@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tuile : MonoBehaviour
+public class Tuile : MonoBehaviour
 {
     private int north = 1;
     private int east = 2;
@@ -28,7 +28,7 @@ public class tuile : MonoBehaviour
         // Debug.Log("west: " + west);
         // Debug.Log("middle: " + middle);
     }
- 
+ /*
     void rotation()
     {
         right = Input.GetKeyDown(KeyCode.RightArrow) + 1;
@@ -43,7 +43,7 @@ public class tuile : MonoBehaviour
             rot += left % (-4);
         }
     }
-
+*/
     void moveToRight()
     {
         north2 = north + 1 % 4;

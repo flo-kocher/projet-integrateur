@@ -28,11 +28,11 @@ public class tuile : MonoBehaviour
         // Debug.Log("west: " + west);
         // Debug.Log("middle: " + middle);
     }
- 
+ /*
     void rotation()
     {
-        right = Input.GetKeyDown(KeyCode.RightArrow) + 1
-        left = Input.GetKeyDown(KeyCode.LeftArrow) - 1
+        right = Input.GetKeyDown(KeyCode.RightArrow) + 1;
+        left = Input.GetKeyDown(KeyCode.LeftArrow) - 1;
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             rot += right % 4;
@@ -42,7 +42,7 @@ public class tuile : MonoBehaviour
             rot += left % (-4);
         }
     }
-
+*/
     void moveToRight()
     {
         north2 = north + 1 % 4;
