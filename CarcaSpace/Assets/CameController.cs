@@ -17,19 +17,22 @@ public class CameController : MonoBehaviour {
 	
 	Vector3 pos = transform.position;
 // z,q,s,d touche pour déplacer la caméra (prévus pour clavier azerty)	
-	if (Input.GetKey("z") || ((Input.mousePosition.y >= (Screen.height - panBorderThickness)) && (Input.mousePosition.y < Screen.height)))
+	if (Input.GetKey("z") || ((Input.mousePosition.y >= (Screen.height - panBorderThickness)) && (Input.mousePosition.y < Screen.height) && (Input.mousePosition.x < Screen.width) && (Input.mousePosition.x > 0)))
 	{
 		pos.y += panSpeed * Time.deltaTime;
 	}
-	if (Input.GetKey("s") || ((Input.mousePosition.y <= panBorderThickness) && (Input.mousePosition.y > 0)))
+	if (Input.GetKey("s") || ((Input.mousePosition.y <= panBorderThickness) && (Input.mousePosition.y > 0) && (Input.mousePosition.x < Screen.width) && (Input.mousePosition.x > 0)))
+
 	{
 		pos.y -= panSpeed * Time.deltaTime;
 	}
-	if (Input.GetKey("d") || ((Input.mousePosition.x >= (Screen.width - panBorderThickness)) && (Input.mousePosition.x < Screen.width)))
+	if (Input.GetKey("d") || ((Input.mousePosition.x >= (Screen.width - panBorderThickness)) && (Input.mousePosition.x < Screen.width) && (Input.mousePosition.y < Screen.height) && (Input.mousePosition.y > 0)))
+
 	{
 		pos.x += panSpeed * Time.deltaTime;
 	}
-	if (Input.GetKey("q") || ((Input.mousePosition.x <= panBorderThickness) && (Input.mousePosition.x > 0)))
+	if (Input.GetKey("q") || ((Input.mousePosition.x <= panBorderThickness) && (Input.mousePosition.x > 0) && (Input.mousePosition.y < Screen.height) && (Input.mousePosition.y > 0)))
+
 	{
 		pos.x -= panSpeed * Time.deltaTime;
 	}
