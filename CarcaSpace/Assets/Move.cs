@@ -42,6 +42,7 @@ public class Move : MonoBehaviour
                         disapear = GameObject.Find((int)x + "/" + (int)y);
                         anim2 = true;
                         this.GetComponent<rotateZ>().enabled = false;
+                        this.GetComponent<Constraints>().enabled = false;
         	    }
                     else
                     {
@@ -69,7 +70,8 @@ public class Move : MonoBehaviour
             transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
             float finish = Vector3.Angle(transform.position, target);
             if (finish <= 0.01f)
-	    {
+	          {
+                this.GetComponent<Constraints>().enabled = true;
                 this.GetComponent<rotateZ>().enabled = true;
                 anim1 = false;
             }
