@@ -9,10 +9,12 @@ public class Constraints : MonoBehaviour
     public string bas;
     public string droite;
     public string milieu;
+    private rotateZ r;
     // Start is called before the first frame update
     void Start()
     {
         //Debug.Log(transform.eulerAngles.z);
+        r = this.GetComponent<rotateZ>();
         haut = "plaine";
         gauche = "chemin";
         bas = "plaine";
@@ -34,11 +36,11 @@ rotation deux fois : 180 ou -180
 
         //attention si on fait trop vite, l'animation a pas le temps de se faire
         //donc ca decale tout
-        if(Input.GetKeyDown("left"))
+        if(Input.GetKeyDown("left") && !(r.leve || r.couche || r.tourne))
         {
             rotate_left();
         }
-        if(Input.GetKeyDown("right"))
+        if(Input.GetKeyDown("right") && !(r.leve || r.couche || r.tourne))
         {
             rotate_right();
         }
