@@ -2,35 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Linq;
+using System.Collections;
 
 public class Board : MonoBehaviour
 {
-    /*
-    SerializedObject tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
-    SerializedProperty tagsProp = tagManager.FindProperty("tags");
- 
-    // For Unity 5 we need this too
-    SerializedProperty layersProp = tagManager.FindProperty("layers");
- 
-    // Adding a Tag
-    string s = "Plateau";
- 
-    // First check if it is not already present
-    bool found = false;
-    for(int i = 0;i < tagsProp.arraySize;i++)
-    {
-        SerializedProperty t = tagsProp.GetArrayElementAtIndex(i);
-        if (t.stringValue.Equals(s)) { found = true; break; }
-    }
- 
-    // if not found, add it
-    if (!found)
-    {
-        tagsProp.InsertArrayElementAtIndex(0);
-        SerializedProperty n = tagsProp.GetArrayElementAtIndex(0);
-        n.stringValue = s;
-    }
-    */
+    Move plateau;
 
     //List<GameObject> board = new List<GameObject>();
     // Start is called before the first frame update
@@ -46,7 +23,24 @@ public class Board : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        
+        GameObject[] onlyInactive = GameObject.FindObjectsOfType<GameObject>(true).Where(sr => !sr.gameObject.activeInHierarchy).ToArray();
+        for (var i = 0; i < onlyInactive.Length; i++)
+        {
+            if(onlyInactive[i].name.Contains("/"))
+            {
+                //board.Add(onlyInactive[i].name.Contains("/"));
+                //Debug.Log("hidden objects : " + onlyInactive[i]);
+                //Debug.Log("nbr elements : " + onlyInactive.Length);
+            }
+        }
+
+        plateau = this.GetComponent<Move>();
+
+        // regler le soucis de ca ...
+        if(plateau != null)
+        {
+            Debug.Log("Plateau : " + plateau.board[0]);
+            Debug.Log("Plateau : " + plateau.board.Count);
+        }
     }
 }

@@ -12,6 +12,8 @@ public class Move : MonoBehaviour
     private bool anim2 = false;
     private GameObject disapear;
     private rotateZ r;
+ // creation de liste d'objets faisant parti du plateau
+    public List<GameObject> board = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -91,7 +93,10 @@ public class Move : MonoBehaviour
 	    {
                 anim2 = false;
             	if (disapear != null)
+                {
+                    board.Add(disapear);
                     disapear.SetActive(false);
+                }
 	    }
         }
     }
