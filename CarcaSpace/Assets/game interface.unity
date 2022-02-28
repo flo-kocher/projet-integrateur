@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.32367027, g: 0.3416242, b: 0.5641687, a: 1}
+  m_IndirectSpecularColor: {r: 0.32363236, g: 0.3414824, b: 0.56393903, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -699,6 +699,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 0.1
   speed: 5
+  plateau: {fileID: 0}
 --- !u!114 &1029606245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1815,6 +1816,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8916260352002946909}
+  - component: {fileID: 8140039860736536040}
   m_Layer: 0
   m_Name: Tiles
   m_TagString: Untagged
@@ -1822,6 +1824,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8140039860736536040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140039860736536039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53efbf148c80a314aa3d909a9a463a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  board: []
 --- !u!4 &8692485578375011299
 Transform:
   m_ObjectHideFlags: 0

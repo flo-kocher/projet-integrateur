@@ -12,13 +12,13 @@ public class Move : MonoBehaviour
     private bool anim2 = false;
     private GameObject disapear;
     private rotateZ r;
- // creation de liste d'objets faisant parti du plateau
-    public List<GameObject> board = new List<GameObject>();
+
+    public Board plateau;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        plateau = this.transform.parent.GetComponent<Board>();
     }
 
     // Update is called once per frame
@@ -94,7 +94,7 @@ public class Move : MonoBehaviour
                 anim2 = false;
             	if (disapear != null)
                 {
-                    board.Add(disapear);
+                    plateau.board.Add(disapear);
                     disapear.SetActive(false);
                 }
 	    }
