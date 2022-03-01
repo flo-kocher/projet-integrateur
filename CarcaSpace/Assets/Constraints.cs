@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Type_land
+{
+  Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye
+}
 public class Constraints : MonoBehaviour
 {
-    public string haut;
-    public string gauche;
-    public string bas;
-    public string droite;
-    public string milieu;
+    public Type_land haut;
+    public Type_land gauche;
+    public Type_land bas;
+    public Type_land droite;
+    public Type_land milieu;
     private rotateZ r;
     // Start is called before the first frame update
     void Start()
     {
         //Debug.Log(transform.eulerAngles.z);
         r = this.GetComponent<rotateZ>();
-        haut = "plaine";
-        gauche = "chemin";
-        bas = "plaine";
-        droite = "chemin";
-        milieu = "plaine";
+        haut = Type_land.Plaine;
+        gauche = Type_land.Chemin;
+        bas = Type_land.Plaine;
+        droite = Type_land.Chemin;
+        milieu = Type_land.Chemin;
     }
 /*
 rotation a gauche : 90
@@ -87,7 +91,7 @@ rotation deux fois : 180 ou -180
     // des pressions sur touche pour tourner faire les changements de valeurs
     void rotate_left()
     {
-        string cp = haut;
+        Type_land cp = haut;
         haut = droite;
         droite = bas;
         bas = gauche;
@@ -96,7 +100,7 @@ rotation deux fois : 180 ou -180
 
     void rotate_right()
     {
-        string cp = haut;
+        Type_land cp = haut;
         haut = gauche;
         gauche = bas;
         bas = droite;
