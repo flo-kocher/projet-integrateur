@@ -11,6 +11,7 @@ public class CameController : MonoBehaviour {
 	public Vector2 panLimit;
 	public float minZ;
 	public float maxZ;
+	private float gradient;
 	
 	
     void Update() {
@@ -19,22 +20,31 @@ public class CameController : MonoBehaviour {
 // z,q,s,d touche pour déplacer la caméra (prévus pour clavier azerty)	
 	if (Input.GetKey("z") || ((Input.mousePosition.y >= (Screen.height - panBorderThickness)) && (Input.mousePosition.y < Screen.height) && (Input.mousePosition.x < Screen.width) && (Input.mousePosition.x > 0)))
 	{
-		pos.y += panSpeed * Time.deltaTime;
+		gradient = 1 - (Screen.height - Input.mousePosition.y) / panBorderThickness;
+		if (Input.GetKey("z"))
+			gradient = 0.5f;
+		pos.y += gradient * panSpeed * Time.deltaTime;
 	}
 	if (Input.GetKey("s") || ((Input.mousePosition.y <= panBorderThickness) && (Input.mousePosition.y > 0) && (Input.mousePosition.x < Screen.width) && (Input.mousePosition.x > 0)))
-
 	{
-		pos.y -= panSpeed * Time.deltaTime;
+		gradient = (panBorderThickness - Input.mousePosition.y) / panBorderThickness;
+		if (Input.GetKey("s"))
+			gradient = 0.5f;
+		pos.y -= gradient * panSpeed * Time.deltaTime;
 	}
 	if (Input.GetKey("d") || ((Input.mousePosition.x >= (Screen.width - panBorderThickness)) && (Input.mousePosition.x < Screen.width) && (Input.mousePosition.y < Screen.height) && (Input.mousePosition.y > 0)))
-
 	{
-		pos.x += panSpeed * Time.deltaTime;
+		gradient = 1 - (Screen.width- Input.mousePosition.x) / panBorderThickness;
+		if (Input.GetKey("d"))
+			gradient = 0.5f;
+		pos.x += gradient * panSpeed * Time.deltaTime;
 	}
 	if (Input.GetKey("q") || ((Input.mousePosition.x <= panBorderThickness) && (Input.mousePosition.x > 0) && (Input.mousePosition.y < Screen.height) && (Input.mousePosition.y > 0)))
-
 	{
-		pos.x -= panSpeed * Time.deltaTime;
+		gradient = (panBorderThickness - Input.mousePosition.x) / panBorderThickness;
+		if (Input.GetKey("q"))
+			gradient = 0.5f;
+		pos.x -= gradient * panSpeed * Time.deltaTime;
 	}
 
 //dezoomer ou zoomer avec la roulette du clavier
