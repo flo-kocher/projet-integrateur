@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class PIck : MonoBehaviour
 {
+    private tile_type[] tiles = {new tile_type_1(), new tile_type_2(), new tile_type_3(), new tile_type_4(), new tile_type_5(),
+                                new tile_type_6(), new tile_type_7(), new tile_type_8(), new tile_type_9(), new tile_type_10(),
+                                new tile_type_11(), new tile_type_12(), new tile_type_13(), new tile_type_14(), new tile_type_15(),
+                                new tile_type_16(), new tile_type_17(), new tile_type_18(), new tile_type_19(), new tile_type_20(),
+                                new tile_type_21(), new tile_type_22(), new tile_type_23(), new tile_type_24()};
     private static int compteur = 0;
     // Start is called before the first frame update
     void Start()
@@ -36,269 +41,37 @@ public class PIck : MonoBehaviour
         clone.name = "Pioche" + compteur;
         
         int loop = 1;
-        int num = 0;
+        int num = 0, comptTuile=0;
         while (loop == 1)
         {
             System.Random rnd = new System.Random();
             // Create number between 1 and 24 
             num = rnd.Next(1, 25);
-            Debug.Log("num random => "+num);
+            //Debug.Log("num random => "+num);
             int nbr=0;
-            switch (num)
-            {
-                case 1:
-                    nbr = tile_type_1.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_1.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_1>();
-                        loop = 0;
-                    }
-                    break;
 
-                case 2:
-                    nbr = tile_type_2.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_2.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_2>();
-                        loop = 0;
-                    }
-                    break;
+            nbr = tiles[num-1].getNbrTuile();
+            if(nbr > 0){
+                Debug.Log("nombre => " + nbr);
+                tiles[num-1].decrementNbrTuile();
+                Debug.Log("nombre decrem => " + tiles[num-1].getNbrTuile());
+                clone.AddComponent(tiles[num-1].GetType());
+                loop = 0;
+            }
+            else{
+                if(tiles[num-1].getFinish() == false){
+                    tiles[num-1].changeFinish();
+                }
+                else{
+                    comptTuile++;
+                }
+            }
 
-                case 3:
-                    nbr = tile_type_3.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_3.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_3>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 4:
-                    nbr = tile_type_4.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_4.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_4>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 5:
-                    nbr = tile_type_5.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_5.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_5>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 6:
-                    nbr = tile_type_6.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_6.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_6>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 7:
-                    nbr = tile_type_7.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_7.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_7>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 8:
-                    nbr = tile_type_8.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_8.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_8>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 9:
-                    nbr = tile_type_9.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;
-                        tile_type_9.nbrTuile = nbr;
-                        clone.AddComponent<tile_type_9>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 10:
-                    nbr = tile_type_10.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_10.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_10>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 11:
-                    nbr = tile_type_11.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_11.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_11>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 12:
-                    nbr = tile_type_12.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_12.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_12>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 13:
-                    nbr = tile_type_13.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_13.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_13>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 14:
-                    nbr = tile_type_14.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_14.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_14>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 15:
-                    nbr = tile_type_15.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_15.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_15>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 16:
-                    nbr = tile_type_16.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_16.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_16>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 17:
-                    nbr = tile_type_17.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_17.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_17>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 18:
-                    nbr = tile_type_18.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_18.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_18>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 19:
-                    nbr = tile_type_19.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_19.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_19>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 20:
-                    nbr = tile_type_20.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_20.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_20>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 21:
-                    nbr = tile_type_21.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_21.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_21>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 22:
-                    nbr = tile_type_22.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_22.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_22>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 23:
-                    nbr = tile_type_23.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_23.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_23>();
-                        loop = 0;
-                    }
-                    break;
-
-                case 24:
-                    nbr = tile_type_24.nbrTuile;
-                    if(nbr > 0){
-                        nbr--;;
-                        tile_type_24.nbrTuile = nbr;;
-                        clone.AddComponent<tile_type_24>();
-                        loop = 0;
-                    }
-                    break;
-
-                default:
-                    loop = 0;
-                    break;
-
+            if(comptTuile > 24){
+                loop = 0;
             }
             
         }
 
-        
-
-
-        
-        
-        //clone.AddComponent("tile_type_2"()
     }
 }
