@@ -11,7 +11,7 @@ public class tile_type_24 : MonoBehaviour
     public int west = 3;
     public int middle = 4;
     public bool blazon = false;
-    public int nbrTuile = 30;
+    public static int nbrTuile = 30;
 
     // Start is called before the first frame update
     void Start()
