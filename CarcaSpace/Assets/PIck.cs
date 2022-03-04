@@ -40,7 +40,8 @@ public class PIck : MonoBehaviour
         while (loop == 1)
         {
             System.Random rnd = new System.Random();
-            num = rnd.Next(25);
+            // Create number between 1 and 24 
+            num = rnd.Next(1, 25);
             Debug.Log("num random => "+num);
             int nbr=0;
             switch (num)
@@ -286,7 +287,7 @@ public class PIck : MonoBehaviour
                     break;
 
                 default:
-                    
+                    loop = 0;
                     break;
 
             }
