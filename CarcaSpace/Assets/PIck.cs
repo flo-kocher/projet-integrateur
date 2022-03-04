@@ -136,7 +136,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 10:;
+                case 10:
                     nbr = tile_type_10.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -146,7 +146,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 11:;
+                case 11:
                     nbr = tile_type_11.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -156,7 +156,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 12:;
+                case 12:
                     nbr = tile_type_12.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -166,7 +166,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 13:;
+                case 13:
                     nbr = tile_type_13.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -176,7 +176,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 14:;
+                case 14:
                     nbr = tile_type_14.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -186,7 +186,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 15:;
+                case 15:
                     nbr = tile_type_15.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -196,7 +196,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 16:;
+                case 16:
                     nbr = tile_type_16.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -206,7 +206,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 17:;
+                case 17:
                     nbr = tile_type_17.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -216,7 +216,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 18:;
+                case 18:
                     nbr = tile_type_18.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -226,7 +226,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 19:;
+                case 19:
                     nbr = tile_type_19.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -236,7 +236,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 20:;
+                case 20:
                     nbr = tile_type_20.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -246,7 +246,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 21:;
+                case 21:
                     nbr = tile_type_21.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -256,7 +256,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 22:;
+                case 22:
                     nbr = tile_type_22.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -266,7 +266,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 23:;
+                case 23:
                     nbr = tile_type_23.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
@@ -276,7 +276,7 @@ public class PIck : MonoBehaviour
                     }
                     break;
 
-                case 24:;
+                case 24:
                     nbr = tile_type_24.nbrTuile;
                     if(nbr > 0){
                         nbr--;;
