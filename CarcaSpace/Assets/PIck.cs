@@ -11,6 +11,7 @@ public class PIck : MonoBehaviour
                                 new tile_type_16(), new tile_type_17(), new tile_type_18(), new tile_type_19(), new tile_type_20(),
                                 new tile_type_21(), new tile_type_22(), new tile_type_23(), new tile_type_24()};
     private static int compteur = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,15 +42,15 @@ public class PIck : MonoBehaviour
         clone.name = "Pioche" + compteur;
         
         int loop = 1;
-        int num = 0, comptTuile=0;
+        int num=0, comptTuile=0;
         while (loop == 1)
         {
             System.Random rnd = new System.Random();
             // Create number between 1 and 24 
             num = rnd.Next(1, 25);
-            //Debug.Log("num random => "+num);
+            Debug.Log("num random => "+num);
             int nbr=0;
-
+            
             nbr = tiles[num-1].getNbrTuile();
             if(nbr > 0){
                 Debug.Log("nombre => " + nbr);

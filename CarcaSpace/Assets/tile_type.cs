@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tile_type : MonoBehaviour
+public abstract class tile_type : MonoBehaviour
 {
 
     public int north = 0;
@@ -13,6 +13,8 @@ public class tile_type : MonoBehaviour
     public bool blazon = false;
     public static int nbrTuile = 30;
     public static bool finish = false;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,19 +28,12 @@ public class tile_type : MonoBehaviour
         
     }
 
-    public int getNbrTuile(){
-        return nbrTuile;
-    }
+    public abstract int getNbrTuile();
 
-    public void decrementNbrTuile(){
-        nbrTuile--;
-    }
+    public abstract void decrementNbrTuile();
 
-    public bool getFinish(){
-        return finish;
-    }
+    public abstract bool getFinish();
 
-    public void changeFinish(){
-        finish = true;
-    }
+    public abstract void changeFinish();
+
 }

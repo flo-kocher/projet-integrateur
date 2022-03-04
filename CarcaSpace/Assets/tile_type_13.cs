@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class tile_type_13 : tile_type
 {
+    public static int nbrTuile = 30;
+    public static bool finish = false;
 
     // Start is called before the first frame update
     void Start()
@@ -15,5 +17,21 @@ public class tile_type_13 : tile_type
     void Update()
     {
         
+    }
+
+    public override int getNbrTuile(){
+        return nbrTuile;
+    }
+
+    public override void decrementNbrTuile(){
+        nbrTuile--;
+    }
+
+    public override bool getFinish(){
+        return finish;
+    }
+
+    public override void changeFinish(){
+        finish = true;
     }
 }
