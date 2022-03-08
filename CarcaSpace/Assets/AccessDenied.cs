@@ -14,6 +14,7 @@ public class AccessDenied : MonoBehaviour
     Material Red;
     Material logo;
     public float speed;
+    public int wait;
     // Start is called before the first frame update
     
 
@@ -30,27 +31,44 @@ public class AccessDenied : MonoBehaviour
     void Update()
     {
 
-      if (Input.GetKey("m") && !(animDenied && endAnimDenied))
-          animDenied = true;
+      if (Input.GetKey("m") && !(animDenied || endAnimDenied))
+        animDenied = true;
 
       if (animDenied)
       {
-          StartCoroutine(modif());
+        StartCoroutine(error());
+      }
+      
+      if(endAnimDenied)
+      {
+        init();
       }
 
     }
 
-    IEnumerator modif()
+    IEnumerator error()
     {
-	Color c_target = m[1].color;
-	c_target.a = 0;
-	m[1].color = Color.Lerp(m[1].color, c_target,speed*Time.deltaTime);
-        face.GetComponent<Renderer>().materials = m.ToArray();
-	if (m[1].color.a <= 0.01f)
-	{
-	  yield return new WaitForSeconds(5);
-          Debug.Log("finish");
-	  animDenied = false;
-	}
+	    Color c_target = m[1].color;
+	    c_target.a = 0;
+	    m[1].color = Color.Lerp(m[1].color, c_target,speed*Time.deltaTime);
+      face.GetComponent<Renderer>().materials = m.ToArray();
+	    if (m[1].color.a <= 0.01f)
+	    {
+	      yield return new WaitForSeconds(wait);
+        endAnimDenied = true;
+	      animDenied = false;
+	    }
     }
+
+      void init()
+      {
+        Color c_target = m[1].color;
+	      c_target.a = 1;
+	      m[1].color = Color.Lerp(m[1].color, c_target,speed*Time.deltaTime);
+        face.GetComponent<Renderer>().materials = m.ToArray();
+	      if (m[1].color.a >= 0.99f)
+	      {
+          endAnimDenied = false;
+        }
+      } 
 }
