@@ -8,13 +8,15 @@ public class AccessDenied : MonoBehaviour
 {
     GameObject face;
     List<Material> m;
-    public bool animDenied = false;
-    public bool endAnimDenied = false;
+    bool animDenied = false;
+    bool endAnimDenied = false;
+    bool brotatz = false;
     Material Cross;
     Material Red;
     Material logo;
     public float speed;
-    public int wait;
+    public float speedShake;
+    public float wait;
     float timer = 0;
     // Start is called before the first frame update
     
@@ -35,12 +37,22 @@ public class AccessDenied : MonoBehaviour
       {
         error();
       }
+
+      if (brotatz)
+      {
+        rotatz();
+      }
       
       if(endAnimDenied)
       {
         timer += Time.deltaTime;
         if (timer > wait)
+        {
+          brotatz = false;
+          rotateZ r = GetComponent<rotateZ>();
+          transform.rotation = Quaternion.Euler(0,0,r.angle);
           init();
+        }
       }
 
       if (Input.GetKey("m") && !(animDenied || endAnimDenied))
@@ -59,9 +71,20 @@ public class AccessDenied : MonoBehaviour
 	    if (m[1].color.a <= 0.01f)
 	    {
         endAnimDenied = true;
+        brotatz = true;
 	      animDenied = false;
 	    }
     }
+
+    void rotatz()
+    {
+      rotateZ r = GetComponent<rotateZ>();
+      Quaternion left = Quaternion.Euler(0,0,r.angle+20);
+      Quaternion right = Quaternion.Euler(0,0,r.angle-20);
+      float lerp = Mathf.PingPong(speedShake*timer,1);
+      transform.rotation = Quaternion.Slerp(left,right,lerp);
+    }
+
 
       void init()
       {

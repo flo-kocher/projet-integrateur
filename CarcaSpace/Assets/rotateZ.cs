@@ -8,7 +8,7 @@ public class rotateZ : MonoBehaviour
     public bool leve = false;
     public bool tourne = false;
     public bool couche = false;
-    private float angle = 0.0f;
+    internal float angle = 0.0f;
     private float angle_last;
  
     void Start()
