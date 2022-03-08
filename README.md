@@ -5,7 +5,6 @@
 Instructions à suivre pour développer une nouvelle implémentation sur git dans la bonne humeur.
 
 ### 1. Récupérer le plus récent commit
-<br>
 
 ```bash
 git checkout develop ; git pull
@@ -15,7 +14,6 @@ git checkout develop ; git pull
 - **pull** => récupérer le plus récent commit
 
 ### 2. Créer sa propre branche
-<br>
 
 ```bash
 git checkout -b <nom_de_la_branche>
@@ -24,7 +22,6 @@ git checkout -b <nom_de_la_branche>
 - **-b** => créer une nouvelle branche et se positionner dessus
 
 ### 3. Etre libre de ses modifications
-<br>
 
 ```bash
 git add * ; git commit -m <message>
@@ -34,7 +31,6 @@ git add * ; git commit -m <message>
 - **commit** => applique les modifications en local
 
 ### 4. Push sur le repositoire distant (optionnel)
-<br>
 
 ```bash
 git push --set-upstream origin <nom_de_la_branche>
@@ -43,7 +39,6 @@ git push --set-upstream origin <nom_de_la_branche>
 - **push** => charge le contenu d'un dépôt local vers un dépôt distant
 
 ### 5. Merge sur develop
-<br>
 
 ```bash
 git checkout develop ; git merge <nom_de_la_branche>
@@ -52,7 +47,6 @@ git checkout develop ; git merge <nom_de_la_branche>
 - **merge** => fusionne une branche avec une autre
 
 ### 6. Informations diverses
-<br>
 
 Supprimer une branche:
 ```bash
