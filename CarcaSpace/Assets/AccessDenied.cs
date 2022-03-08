@@ -15,6 +15,7 @@ public class AccessDenied : MonoBehaviour
     Material logo;
     public float speed;
     public int wait;
+    float timer = 0;
     // Start is called before the first frame update
     
 
@@ -37,7 +38,9 @@ public class AccessDenied : MonoBehaviour
       
       if(endAnimDenied)
       {
-        init();
+        timer += Time.deltaTime;
+        if (timer > wait)
+          init();
       }
 
       if (Input.GetKey("m") && !(animDenied || endAnimDenied))
@@ -66,8 +69,9 @@ public class AccessDenied : MonoBehaviour
 	      c_target.a = 1;
 	      m[1].color = Color.Lerp(m[1].color, c_target,speed*Time.deltaTime);
         face.GetComponent<Renderer>().materials = m.ToArray();
-	      if (m[1].color.a >= 0.99999f)
+	      if (m[1].color.a >= 0.99f)
 	      {
+          timer = 0;
           endAnimDenied = false;
         }
       } 
