@@ -28,7 +28,7 @@ public class CreateGrid : MonoBehaviour
                 clone.SetActive(true);
             }
         }
-        Vector3 vec = new Vector3((float)Decimal.Divide(nbTuiles, 2),0,-3);
+        Vector3 vec = new Vector3((float)Decimal.Divide(nbTuiles, 2),(float)Decimal.Divide(nbTuiles, -4),-5);
         Camera.main.transform.position = vec;
     }
 

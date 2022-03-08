@@ -11,6 +11,7 @@ public class PIck : MonoBehaviour
                                 new tile_type_16(), new tile_type_17(), new tile_type_18(), new tile_type_19(), new tile_type_20(),
                                 new tile_type_21(), new tile_type_22(), new tile_type_23(), new tile_type_24()};
     private static int compteur = 0;
+    bool create = true;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,7 @@ public class PIck : MonoBehaviour
     
     void func()
     {
+        create = true;
         GameObject temp = null;
         var list = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach (GameObject i in list)
@@ -36,8 +38,12 @@ public class PIck : MonoBehaviour
             {
                 i.GetComponent<Move>().enabled = false;
                 i.GetComponent<AccessDenied>().enabled = false;
+                if (i.GetComponent<rotateZ>().enabled == true)
+                  create = false;
             }
         }
+        if (create)
+        {
         GameObject clone = GameObject.Instantiate(temp);
         clone.SetActive(true);
         clone.transform.SetParent(GameObject.Find("Tiles").transform);
@@ -75,6 +81,7 @@ public class PIck : MonoBehaviour
                 loop = 0;
             }
             
+        }
         }
 
     }
