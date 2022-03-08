@@ -8,8 +8,8 @@ public class AccessDenied : MonoBehaviour
 {
     GameObject face;
     List<Material> m;
-    bool animDenied = false;
-    bool endAnimDenied = false;
+    public bool animDenied = false;
+    public bool endAnimDenied = false;
     Material Cross;
     Material Red;
     Material logo;
@@ -30,16 +30,9 @@ public class AccessDenied : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-      if (Input.GetKey("m") && !(animDenied || endAnimDenied))
-      {
-        Debug.Log("WTFFFFF");
-        animDenied = true;
-      }
-
       if (animDenied)
       {
-        StartCoroutine(error());
+        error();
       }
       
       if(endAnimDenied)
@@ -47,9 +40,14 @@ public class AccessDenied : MonoBehaviour
         init();
       }
 
+      if (Input.GetKey("m") && !(animDenied || endAnimDenied))
+      {
+        animDenied = true;
+      } 
+
     }
 
-    IEnumerator error()
+    void error()
     {
 	    Color c_target = m[1].color;
 	    c_target.a = 0;
@@ -57,7 +55,6 @@ public class AccessDenied : MonoBehaviour
       face.GetComponent<Renderer>().materials = m.ToArray();
 	    if (m[1].color.a <= 0.01f)
 	    {
-	      yield return new WaitForSeconds(wait);
         endAnimDenied = true;
 	      animDenied = false;
 	    }
@@ -69,7 +66,7 @@ public class AccessDenied : MonoBehaviour
 	      c_target.a = 1;
 	      m[1].color = Color.Lerp(m[1].color, c_target,speed*Time.deltaTime);
         face.GetComponent<Renderer>().materials = m.ToArray();
-	      if (m[1].color.a >= 0.99f)
+	      if (m[1].color.a >= 0.99999f)
 	      {
           endAnimDenied = false;
         }
