@@ -1,0 +1,32 @@
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="https://www.cts-strasbourg.eu/rechargementBadgeo/" href="rechargementBadgeo.jnlp?id=7951E8B606D480812AE918F2D004D604&amp;lang=fr_FR">
+<information>
+<title>Rechargement Badgéo</title>
+<vendor>SII</vendor>
+<homepage href="https://www.cts-strasbourg.eu/"/>
+<description>Module de Communication Badgeo : utilitaire de rechargement de carte Badgeo à utiliser avec le site internet de la CTS</description>
+<icon href="./Logo_CTS.png" kind="default"/>
+</information>
+
+<update check="always" policy="always" />
+
+<security>
+<all-permissions/>
+</security>
+
+<resources>
+<j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+<jar href="resources/CTS_MCB.jar" />
+</resources>
+
+<application-desc main-class="com.sii.MCB.Main">
+    <argument>fr_FR</argument>
+    <argument>7951E8B606D480812AE918F2D004D604</argument>
+	<argument>wss://www.cts-strasbourg.eu/socketmcb</argument>
+</application-desc>
+
+</jnlp>
