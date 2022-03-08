@@ -33,7 +33,10 @@ public class PIck : MonoBehaviour
             if (i.name == "Temp")
                 temp = i;
             if (i.name.Contains("Pioche"))
+            {
                 i.GetComponent<Move>().enabled = false;
+                i.GetComponent<AccessDenied>().enabled = false;
+            }
         }
         GameObject clone = GameObject.Instantiate(temp);
         clone.SetActive(true);

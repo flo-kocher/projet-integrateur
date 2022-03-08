@@ -32,7 +32,10 @@ public class AccessDenied : MonoBehaviour
     {
 
       if (Input.GetKey("m") && !(animDenied || endAnimDenied))
+      {
+        Debug.Log("WTFFFFF");
         animDenied = true;
+      }
 
       if (animDenied)
       {
