@@ -2,17 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Threading;
 
 public class AccessDenied : MonoBehaviour
 {
     GameObject face;
     List<Material> m;
-    bool animDenied;
-    bool endAnimDenied;
+    bool animDenied = false;
+    bool endAnimDenied = false;
     Material Cross;
     Material Red;
     Material logo;
+    public float speed;
     // Start is called before the first frame update
+    
+
     void Start()
     {
       Cross = Resources.Load<Material>("Material/Cross");
@@ -31,9 +35,22 @@ public class AccessDenied : MonoBehaviour
 
       if (animDenied)
       {
-        m[1] = Red;
-        face.GetComponent<Renderer>().materials = m.ToArray();
+          StartCoroutine(modif());
       }
 
+    }
+
+    IEnumerator modif()
+    {
+	Color c_target = m[1].color;
+	c_target.a = 0;
+	m[1].color = Color.Lerp(m[1].color, c_target,speed*Time.deltaTime);
+        face.GetComponent<Renderer>().materials = m.ToArray();
+	if (m[1].color.a <= 0.01f)
+	{
+	  yield return new WaitForSeconds(5);
+          Debug.Log("finish");
+	  animDenied = false;
+	}
     }
 }
