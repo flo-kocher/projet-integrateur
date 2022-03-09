@@ -36,7 +36,7 @@ public class AccessDenied : MonoBehaviour
       if (animDenied)
       {
         error();
-        GetComponent<NotifDenied>().pushNotif("bite");
+        GetComponent<NotifDenied>().pushNotif("La tuile ne peut pas être posé ici.");
       }
 
       if (brotatz)
