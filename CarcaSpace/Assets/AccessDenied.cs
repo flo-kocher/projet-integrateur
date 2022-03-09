@@ -36,6 +36,7 @@ public class AccessDenied : MonoBehaviour
       if (animDenied)
       {
         error();
+        GetComponent<NotifDenied>().pushNotif("bite");
       }
 
       if (brotatz)
