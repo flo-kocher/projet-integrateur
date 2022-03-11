@@ -2,8 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror; 
 
-public class CreateGrid : MonoBehaviour
+public class CreateGrid : NetworkBehaviour
 {
     public int nbTuiles;
     private GameObject go;
