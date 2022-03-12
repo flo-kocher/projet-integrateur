@@ -36,21 +36,21 @@ public class Move : MonoBehaviour
             if( Physics.Raycast( ray, out hit, 100 ) )
             {
                 go = hit.transform.gameObject;
-		if (go == this.gameObject)
-		{
-        	    dragging = !dragging;
+                if (go == this.gameObject)
+                {
+                    dragging = !dragging;
                     if (!dragging)
                     {
                         disapear = GameObject.Find((int)x + "/" + (int)y);
                         anim2 = true;
                         this.GetComponent<rotateZ>().enabled = false;
                         this.GetComponent<Constraints>().enabled = false;
-        	    }
+                    }
                     else
                     {
                         anim1 = true;
                     }
-		}
+                }
             }
         }
         if (dragging)
@@ -60,44 +60,45 @@ public class Move : MonoBehaviour
             transform.position = new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
         }
         if (anim1) {
-	    if (disapear != null)
-	    {
+	        if (disapear != null)
+            {
                 disapear.SetActive(true);
-	        Material mat = disapear.GetComponent<Renderer>().material;
-	        Color c_target = mat.color;
-	        c_target.a = 1;
-	        mat.color = Color.Lerp(mat.color, c_target,speed*Time.deltaTime);
-	    }
+                Material mat = disapear.GetComponent<Renderer>().material;
+                Color c_target = mat.color;
+                c_target.a = 1;
+                mat.color = Color.Lerp(mat.color, c_target,speed*Time.deltaTime);
+            }
             Vector3 target = new Vector3(transform.position.x, transform.position.y, -0.2f);
             transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
             float finish = Vector3.Angle(transform.position, target);
             if (finish <= 0.01f)
-	          {
+            {
                 this.GetComponent<Constraints>().enabled = true;
                 this.GetComponent<rotateZ>().enabled = true;
                 anim1 = false;
             }
         }
+        //Pose de la tuile
         if (anim2) {
-	    if (disapear != null)
-	    {
-	        Material mat = disapear.GetComponent<Renderer>().material;
-	        Color c_target = mat.color;
-	        c_target.a = 0;
-	        mat.color = Color.Lerp(mat.color, c_target,speed*Time.deltaTime);
-	    }
-            Vector3 target = new Vector3(x+0.5f,y+0.5f, 0f);
-            transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
-            float finish = Vector3.Angle(transform.position, target);
-            if (finish <= 0.01f)
-	    {
+            if (disapear != null)
+            {
+                Material mat = disapear.GetComponent<Renderer>().material;
+                Color c_target = mat.color;
+                c_target.a = 0;
+                mat.color = Color.Lerp(mat.color, c_target,speed*Time.deltaTime);
+            }
+                Vector3 target = new Vector3(x+0.5f,y+0.5f, 0f);
+                transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
+                float finish = Vector3.Angle(transform.position, target);
+                if (finish <= 0.01f)
+            {
                 anim2 = false;
-            	if (disapear != null)
+                if (disapear != null)
                 {
                     plateau.board.Add(disapear);
                     disapear.SetActive(false);
                 }
-	    }
+            }
         }
     }
 }

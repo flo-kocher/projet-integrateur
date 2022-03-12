@@ -1625,6 +1625,7 @@ GameObject:
   - component: {fileID: 1813632085}
   - component: {fileID: 1813632084}
   - component: {fileID: 1813632108}
+  - component: {fileID: 1813632109}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1758,6 +1759,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c31e8fd50a5b48643b657b0eaca98ee7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1776,6 +1779,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77220f8f7403a1042847db7c74c6638b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1794,6 +1799,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d44213fb50eb0647bef2f2b7e437032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1812,6 +1819,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69766cb0ccd633d4a933cab725738a7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1830,6 +1839,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faf11fa973833b745849aeba214bc070, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1848,6 +1859,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41dc6ae86c52b9345b857fd1d425fa09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1866,6 +1879,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ddec2a6f8df8744d8b8672d3e756299, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1884,6 +1899,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6995c8509afc4f849a93637d44608ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1902,6 +1919,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9a320d561c0abe43a81134929c3689c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1920,6 +1939,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 214a9016256d4a84ebbe823cec17f027, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1938,6 +1959,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbfe0daedef96fb42ab1a9592eb85bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1956,6 +1979,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8ec17975fb6d447be38df704fa3e7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1974,6 +1999,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a5afd135475c748810f5cc30524a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -1992,6 +2019,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac8e4e239dc32543a1a713c80eea8b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2010,6 +2039,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262683a9c2a94894f8b0f8cbfda1b621, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2028,6 +2059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90e405b1f7f276f45a5c813a3f32b029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2046,6 +2079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97b95204ce6ab564191939dee4361929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2064,6 +2099,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3311d04a79a35bd478fc58cdadd409eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2082,6 +2119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f234884cfe789e449d22fb452460eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2100,6 +2139,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b313d973d341044ab4d5de61b230c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2118,6 +2159,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 181570593d446c34dbc4d10060b3566a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2136,6 +2179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afe9896b2aa82994e9b85b6994c6ff2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2154,6 +2199,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ee4276dbd90fca4fb876c2876de71b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2172,6 +2219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15321f99bbd2ce1408ac672114559d8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   north: 0
   east: 1
   south: 2
@@ -2190,6 +2239,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f6f5665acff94690adec93036eca0db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1813632109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1813632078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2933360541
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &307843854844066436
 GameObject:
   m_ObjectHideFlags: 0

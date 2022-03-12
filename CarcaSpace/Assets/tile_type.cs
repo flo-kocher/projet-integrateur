@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror ;
 
-public abstract class tile_type : MonoBehaviour
+public abstract class tile_type : NetworkBehaviour
 {
 
     public int north = 0;
