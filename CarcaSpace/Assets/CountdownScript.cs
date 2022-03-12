@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class CountdownScript : MonoBehaviour
+public class CountdownScript : NetworkBehaviour
 {
     public float time = 60f;
     bool CountDownOn = true;
