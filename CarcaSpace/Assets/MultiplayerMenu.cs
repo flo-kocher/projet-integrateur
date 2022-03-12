@@ -12,21 +12,21 @@ public class MultiplayerMenu : MonoBehaviour
     private Button subPlayers;
     private Text text;
     private Mask mask;
-    public void EnterMultiplayerMenu()
+    protected void EnterMultiplayerMenu()
     {
-         SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Additive);
+         SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
     }
 
-    public void EnterSoloMenu()
+    protected void EnterSoloMenu()
     {
         SceneManager.LoadScene("game interface",LoadSceneMode.Single);
     }
 
-    public void EnterJoinFriendsMenu()
+    protected void EnterJoinFriendsMenu()
     {
-        SceneManager.LoadScene("JFMenu",LoadSceneMode.Additive);
+        SceneManager.LoadScene("JFMenu",LoadSceneMode.Single);
     }
-    public void addPlayer()
+    protected void addPlayer()
     {
         text = GameObject.Find("PlayerInput").GetComponent<Text>();
         mask = GameObject.Find("left-arrow").GetComponent<Mask>();
@@ -41,7 +41,7 @@ public class MultiplayerMenu : MonoBehaviour
         text.text = nbPlayers.ToString();
     }
 
-    public void substractPlayer()
+    protected void substractPlayer()
     {
         text = GameObject.Find("PlayerInput").GetComponent<Text>();
         mask = GameObject.Find("left-arrow").GetComponent<Mask>();

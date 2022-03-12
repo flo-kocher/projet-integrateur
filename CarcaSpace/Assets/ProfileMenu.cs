@@ -7,9 +7,9 @@ public class ProfileMenu : MonoBehaviour
 {   
     private Button profile;
 
-    public void EnterProfileMenu()
+    protected void EnterProfileMenu()
     {
-        SceneManager.LoadScene("ProfileMenu", LoadSceneMode.Additive);
+        SceneManager.LoadScene("ProfileMenu", LoadSceneMode.Single);
     }
     void Start()
     {
