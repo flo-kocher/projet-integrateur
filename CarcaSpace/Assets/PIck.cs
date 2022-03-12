@@ -57,14 +57,14 @@ public class PIck : MonoBehaviour
             System.Random rnd = new System.Random();
             // Create number between 1 and 24 
             num = rnd.Next(1, 25);
-            Debug.Log("num random => "+num);
+            //Debug.Log("num random => "+num);
             int nbr=0;
             
             nbr = tiles[num-1].getNbrTuile();
             if(nbr > 0){
-                Debug.Log("nombre => " + nbr);
+                //Debug.Log("nombre => " + nbr);
                 tiles[num-1].decrementNbrTuile();
-                Debug.Log("nombre decrem => " + tiles[num-1].getNbrTuile());
+                //Debug.Log("nombre decrem => " + tiles[num-1].getNbrTuile());
                 clone.AddComponent(tiles[num-1].GetType());
                 loop = 0;
             }

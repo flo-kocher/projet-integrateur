@@ -11,13 +11,30 @@ public class tile_type_12 : tile_type
     // Start is called before the first frame update
     void Start()
     {
-        
+        r = this.GetComponent<rotateZ>();
+        haut = Type_land.Plaine;
+        gauche = Type_land.Chemin;
+        bas = Type_land.Plaine;
+        droite = Type_land.Chemin;
+        milieu = Type_land.Chemin;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown("left") && r!=null)
+        {
+            if(!(r.leve || r.couche || r.tourne)){
+                rotate_left();
+            }
+            
+        }
+        if(Input.GetKeyDown("right") && r!=null)
+        {
+            if(!(r.leve || r.couche || r.tourne)){
+                rotate_right();
+            }
+        }
     }
 
     public override int getNbrTuile(){

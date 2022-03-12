@@ -36,7 +36,6 @@ public class AccessDenied : MonoBehaviour
       if (animDenied)
       {
         error();
-        GetComponent<NotifDenied>().pushNotif("La tuile ne peut pas être posé ici.");
       }
 
       if (brotatz)
@@ -98,5 +97,15 @@ public class AccessDenied : MonoBehaviour
           timer = 0;
           endAnimDenied = false;
         }
-      } 
+      }
+
+      public void animRefuse()
+      {
+        animDenied = true;
+      }
+
+      public bool testRefuse()
+      {
+        return !(animDenied || endAnimDenied);
+      }
 }
