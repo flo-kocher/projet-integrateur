@@ -30,11 +30,13 @@ public class MultiplayerMenu : MonoBehaviour
     {
         text = GameObject.Find("PlayerInput").GetComponent<Text>();
         mask = GameObject.Find("left-arrow").GetComponent<Mask>();
+        int nbPlayers = int.Parse(text.text);
 
-        
-        int nbPlayers = int.Parse(text.text) + 1;
-        if(nbPlayers == 2){
-            mask.showMaskGraphic = true;
+        if(nbPlayers < 6){
+            nbPlayers = int.Parse(text.text) + 1;
+            if(nbPlayers == 2){
+                mask.showMaskGraphic = true;
+            }
         }
         text.text = nbPlayers.ToString();
     }
