@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class tile_type_1 : tile_type
 {
+    // his own static member
     public static int nbrTuile = 30;
     public static bool finish = false;
 

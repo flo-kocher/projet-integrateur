@@ -22,9 +22,9 @@ public class PIck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
-    
+
     void func()
     {
         create = true;
@@ -39,49 +39,55 @@ public class PIck : MonoBehaviour
                 i.GetComponent<Move>().enabled = false;
                 i.GetComponent<AccessDenied>().enabled = false;
                 if (i.GetComponent<rotateZ>().enabled == true)
-                  create = false;
+                    create = false;
             }
         }
         if (create)
         {
-        GameObject clone = GameObject.Instantiate(temp);
-        clone.SetActive(true);
-        clone.transform.SetParent(GameObject.Find("Tiles").transform);
-        compteur++;
-        clone.name = "Pioche" + compteur;
-        
-        int loop = 1;
-        int num=0, comptTuile=0;
-        while (loop == 1)
-        {
-            System.Random rnd = new System.Random();
-            // Create number between 1 and 24 
-            num = rnd.Next(1, 25);
-            Debug.Log("num random => "+num);
-            int nbr=0;
-            
-            nbr = tiles[num-1].getNbrTuile();
-            if(nbr > 0){
-                Debug.Log("nombre => " + nbr);
-                tiles[num-1].decrementNbrTuile();
-                Debug.Log("nombre decrem => " + tiles[num-1].getNbrTuile());
-                clone.AddComponent(tiles[num-1].GetType());
-                loop = 0;
-            }
-            else{
-                if(tiles[num-1].getFinish() == false){
-                    tiles[num-1].changeFinish();
-                }
-                else{
-                    comptTuile++;
-                }
-            }
+            GameObject clone = GameObject.Instantiate(temp);
+            clone.SetActive(true);
+            clone.transform.SetParent(GameObject.Find("Tiles").transform);
+            compteur++;
+            clone.name = "Pioche" + compteur;
 
-            if(comptTuile > 24){
-                loop = 0;
+            int loop = 1;
+            int num = 0;
+            while (loop == 1)
+            {
+                System.Random rnd = new System.Random();
+                // Create number between 1 and 24 
+                num = rnd.Next(1, 25);
+                Debug.Log("num random => " + num);
+                int Remains = 0;
+
+                // get remains static member of selected tile before anything
+                Remains = tiles[num - 1].getNbrTuile();
+
+                if (Remains > 0)
+                {
+                    Debug.Log("nombre" + num + " => " + Remains);
+                    tiles[num - 1].decrementNbrTuile();
+                    Remains = tiles[num - 1].getNbrTuile();
+                    Debug.Log("nombre" + num + " after decrem =>" + Remains);
+                    clone.AddComponent(tiles[num - 1].GetType());
+                    loop = 0;
+                }
+                else
+                {
+                    if (tiles[num - 1].getFinish() == false)
+                    {
+                        tiles[num - 1].changeFinish();
+                        
+                        // dicrease tile_type static member 
+                        tile_type.nbrTypeTile --;
+                    }
+                }
+
+                if (tile_type.nbrTypeTile <= 0)
+                {
+                    loop = 0;
+                }
             }
-            
-        }
         }
 
     }

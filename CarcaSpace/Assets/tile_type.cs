@@ -12,10 +12,7 @@ public abstract class tile_type : NetworkBehaviour
     public int west = 3;
     public int middle = 4;
     public bool blazon = false;
-    public static int nbrTuile = 30;
-    public static bool finish = false;
-
-    
+    public static int nbrTypeTile = 24;
 
     // Start is called before the first frame update
     void Start()
