@@ -5,15 +5,22 @@ using Mirror;
 
 public class PlayerManager : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public GameObject grid ; 
+    public GameObject  tiles ;
+
+    List<GameObject> tile = new List<GameObject>();
+
+    public override void OnStartClient(){
+        base.OnStartClient();
+
+        grid = GameObject.Find("Grid");
+        tiles = GameObject.Find("Tiles");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [Server]
+    public override void OnStartServer(){
+        base.OnStartServer();
+        tile.Add(tiles);
+        Debug.Log(tile);
     }
 }
