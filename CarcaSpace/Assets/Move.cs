@@ -60,8 +60,10 @@ public class Move : MonoBehaviour
                         }
                         else{
                             if (this.GetComponent<AccessDenied>().testRefuse())
+			    {
                                 this.GetComponent<NotifDenied>().pushNotif("La tuile ne peut pas être posée ici");
                                 this.GetComponent<AccessDenied>().animRefuse();
+			    }
                                 
                             dragging = !dragging;
                         }
