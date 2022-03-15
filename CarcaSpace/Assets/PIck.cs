@@ -12,6 +12,7 @@ public class PIck : MonoBehaviour
                                 new tile_type_21(), new tile_type_22(), new tile_type_23(), new tile_type_24()};
     private static int compteur = 0;
     bool create = true;
+    bool premier = true;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +55,13 @@ public class PIck : MonoBehaviour
         int num=0, comptTuile=0;
         while (loop == 1)
         {
+            if(premier){
+                premier = false;
+                tile_type_0 tuile = new tile_type_0();
+                clone.AddComponent(tuile.GetType());
+                return;
+            }
+            
             System.Random rnd = new System.Random();
             // Create number between 1 and 24 
             num = rnd.Next(1, 25);
