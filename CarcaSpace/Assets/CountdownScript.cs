@@ -26,15 +26,15 @@ public class CountdownScript : MonoBehaviour
             time--;
             yield return new WaitForSeconds (1f);
             GetComponent<Text> ().text = "" +time;
-            if (time < 31f)
-            {
-                GetComponent<Text>().color = Color.yellow;
-            }
-            if (time < 11f)
-            {
-                GetComponent<Text>().color = Color.red;
-            } 
-
+            /* if (time < 31f) */
+            // {
+            //     GetComponent<Text>().color = Color.yellow;
+            // }
+            // if (time < 11f)
+            // {
+            //     GetComponent<Text>().color = Color.red;
+            // }
+/*  */
         }
     }
     
