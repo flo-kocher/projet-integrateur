@@ -146,8 +146,11 @@ rotation deux fois : 180 ou -180
         if(voisins[3] != null && voisins[3].GetComponent<Constraints>().droite != Type_land.Rien && voisins[3].GetComponent<Constraints>().droite != g){
             return false;
         }        
-        
-        return true;
+        if((voisins[0] != null && voisins[0].GetComponent<Constraints>().bas != Type_land.Rien) || (voisins[1] != null && voisins[1].GetComponent<Constraints>().gauche != Type_land.Rien) ||
+        (voisins[2] != null && voisins[2].GetComponent<Constraints>().haut != Type_land.Rien) || (voisins[3] != null && voisins[3].GetComponent<Constraints>().droite != Type_land.Rien) ||
+        this.GetComponent<tile_type_0>() != null)
+            return true;
+        return false;
     }
 
 }
