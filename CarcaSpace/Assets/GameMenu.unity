@@ -266,7 +266,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 8
     m_MaxSize: 80
-    m_Alignment: 0
+    m_Alignment: 3
     m_AlignByGeometry: 0
     m_RichText: 0
     m_HorizontalOverflow: 1
@@ -452,8 +452,9 @@ GameObject:
   - component: {fileID: 976041063}
   - component: {fileID: 976041062}
   - component: {fileID: 976041065}
+  - component: {fileID: 976041066}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Submit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -583,6 +584,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3ffbbcd2801d3449ad0e22ef513d5f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &976041066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976041060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc6a968c46489443870de49aa68b640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1026136287
@@ -935,7 +948,7 @@ GameObject:
   - component: {fileID: 1449961575}
   - component: {fileID: 1449961574}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: Password
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1329,7 +1342,7 @@ GameObject:
   - component: {fileID: 2112192551}
   - component: {fileID: 2112192550}
   m_Layer: 5
-  m_Name: InputField
+  m_Name: Username
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

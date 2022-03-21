@@ -24,32 +24,18 @@ app.listen(3000, () => console.log('Server has started on port 3000'))
 
 
 app.post('/signIn', async (req,res,next) => {
-    console.log(req);
-    console.log("1")
-    /*
-        const user = new userSchema ({
-            name: 'On est pas d pd',
-            pass: 'oe d gros zizi'
+    const user = new userSchema ({
+        name: req.body.name,
+        pass: req.body.pass
     })
-            const newUser = await user.save()
-            res.status(201).json(newUser)
-            console.log(res);*/
+    const newUser = await user.save()
+    res.status(201).json(newUser)
 });
 
 app.use((err, req, res, next) => {
     console.log(req);
-    console.log(e);
-    res.status(400).json({message: e.message })
-})
-
-app.get('/signIn', async (req,res) => {
-    new Promise( (resolve,reject) => {
-        res.render('Hello');
-    }).then((e) =>{
-        console.log("youpi");
-    }).catch((e) =>{
-        console.log("pas youpi");
-    })
+    console.log(err);
+    res.status(400).json({message: err.message })
 })
 
 

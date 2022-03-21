@@ -494,7 +494,7 @@ GameObject:
   - component: {fileID: 327167569}
   - component: {fileID: 327167568}
   m_Layer: 5
-  m_Name: Button
+  m_Name: StartGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1502,19 +1502,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 958058005}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 958058007}
-        m_TargetAssemblyTypeName: MultiplayerMenu, Assembly-CSharp
-        m_MethodName: EnterMultiplayerMenu
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 1
+      m_Calls: []
 --- !u!114 &958058005
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1565,6 +1553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Solo: {fileID: 958058004}
 --- !u!1 &1248313223
 GameObject:
   m_ObjectHideFlags: 0
