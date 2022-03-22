@@ -4,6 +4,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    mail: {
+        type: String,
+        required: true
+    },
     pass: {
         type: String,
         required: true

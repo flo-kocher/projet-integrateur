@@ -23,14 +23,35 @@ app.use(express.json());
 app.listen(3000, () => console.log('Server has started on port 3000'))
 
 
-app.post('/signIn', async (req,res,next) => {
+app.post('/signIn', async (req,res) => {
+
     const user = new userSchema ({
         name: req.body.name,
+        mail: req.body.mail,
         pass: req.body.pass
     })
+
     const newUser = await user.save()
+    console.log(req.body)
     res.status(201).json(newUser)
 });
+
+app.post('/logIn', async (req,res) =>{
+    const user = new userSchema ({
+        name: req.body.name,
+        mail: req.body.mail,
+        pass: req.body.pass
+    })
+
+    const newUser = await user.findOne({name: req.body.name, pass: req.body.pass})
+    .then( () => {
+        console.log("pas d'erreur !")
+    })
+    .catch( (e) =>{
+        console.log(e);
+    })
+    
+})
 
 app.use((err, req, res, next) => {
     console.log(req);
