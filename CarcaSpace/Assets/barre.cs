@@ -17,7 +17,7 @@ public class barre : MonoBehaviour
     {
       if(time <= 61f)
       {
-        float decrease = Time.deltaTime*16.6f;
+        float decrease = Time.deltaTime*4.98f;
         Color c = GetComponent<Image>().color;
         if (time <= 30f)
         {
@@ -29,7 +29,6 @@ public class barre : MonoBehaviour
           c.g -= Time.deltaTime*0.01f;
         }
         GetComponent<Image>().color = c;
-        GameObject.Find("Compteur").GetComponent<Text>().color = c;
         RectTransform rt = GetComponent<RectTransform>();
         rt.sizeDelta = new Vector2(rt.sizeDelta.x-decrease,rt.sizeDelta.y);
       }
