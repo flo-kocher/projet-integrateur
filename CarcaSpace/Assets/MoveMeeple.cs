@@ -2,36 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveMeeple : MonoBehaviour
-{
-    // Start is called before the first frame update
-    public bool nord;
-    public bool sud;
-    public bool est;
-    public bool ouest;
-    void Start()
-    {
-
+public static class MoveMeeple : object {
+  // Coorodnnées à transform selon ou l'on veut
+  static Vector2 nord = new Vector2(0.5f,0.83f);
+  static Vector2 sud = new Vector2(0.5f,0.17f);
+  static Vector2 est = new Vector2(0.83f,0.5f);
+  static Vector2 ouest = new Vector2(0.17f,0.5f);
+  static Vector2 milieu = new Vector2(0.5f,0.5f);
+  // Tableau défini pour les booleens et les Vector2
+  static Vector2[] tabPos = { nord, sud, est, ouest, milieu };
+  
+  public static void makeStars(bool[] tab) {
+    GameObject temp = null;
+    var list = Resources.FindObjectsOfTypeAll<GameObject>();
+    foreach (GameObject i in list) {
+      if (i.name == "tempStar")
+        temp = i;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        nord = false;
-        sud = false;
-        est = false;
-        ouest = false;
-        float x = transform.position.x-(transform.position.x%0.33f);
-        float y = transform.position.y-(transform.position.y%0.33f);
-        if (y<0.33f)
-          sud = true;
-        if (y>=0.66f)
-          nord = true;
-        if (x<0.33f)
-          ouest = true;
-        if (x>=0.66f) 
-          est = true;
-        if (!((sud && ouest) || (sud && est) || (nord && ouest) || (nord && est)))
-           transform.position = new Vector2(x+0.17f,y+0.17f); 
+    for(int i = 0; i<5; i++) {
+      if (tab[i]) { 
+        GameObject clone = GameObject.Instantiate(temp);
+        clone.name = "Star" + i;
+        clone.transform.position = tabPos[i];
+        clone.transform.SetParent(GameObject.Find("Stars").transform);
+        clone.SetActive(true);
+      }
     }
+  }
 }
