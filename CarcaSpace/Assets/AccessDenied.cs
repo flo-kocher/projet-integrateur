@@ -35,6 +35,7 @@ public class AccessDenied : MonoBehaviour
     {
       if (animDenied)
       {
+        GetComponent<rotateZ>().enabled = false;
         error();
       }
 
@@ -96,6 +97,7 @@ public class AccessDenied : MonoBehaviour
 	      {
           timer = 0;
           endAnimDenied = false;
+          GetComponent<rotateZ>().enabled = true;
         }
       }
 
