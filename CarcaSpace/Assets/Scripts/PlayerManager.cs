@@ -64,7 +64,7 @@ public class PlayerManager : NetworkBehaviour
         }
         if (create)
         {
-            randInt=rnd.Next(0,all_tiles.Count);
+            randInt=rnd.Next(0,all_tiles.Count-1);
             // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
             GameObject tuilos = Instantiate(all_tiles[randInt]);
             all_tiles.RemoveAt(randInt);
