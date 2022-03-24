@@ -180,6 +180,49 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 481b451308727b14c9f661ca3a63d540, type: 3}
+--- !u!1 &102979560 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5971067704088160383, guid: 481b451308727b14c9f661ca3a63d540, type: 3}
+  m_PrefabInstance: {fileID: 102979559}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &102979561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102979560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 0
+  interpolateScale: 1
+  syncScale: 1
+--- !u!114 &102979562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 102979560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 1370515260
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 481b451308727b14c9f661ca3a63d540
+  hasSpawned: 0
 --- !u!1 &631128771
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,6 +1512,10 @@ PrefabInstance:
     - target: {fileID: 7204841955525357832, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
       propertyPath: sceneId
       value: 2933360541
+      objectReference: {fileID: 0}
+    - target: {fileID: 8906476511263371975, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
+      propertyPath: sceneId
+      value: 2031336298
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
