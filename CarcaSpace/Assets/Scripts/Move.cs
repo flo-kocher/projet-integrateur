@@ -18,7 +18,7 @@ public class Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        plateau = this.transform.parent.GetComponent<Board>();
+        //plateau = this.GetComponent<Board>();
     }
 
     // Update is called once per frame
@@ -95,7 +95,7 @@ public class Move : MonoBehaviour
                 anim2 = false;
                 if (disapear != null)
                 {
-                    plateau.board.Add(disapear);
+                    this.GetComponent<Board>().board.Add(disapear);
                     disapear.SetActive(false);
                 }
             }

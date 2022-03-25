@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using System;
 
 
-public class TileManager: NetworkBehaviour{
+public class TilManager: NetworkBehaviour{
 
     private List<GameObject> all_tiles = new List<GameObject>();
 
