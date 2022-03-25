@@ -30,8 +30,8 @@ public static class MoveMeeple : object {
     }
   }
   public static void rmStars() {
-   GameObject parent = GameObject.Find("Stars");
-   for (int i = 1; i<parent.transform.childCount; i++)
-     MonoBehaviour.Destroy(parent.transform.GetChild(i).gameObject);
+    GameObject parent = GameObject.Find("Stars");
+    for (int i = 1; i<parent.transform.childCount; i++)
+      MonoBehaviour.Destroy(parent.transform.GetChild(i).gameObject);
   }
 }
