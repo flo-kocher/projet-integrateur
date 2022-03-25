@@ -14,7 +14,7 @@ public class tile_type_16 : tile_type
         gauche = Type_land.Plaine;
         bas = Type_land.Plaine;
         droite = Type_land.Plaine;
-        milieu = Type_land.Plaine;
+        milieu = Type_land.Ville;
     }
 
     // Update is called once per frame
