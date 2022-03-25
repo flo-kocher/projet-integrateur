@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class tile_type_2 : tile_type
 {
-    public static int nbrTuile = 30;
     public static bool finish = false;
 
 
@@ -13,10 +12,10 @@ public class tile_type_2 : tile_type
     {
         r = this.GetComponent<rotateZ>();
         haut = Type_land.Plaine;
-        gauche = Type_land.Chemin;
-        bas = Type_land.Plaine;
-        droite = Type_land.Chemin;
-        milieu = Type_land.Chemin;
+        gauche = Type_land.Plaine;
+        bas = Type_land.Chemin;
+        droite = Type_land.Plaine;
+        milieu = Type_land.Abbaye;
     }
 
     // Update is called once per frame

@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class tile_type_22 : tile_type
 {
-
-
-    public static int nbrTuile = 30;
     public static bool finish = false;
 
     // Start is called before the first frame update
@@ -15,9 +12,9 @@ public class tile_type_22 : tile_type
         r = this.GetComponent<rotateZ>();
         haut = Type_land.Plaine;
         gauche = Type_land.Chemin;
-        bas = Type_land.Plaine;
+        bas = Type_land.Chemin;
         droite = Type_land.Chemin;
-        milieu = Type_land.Chemin;
+        milieu = Type_land.Arret_chemin; 
     }
 
     // Update is called once per frame

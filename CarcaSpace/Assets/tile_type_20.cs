@@ -4,16 +4,13 @@ using UnityEngine;
 
 public class tile_type_20 : tile_type
 {
-
-
-    public static int nbrTuile = 30;
     public static bool finish = false;
 
     // Start is called before the first frame update
     void Start()
     {
         r = this.GetComponent<rotateZ>();
-        haut = Type_land.Plaine;
+        haut = Type_land.Ville;
         gauche = Type_land.Chemin;
         bas = Type_land.Plaine;
         droite = Type_land.Chemin;
