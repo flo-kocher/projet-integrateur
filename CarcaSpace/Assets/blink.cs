@@ -17,6 +17,6 @@ public class blink : MonoBehaviour
         Color plein = new Color(1f,1f,1f,1f);
         Color vide = new Color(1f,1f,1f,0f);
         float lerp = Mathf.PingPong(speed*Time.time,1);
-	      GetComponent<Renderer>().material.color = Color.Lerp(plein,vide,lerp);
+	      transform.GetChild(0).GetComponent<Renderer>().material.color = Color.Lerp(vide,plein,lerp);
     }
 }

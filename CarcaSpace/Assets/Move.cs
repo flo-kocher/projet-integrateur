@@ -93,10 +93,11 @@ public class Move : MonoBehaviour
             Vector3 target = new Vector3(transform.position.x, transform.position.y, -0.2f);
             transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
             float finish = Vector3.Angle(transform.position, target);
-            if (finish <= 0.01f)
+            if (finish <= 0.001f)
 	          {
                 this.GetComponent<Constraints>().enabled = true;
                 this.GetComponent<rotateZ>().enabled = true;
+                MoveMeeple.rmStars();
                 anim1 = false;
             }
         }
@@ -111,9 +112,11 @@ public class Move : MonoBehaviour
             Vector3 target = new Vector3(x+0.5f,y+0.5f, 0f);
             transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
             float finish = Vector3.Angle(transform.position, target);
-            if (finish <= 0.01f)
+            if (finish <= 0.001f)
 	        {
                 anim2 = false;
+                bool[] tabExample = {false, true, false, true, false};
+                MoveMeeple.makeStars(tabExample,x,y);
             	if (disapear != null)
                 {
                     plateau.board.Add(disapear);
