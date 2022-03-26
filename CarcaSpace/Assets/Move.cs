@@ -31,13 +31,11 @@ public class Move : MonoBehaviour
         if(Input.GetMouseButtonDown(0) && !(anim1||anim2) && !(r.leve || r.couche || r.tourne))
         {
             Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
-            RaycastHit[] hit = Physics.RaycastAll(ray,100);
-            foreach(RaycastHit i in hit)
-              Debug.Log(i.transform.gameObject.name);
+            RaycastHit hit;
 
-            if(true) 
+            if( Physics.Raycast(ray, out hit, 100) ) 
             {
-                go = hit[1].transform.gameObject;
+                go = hit.transform.gameObject;
                 if (go == this.gameObject)
                 {
                     dragging = !dragging;
@@ -75,6 +73,8 @@ public class Move : MonoBehaviour
                         anim1 = true;
                     }
                 }
+                else if (go.name.Contains("Star"))
+                  go.GetComponent<CreateMeeple>().function();
             }
         }
         if (dragging)

@@ -17,7 +17,7 @@ public class CreateMeeple : MonoBehaviour
         
     }
 
-    void function()
+    public void function()
     {
       compteur++;
       GameObject temp = null;
