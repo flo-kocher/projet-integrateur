@@ -83,3 +83,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5846cce6e2de84d4da26109eb731c415, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  grid: {fileID: 5073323062766879432, guid: 90e56f7d44a1f934593ba34f853cfce5, type: 3}
+  temp: {fileID: 5971067704088160383, guid: 481b451308727b14c9f661ca3a63d540, type: 3}
+  ui: {fileID: 7204841954082801416, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
+  all_tiles: []

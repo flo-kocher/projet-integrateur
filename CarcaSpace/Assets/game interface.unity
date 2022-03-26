@@ -500,7 +500,6 @@ MonoBehaviour:
   playerSpawnMethod: 0
   spawnPrefabs:
   - {fileID: 7204841954082801416, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
-  - {fileID: 2461845627272391842, guid: ff1653b1ecdc9f14383cf5b2c8b205ad, type: 3}
   - {fileID: 5073323062766879432, guid: 90e56f7d44a1f934593ba34f853cfce5, type: 3}
   - {fileID: 2048404013512225136, guid: 89db100fee5c7f846a70cbf8d1d80f36, type: 3}
 --- !u!114 &1117173477
