@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
 
-public class CountdownScript : NetworkBehaviour
+public class CountdownScript : MonoBehaviour
 {
     public float time = 60f;
     bool CountDownOn = true;

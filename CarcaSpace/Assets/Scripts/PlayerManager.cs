@@ -12,7 +12,7 @@ public class PlayerManager : NetworkBehaviour
     public GameObject ui;
 
     //Nbr total tuiles par partie
-    private int nbrTotalTuiles = 84;
+    
 
     /* ************************************ */
 
