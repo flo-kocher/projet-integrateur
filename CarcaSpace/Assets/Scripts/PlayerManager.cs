@@ -9,6 +9,31 @@ public class PlayerManager : NetworkBehaviour
 {
     public GameObject grid;
     public GameObject temp;
+    public Gameobject TileType1;
+    public Gameobject TileType2;
+    public Gameobject TileType3;
+    public Gameobject TileType4;
+    public Gameobject TileType5;
+    public Gameobject TileType6;
+    public Gameobject TileType7;
+    public Gameobject TileType8;
+    public Gameobject TileType9;
+    public Gameobject TileType10;
+    public Gameobject TileType11;
+    public Gameobject TileType12;
+    public Gameobject TileType13;
+    public Gameobject TileType14;
+    public Gameobject TileType15;
+    public Gameobject TileType16;
+    public Gameobject TileType17;
+    public Gameobject TileType18;
+    public Gameobject TileType19;
+    public Gameobject TileType20;
+    public Gameobject TileType21;
+    public Gameobject TileType22;
+    public Gameobject TileType23;
+    public Gameobject TileType24;
+
     public GameObject ui;
 
     //Nbr total tuiles par partie
@@ -28,143 +53,145 @@ public class PlayerManager : NetworkBehaviour
         grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
         ui = GameObject.Find("UI");
+        TileType1 = GameObject.Find("TileType1");
+
     }
 
      public List<GameObject>  instatiateTiles(){
-        GameObject go = GameObject.Find("Temp");
-        GameObject tmp = GameObject.Instantiate(temp);
+        //GameObject go = GameObject.Find("Temp");
+        //GameObject tmp = GameObject.Instantiate(temp);
         int x = 0 ;
         for(int i =1 ;i< 25; i++){
             switch(i){
                 case 1 : 
-                   tmp.AddComponent<tile_type_1>();
+                   //tmp.AddComponent<tile_type_1>();
                    //go  = GameObject.Instantiate(tmp);
-                   all_tiles.Add(tmp);
+                   all_tiles.Add(Tile_Type1);
                    break;
                 case 2 : 
-                   tmp.AddComponent<tile_type_2>();
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
+                  // tmp.AddComponent<tile_type_2>();
+                   all_tiles.Add(Tile_Type2);
+                   all_tiles.Add(Tile_Type2);
                    break;
                 case 3 : 
-                   tmp.AddComponent<tile_type_3>();
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(go);
+                   //tmp.AddComponent<tile_type_3>();
+                   all_tiles.Add(Tile_Type3);
+                   all_tiles.Add(Tile_Type3);
+                   all_tiles.Add(Tile_Type3);
+                   all_tiles.Add(Tile_Type3);
                    break;
                 case 4 : 
-                   tmp.AddComponent<tile_type_4>();
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
+                   //tmp.AddComponent<tile_type_4>();
+                   all_tiles.Add(Tile_Type4);
+                   all_tiles.Add(Tile_Type4);
+                   all_tiles.Add(Tile_Type4);
                    break;
                 case 5 : 
-                   tmp.AddComponent<tile_type_5>();
-                   all_tiles.Add(tmp);
+                   //tmp.AddComponent<tile_type_5>();
+                   all_tiles.Add(Tile_Type5);
                    break;
                 case 6 : 
-                   tmp.AddComponent<tile_type_6>();
-                   all_tiles.Add(tmp);
+                  // tmp.AddComponent<tile_type_6>();
+                   all_tiles.Add(Tile_Type6);
                    break;
                 case 7 : 
-                   tmp.AddComponent<tile_type_7>();
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
+                  // tmp.AddComponent<tile_type_7>();
+                   all_tiles.Add(Tile_Type7);
+                   all_tiles.Add(Tile_Type7);
                    break;
                 case 8 : 
-                   tmp.AddComponent<tile_type_8>();
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
-                   all_tiles.Add(tmp);
+                  // tmp.AddComponent<tile_type_8>();
+                   all_tiles.Add(Tile_Type8);
+                   all_tiles.Add(Tile_Type8);
+                   all_tiles.Add(Tile_Type8);
                    break;
                 case 9 : 
-                   tmp.AddComponent<tile_type_9>();
+                  // tmp.AddComponent<tile_type_9>();
                    all_tiles.Add(tmp);
                    all_tiles.Add(tmp);
                    break;
                 case 10 : 
-                   tmp.AddComponent<tile_type_10>();
+                   //tmp.AddComponent<tile_type_10>();
                    all_tiles.Add(tmp);
                    all_tiles.Add(tmp);
                    break;
                 case 11 : 
-                   tmp.AddComponent<tile_type_11>();
+                   //tmp.AddComponent<tile_type_11>();
                    all_tiles.Add(tmp);
                    all_tiles.Add(tmp);
                    all_tiles.Add(tmp);
                    break;
                 case 12 : 
-                   tmp.AddComponent<tile_type_12>();
+                   //tmp.AddComponent<tile_type_12>();
                    all_tiles.Add(tmp);
                    all_tiles.Add(tmp);
                    break;
                 case 13 : 
-                   tmp.AddComponent<tile_type_13>();
+                  // tmp.AddComponent<tile_type_13>();
                    all_tiles.Add(tmp); 
                    break;                       
                 case 14 :
                     for(x=0;x<1;x++){
-                        tmp.AddComponent<tile_type_14>();
+                        //tmp.AddComponent<tile_type_14>();
                         all_tiles.Add(tmp);
                     }
                     break;
                 case 15 :
                     for(x=0;x<2;x++){
-                        tmp.AddComponent<tile_type_15>();
+                        //tmp.AddComponent<tile_type_15>();
                         all_tiles.Add(tmp);
                     }
                     break;
                 case 16 :
                     for(x=0;x<4;x++){
-                        tmp.AddComponent<tile_type_16>();
+                        //tmp.AddComponent<tile_type_16>();
                         all_tiles.Add(tmp);
                     }
                     break;
                 case 17 :
                     for(x=0;x<2;x++){
-                        tmp.AddComponent<tile_type_17>();
+                        //tmp.AddComponent<tile_type_17>();
                         all_tiles.Add(tmp);
                     }
                     break;
                 case 18 :
                     for(x=0;x<2;x++){
-                        tmp.AddComponent<tile_type_18>();
+                        //tmp.AddComponent<tile_type_18>();
                         all_tiles.Add(tmp);
                     } 
                     break;
                 case 19 :
                     for(x=0;x<2;x++){
-                        tmp.AddComponent<tile_type_19>();
+                        //tmp.AddComponent<tile_type_19>();
                         all_tiles.Add(tmp);
                     } 
                     break;
                 //a revoir
                 case 20 :
                     for(x=0;x<3;x++){
-                        tmp.AddComponent<tile_type_20>();
+                        //tmp.AddComponent<tile_type_20>();
                         all_tiles.Add(tmp);
                     } 
                     break;
                 case 21 :
-                    tmp.AddComponent<tile_type_21>();
+                   // tmp.AddComponent<tile_type_21>();
                     all_tiles.Add(tmp);
                     break;
                 case 22 :
                     for(x=0;x<3;x++){
-                        tmp.AddComponent<tile_type_22>();
+                       // tmp.AddComponent<tile_type_22>();
                         all_tiles.Add(tmp);
                     }  
                     break;
                 case 23:
                   for(x=0;x<7;x++){
-                        tmp.AddComponent<tile_type_23>();
+                       // tmp.AddComponent<tile_type_23>();
                         all_tiles.Add(tmp);
                     }  
                     break;
                 case 24 :
                     for(x=0;x<8;x++){
-                        tmp.AddComponent<tile_type_24>();
+                       // tmp.AddComponent<tile_type_24>();
                         all_tiles.Add(tmp);
                     }
                     break;
