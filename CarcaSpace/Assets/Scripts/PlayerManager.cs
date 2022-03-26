@@ -37,7 +37,7 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        all_tiles = GetComponent<TileManager>().instatiateTiles();
+        all_tiles= GetComponent<TileManager>().instatiateTiles();
         Debug.Log("els dans all_tiles : " +all_tiles);
     }
 
@@ -70,9 +70,7 @@ public class PlayerManager : NetworkBehaviour
             all_tiles.RemoveAt(randInt);
             NetworkServer.Spawn(tuilos, connectionToClient);
             RpcShowTiles(tuilos, "Dealt");
-
         }
-    
     }
 
     // for message to all clients to display all tiles
