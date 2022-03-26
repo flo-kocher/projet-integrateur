@@ -208,6 +208,7 @@ public class PlayerManager : NetworkBehaviour
         base.OnStartServer();
         instatiateTiles();
         Debug.Log("els dans all_tiles : " +all_tiles);
+        Debug.Log(all_tiles.Count);
     }
 
     [Command]
@@ -215,7 +216,7 @@ public class PlayerManager : NetworkBehaviour
     {
         int randInt = 0 ; 
         System.Random rnd = new System.Random();
-         
+        /*
         create = true;
         GameObject temp = null;
         var list = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -240,6 +241,15 @@ public class PlayerManager : NetworkBehaviour
             NetworkServer.Spawn(tuilos, connectionToClient);
             RpcShowTiles(tuilos, "Dealt");
         }
+        */
+
+        randInt=rnd.Next(0,all_tiles.Count);
+        // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
+        GameObject tuilos = Instantiate(all_tiles[randInt]);
+        all_tiles.RemoveAt(randInt);
+        Debug.Log("Objet à faire spawn : " + tuilos);
+        NetworkServer.Spawn(tuilos, connectionToClient);
+        RpcShowTiles(tuilos, "Dealt");
     }
 
     // for message to all clients to display all tiles
