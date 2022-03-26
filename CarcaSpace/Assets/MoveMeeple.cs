@@ -34,4 +34,9 @@ public static class MoveMeeple : object {
     for (int i = 1; i<parent.transform.childCount; i++)
       MonoBehaviour.Destroy(parent.transform.GetChild(i).gameObject);
   }
+  public static void rmMeeple() {
+    GameObject parent = GameObject.Find("Meeples");
+    if (parent.transform.childCount > 1)
+      MonoBehaviour.Destroy(parent.transform.GetChild(parent.transform.childCount-1).gameObject);
+  }
 }

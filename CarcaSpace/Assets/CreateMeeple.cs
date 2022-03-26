@@ -29,7 +29,7 @@ public class CreateMeeple : MonoBehaviour
       GameObject clone = GameObject.Instantiate(temp);
       clone.SetActive(true);
       clone.name = "Meeple" + compteur;
-      clone.transform.position = new Vector2(transform.position.x,transform.position.y);
+      clone.transform.position = new Vector3(transform.position.x+0.6f,transform.position.y-0.04f,0.25f);
       clone.transform.SetParent(GameObject.Find("Meeples").transform);
       MoveMeeple.rmStars();
     }

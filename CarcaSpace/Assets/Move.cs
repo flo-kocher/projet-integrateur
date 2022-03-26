@@ -14,6 +14,9 @@ public class Move : MonoBehaviour
     private rotateZ r;
     
     public Board plateau;
+    
+    // Bool pour supprimer le dernier meeple si on veut rebouger la tuile.
+    private bool clickedOnStar = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +41,11 @@ public class Move : MonoBehaviour
                 go = hit.transform.gameObject;
                 if (go == this.gameObject)
                 {
+                    if (clickedOnStar)
+                    {
+                      MoveMeeple.rmMeeple();
+                      clickedOnStar = false;
+                    }
                     dragging = !dragging;
                     if (!dragging)
                     {
@@ -74,7 +82,10 @@ public class Move : MonoBehaviour
                     }
                 }
                 else if (go.name.Contains("Star"))
+                {
                   go.GetComponent<CreateMeeple>().function();
+                  clickedOnStar = true;
+                }
             }
         }
         if (dragging)
