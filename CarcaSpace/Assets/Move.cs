@@ -33,7 +33,7 @@ public class Move : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay( Input.mousePosition );
             RaycastHit hit;
 
-            if( Physics.Raycast( ray, out hit, 100 ) )
+            if( Physics.Raycast(ray, out hit, 100) ) 
             {
                 go = hit.transform.gameObject;
                 if (go == this.gameObject)
@@ -56,7 +56,9 @@ public class Move : MonoBehaviour
                             disapear.GetComponent<Constraints>().bas = this.GetComponent<tile_type>().bas;
                             disapear.GetComponent<Constraints>().gauche = this.GetComponent<tile_type>().gauche;
                             disapear.GetComponent<Constraints>().droite = this.GetComponent<tile_type>().droite;
+                            disapear.GetComponent<Constraints>().milieu = this.GetComponent<tile_type>().milieu;
                             this.GetComponent<Constraints>().enabled = false;
+                            // lancer est_complet
                         }
                         else{
                             if (this.GetComponent<AccessDenied>().testRefuse())
@@ -93,7 +95,7 @@ public class Move : MonoBehaviour
             Vector3 target = new Vector3(transform.position.x, transform.position.y, -0.2f);
             transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
             float finish = Vector3.Angle(transform.position, target);
-            if (finish <= 0.01f)
+            if (finish <= 0.001f)
 	          {
                 this.GetComponent<Constraints>().enabled = true;
                 this.GetComponent<rotateZ>().enabled = true;
@@ -111,9 +113,10 @@ public class Move : MonoBehaviour
             Vector3 target = new Vector3(x+0.5f,y+0.5f, 0f);
             transform.position = Vector3.Slerp(transform.position,target,speed*Time.deltaTime);
             float finish = Vector3.Angle(transform.position, target);
-            if (finish <= 0.01f)
+            if (finish <= 0.001f)
 	        {
                 anim2 = false;
+                bool[] tabExample = {false, true, false, true, false};
             	if (disapear != null)
                 {
                     plateau.board.Add(disapear);
