@@ -35,8 +35,6 @@ public class PlayerManager : NetworkBehaviour
     public GameObject TileType24;
 
     public GameObject ui;
-
-    //Nbr total tuiles par partie
     
 
     /* ************************************ */
@@ -46,6 +44,9 @@ public class PlayerManager : NetworkBehaviour
 
     public List<GameObject> all_tiles = new List<GameObject>();
 
+    /* liste des clients connectes*/
+    public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
+
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -53,8 +54,11 @@ public class PlayerManager : NetworkBehaviour
         grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
         ui = GameObject.Find("UI");
-        //TileType1 = GameObject.Find("TileType1");
 
+        // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        playerList.Add(networkIdentity);
+        //Debug.Log("Player list",playerList.Count);
     }
 
      public List<GameObject>  instatiateTiles(){
