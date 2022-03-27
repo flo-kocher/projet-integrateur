@@ -13,6 +13,8 @@ public class Move : MonoBehaviour {
       disapear; // GO de la grid (X/Y) sur lequel on va poser la tuile
   private rotateZ r;
 
+  public Board plateau;
+
   // Bool pour supprimer le dernier meeple si on veut rebouger la tuile.
   private bool clickedOnStar = false;
 
