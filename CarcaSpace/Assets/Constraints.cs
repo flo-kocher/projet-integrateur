@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Type_land
 {
-  Rien, Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye
+  Rien, Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye, Continue
 }
 public class Constraints : MonoBehaviour
 {
@@ -13,7 +13,6 @@ public class Constraints : MonoBehaviour
     public Type_land bas;
     public Type_land droite;
     public Type_land milieu;
-    public Type_land rien;
     public int coordX;
     public int coordY;
    
@@ -108,10 +107,9 @@ rotation deux fois : 180 ou -180
         droite = cp;
     }
     */
-
-// Beaucoup a faire, il faut trouver un moyen de recuperer les pieces par rapport a leurs coordonnées
-// créer un script pour retenir les infos des pieces dans grid.
-    void Voisin(int x, int y, GameObject[] voisins)
+    
+// recuper les valeurs des quatre voisins direct en partant de celui du dessus puis dans le sens horaire
+    void Voisin(int x, int y, GameObject[] voisins) 
     {
         voisins[0] = GameObject.Find(coordX + "/" + (coordY+1));
         voisins[1] = GameObject.Find((coordX+1) + "/" + coordY);
@@ -125,9 +123,8 @@ rotation deux fois : 180 ou -180
         this.coordX = (int) transform.position.x;
         this.coordY = (int) transform.position.y; 
         GameObject[] voisins = new GameObject[4];
-        GameObject actuel = GameObject.Find(coordX + "/" + coordY);
 
-        if(actuel.GetComponent<Constraints>().bas != Type_land.Rien && actuel.GetComponent<Constraints>().haut != Type_land.Rien && actuel.GetComponent<Constraints>().droite != Type_land.Rien && actuel.GetComponent<Constraints>().gauche != Type_land.Rien){
+        if(bas != Type_land.Rien && haut != Type_land.Rien && droite != Type_land.Rien && gauche != Type_land.Rien){
             return false;
         }
         Voisin(coordY, coordY, voisins);
