@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Move : MonoBehaviour {
-  private GameObject go;
-  private bool dragging = false;
-  public float moveSpeed;
-  public float speed;
-  private bool anim1 = false;
-  private bool anim2 = false;
-  private GameObject disapear;
+  private GameObject go;         // GameObject sur lequel on clique
+  private bool dragging = false; // Booléen qui controle le suivi de la souris
+  public float speed;            // vitesse de lévé et de pose de la tuile
+  private bool anim1 = false;    // Leve de la tuile
+  private bool anim2 = false;    // Pose de la tuile
+  private GameObject
+      disapear; // GameObject de la grille en dessous de la ou on veut poser
   private rotateZ r;
 
   private bool clickedOnStar = false;
@@ -124,7 +124,7 @@ public class Move : MonoBehaviour {
       if (finish <= 0.001f) {
         anim2 = false;
         bool[] tabExample = { false, true, false, true, false };
-        MoveMeeple.makeStars(tabExample,x,y);
+        MoveMeeple.makeStars(tabExample, x, y);
         if (disapear != null) {
           plateau.board.Add(disapear);
           // disapear.SetActive(false);
