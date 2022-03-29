@@ -5,6 +5,7 @@ using UnityEngine;
 public class tile_type_17 : tile_type
 {
     public static bool finish = false;
+    public static int nbrTuile = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,7 @@ public class tile_type_17 : tile_type
         bas = Type_land.Chemin;
         droite = Type_land.Chemin;
         milieu = Type_land.Arret_chemin;
+        blason = false;
     }
 
     // Update is called once per frame
@@ -22,32 +24,38 @@ public class tile_type_17 : tile_type
     {
         if(Input.GetKeyDown("left") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne)){
+            if(!(r.leve || r.couche || r.tourne))
+            {
                 rotate_left();
             }
             
         }
         if(Input.GetKeyDown("right") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne)){
+            if(!(r.leve || r.couche || r.tourne))
+            {
                 rotate_right();
             }
         }
     }
 
-    public override int getNbrTuile(){
+    public override int getNbrTuile()
+    {
         return nbrTuile;
     }
 
-    public override void decrementNbrTuile(){
+    public override void decrementNbrTuile()
+    {
         nbrTuile--;
     }
 
-    public override bool getFinish(){
+    public override bool getFinish()
+    {
         return finish;
     }
 
-    public override void changeFinish(){
+    public override void changeFinish()
+    {
         finish = true;
     }
 }

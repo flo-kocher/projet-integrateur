@@ -7,9 +7,6 @@ using UnityEngine;
 
 public abstract class tile_type : MonoBehaviour
 {
-
-    
-    
     public Type_land haut;
     public Type_land gauche;
     public Type_land bas;
@@ -18,20 +15,16 @@ public abstract class tile_type : MonoBehaviour
     public int coordX;
     public int coordY;
     public rotateZ r;
-    public static int nbrTuile = 30;
+    public static int nbrTuile = 72; // sans rivière : 72, avec rivière : 84
     public static bool finish = false;
+    public static bool blason;
 
     
 
     // Start is called before the first frame update
     void Start()
     {
-        r = this.GetComponent<rotateZ>();
-        haut = Type_land.Plaine;
-        gauche = Type_land.Chemin;
-        bas = Type_land.Plaine;
-        droite = Type_land.Chemin;
-        milieu = Type_land.Chemin;
+
     }
 
     // Update is called once per frame
