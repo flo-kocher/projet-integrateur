@@ -22,7 +22,7 @@ public class Move : MonoBehaviour {
 
   // Update is called once per frame
   void Update() {
-    type i = test(); 
+    dynamic i = test(); 
     r = this.GetComponent<rotateZ>();
     float x = transform.position.x - (transform.position.x % 1);
     float y = transform.position.y - (transform.position.y % 1);
@@ -41,12 +41,11 @@ public class Move : MonoBehaviour {
             clickedOnStar = false;
           }
           if (!dragging) {
-
             if (this.GetComponent<Constraints>().verif(
-                    this.GetComponent<i>().haut,
-                    this.GetComponent<i>().bas,
-                    this.GetComponent<i>().droite,
-                    this.GetComponent<i>().gauche)) {
+                    i.haut,
+                    i.bas,
+                    i.droite,
+                    i.gauche)) {
               disapear = GameObject.Find((int)x + "/" + (int)y);
 
               anim2 = true;
@@ -55,15 +54,15 @@ public class Move : MonoBehaviour {
               // Type_land tg = tiles[z].haut;
               tile_type_1 dd = new tile_type_1();
               disapear.GetComponent<Constraints>().haut =
-                  this.GetComponent<tile_type>().haut;
+                  i.haut;
               disapear.GetComponent<Constraints>().bas =
-                  this.GetComponent<tile_type>().bas;
+                  i.bas;
               disapear.GetComponent<Constraints>().gauche =
-                  this.GetComponent<tile_type>().gauche;
+                  i.gauche;
               disapear.GetComponent<Constraints>().droite =
-                  this.GetComponent<tile_type>().droite;
+                  i.droite;
               disapear.GetComponent<Constraints>().milieu =
-                  this.GetComponent<tile_type>().milieu;
+                  i.milieu;
               this.GetComponent<Constraints>().enabled = false;
               // lancer est_complet
             } else {
@@ -131,12 +130,12 @@ public class Move : MonoBehaviour {
     }
   }
 
-  Type test() {
+  dynamic test() {
     var mm = this.gameObject.GetComponents(typeof(Component));
     foreach(object i in mm)
     {
       if (i.GetType().Name.Contains("tile_type"))
-        return i.GetType();
+        return i;
     }
     return null;
   }
