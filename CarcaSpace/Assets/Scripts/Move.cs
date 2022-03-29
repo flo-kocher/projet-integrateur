@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Move : MonoBehaviour {
   private GameObject go;         // GameObject sur lequel on clique
@@ -14,13 +15,14 @@ public class Move : MonoBehaviour {
 
   private bool clickedOnStar = false;
 
-  public Board plateau;
+
 
   // Start is called before the first frame update
-  void Start() { plateau = this.transform.parent.GetComponent<Board>(); }
+  void Start() {  }
 
   // Update is called once per frame
   void Update() {
+    type i = test(); 
     r = this.GetComponent<rotateZ>();
     float x = transform.position.x - (transform.position.x % 1);
     float y = transform.position.y - (transform.position.y % 1);
@@ -41,10 +43,10 @@ public class Move : MonoBehaviour {
           if (!dragging) {
 
             if (this.GetComponent<Constraints>().verif(
-                    this.GetComponent<tile_type>().haut,
-                    this.GetComponent<tile_type>().bas,
-                    this.GetComponent<tile_type>().droite,
-                    this.GetComponent<tile_type>().gauche)) {
+                    this.GetComponent<i>().haut,
+                    this.GetComponent<i>().bas,
+                    this.GetComponent<i>().droite,
+                    this.GetComponent<i>().gauche)) {
               disapear = GameObject.Find((int)x + "/" + (int)y);
 
               anim2 = true;
@@ -125,11 +127,17 @@ public class Move : MonoBehaviour {
         anim2 = false;
         bool[] tabExample = { false, true, false, true, false };
         MoveMeeple.makeStars(tabExample, x, y);
-        if (disapear != null) {
-          plateau.board.Add(disapear);
-          // disapear.SetActive(false);
-        }
       }
     }
+  }
+
+  Type test() {
+    var mm = this.gameObject.GetComponents(typeof(Component));
+    foreach(object i in mm)
+    {
+      if (i.GetType().Name.Contains("tile_type"))
+        return i.GetType();
+    }
+    return null;
   }
 }

@@ -85,8 +85,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  grid: {fileID: 5073323062766879432, guid: 90e56f7d44a1f934593ba34f853cfce5, type: 3}
-  temp: {fileID: 8165269579650722596, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
+  grid: {fileID: 8611214949892135017, guid: 90e56f7d44a1f934593ba34f853cfce5, type: 3}
+  temp: {fileID: 8127399405721289948, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
   TileType1: {fileID: 4793412428863025624, guid: bafb660a05eb8ab419a7eac85704e3a5, type: 3}
   TileType2: {fileID: 4848435182477518786, guid: 4ed6246e846d8734a9eaa77a36a31c8d, type: 3}
   TileType3: {fileID: 5971067704088160383, guid: 481b451308727b14c9f661ca3a63d540, type: 3}
@@ -111,5 +111,6 @@ MonoBehaviour:
   TileType22: {fileID: 6846982068935289571, guid: 6cf576170f4dff54bac490b1723a071b, type: 3}
   TileType23: {fileID: 9220351794439043822, guid: 3e27a1c20475f1d4b971973e24db8f9b, type: 3}
   TileType24: {fileID: 3513544747952051030, guid: e6bc89dde42bfaf4bac4f6a2cf317e60, type: 3}
-  ui: {fileID: 7204841954082801416, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
+  ui: {fileID: 612191210239054146, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
   all_tiles: []
+  playerList: []
