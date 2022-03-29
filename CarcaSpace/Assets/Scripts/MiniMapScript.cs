@@ -11,9 +11,6 @@ public class MiniMapScript : NetworkBehaviour
         transform.position = new Vector3(grid/2,grid/2,-grid+0.5f);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+  // Update is called once per frame
+  void Update() {}
 }

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class tile_type_12 : tile_type
+public class tile_type_0 : tile_type
 {
+
 
     public static int nbrTuile = 30;
     public static bool finish = false;
@@ -12,7 +13,7 @@ public class tile_type_12 : tile_type
     void Start()
     {
         r = this.GetComponent<rotateZ>();
-        haut = Type_land.Plaine;
+        haut = Type_land.Ville;
         gauche = Type_land.Chemin;
         bas = Type_land.Plaine;
         droite = Type_land.Chemin;

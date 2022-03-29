@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum Type_land
 {
-  Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye
+  Rien, Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye, Continue
 }
 public class Constraints : MonoBehaviour
 {
@@ -13,17 +13,18 @@ public class Constraints : MonoBehaviour
     public Type_land bas;
     public Type_land droite;
     public Type_land milieu;
-    private rotateZ r;
+    public int coordX;
+    public int coordY;
+   
     // Start is called before the first frame update
     void Start()
     {
         //Debug.Log(transform.eulerAngles.z);
-        r = this.GetComponent<rotateZ>();
-        haut = Type_land.Plaine;
-        gauche = Type_land.Chemin;
-        bas = Type_land.Plaine;
-        droite = Type_land.Chemin;
-        milieu = Type_land.Chemin;
+        haut = Type_land.Rien;
+        gauche = Type_land.Rien;
+        bas = Type_land.Rien;
+        droite = Type_land.Rien;
+        milieu = Type_land.Rien;
     }
 /*
 rotation a gauche : 90
@@ -40,15 +41,12 @@ rotation deux fois : 180 ou -180
 
         //attention si on fait trop vite, l'animation a pas le temps de se faire
         //donc ca decale tout
-        if(Input.GetKeyDown("left") && !(r.leve || r.couche || r.tourne))
-        {
-            rotate_left();
-        }
-        if(Input.GetKeyDown("right") && !(r.leve || r.couche || r.tourne))
-        {
-            rotate_right();
-        }
+       
+        
+    
     }
+
+
 /*
     // pas encore terminer/pas encore tester
     void rotation_side_switch()
@@ -89,6 +87,8 @@ rotation deux fois : 180 ou -180
 */
 
     // des pressions sur touche pour tourner faire les changements de valeurs
+
+    /*
     void rotate_left()
     {
         Type_land cp = haut;
@@ -106,6 +106,72 @@ rotation deux fois : 180 ou -180
         bas = droite;
         droite = cp;
     }
-
+    */
     
+// recuper les valeurs des quatre voisins direct en partant de celui du dessus puis dans le sens horaire
+    void Voisin(int x, int y, GameObject[] voisins) 
+    {
+        voisins[0] = GameObject.Find(coordX + "/" + (coordY+1));
+        voisins[1] = GameObject.Find((coordX+1) + "/" + coordY);
+        voisins[2] = GameObject.Find(coordX + "/" + (coordY-1));
+        voisins[3] = GameObject.Find((coordX-1) + "/" + coordY);
+    }
+
+    public bool verif(Type_land h, Type_land b, Type_land d, Type_land g)
+    {
+        bool vide = true;
+        this.coordX = (int) transform.position.x;
+        this.coordY = (int) transform.position.y; 
+        GameObject[] voisins = new GameObject[4];
+
+        if(bas != Type_land.Rien && haut != Type_land.Rien && droite != Type_land.Rien && gauche != Type_land.Rien){
+            return false;
+        }
+        Voisin(coordY, coordY, voisins);
+
+        // Bas
+        if(voisins[0] != null && voisins[0].GetComponent<Constraints>().bas != Type_land.Rien && voisins[0].GetComponent<Constraints>().bas != h){
+            return false;
+        }
+
+        // gauche
+        if(voisins[1] != null && voisins[1].GetComponent<Constraints>().gauche != Type_land.Rien && voisins[1].GetComponent<Constraints>().gauche != d){
+            return false;
+        }
+        
+        // haut
+        if(voisins[2] != null && voisins[2].GetComponent<Constraints>().haut != Type_land.Rien && voisins[2].GetComponent<Constraints>().haut != b){
+            return false;
+        }
+        
+        // droite
+        if(voisins[3] != null && voisins[3].GetComponent<Constraints>().droite != Type_land.Rien && voisins[3].GetComponent<Constraints>().droite != g){
+            return false;
+        }        
+        if((voisins[0] != null && voisins[0].GetComponent<Constraints>().bas != Type_land.Rien) || (voisins[1] != null && voisins[1].GetComponent<Constraints>().gauche != Type_land.Rien) ||
+        (voisins[2] != null && voisins[2].GetComponent<Constraints>().haut != Type_land.Rien) || (voisins[3] != null && voisins[3].GetComponent<Constraints>().droite != Type_land.Rien) ||
+        this.GetComponent<tile_type_0>() != null)
+            return true;
+        return false;
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
