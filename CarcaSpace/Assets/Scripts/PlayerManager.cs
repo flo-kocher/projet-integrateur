@@ -9,6 +9,7 @@ public class PlayerManager : NetworkBehaviour
 {
     public GameObject grid;
     public GameObject temp;
+    public GameObject TileType0;
     public GameObject TileType1;
     public GameObject TileType2;
     public GameObject TileType3;
@@ -35,6 +36,8 @@ public class PlayerManager : NetworkBehaviour
     public GameObject TileType24;
 
     public GameObject ui;
+
+    private int compteur = 0;
     
 
     /* ************************************ */
@@ -65,8 +68,11 @@ public class PlayerManager : NetworkBehaviour
         //GameObject go = GameObject.Find("Temp");
         //GameObject tmp = GameObject.Instantiate(temp);
         int x = 0 ;
-        for(int i =1 ;i< 25; i++){
+        for(int i =0 ;i< 25; i++){
             switch(i){
+                case 0 :
+                   all_tiles.Add(TileType0);
+                   break;
                 case 1 : 
                    //tmp.AddComponent<tile_type_1>();
                    //go  = GameObject.Instantiate(tmp);
@@ -246,14 +252,25 @@ public class PlayerManager : NetworkBehaviour
             RpcShowTiles(tuilos, "Dealt");
         }
         */
+        if (compteur==0)
+        {
+          GameObject tuilos = Instantiate(all_tiles[0]);
+          all_tiles.RemoveAt(0);
+          Debug.Log("Objet à faire spawn : " + tuilos);
+          NetworkServer.Spawn(tuilos, connectionToClient);
+          RpcShowTiles(tuilos, "Dealt");
 
-        randInt=rnd.Next(0,all_tiles.Count);
-        // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
-        GameObject tuilos = Instantiate(all_tiles[randInt]);
-        all_tiles.RemoveAt(randInt);
-        Debug.Log("Objet à faire spawn : " + tuilos);
-        NetworkServer.Spawn(tuilos, connectionToClient);
-        RpcShowTiles(tuilos, "Dealt");
+        }
+        else {
+          randInt=rnd.Next(0,all_tiles.Count);
+          // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
+          GameObject tuilos = Instantiate(all_tiles[randInt]);
+          all_tiles.RemoveAt(randInt);
+          Debug.Log("Objet à faire spawn : " + tuilos);
+          NetworkServer.Spawn(tuilos, connectionToClient);
+          RpcShowTiles(tuilos, "Dealt");
+        }
+        compteur++;
     }
 
     // for message to all clients to display all tiles
