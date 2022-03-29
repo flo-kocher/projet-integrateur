@@ -6,20 +6,12 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-[Serializable]
-public class Credentials
-{
-    public string name;
-    public string mail;
-    public string pass;
-}
 public class signIn : MonoBehaviour{
     TMP_InputField inputUsername;
     TMP_InputField inputPassword;
     TMP_InputField inputMail;
     Button submit;
-
-    string getRouteURI = "localhost:3000/signIn";
+    string getRouteURI = "localhost:8080/signIn";
     void Start(){
         inputUsername = GameObject.Find("Username").GetComponent<TMP_InputField>();
         inputPassword = GameObject.Find("Password").GetComponent<TMP_InputField>();
@@ -27,9 +19,9 @@ public class signIn : MonoBehaviour{
         GameObject.Find("Submit").GetComponent<Button>().onClick.AddListener(PostData);
         
     }
-    void PostData() => StartCoroutine(Upload());
+    void PostData() => StartCoroutine(UploadTo());
 
-    public IEnumerator Upload(){
+    public IEnumerator UploadTo(){
         Credentials credentials = new Credentials();
         credentials.name = inputUsername.text;
         credentials.pass = inputPassword.text;
@@ -45,8 +37,8 @@ public class signIn : MonoBehaviour{
 
             yield return restAPI.SendWebRequest();
             if(restAPI.isNetworkError || restAPI.isHttpError){
-                Debug.Log(jsonData);
                 Debug.Log(restAPI.error);
+                Debug.Log(jsonData);
             }else{
                 Debug.Log("Form uploaded !");
             }
