@@ -7,6 +7,8 @@ using System;
 
 public class PlayerManager : NetworkBehaviour
 {
+    [SyncVar]
+    int compteurMeeple = 0;
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -314,5 +316,29 @@ public class PlayerManager : NetworkBehaviour
         }
         Debug.Log("je fais planter tout");
         
+    }
+
+    [Command]
+    public void CmdSpawnMeeple(){
+    compteurMeeple++;
+    GameObject temp = null;
+    var list = Resources.FindObjectsOfTypeAll<GameObject>();
+    foreach (GameObject i in list) {
+      if (i.name == "tempMeeple")
+        temp = i;
+    }
+    GameObject clone = GameObject.Instantiate(temp);
+    clone.SetActive(true);
+    NetworkServer.Spawn(clone, connectionToClient);
+    clone.name = "Meeple" + compteurMeeple;
+    clone.transform.position = new Vector3(transform.position.x + 0.6f,
+                                           transform.position.y - 0.04f, 0.25f);
+    clone.transform.SetParent(GameObject.Find("Meeples").transform);
+    MoveMeeple.rmStars();
+    }
+
+    [ClientRpc]
+    public void RpcShowMeeple(GameObject go ){
+        go.SetActive(true);
     }
 }

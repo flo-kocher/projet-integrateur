@@ -85,7 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  grid: {fileID: 8611214949892135017, guid: 90e56f7d44a1f934593ba34f853cfce5, type: 3}
+  grid: {fileID: 0}
   temp: {fileID: 8127399405721289948, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
   TileType0: {fileID: 904876740412345685, guid: 807a86916ff80ab45a84ce2d1809b5ee, type: 3}
   TileType1: {fileID: 4793412428863025624, guid: bafb660a05eb8ab419a7eac85704e3a5, type: 3}
