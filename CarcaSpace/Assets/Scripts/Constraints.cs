@@ -123,8 +123,9 @@ rotation deux fois : 180 ou -180
         this.coordX = (int) transform.position.x;
         this.coordY = (int) transform.position.y; 
         GameObject[] voisins = new GameObject[4];
-
-        if(bas != Type_land.Rien && haut != Type_land.Rien && droite != Type_land.Rien && gauche != Type_land.Rien){
+        GameObject poser;
+        poser = GameObject.Find((this.coordX) + "/" + (this.coordY));
+        if(poser.GetComponent<Constraints>().bas != Type_land.Rien && poser.GetComponent<Constraints>().haut != Type_land.Rien && poser.GetComponent<Constraints>().droite != Type_land.Rien && poser.GetComponent<Constraints>().gauche != Type_land.Rien){
             return false;
         }
         Voisin(coordY, coordY, voisins);
