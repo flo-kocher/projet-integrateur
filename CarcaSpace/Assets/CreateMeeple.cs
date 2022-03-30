@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror ;
 
 // Script qui clone un meeple lorsqu'on appuie sur une étoile
-public class CreateMeeple : MonoBehaviour {
+public class CreateMeeple : NetworkBehaviour {
+
   static int compteur = 0;
   // Start is called before the first frame update
   void Start() {}
@@ -21,6 +23,7 @@ public class CreateMeeple : MonoBehaviour {
     }
     GameObject clone = GameObject.Instantiate(temp);
     clone.SetActive(true);
+    //NetworkServer.Spawn(clone, connectionToClient);
     clone.name = "Meeple" + compteur;
     clone.transform.position = new Vector3(transform.position.x + 0.6f,
                                            transform.position.y - 0.04f, 0.25f);
