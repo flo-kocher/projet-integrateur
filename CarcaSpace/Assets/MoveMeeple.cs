@@ -14,8 +14,11 @@ public static class MoveMeeple : object {
   // Tableau défini pour les booleens et les Vector2
   static Vector2[] tabPos = { nord, sud, est, ouest, milieu };
 
+
   // Méthode qui créer les étoiles avec le tableau de booleens et la postion X/Y
   // de la tuile
+
+
   public static void makeStars(bool[] tab, float x, float y) {
     GameObject temp = null;
     var list = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -34,6 +37,43 @@ public static class MoveMeeple : object {
       }
     }
   }
+  /*
+    public static void makeStars(bool[] tab, float x, float y) {
+    GameObject temp = null;
+    var list = Resources.FindObjectsOfTypeAll<GameObject>();
+    foreach (GameObject i in list) {
+      if (i.name == "tempStar")
+        temp = i;
+    }
+    for (int i = 0; i < 5; i++) {
+      if (tab[i]) {
+        GameObject clone = GameObject.Instantiate(temp);
+        clone.SetActive(true);
+        clone.name = "Star" + i;
+        clone.transform.position =
+            new Vector3(x + tabPos[i].x, y + tabPos[i].y, -0.1f);
+        clone.transform.SetParent(GameObject.Find("Stars").transform);
+      }
+    }
+  }
+  */
+  /*
+    public static void makeStars(bool[] tab, float x, float y) {
+    
+    for (int i = 0; i < 5; i++) {
+      if (tab[i]) {
+        GameObject clone = GameObject.Instantiate(tempStar);
+        clone.SetActive(true);
+        clone.name = "Star" + i;
+        clone.transform.position =
+            new Vector3(x + tabPos[i].x, y + tabPos[i].y, -0.1f);
+        clone.transform.SetParent(GameObject.Find("Stars").transform);
+      }
+    }
+  }
+*/
+
+
   // Suppresion des étoiles
   public static void rmStars() {
     GameObject parent = GameObject.Find("Stars");

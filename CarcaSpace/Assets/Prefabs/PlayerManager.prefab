@@ -85,6 +85,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  compteurMeeple: 0
   grid: {fileID: 0}
   temp: {fileID: 8127399405721289948, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
   TileType0: {fileID: 904876740412345685, guid: 807a86916ff80ab45a84ce2d1809b5ee, type: 3}
@@ -113,5 +114,7 @@ MonoBehaviour:
   TileType23: {fileID: 9220351794439043822, guid: 3e27a1c20475f1d4b971973e24db8f9b, type: 3}
   TileType24: {fileID: 3513544747952051030, guid: e6bc89dde42bfaf4bac4f6a2cf317e60, type: 3}
   ui: {fileID: 612191210239054146, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
+  Stars: {fileID: 4415478285986156306, guid: bdb108f5a9bd5e1438bf9e9a0f40cd0d, type: 3}
+  Meeples: {fileID: 2901618024628144452, guid: 78b4c1a494b52a242b2d7a4d72eb6487, type: 3}
   all_tiles: []
   playerList: []

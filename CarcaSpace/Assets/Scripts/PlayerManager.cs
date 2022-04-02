@@ -8,7 +8,7 @@ using System;
 public class PlayerManager : NetworkBehaviour
 {
     [SyncVar]
-    int compteurMeeple = 0;
+    public int compteurMeeple = 0;
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -38,6 +38,9 @@ public class PlayerManager : NetworkBehaviour
     public GameObject TileType24;
 
     public GameObject ui;
+
+    public GameObject Stars;
+    public GameObject Meeples;
 
     private int compteur = 0;
     
@@ -228,32 +231,7 @@ public class PlayerManager : NetworkBehaviour
     {
         int randInt = 0 ; 
         System.Random rnd = new System.Random();
-        /*
-        create = true;
-        GameObject temp = null;
-        var list = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (GameObject i in list)
-        {
-            if (i.name == "Temp")
-                temp = i;
-            if (i.name.Contains("Pioche"))
-            {
-                i.GetComponent<Move>().enabled = false;
-                i.GetComponent<AccessDenied>().enabled = false;
-                if (i.GetComponent<rotateZ>().enabled == true)
-                    create = false;
-            }
-        }
-        if (create)
-        {
-            randInt=rnd.Next(0,all_tiles.Count);
-            // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
-            GameObject tuilos = all_tiles[randInt];
-            all_tiles.RemoveAt(randInt);
-            NetworkServer.Spawn(tuilos, connectionToClient);
-            RpcShowTiles(tuilos, "Dealt");
-        }
-        */
+
         if (compteur==0)
         {
           GameObject tuilos = Instantiate(all_tiles[0]);
@@ -317,28 +295,79 @@ public class PlayerManager : NetworkBehaviour
         Debug.Log("je fais planter tout");
         
     }
-
+/*
     [Command]
     public void CmdSpawnMeeple(){
-    compteurMeeple++;
-    GameObject temp = null;
-    var list = Resources.FindObjectsOfTypeAll<GameObject>();
-    foreach (GameObject i in list) {
-      if (i.name == "tempMeeple")
-        temp = i;
+        compteurMeeple++;
+        GameObject temp = null;
+        var list = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject i in list) {
+            if (i.name == "tempMeeple")
+            temp = i;
+        }
+        GameObject clone = GameObject.Instantiate(temp);
+        clone.SetActive(true);
+        NetworkServer.Spawn(clone, connectionToClient);
+        clone.name = "Meeple" + compteurMeeple;
+        clone.transform.position = new Vector3(transform.position.x + 0.6f, transform.position.y - 0.04f, 0.25f);
+        clone.transform.SetParent(GameObject.Find("Meeples").transform);
+        MoveMeeple.rmStars();
     }
-    GameObject clone = GameObject.Instantiate(temp);
-    clone.SetActive(true);
-    NetworkServer.Spawn(clone, connectionToClient);
-    clone.name = "Meeple" + compteurMeeple;
-    clone.transform.position = new Vector3(transform.position.x + 0.6f,
-                                           transform.position.y - 0.04f, 0.25f);
-    clone.transform.SetParent(GameObject.Find("Meeples").transform);
-    MoveMeeple.rmStars();
+*/
+    [Command]
+    public void CmdSpawnMeeple(float x, float y){
+        compteurMeeple++;
+
+        GameObject meeple = GameObject.Instantiate(Meeples);
+        meeple.SetActive(true);
+        NetworkServer.Spawn(meeple, connectionToClient);
+    
+        meeple.name = "Meeple" + compteurMeeple;
+        //meeple.transform.position = new Vector3(transform.position.x + 0.6f, transform.position.y - 0.04f, 0.25f);
+        Debug.Log("positions stars en x : " +transform.position.x + " et en y : " + transform.position.y);
+
+
+        // il faut qu'on trouve quelle est la position de l'objet sur lequel il clique et la remplacer par transform.position.x
+        //meeple.transform.position = new Vector3(transform.position.x + 0.9f, transform.position.y - 0.09f, 0.40f);
+        meeple.transform.position = new Vector3(x + 0.6f, y - 0.04f, 0.25f);
+
+
+
+        //meeple.transform.SetParent(GameObject.Find("Meeples").transform);
+        MoveMeeple.rmStars();
+        RpcShowMeeples(meeple,"Dealt");
     }
 
+
     [ClientRpc]
-    public void RpcShowMeeple(GameObject go ){
-        go.SetActive(true);
+    void RpcShowMeeples(GameObject go , string action)
+    {
+        //Debug.Log("je suis dans rpc");
+        //Debug.Log("GameObject : "+ go);
+        //Debug.Log("Action : "+ action);
+        
+        if(action == "Dealt")
+        {
+            if(hasAuthority)
+            {
+                //go.name = "connard";
+                go.SetActive(true);
+                //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
+                Debug.Log("rpc meeple if");
+            }
+            else
+            {
+                //go.name = "le con";
+                go.SetActive(true);
+                //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
+                Debug.Log("rpc meeple else");
+            }
+        }
+        else if (action == "Played")
+        {
+
+        }
+        //Debug.Log("je fais planter tout");
+        
     }
 }

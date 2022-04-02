@@ -19,7 +19,9 @@ public class CreateMeeple : NetworkBehaviour {
 
     NetworkIdentity networkIdentity = NetworkClient.connection.identity;
     PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-    PlayerManager.CmdSpawnMeeple();
+    PlayerManager.CmdSpawnMeeple(transform.position.x,transform.position.y);
+    
+    Debug.Log(transform.position.x);
     // compteur++;
     // GameObject temp = null;
     // var list = Resources.FindObjectsOfTypeAll<GameObject>();
