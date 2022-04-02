@@ -9,6 +9,9 @@ public class PlayerManager : NetworkBehaviour
 {
     [SyncVar]
     int compteurMeeple = 0;
+    [SyncVar]
+    public bool isOurTurn = false;  // tour du joueur
+
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -63,6 +66,8 @@ public class PlayerManager : NetworkBehaviour
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         playerList.Add(networkIdentity);
+        GameManager.Instance.AddPlayer(this);
+        Debug.Log("ON START APPELE");
         //Debug.Log("Player list",playerList.Count);
     }
 
