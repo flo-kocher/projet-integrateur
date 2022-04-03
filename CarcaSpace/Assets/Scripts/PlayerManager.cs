@@ -14,6 +14,8 @@ public class PlayerManager : NetworkBehaviour
     [SyncVar]
     public int id;
 
+    public bool check = false;
+
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -270,51 +272,38 @@ public class PlayerManager : NetworkBehaviour
     {
         int randInt = 0 ; 
         System.Random rnd = new System.Random();
-        /*
-        create = true;
-        GameObject temp = null;
-        var list = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (GameObject i in list)
-        {
-            if (i.name == "Temp")
-                temp = i;
-            if (i.name.Contains("Pioche"))
+        
+        
+        if(CheckPick()){
+            if (compteur==0)
             {
-                i.GetComponent<Move>().enabled = false;
-                i.GetComponent<AccessDenied>().enabled = false;
-                if (i.GetComponent<rotateZ>().enabled == true)
-                    create = false;
-            }
-        }
-        if (create)
-        {
-            randInt=rnd.Next(0,all_tiles.Count);
-            // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
-            GameObject tuilos = all_tiles[randInt];
-            all_tiles.RemoveAt(randInt);
-            NetworkServer.Spawn(tuilos, connectionToClient);
-            RpcShowTiles(tuilos, "Dealt");
-        }
-        */
-        if (compteur==0)
-        {
-          GameObject tuilos = Instantiate(all_tiles[0]);
-          all_tiles.RemoveAt(0);
-          Debug.Log("Objet à faire spawn : " + tuilos);
-          NetworkServer.Spawn(tuilos, connectionToClient);
-          RpcShowTiles(tuilos, "Dealt");
+                GameObject tuilos = Instantiate(all_tiles[0]);
+                all_tiles.RemoveAt(0);
+                Debug.Log("Objet à faire spawn : " + tuilos);
+                NetworkServer.Spawn(tuilos, connectionToClient);
+                RpcShowTiles(tuilos, "Dealt");
 
+            }
+            else {
+                randInt=rnd.Next(0,all_tiles.Count);
+                // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
+                GameObject tuilos = Instantiate(all_tiles[randInt]);
+                all_tiles.RemoveAt(randInt);
+                Debug.Log("Objet à faire spawn : " + tuilos);
+                NetworkServer.Spawn(tuilos, connectionToClient);
+                RpcShowTiles(tuilos, "Dealt");
+            }
+            compteur++;
         }
-        else {
-          randInt=rnd.Next(0,all_tiles.Count);
-          // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
-          GameObject tuilos = Instantiate(all_tiles[randInt]);
-          all_tiles.RemoveAt(randInt);
-          Debug.Log("Objet à faire spawn : " + tuilos);
-          NetworkServer.Spawn(tuilos, connectionToClient);
-          RpcShowTiles(tuilos, "Dealt");
+        
+    }
+
+    bool CheckPick(){
+        //Debug.Log("our turn "+ isOurTurn);
+        if (isOurTurn){
+            return true;
         }
-        compteur++;
+        return false;
     }
 
     // for message to all clients to display all tiles
@@ -349,14 +338,14 @@ public class PlayerManager : NetworkBehaviour
                 //go.name = "le con";
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
-                Debug.Log("je suis dans rpc else");
+                //Debug.Log("je suis dans rpc else");
             }
         }
         else if (action == "Played")
         {
 
         }
-        Debug.Log("je fais planter tout");
+        //Debug.Log("je fais planter tout");
         
     }
 
