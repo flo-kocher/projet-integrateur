@@ -32,9 +32,11 @@ public class GameManager : NetworkBehaviour
         }
 
         _players[Current_player].isOurTurn = true;
+        
 
     }
     public void AddPlayer(PlayerManager player){
+        endTurnButton.SetActive(false);
         player.id = _players.Count;
         _players.Add(player);
 
@@ -65,18 +67,7 @@ public class GameManager : NetworkBehaviour
     }
 
 
-   [Command]
-    public void CmdUpdateJoueur(int i)
-    {
-        RpcUpdateJoueur(i);
-    }
-
-    [ClientRpc]
-    public void RpcUpdateJoueur(int i)
-    {
-        Current_player = (Current_player + i) % nb_joueur;
-
-    }
+   
 
 
 
