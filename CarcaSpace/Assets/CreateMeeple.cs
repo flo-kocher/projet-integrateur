@@ -22,20 +22,5 @@ public class CreateMeeple : NetworkBehaviour {
     PlayerManager.CmdSpawnMeeple(transform.position.x,transform.position.y);
     
     Debug.Log(transform.position.x);
-    // compteur++;
-    // GameObject temp = null;
-    // var list = Resources.FindObjectsOfTypeAll<GameObject>();
-    // foreach (GameObject i in list) {
-    //   if (i.name == "tempMeeple")
-    //     temp = i;
-    // }
-    // GameObject clone = GameObject.Instantiate(temp);
-    // clone.SetActive(true);
-    // NetworkServer.Spawn(clone, connectionToClient);
-    // clone.name = "Meeple" + compteur;
-    // clone.transform.position = new Vector3(transform.position.x + 0.6f,
-    //                                        transform.position.y - 0.04f, 0.25f);
-    // clone.transform.SetParent(GameObject.Find("Meeples").transform);
-    // MoveMeeple.rmStars();
   }
 }

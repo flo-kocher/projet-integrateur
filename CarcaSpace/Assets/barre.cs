@@ -6,6 +6,7 @@ using Mirror ;
 
 // Script qui va modifier la barre de timer
 public class barre : NetworkBehaviour {
+  [SyncVar]
   float time = 0;
   // Start is called before the first frame update
   void Start() {}

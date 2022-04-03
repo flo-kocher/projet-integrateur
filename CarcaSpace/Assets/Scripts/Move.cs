@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-
-public class Move : MonoBehaviour {
+using Mirror ; 
+public class Move : NetworkBehaviour {
   private GameObject go;         // GameObject sur lequel on clique
   private bool dragging = false; // Booléen qui controle le suivi de la souris
   public float speed;            // vitesse de lévé et de pose de la tuile
