@@ -31,7 +31,6 @@ public class GameManager : NetworkBehaviour
             yield return null;
         }
 
-        endTurnButton.SetActive(false); 
         _players[Current_player].isOurTurn = true;
 
     }

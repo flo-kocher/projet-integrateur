@@ -74,6 +74,7 @@ public class PlayerManager : NetworkBehaviour
 
     
     public void Update(){   
+        if (!isLocalPlayer) return ;
         if (!GameManager.Instance.gameEnded){
             if (isOurTurn && isLocalPlayer){
                 GameManager.Instance.endTurnButton.SetActive(true);
