@@ -7,23 +7,18 @@ public class GameManager : NetworkBehaviour
 {
     [Header("Turn Management")]
     public GameObject endTurnButton;
-    public enum GameState {
-        PlayerTurn,
-        OthersTurn,
-        GameEnd,
-    }
-
-
-    private bool inAction = false;
     public static GameManager Instance;
+
+    // Variables de la partie 
+    public int nb_joueur; 
+    private bool inAction = false;
     public int Current_player = 0;
-    private bool gameEnded = false;
-    public GameState state;
+    public bool gameEnded = false;
 
     private void Awake(){
         Instance = this;
     }
-    private List<PlayerManager> _players = new List<PlayerManager>();
+    public List<PlayerManager> _players = new List<PlayerManager>();
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -41,16 +36,12 @@ public class GameManager : NetworkBehaviour
 
     }
     public void AddPlayer(PlayerManager player){
+        player.id = _players.Count;
         _players.Add(player);
-        Debug.Log("nombre de joueur: " +_players.Count);
 
     }
 
-    public void Update(){   
-        if (_players[Current_player].isOurTurn){
-           endTurnButton.SetActive(true);
-        }
-    }
+
 
     public void finir_tour(){
     }
@@ -73,5 +64,21 @@ public class GameManager : NetworkBehaviour
             // TODO
         }
     }
+
+
+   [Command]
+    public void CmdUpdateJoueur(int i)
+    {
+        RpcUpdateJoueur(i);
+    }
+
+    [ClientRpc]
+    public void RpcUpdateJoueur(int i)
+    {
+        Current_player = (Current_player + i) % nb_joueur;
+
+    }
+
+
 
 }

@@ -800,7 +800,7 @@ GameObject:
   - component: {fileID: 1502831908}
   - component: {fileID: 1502831907}
   - component: {fileID: 1502831906}
-  - component: {fileID: 1502831905}
+  - component: {fileID: 1502831909}
   m_Layer: 5
   m_Name: Button (1)
   m_TagString: Untagged
@@ -828,23 +828,6 @@ RectTransform:
   m_AnchoredPosition: {x: -741.2054, y: -487.88724}
   m_SizeDelta: {x: 381.589, y: 106.225}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1502831905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1502831903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 3955898848
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!114 &1502831906
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -927,6 +910,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1502831903}
   m_CullTransparentMesh: 1
+--- !u!114 &1502831909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1502831903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6676824df680e834a8fd55d1fa109f1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serveur: {fileID: 1899050875}
 --- !u!1 &1532519130
 GameObject:
   m_ObjectHideFlags: 0
@@ -1214,8 +1210,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   endTurnButton: {fileID: 1502831903}
+  nb_joueur: 2
   Current_player: 0
-  state: 0
+  gameEnded: 0
+  _players: []
 --- !u!4 &1899050876
 Transform:
   m_ObjectHideFlags: 0

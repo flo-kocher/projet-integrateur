@@ -11,6 +11,8 @@ public class PlayerManager : NetworkBehaviour
     int compteurMeeple = 0;
     [SyncVar]
     public bool isOurTurn = false;  // tour du joueur
+    [SyncVar]
+    public int id;
 
     public GameObject grid;
     public GameObject temp;
@@ -67,8 +69,17 @@ public class PlayerManager : NetworkBehaviour
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         playerList.Add(networkIdentity);
         GameManager.Instance.AddPlayer(this);
-        Debug.Log("ON START APPELE");
         //Debug.Log("Player list",playerList.Count);
+    }
+
+    
+    public void Update(){   
+        if (!GameManager.Instance.gameEnded){
+            if (isOurTurn && isLocalPlayer){
+                GameManager.Instance.endTurnButton.SetActive(true);
+            }
+
+        }
     }
 
      public List<GameObject>  instatiateTiles(){
@@ -347,3 +358,5 @@ public class PlayerManager : NetworkBehaviour
         go.SetActive(true);
     }
 }
+
+
