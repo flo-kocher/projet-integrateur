@@ -114,7 +114,13 @@ MonoBehaviour:
   TileType23: {fileID: 9220351794439043822, guid: 3e27a1c20475f1d4b971973e24db8f9b, type: 3}
   TileType24: {fileID: 3513544747952051030, guid: e6bc89dde42bfaf4bac4f6a2cf317e60, type: 3}
   ui: {fileID: 612191210239054146, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
-  Stars: {fileID: 4415478285986156306, guid: bdb108f5a9bd5e1438bf9e9a0f40cd0d, type: 3}
+  Stars: {fileID: 6954049619821841049, guid: bdb108f5a9bd5e1438bf9e9a0f40cd0d, type: 3}
   Meeples: {fileID: 2901618024628144452, guid: 78b4c1a494b52a242b2d7a4d72eb6487, type: 3}
+  nord: {x: 0.5, y: 0.83}
+  sud: {x: 0.5, y: 0.17}
+  est: {x: 0.83, y: 0.5}
+  ouest: {x: 0.17, y: 0.5}
+  milieu: {x: 0.5, y: 0.5}
+  tabPos: []
   all_tiles: []
   playerList: []

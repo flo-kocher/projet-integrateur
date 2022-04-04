@@ -1,41 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Mirror ;
+using Mirror;
 
 // Script qui clone un meeple lorsqu'on appuie sur une étoile
-public class CreateMeeple : NetworkBehaviour {
+public class CreateMeeple : NetworkBehaviour
+{
 
-  // client 
-  public PlayerManager PlayerManager;
-  
-  // Start is called before the first frame update
-  void Start() {}
+    // on récupère le PlayerManager
+    public PlayerManager PlayerManager;
 
-  // Update is called once per frame
-  void Update() {}
+    // Start is called before the first frame update
+    void Start() { }
 
-  public void function() {
+    // Update is called once per frame
+    void Update() { }
 
-    NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-    PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-    PlayerManager.CmdSpawnMeeple(transform.position.x,transform.position.y);
-    
-    Debug.Log(transform.position.x);
-    // compteur++;
-    // GameObject temp = null;
-    // var list = Resources.FindObjectsOfTypeAll<GameObject>();
-    // foreach (GameObject i in list) {
-    //   if (i.name == "tempMeeple")
-    //     temp = i;
-    // }
-    // GameObject clone = GameObject.Instantiate(temp);
-    // clone.SetActive(true);
-    // NetworkServer.Spawn(clone, connectionToClient);
-    // clone.name = "Meeple" + compteur;
-    // clone.transform.position = new Vector3(transform.position.x + 0.6f,
-    //                                        transform.position.y - 0.04f, 0.25f);
-    // clone.transform.SetParent(GameObject.Find("Meeples").transform);
-    // MoveMeeple.rmStars();
-  }
+	// méthode permettant de demander à faire spawn les Meeples
+    public void function()
+    {
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+		// les paramètres sont les emplacements de l'étoile sur laquelle on clique
+        PlayerManager.CmdSpawnMeeple(transform.position.x, transform.position.y);
+
+        //Debug.Log(transform.position.x);
+    }
 }

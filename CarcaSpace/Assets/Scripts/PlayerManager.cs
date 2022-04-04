@@ -7,8 +7,10 @@ using System;
 
 public class PlayerManager : NetworkBehaviour
 {
+    // compteur de Meeple synchronisé entre tous les clients
     [SyncVar]
     public int compteurMeeple = 0;
+    // listes tous les Prefabs qui sont instanciés dans le jeu
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -36,25 +38,33 @@ public class PlayerManager : NetworkBehaviour
     public GameObject TileType22;
     public GameObject TileType23;
     public GameObject TileType24;
-
+    // UI
     public GameObject ui;
-
+    // étoiles qui correspondent aux emplacements où poser les Meeples
     public GameObject Stars;
+    // Meeples
     public GameObject Meeples;
 
     private int compteur = 0;
+
+    // emplacements des étoiles sur une tuile
+    public Vector2 nord = new Vector2(0.5f, 0.83f);
+    public Vector2 sud = new Vector2(0.5f, 0.17f);
+    public Vector2 est = new Vector2(0.83f, 0.5f);
+    public Vector2 ouest = new Vector2(0.17f, 0.5f);
+    public Vector2 milieu = new Vector2(0.5f, 0.5f);
+    // tableau des emplacements
+    public Vector2[] tabPos;
+
     
-
-    /* ************************************ */
-
-
-    bool create = true;
-
+    //bool create = true;
+    // liste de toutes les tuiles du jeu de tuiles
     public List<GameObject> all_tiles = new List<GameObject>();
 
-    /* liste des clients connectes*/
+    // liste des clients connectes
     public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
 
+    // méthode se lançant au démarrage du client
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -69,6 +79,8 @@ public class PlayerManager : NetworkBehaviour
         //Debug.Log("Player list",playerList.Count);
     }
 
+    // méthode générant la liste des tuiles
+    // on génère pour chaque type de tuile un certain numbre prédéfini de tuiles
      public List<GameObject>  instatiateTiles(){
         //GameObject go = GameObject.Find("Temp");
         //GameObject tmp = GameObject.Instantiate(temp);
@@ -216,60 +228,60 @@ public class PlayerManager : NetworkBehaviour
         return all_tiles;
     }
 
-
+    //méthode qui se lance au démarrage du serveur
     [Server]
     public override void OnStartServer()
     {
         base.OnStartServer();
         instatiateTiles();
-        Debug.Log("els dans all_tiles : " +all_tiles);
-        Debug.Log(all_tiles.Count);
+        //Debug.Log("els dans all_tiles : " +all_tiles);
+        //Debug.Log(all_tiles.Count);
+        
+        //instantie le tableau des positions des étoiles
+        tabPos = new Vector2[5];
+        tabPos[0] = nord;
+        tabPos[1] = sud;
+        tabPos[2] = est;
+        tabPos[3] = ouest;
+        tabPos[4] = milieu;
     }
 
+    // Demande du client au serveur du tirage d'une tuile de manière aléatoire
     [Command]
     public void CmdDealTiles()
     {
         int randInt = 0 ; 
+        // génération aléaoire de la seed
         System.Random rnd = new System.Random();
 
         if (compteur==0)
         {
-          GameObject tuilos = Instantiate(all_tiles[0]);
-          all_tiles.RemoveAt(0);
-          Debug.Log("Objet à faire spawn : " + tuilos);
-          NetworkServer.Spawn(tuilos, connectionToClient);
-          RpcShowTiles(tuilos, "Dealt");
+            GameObject tuilos = Instantiate(all_tiles[0]);
+            all_tiles.RemoveAt(0);
+            Debug.Log("Objet à faire spawn : " + tuilos);
+            NetworkServer.Spawn(tuilos, connectionToClient);
+            RpcShowTiles(tuilos, "Dealt");
 
         }
         else {
-          randInt=rnd.Next(0,all_tiles.Count);
-          // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
-          GameObject tuilos = Instantiate(all_tiles[randInt]);
-          all_tiles.RemoveAt(randInt);
-          Debug.Log("Objet à faire spawn : " + tuilos);
-          NetworkServer.Spawn(tuilos, connectionToClient);
-          RpcShowTiles(tuilos, "Dealt");
+            // génération aléatoire d'un nombre parmi le nombre total de tuiles restantes dans la pioche
+            randInt=rnd.Next(0,all_tiles.Count);
+            // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
+            GameObject tuilos = Instantiate(all_tiles[randInt]);
+            all_tiles.RemoveAt(randInt);
+            //Debug.Log("Objet à faire spawn : " + tuilos);
+            // on spawn la tuile sur le serveur
+            NetworkServer.Spawn(tuilos, connectionToClient);
+            // on affiche la tuile chez tous les clients
+            RpcShowTiles(tuilos, "Dealt");
         }
         compteur++;
     }
 
-    // for message to all clients to display all tiles
-
-    /*
-        Test de tout mettre en commentaire : Fait
-        Qu'il aille dans le if(hasAuthority) ou le else, déconnecte dans tous les cas
-
-        Si on ne fait pas d'opération sur go (ex : go.SetActive(), go.name = "")
-        il n'y a pas de déconnexion du client
-
-
-    */
+    // Affiche les tuiles chez tous les clients
     [ClientRpc]
     void RpcShowTiles(GameObject go , string action)
     {
-        Debug.Log("je suis dans rpc");
-        Debug.Log("GameObject : "+ go);
-        Debug.Log("Action : "+ action);
         
         if(action == "Dealt")
         {
@@ -278,67 +290,44 @@ public class PlayerManager : NetworkBehaviour
                 //go.name = "connard";
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
-                Debug.Log("je suis dans rpc if");
+                //Debug.Log("je suis dans rpc if");
             }
             else
             {
                 //go.name = "le con";
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
-                Debug.Log("je suis dans rpc else");
+                //Debug.Log("je suis dans rpc else");
             }
         }
         else if (action == "Played")
         {
 
         }
-        Debug.Log("je fais planter tout");
         
     }
-/*
-    [Command]
-    public void CmdSpawnMeeple(){
-        compteurMeeple++;
-        GameObject temp = null;
-        var list = Resources.FindObjectsOfTypeAll<GameObject>();
-        foreach (GameObject i in list) {
-            if (i.name == "tempMeeple")
-            temp = i;
-        }
-        GameObject clone = GameObject.Instantiate(temp);
-        clone.SetActive(true);
-        NetworkServer.Spawn(clone, connectionToClient);
-        clone.name = "Meeple" + compteurMeeple;
-        clone.transform.position = new Vector3(transform.position.x + 0.6f, transform.position.y - 0.04f, 0.25f);
-        clone.transform.SetParent(GameObject.Find("Meeples").transform);
-        MoveMeeple.rmStars();
-    }
-*/
+
+    // Demande de pose de Meeple au serveur
     [Command]
     public void CmdSpawnMeeple(float x, float y){
         compteurMeeple++;
-
+        // instantiation d'un Prefab Meeple
         GameObject meeple = GameObject.Instantiate(Meeples);
         meeple.SetActive(true);
         NetworkServer.Spawn(meeple, connectionToClient);
-    
         meeple.name = "Meeple" + compteurMeeple;
-        //meeple.transform.position = new Vector3(transform.position.x + 0.6f, transform.position.y - 0.04f, 0.25f);
-        Debug.Log("positions stars en x : " +transform.position.x + " et en y : " + transform.position.y);
-
-
-        // il faut qu'on trouve quelle est la position de l'objet sur lequel il clique et la remplacer par transform.position.x
-        //meeple.transform.position = new Vector3(transform.position.x + 0.9f, transform.position.y - 0.09f, 0.40f);
+        //Debug.Log("positions stars en x : " +transform.position.x + " et en y : " + transform.position.y);
+        // on positionne le Meeple au dessus de la position de l'étoile sur laquelle on clique (ses positions sont les paramètres x et y)
         meeple.transform.position = new Vector3(x + 0.6f, y - 0.04f, 0.25f);
 
-
-
         //meeple.transform.SetParent(GameObject.Find("Meeples").transform);
-        MoveMeeple.rmStars();
+
+        //MoveMeeple.rmStars(); ////////////////////////////////////////////////////////////////// à implémenter
+        
         RpcShowMeeples(meeple,"Dealt");
     }
 
-
+    // Affichage des Meeples chez tous les clients
     [ClientRpc]
     void RpcShowMeeples(GameObject go , string action)
     {
@@ -353,21 +342,68 @@ public class PlayerManager : NetworkBehaviour
                 //go.name = "connard";
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
-                Debug.Log("rpc meeple if");
             }
             else
             {
                 //go.name = "le con";
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
-                Debug.Log("rpc meeple else");
             }
         }
         else if (action == "Played")
         {
 
+        }        
+    }
+
+    // Demande de spawn de Stars (emplacements possibles des Meeples)
+    // tab : tableau de booléens des emplacements des tuiles (nord,sud,est,ouest,milieu)
+    // si = true alors on génère une étoile à cet emplacement
+    // x , y : positions de l'étoile
+    [Command]
+    public void CmdSpawnStars(bool[] tab, float x, float y)
+    {
+        for (int i = 0; i < 5; i++) {
+            // on vérifie les valeurs des positions et on crée les étoiles si les valeurs valent true
+            if (tab[i]) {
+                GameObject star = Instantiate(Stars);
+                
+                star.SetActive(true);
+                Debug.Log("Stars à faire spawn : " + star);
+                //NetworkServer.Spawn(star, connectionToClient);
+                star.name = "Star" + i;
+                star.transform.position = new Vector3(x + tabPos[i].x, y + tabPos[i].y, -0.1f);
+                star.transform.SetParent(GameObject.Find("Stars").transform);
+                NetworkServer.Spawn(star, connectionToClient);
+                RpcShowStars(star, "Dealt");
+                //Debug.Log("rpc fais buggué ? ");
+            }
+        }        
+    }
+
+    // Affichage des étoiles chez tous les clients
+    [ClientRpc]
+    void RpcShowStars(GameObject go , string action)
+    {
+        Debug.Log("GO : " + go);
+        if(action == "Dealt")
+        {
+            if(hasAuthority)
+            {
+                //go.name = "connard";
+                go.SetActive(true);
+                //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
+            }
+            else
+            {
+                //go.name = "le con";
+                go.SetActive(true);
+                //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
+            }
         }
-        //Debug.Log("je fais planter tout");
-        
+        else if (action == "Played")
+        {
+
+        }        
     }
 }

@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Mirror;
 
-public class Move : MonoBehaviour {
+public class Move : NetworkBehaviour {
+
+  public PlayerManager PlayerManager;
   private GameObject go;         // GameObject sur lequel on clique
   private bool dragging = false; // Booléen qui controle le suivi de la souris
   public float speed;            // vitesse de lévé et de pose de la tuile
@@ -37,7 +40,7 @@ public class Move : MonoBehaviour {
         if (go == this.gameObject) {
           dragging = !dragging;
           if (clickedOnStar) {
-            MoveMeeple.rmMeeple();
+            MoveMeeple.rmMeeple(); ///////////////// à faire en version Network
             clickedOnStar = false;
           }
           if (!dragging) {
@@ -92,7 +95,8 @@ public class Move : MonoBehaviour {
           new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
     if (anim1) {
-      MoveMeeple.rmStars();
+      MoveMeeple.rmStars(); ///////////////// Faire en version Network
+
       if (disapear != null) {
         // disapear.SetActive(true);
         Material mat = disapear.GetComponent<Renderer>().material;
@@ -124,8 +128,13 @@ public class Move : MonoBehaviour {
       float finish = Vector3.Angle(transform.position, target);
       if (finish <= 0.001f) {
         anim2 = false;
-        bool[] tabExample = { false, true, false, true, false };
-        MoveMeeple.makeStars(tabExample, x, y);
+        bool[] tabExample = new bool[]{ false, true, false, true, false };
+
+        // on récupère l'identifiant du network
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        // faire spawn les étoiles sur le serveur et les clients
+        PlayerManager.CmdSpawnStars(tabExample, x, y);
       }
     }
   }

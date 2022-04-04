@@ -12,6 +12,7 @@ public class PIck : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // évènement qui se lance lorsqu'on clique sur le bouton de l'UI
         gameObject.GetComponent<Button>().onClick.AddListener(getIdAndCards);
     }
 
@@ -23,10 +24,10 @@ public class PIck : NetworkBehaviour
 
     void getIdAndCards()
     {
-        // get network identity
+        // cherche l'identifiant du network
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-        // sent a request (which is a Command server side) to server to do something for us 
+        // client envoie une requête au serveur pour générer une tuile
         PlayerManager.CmdDealTiles();
     }
 }

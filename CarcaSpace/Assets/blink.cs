@@ -15,15 +15,9 @@ public class blink : NetworkBehaviour {
     Color plein = new Color(1f, 1f, 1f, 1f);
     Color vide = new Color(1f, 1f, 1f, 0f);
     float lerp = Mathf.PingPong(speed * Time.time, 1);
-    /*
-    transform.GetChild(0).GetComponent<Renderer>().material.color =
-        Color.Lerp(vide, plein, lerp);
-    */
+    // fais clignoter les étoiles en changeant leur apparence par intervalle de temps régulier
+    this.transform.GetComponent<Renderer>().material.color = Color.Lerp(vide, plein, lerp);
 
-    int nb_children = transform.childCount;
-    for (int i = 0; i < nb_children; i++)
-    {
-        transform.GetChild(i).GetComponent<Renderer>().material.color = Color.Lerp(vide, plein, lerp);
-    }
+
   }
 }
