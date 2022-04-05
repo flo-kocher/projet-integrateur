@@ -9,8 +9,14 @@ public class PlayerManager : NetworkBehaviour
 {
     // compteur de Meeple synchronisé entre tous les clients
     [SyncVar]
-    public int compteurMeeple = 0;
-    // listes tous les Prefabs qui sont instanciés dans le jeu
+    int compteurMeeple = 0;
+    [SyncVar]
+    public bool isOurTurn = false;  // tour du joueur
+    [SyncVar]
+    public int id;
+
+    public bool check = false;
+
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -76,11 +82,46 @@ public class PlayerManager : NetworkBehaviour
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         playerList.Add(networkIdentity);
+        GameManager.Instance.AddPlayer(this);
         //Debug.Log("Player list",playerList.Count);
     }
 
-    // méthode générant la liste des tuiles
-    // on génère pour chaque type de tuile un certain numbre prédéfini de tuiles
+    
+    public void Update(){   
+        if (!isLocalPlayer) return ;
+        if (!GameManager.Instance.gameEnded){
+            if (isOurTurn && isLocalPlayer){
+                GameManager.Instance.endTurnButton.SetActive(true);
+            }
+
+        }
+    }
+
+
+
+
+    [Command]
+    public void CmdUpdateJoueur(int i)
+    {
+        RpcUpdateJoueur(i);
+    }
+
+    [ClientRpc]
+    public void RpcUpdateJoueur(int i)
+    {
+        
+        GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = false;
+        GameManager.Instance.Current_player = (GameManager.Instance.Current_player + i) % GameManager.Instance.nb_joueur;
+        Debug.Log(GameManager.Instance.Current_player);
+        GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = true;
+        GameManager.Instance.endTurnButton.SetActive(false);
+    }
+
+
+
+
+
+
      public List<GameObject>  instatiateTiles(){
         //GameObject go = GameObject.Find("Temp");
         //GameObject tmp = GameObject.Instantiate(temp);
@@ -253,29 +294,38 @@ public class PlayerManager : NetworkBehaviour
         int randInt = 0 ; 
         // génération aléaoire de la seed
         System.Random rnd = new System.Random();
+        
+        
+        if(CheckPick()){
+            if (compteur==0)
+            {
+                GameObject tuilos = Instantiate(all_tiles[0]);
+                all_tiles.RemoveAt(0);
+                Debug.Log("Objet à faire spawn : " + tuilos);
+                NetworkServer.Spawn(tuilos, connectionToClient);
+                RpcShowTiles(tuilos, "Dealt");
 
-        if (compteur==0)
-        {
-            GameObject tuilos = Instantiate(all_tiles[0]);
-            all_tiles.RemoveAt(0);
-            Debug.Log("Objet à faire spawn : " + tuilos);
-            NetworkServer.Spawn(tuilos, connectionToClient);
-            RpcShowTiles(tuilos, "Dealt");
+            }
+            else {
+                randInt=rnd.Next(0,all_tiles.Count);
+                // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
+                GameObject tuilos = Instantiate(all_tiles[randInt]);
+                all_tiles.RemoveAt(randInt);
+                Debug.Log("Objet à faire spawn : " + tuilos);
+                NetworkServer.Spawn(tuilos, connectionToClient);
+                RpcShowTiles(tuilos, "Dealt");
+            }
+            compteur++;
+        }
+        
+    }
 
+    bool CheckPick(){
+        //Debug.Log("our turn "+ isOurTurn);
+        if (isOurTurn){
+            return true;
         }
-        else {
-            // génération aléatoire d'un nombre parmi le nombre total de tuiles restantes dans la pioche
-            randInt=rnd.Next(0,all_tiles.Count);
-            // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
-            GameObject tuilos = Instantiate(all_tiles[randInt]);
-            all_tiles.RemoveAt(randInt);
-            //Debug.Log("Objet à faire spawn : " + tuilos);
-            // on spawn la tuile sur le serveur
-            NetworkServer.Spawn(tuilos, connectionToClient);
-            // on affiche la tuile chez tous les clients
-            RpcShowTiles(tuilos, "Dealt");
-        }
-        compteur++;
+        return false;
     }
 
     // Affiche les tuiles chez tous les clients
@@ -304,6 +354,7 @@ public class PlayerManager : NetworkBehaviour
         {
 
         }
+        //Debug.Log("je fais planter tout");
         
     }
 
@@ -407,3 +458,5 @@ public class PlayerManager : NetworkBehaviour
         }        
     }
 }
+
+
