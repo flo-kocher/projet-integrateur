@@ -14,7 +14,7 @@ public class MultiplayerMenu : MonoBehaviour
     private Mask mask;
     public void EnterMultiplayerMenu()
     {
-         SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Additive);
+         SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
     }
 
     public void EnterSoloMenu()
@@ -24,7 +24,7 @@ public class MultiplayerMenu : MonoBehaviour
 
     public void EnterJoinFriendsMenu()
     {
-        SceneManager.LoadScene("JFMenu",LoadSceneMode.Additive);
+        SceneManager.LoadScene("JFMenu",LoadSceneMode.Single);
     }
     public void addPlayer()
     {

@@ -56,15 +56,15 @@ app.post('/signIn', async (req,res) => {
 app.post('/logIn', async (req, res) => {
     userSchema.exists({name: req.body.name})
     .then( (doc) => {
-            if(doc != null){
-                console.log("Result :", doc)
-                res.send({success: true});
-            }
-            else {
-                res.send({success: false,
-                    message: "Not existing user"
-                })
-            }
+        if(doc != null){
+            console.log("Result :", doc)
+            res.send({success: true});
+        }
+        else {
+            res.send({success: false,
+                message: "Not existing user"
+            })
+        }
     })
     .catch( (err) => {
         console.log(err);
