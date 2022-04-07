@@ -2,11 +2,19 @@ using UnityEngine;
 using Mirror;
 
 /*
+<<<<<<< HEAD
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-room-manager
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkRoomManager.html
 
 	See Also: NetworkManager
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
+=======
+	Documentation: https://mirror-networking.com/docs/Components/NetworkRoomManager.html
+	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkRoomManager.html
+
+	See Also: NetworkManager
+	Documentation: https://mirror-networking.com/docs/Components/NetworkManager.html
+>>>>>>> origin/alpha_merge
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 */
 
@@ -44,13 +52,21 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// This is called on the server when a new client connects to the server.
     /// </summary>
     /// <param name="conn">The new connection.</param>
+<<<<<<< HEAD
     public override void OnRoomServerConnect(NetworkConnectionToClient conn) { }
+=======
+    public override void OnRoomServerConnect(NetworkConnection conn) { }
+>>>>>>> origin/alpha_merge
 
     /// <summary>
     /// This is called on the server when a client disconnects.
     /// </summary>
     /// <param name="conn">The connection that disconnected.</param>
+<<<<<<< HEAD
     public override void OnRoomServerDisconnect(NetworkConnectionToClient conn) { }
+=======
+    public override void OnRoomServerDisconnect(NetworkConnection conn) { }
+>>>>>>> origin/alpha_merge
 
     /// <summary>
     /// This is called on the server when a networked scene finishes loading.
@@ -64,7 +80,11 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// </summary>
     /// <param name="conn">The connection the player object is for.</param>
     /// <returns>The new room-player object.</returns>
+<<<<<<< HEAD
     public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
+=======
+    public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
     {
         return base.OnRoomServerCreateRoomPlayer(conn);
     }
@@ -76,7 +96,11 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// <param name="conn">The connection the player object is for.</param>
     /// <param name="roomPlayer">The room player object for this connection.</param>
     /// <returns>A new GamePlayer object.</returns>
+<<<<<<< HEAD
     public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
+=======
+    public override GameObject OnRoomServerCreateGamePlayer(NetworkConnection conn, GameObject roomPlayer)
+>>>>>>> origin/alpha_merge
     {
         return base.OnRoomServerCreateGamePlayer(conn, roomPlayer);
     }
@@ -87,7 +111,11 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// <para>See OnRoomServerCreateGamePlayer to customize the player object for the initial GamePlay scene.</para>
     /// </summary>
     /// <param name="conn">The connection the player object is for.</param>
+<<<<<<< HEAD
     public override void OnRoomServerAddPlayer(NetworkConnectionToClient conn)
+=======
+    public override void OnRoomServerAddPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
     {
         base.OnRoomServerAddPlayer(conn);
     }
@@ -100,7 +128,11 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// <param name="roomPlayer">The room player object.</param>
     /// <param name="gamePlayer">The game player object.</param>
     /// <returns>False to not allow this player to replace the room player.</returns>
+<<<<<<< HEAD
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
+=======
+    public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)
+>>>>>>> origin/alpha_merge
     {
         return base.OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer);
     }
@@ -137,16 +169,30 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// <summary>
     /// This is called on the client when it connects to server.
     /// </summary>
+<<<<<<< HEAD
     public override void OnRoomClientConnect() { }
+=======
+    /// <param name="conn">The connection that connected.</param>
+    public override void OnRoomClientConnect(NetworkConnection conn) { }
+>>>>>>> origin/alpha_merge
 
     /// <summary>
     /// This is called on the client when disconnected from a server.
     /// </summary>
+<<<<<<< HEAD
     public override void OnRoomClientDisconnect() { }
+=======
+    /// <param name="conn">The connection that disconnected.</param>
+    public override void OnRoomClientDisconnect(NetworkConnection conn) { }
+>>>>>>> origin/alpha_merge
 
     /// <summary>
     /// This is called on the client when a client is started.
     /// </summary>
+<<<<<<< HEAD
+=======
+    /// <param name="roomClient">The connection for the room.</param>
+>>>>>>> origin/alpha_merge
     public override void OnRoomStartClient() { }
 
     /// <summary>
@@ -157,7 +203,12 @@ public class #SCRIPTNAME# : NetworkRoomManager
     /// <summary>
     /// This is called on the client when the client is finished loading a new networked scene.
     /// </summary>
+<<<<<<< HEAD
     public override void OnRoomClientSceneChanged() { }
+=======
+    /// <param name="conn">The connection that finished loading a new networked scene.</param>
+    public override void OnRoomClientSceneChanged(NetworkConnection conn) { }
+>>>>>>> origin/alpha_merge
 
     /// <summary>
     /// Called on the client when adding a player to the room fails.

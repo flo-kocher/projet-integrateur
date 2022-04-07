@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,15 @@ using UnityEngine;
 
 /*
     Documentation: https://mirror-networking.gitbook.io/docs/components/network-authenticators
+=======
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using Mirror;
+
+/*
+    Authenticators: https://mirror-networking.com/docs/Components/Authenticators/
+    Documentation: https://mirror-networking.com/docs/Guides/Authentication.html
+>>>>>>> origin/alpha_merge
     API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkAuthenticator.html
 */
 
@@ -35,14 +45,22 @@ public class #SCRIPTNAME# : NetworkAuthenticator
     /// Called on server from OnServerAuthenticateInternal when a client needs to authenticate
     /// </summary>
     /// <param name="conn">Connection to client.</param>
+<<<<<<< HEAD
     public override void OnServerAuthenticate(NetworkConnectionToClient conn) { }
+=======
+    public override void OnServerAuthenticate(NetworkConnection conn) { }
+>>>>>>> origin/alpha_merge
 
     /// <summary>
     /// Called on server when the client's AuthRequestMessage arrives
     /// </summary>
     /// <param name="conn">Connection to client.</param>
     /// <param name="msg">The message payload</param>
+<<<<<<< HEAD
     public void OnAuthRequestMessage(NetworkConnectionToClient conn, AuthRequestMessage msg)
+=======
+    public void OnAuthRequestMessage(NetworkConnection conn, AuthRequestMessage msg)
+>>>>>>> origin/alpha_merge
     {
         AuthResponseMessage authResponseMessage = new AuthResponseMessage();
 
@@ -69,7 +87,12 @@ public class #SCRIPTNAME# : NetworkAuthenticator
     /// <summary>
     /// Called on client from OnClientAuthenticateInternal when a client needs to authenticate
     /// </summary>
+<<<<<<< HEAD
     public override void OnClientAuthenticate()
+=======
+    /// <param name="conn">Connection of the client.</param>
+    public override void OnClientAuthenticate(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
     {
         AuthRequestMessage authRequestMessage = new AuthRequestMessage();
 
@@ -79,11 +102,19 @@ public class #SCRIPTNAME# : NetworkAuthenticator
     /// <summary>
     /// Called on client when the server's AuthResponseMessage arrives
     /// </summary>
+<<<<<<< HEAD
+=======
+    /// <param name="conn">Connection to client.</param>
+>>>>>>> origin/alpha_merge
     /// <param name="msg">The message payload</param>
     public void OnAuthResponseMessage(AuthResponseMessage msg)
     {
         // Authentication has been accepted
+<<<<<<< HEAD
         ClientAccept();
+=======
+        ClientAccept(NetworkClient.connection);
+>>>>>>> origin/alpha_merge
     }
 
     #endregion

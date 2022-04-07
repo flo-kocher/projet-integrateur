@@ -9,7 +9,11 @@ namespace Mirror.Discovery
     public class ServerFoundUnityEvent : UnityEvent<ServerResponse> {};
 
     [DisallowMultipleComponent]
+<<<<<<< HEAD
     [AddComponentMenu("Network/Network Discovery")]
+=======
+    [AddComponentMenu("Network/NetworkDiscovery")]
+>>>>>>> origin/alpha_merge
     public class NetworkDiscovery : NetworkDiscoveryBase<ServerRequest, ServerResponse>
     {
         #region Server

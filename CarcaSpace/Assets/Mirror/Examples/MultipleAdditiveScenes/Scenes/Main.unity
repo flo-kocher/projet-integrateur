@@ -216,9 +216,14 @@ GameObject:
   - component: {fileID: 69965669}
   - component: {fileID: 69965667}
   - component: {fileID: 69965671}
+<<<<<<< HEAD
   - component: {fileID: 69965668}
   m_Layer: 0
   m_Name: NetworkManager
+=======
+  m_Layer: 0
+  m_Name: Network
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -239,6 +244,7 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
+<<<<<<< HEAD
 --- !u!114 &69965668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,6 +257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b979f26c95d34324ba005bfacfa9c4fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+=======
+>>>>>>> origin/alpha_merge
 --- !u!114 &69965669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +276,11 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
+<<<<<<< HEAD
+=======
+  serverBatching: 0
+  serverBatchInterval: 0
+>>>>>>> origin/alpha_merge
   offlineScene: 
   onlineScene: 
   transport: {fileID: 69965671}
@@ -313,15 +326,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Port: 7777
+<<<<<<< HEAD
   DualMode: 1
   NoDelay: 1
   Interval: 10
   Timeout: 10000
+=======
+  NoDelay: 1
+  Interval: 10
+>>>>>>> origin/alpha_merge
   FastResend: 2
   CongestionWindow: 0
   SendWindowSize: 4096
   ReceiveWindowSize: 4096
+<<<<<<< HEAD
   NonAlloc: 1
+=======
+>>>>>>> origin/alpha_merge
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0

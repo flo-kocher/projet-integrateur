@@ -1,5 +1,8 @@
 using System;
+<<<<<<< HEAD
 using System.Runtime.CompilerServices;
+=======
+>>>>>>> origin/alpha_merge
 using UnityEngine;
 
 namespace Mirror
@@ -7,6 +10,7 @@ namespace Mirror
     // message packing all in one place, instead of constructing headers in all
     // kinds of different places
     //
+<<<<<<< HEAD
     //   MsgType     (2 bytes)
     //   Content     (ContentSize bytes)
     public static class MessagePacking
@@ -42,6 +46,37 @@ namespace Mirror
         {
             ushort msgType = GetId<T>();
             writer.WriteUShort(msgType);
+=======
+    //   MsgType     (1-n bytes)
+    //   Content     (ContentSize bytes)
+    //
+    // -> we use varint for headers because most messages will result in 1 byte
+    //    type/size headers then instead of always
+    //    using 2 bytes for shorts.
+    // -> this reduces bandwidth by 10% if average message size is 20 bytes
+    //    (probably even shorter)
+    public static class MessagePacking
+    {
+        // message header size
+        internal const int HeaderSize = sizeof(ushort);
+
+        public static int GetId<T>() where T : struct, NetworkMessage
+        {
+            // paul: 16 bits is enough to avoid collisions
+            //  - keeps the message size small because it gets varinted
+            //  - in case of collisions,  Mirror will display an error
+            return typeof(T).FullName.GetStableHashCode() & 0xFFFF;
+        }
+
+        // pack message before sending
+        // -> NetworkWriter passed as arg so that we can use .ToArraySegment
+        //    and do an allocation free send before recycling it.
+        public static void Pack<T>(T message, NetworkWriter writer)
+            where T : struct, NetworkMessage
+        {
+            int msgType = GetId<T>();
+            writer.WriteUInt16((ushort)msgType);
+>>>>>>> origin/alpha_merge
 
             // serialize message into writer
             writer.Write(message);
@@ -51,6 +86,7 @@ namespace Mirror
         // -> pass NetworkReader so it's less strange if we create it in here
         //    and pass it upwards.
         // -> NetworkReader will point at content afterwards!
+<<<<<<< HEAD
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool Unpack(NetworkReader messageReader, out ushort msgType)
         {
@@ -58,6 +94,14 @@ namespace Mirror
             try
             {
                 msgType = messageReader.ReadUShort();
+=======
+        public static bool Unpack(NetworkReader messageReader, out int msgType)
+        {
+            // read message type (varint)
+            try
+            {
+                msgType = messageReader.ReadUInt16();
+>>>>>>> origin/alpha_merge
                 return true;
             }
             catch (System.IO.EndOfStreamException)
@@ -67,10 +111,18 @@ namespace Mirror
             }
         }
 
+<<<<<<< HEAD
         // version for handlers with channelId
         // inline! only exists for 20-30 messages and they call it all the time.
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static NetworkMessageDelegate WrapHandler<T, C>(Action<C, T, int> handler, bool requireAuthentication)
+=======
+        [Obsolete("MessagePacker.UnpackMessage was renamed to Unpack for consistency with Pack.")]
+        public static bool UnpackMessage(NetworkReader messageReader, out int msgType) =>
+            Unpack(messageReader, out msgType);
+
+        internal static NetworkMessageDelegate WrapHandler<T, C>(Action<C, T> handler, bool requireAuthentication)
+>>>>>>> origin/alpha_merge
             where T : struct, NetworkMessage
             where C : NetworkConnection
             => (conn, reader, channelId) =>
@@ -88,8 +140,11 @@ namespace Mirror
             // let's catch them all and then disconnect that connection to avoid
             // further attacks.
             T message = default;
+<<<<<<< HEAD
             // record start position for NetworkDiagnostics because reader might contain multiple messages if using batching
             int startPos = reader.Position;
+=======
+>>>>>>> origin/alpha_merge
             try
             {
                 if (requireAuthentication && !conn.isAuthenticated)
@@ -114,15 +169,21 @@ namespace Mirror
             }
             finally
             {
+<<<<<<< HEAD
                 int endPos = reader.Position;
                 // TODO: Figure out the correct channel
                 NetworkDiagnostics.OnReceive(message, channelId, endPos - startPos);
+=======
+                // TODO: Figure out the correct channel
+                NetworkDiagnostics.OnReceive(message, channelId, reader.Length);
+>>>>>>> origin/alpha_merge
             }
 
             // user handler exception should not stop the whole server
             try
             {
                 // user implemented handler
+<<<<<<< HEAD
                 handler((C)conn, message, channelId);
             }
             catch (Exception e)
@@ -144,5 +205,15 @@ namespace Mirror
             void Wrapped(C conn, T msg, int _) => handler(conn, msg);
             return WrapHandler((Action<C, T, int>) Wrapped, requireAuthentication);
         }
+=======
+                handler((C)conn, message);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Exception in MessageHandler: {e.GetType().Name} {e.Message}\n{e.StackTrace}");
+                conn.Disconnect();
+            }
+        };
+>>>>>>> origin/alpha_merge
     }
 }

@@ -6,12 +6,18 @@ using UnityEngine;
 namespace Mirror
 {
     [DisallowMultipleComponent]
+<<<<<<< HEAD
     [HelpURL("https://mirror-networking.gitbook.io/docs/guides/interest-management")]
     public abstract class InterestManagement : MonoBehaviour
     {
         // Awake configures InterestManagement in NetworkServer/Client
         // Do NOT check for active server or client here.
         // Awake must always set the static aoi references.
+=======
+    public abstract class InterestManagement : MonoBehaviour
+    {
+        // Awake configures InterestManagement in NetworkServer
+>>>>>>> origin/alpha_merge
         void Awake()
         {
             if (NetworkServer.aoi == null)
@@ -19,6 +25,7 @@ namespace Mirror
                 NetworkServer.aoi = this;
             }
             else Debug.LogError($"Only one InterestManagement component allowed. {NetworkServer.aoi.GetType()} has been set up already.");
+<<<<<<< HEAD
 
             if (NetworkClient.aoi == null)
             {
@@ -30,12 +37,20 @@ namespace Mirror
         [ServerCallback]
         public virtual void Reset() {}
 
+=======
+        }
+
+>>>>>>> origin/alpha_merge
         // Callback used by the visibility system to determine if an observer
         // (player) can see the NetworkIdentity. If this function returns true,
         // the network connection will be added as an observer.
         //   conn: Network connection of a player.
         //   returns True if the player can see this object.
+<<<<<<< HEAD
         public abstract bool OnCheckObserver(NetworkIdentity identity, NetworkConnectionToClient newObserver);
+=======
+        public abstract bool OnCheckObserver(NetworkIdentity identity, NetworkConnection newObserver);
+>>>>>>> origin/alpha_merge
 
         // rebuild observers for the given NetworkIdentity.
         // Server will automatically spawn/despawn added/removed ones.
@@ -54,7 +69,11 @@ namespace Mirror
         //
         // Mirror maintains .observing automatically in the background. best of
         // both worlds without any worrying now!
+<<<<<<< HEAD
         public abstract void OnRebuildObservers(NetworkIdentity identity, HashSet<NetworkConnectionToClient> newObservers);
+=======
+        public abstract void OnRebuildObservers(NetworkIdentity identity, HashSet<NetworkConnection> newObservers, bool initialize);
+>>>>>>> origin/alpha_merge
 
         // helper function to trigger a full rebuild.
         // most implementations should call this in a certain interval.
@@ -62,14 +81,21 @@ namespace Mirror
         // scene changes and so on.
         //
         // IMPORTANT: check if NetworkServer.active when using Update()!
+<<<<<<< HEAD
         [ServerCallback]
         protected void RebuildAll()
         {
             foreach (NetworkIdentity identity in NetworkServer.spawned.Values)
+=======
+        protected void RebuildAll()
+        {
+            foreach (NetworkIdentity identity in NetworkIdentity.spawned.Values)
+>>>>>>> origin/alpha_merge
             {
                 NetworkServer.RebuildObservers(identity, false);
             }
         }
+<<<<<<< HEAD
 
         // Callback used by the visibility system for objects on a host.
         // Objects on a host (with a local client) cannot be disabled or
@@ -95,5 +121,7 @@ namespace Mirror
         // (useful for 'only rebuild if changed' interest management algorithms)
         [ServerCallback]
         public virtual void OnDestroyed(NetworkIdentity identity) {}
+=======
+>>>>>>> origin/alpha_merge
     }
 }

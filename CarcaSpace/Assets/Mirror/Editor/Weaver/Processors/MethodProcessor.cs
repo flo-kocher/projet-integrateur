@@ -7,6 +7,7 @@ namespace Mirror.Weaver
     {
         const string RpcPrefix = "UserCode_";
 
+<<<<<<< HEAD
         // For a function like
         //   [ClientRpc] void RpcTest(int value),
         // Weaver substitutes the method and moves the code to a new method:
@@ -30,6 +31,36 @@ namespace Mirror.Weaver
             cmd.IsPublic = false;
             cmd.IsFamily = true;
 
+=======
+        // creates a method substitute
+        // For example, if we have this:
+        //  public void CmdThrust(float thrusting, int spin)
+        //  {
+        //      xxxxx
+        //  }
+        //
+        //  it will substitute the method and move the code to a new method with a provided name
+        //  for example:
+        //
+        //  public void CmdTrust(float thrusting, int spin)
+        //  {
+        //  }
+        //
+        //  public void <newName>(float thrusting, int spin)
+        //  {
+        //      xxxxx
+        //  }
+        //
+        //  Note that all the calls to the method remain untouched
+        //
+        //  the original method definition loses all code
+        //  this returns the newly created method with all the user provided code
+        public static MethodDefinition SubstituteMethod(TypeDefinition td, MethodDefinition md)
+        {
+            string newName = RpcPrefix + md.Name;
+            MethodDefinition cmd = new MethodDefinition(newName, md.Attributes, md.ReturnType);
+
+>>>>>>> origin/alpha_merge
             // add parameters
             foreach (ParameterDefinition pd in md.Parameters)
             {
@@ -52,6 +83,7 @@ namespace Mirror.Weaver
 
             td.Methods.Add(cmd);
 
+<<<<<<< HEAD
             FixRemoteCallToBaseMethod(Log, td, cmd, ref WeavingFailed);
             return cmd;
         }
@@ -67,6 +99,19 @@ namespace Mirror.Weaver
         // with
         //   UserCode_RpcTest(value)
         public static void FixRemoteCallToBaseMethod(Logger Log, TypeDefinition type, MethodDefinition method, ref bool WeavingFailed)
+=======
+            FixRemoteCallToBaseMethod(td, cmd);
+            return cmd;
+        }
+
+        /// <summary>
+        /// Finds and fixes call to base methods within remote calls
+        /// <para>For example, changes `base.CmdDoSomething` to `base.CallCmdDoSomething` within `this.CallCmdDoSomething`</para>
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="method"></param>
+        public static void FixRemoteCallToBaseMethod(TypeDefinition type, MethodDefinition method)
+>>>>>>> origin/alpha_merge
         {
             string callName = method.Name;
 
@@ -80,6 +125,7 @@ namespace Mirror.Weaver
 
             foreach (Instruction instruction in method.Body.Instructions)
             {
+<<<<<<< HEAD
                 // is this instruction a Call to a method?
                 // if yes, output the method so we can check it.
                 if (IsCallToMethod(instruction, out MethodDefinition calledMethod))
@@ -117,6 +163,30 @@ namespace Mirror.Weaver
 
                         instruction.Operand = baseMethod;
                     }
+=======
+                // if call to base.CmdDoSomething within this.CallCmdDoSomething
+                if (IsCallToMethod(instruction, out MethodDefinition calledMethod) &&
+                    calledMethod.Name == baseRemoteCallName)
+                {
+                    TypeDefinition baseType = type.BaseType.Resolve();
+                    MethodDefinition baseMethod = baseType.GetMethodInBaseType(callName);
+
+                    if (baseMethod == null)
+                    {
+                        Weaver.Error($"Could not find base method for {callName}", method);
+                        return;
+                    }
+
+                    if (!baseMethod.IsVirtual)
+                    {
+                        Weaver.Error($"Could not find base method that was virutal {callName}", method);
+                        return;
+                    }
+
+                    instruction.Operand = baseMethod;
+
+                    Weaver.DLog(type, "Replacing call to '{0}' with '{1}' inside '{2}'", calledMethod.FullName, baseMethod.FullName, method.FullName);
+>>>>>>> origin/alpha_merge
                 }
             }
         }

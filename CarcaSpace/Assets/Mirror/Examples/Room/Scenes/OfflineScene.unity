@@ -54,7 +54,11 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
+<<<<<<< HEAD
     serializedVersion: 12
+=======
+    serializedVersion: 10
+>>>>>>> origin/alpha_merge
     m_Resolution: 2
     m_BakeResolution: 40
     m_AtlasSize: 1024
@@ -62,7 +66,10 @@ LightmapSettings:
     m_AOMaxDistance: 1
     m_CompAOExponent: 1
     m_CompAOExponentDirect: 0
+<<<<<<< HEAD
     m_ExtractAmbientOcclusion: 0
+=======
+>>>>>>> origin/alpha_merge
     m_Padding: 2
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
@@ -77,6 +84,7 @@ LightmapSettings:
     m_PVRDirectSampleCount: 32
     m_PVRSampleCount: 500
     m_PVRBounces: 2
+<<<<<<< HEAD
     m_PVREnvironmentSampleCount: 500
     m_PVREnvironmentReferencePointCount: 2048
     m_PVRFilteringMode: 2
@@ -87,6 +95,12 @@ LightmapSettings:
     m_PVRFilterTypeIndirect: 0
     m_PVRFilterTypeAO: 0
     m_PVREnvironmentMIS: 0
+=======
+    m_PVRFilterTypeDirect: 0
+    m_PVRFilterTypeIndirect: 0
+    m_PVRFilterTypeAO: 0
+    m_PVRFilteringMode: 2
+>>>>>>> origin/alpha_merge
     m_PVRCulling: 1
     m_PVRFilteringGaussRadiusDirect: 1
     m_PVRFilteringGaussRadiusIndirect: 5
@@ -94,9 +108,13 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaDirect: 0.5
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
+<<<<<<< HEAD
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
+=======
+    m_ShowResolutionOverlay: 1
+>>>>>>> origin/alpha_merge
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -150,10 +168,16 @@ Camera:
   m_ClearFlags: 1
   m_BackGroundColor: {r: 0.23429157, g: 0.254717, b: 0.23546094, a: 0}
   m_projectionMatrixMode: 1
+<<<<<<< HEAD
   m_GateFitMode: 2
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
+=======
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_GateFitMode: 2
+>>>>>>> origin/alpha_merge
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
@@ -208,7 +232,11 @@ GameObject:
   - component: {fileID: 2008127831}
   - component: {fileID: 2008127830}
   m_Layer: 0
+<<<<<<< HEAD
   m_Name: NetworkRoomManager
+=======
+  m_Name: RoomManager
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -227,15 +255,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Port: 7777
+<<<<<<< HEAD
   DualMode: 1
   NoDelay: 1
   Interval: 10
   Timeout: 10000
+=======
+  NoDelay: 1
+  Interval: 10
+>>>>>>> origin/alpha_merge
   FastResend: 2
   CongestionWindow: 0
   SendWindowSize: 4096
   ReceiveWindowSize: 4096
+<<<<<<< HEAD
   NonAlloc: 1
+=======
+>>>>>>> origin/alpha_merge
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
@@ -252,10 +288,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dontDestroyOnLoad: 1
+<<<<<<< HEAD
   PersistNetworkManagerToOfflineScene: 0
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
+=======
+  runInBackground: 1
+  autoStartServerBuild: 1
+  showDebugMessages: 0
+  serverTickRate: 30
+  serverBatching: 0
+  serverBatchInterval: 0
+>>>>>>> origin/alpha_merge
   offlineScene: Assets/Mirror/Examples/Room/Scenes/OfflineScene.unity
   onlineScene: Assets/Mirror/Examples/Room/Scenes/RoomScene.unity
   transport: {fileID: 2008127830}

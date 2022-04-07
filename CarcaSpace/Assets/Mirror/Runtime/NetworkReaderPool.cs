@@ -1,5 +1,8 @@
 using System;
+<<<<<<< HEAD
 using System.Runtime.CompilerServices;
+=======
+>>>>>>> origin/alpha_merge
 
 namespace Mirror
 {
@@ -19,6 +22,7 @@ namespace Mirror
         // position and array before reusing.
         static readonly Pool<PooledNetworkReader> Pool = new Pool<PooledNetworkReader>(
             // byte[] will be assigned in GetReader
+<<<<<<< HEAD
             () => new PooledNetworkReader(new byte[]{}),
             // initial capacity to avoid allocations in the first few frames
             1000
@@ -26,26 +30,48 @@ namespace Mirror
 
         /// <summary>Get the next reader in the pool. If pool is empty, creates a new Reader</summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+=======
+            () => new PooledNetworkReader(new byte[]{})
+        );
+
+        /// <summary>Get the next reader in the pool. If pool is empty, creates a new Reader</summary>
+>>>>>>> origin/alpha_merge
         public static PooledNetworkReader GetReader(byte[] bytes)
         {
             // grab from pool & set buffer
             PooledNetworkReader reader = Pool.Take();
+<<<<<<< HEAD
             reader.SetBuffer(bytes);
+=======
+            reader.buffer = new ArraySegment<byte>(bytes);
+            reader.Position = 0;
+>>>>>>> origin/alpha_merge
             return reader;
         }
 
         /// <summary>Get the next reader in the pool. If pool is empty, creates a new Reader</summary>
+<<<<<<< HEAD
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+=======
+>>>>>>> origin/alpha_merge
         public static PooledNetworkReader GetReader(ArraySegment<byte> segment)
         {
             // grab from pool & set buffer
             PooledNetworkReader reader = Pool.Take();
+<<<<<<< HEAD
             reader.SetBuffer(segment);
+=======
+            reader.buffer = segment;
+            reader.Position = 0;
+>>>>>>> origin/alpha_merge
             return reader;
         }
 
         /// <summary>Returns a reader to the pool.</summary>
+<<<<<<< HEAD
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+=======
+>>>>>>> origin/alpha_merge
         public static void Recycle(PooledNetworkReader reader)
         {
             Pool.Return(reader);

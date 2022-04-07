@@ -13,9 +13,15 @@ namespace Mirror
     /// <para>If the object has authority on the server, then it should be animated on the server and state information will be sent to all clients. This is common for objects not related to a specific client, such as an enemy unit.</para>
     /// <para>The NetworkAnimator synchronizes all animation parameters of the selected Animator. It does not automatically synchronize triggers. The function SetTrigger can by used by an object with authority to fire an animation trigger on other clients.</para>
     /// </remarks>
+<<<<<<< HEAD
     [AddComponentMenu("Network/Network Animator")]
     [RequireComponent(typeof(NetworkIdentity))]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-animator")]
+=======
+    [AddComponentMenu("Network/NetworkAnimator")]
+    [RequireComponent(typeof(NetworkIdentity))]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkAnimator.html")]
+>>>>>>> origin/alpha_merge
     public class NetworkAnimator : NetworkBehaviour
     {
         [Header("Authority")]
@@ -30,6 +36,10 @@ namespace Mirror
         [Tooltip("Animator that will have parameters synchronized")]
         public Animator animator;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/alpha_merge
         /// <summary>
         /// Syncs animator.speed
         /// </summary>
@@ -47,7 +57,11 @@ namespace Mirror
         int[] animationHash;
         int[] transitionHash;
         float[] layerWeight;
+<<<<<<< HEAD
         double nextSendTime;
+=======
+        float nextSendTime;
+>>>>>>> origin/alpha_merge
 
         bool SendMessagesAllowed
         {
@@ -133,6 +147,16 @@ namespace Mirror
             }
         }
 
+<<<<<<< HEAD
+=======
+        void CmdSetAnimatorSpeed(float newSpeed)
+        {
+            // set animator
+            animator.speed = newSpeed;
+            animatorSpeed = newSpeed;
+        }
+
+>>>>>>> origin/alpha_merge
         void OnAnimatorSpeedChanged(float _, float value)
         {
             // skip if host or client with authority
@@ -188,7 +212,11 @@ namespace Mirror
 
         void CheckSendRate()
         {
+<<<<<<< HEAD
             double now = NetworkTime.localTime;
+=======
+            float now = Time.time;
+>>>>>>> origin/alpha_merge
             if (SendMessagesAllowed && syncInterval >= 0 && now > nextSendTime)
             {
                 nextSendTime = now + syncInterval;
@@ -303,7 +331,11 @@ namespace Mirror
         bool WriteParameters(NetworkWriter writer, bool forceAll = false)
         {
             ulong dirtyBits = forceAll ? (~0ul) : NextDirtyBits();
+<<<<<<< HEAD
             writer.WriteULong(dirtyBits);
+=======
+            writer.WriteUInt64(dirtyBits);
+>>>>>>> origin/alpha_merge
             for (int i = 0; i < parameters.Length; i++)
             {
                 if ((dirtyBits & (1ul << i)) == 0)
@@ -313,17 +345,29 @@ namespace Mirror
                 if (par.type == AnimatorControllerParameterType.Int)
                 {
                     int newIntValue = animator.GetInteger(par.nameHash);
+<<<<<<< HEAD
                     writer.WriteInt(newIntValue);
+=======
+                    writer.WriteInt32(newIntValue);
+>>>>>>> origin/alpha_merge
                 }
                 else if (par.type == AnimatorControllerParameterType.Float)
                 {
                     float newFloatValue = animator.GetFloat(par.nameHash);
+<<<<<<< HEAD
                     writer.WriteFloat(newFloatValue);
+=======
+                    writer.WriteSingle(newFloatValue);
+>>>>>>> origin/alpha_merge
                 }
                 else if (par.type == AnimatorControllerParameterType.Bool)
                 {
                     bool newBoolValue = animator.GetBool(par.nameHash);
+<<<<<<< HEAD
                     writer.WriteBool(newBoolValue);
+=======
+                    writer.WriteBoolean(newBoolValue);
+>>>>>>> origin/alpha_merge
                 }
             }
             return dirtyBits != 0;
@@ -334,7 +378,11 @@ namespace Mirror
             bool animatorEnabled = animator.enabled;
             // need to read values from NetworkReader even if animator is disabled
 
+<<<<<<< HEAD
             ulong dirtyBits = reader.ReadULong();
+=======
+            ulong dirtyBits = reader.ReadUInt64();
+>>>>>>> origin/alpha_merge
             for (int i = 0; i < parameters.Length; i++)
             {
                 if ((dirtyBits & (1ul << i)) == 0)
@@ -343,19 +391,31 @@ namespace Mirror
                 AnimatorControllerParameter par = parameters[i];
                 if (par.type == AnimatorControllerParameterType.Int)
                 {
+<<<<<<< HEAD
                     int newIntValue = reader.ReadInt();
+=======
+                    int newIntValue = reader.ReadInt32();
+>>>>>>> origin/alpha_merge
                     if (animatorEnabled)
                         animator.SetInteger(par.nameHash, newIntValue);
                 }
                 else if (par.type == AnimatorControllerParameterType.Float)
                 {
+<<<<<<< HEAD
                     float newFloatValue = reader.ReadFloat();
+=======
+                    float newFloatValue = reader.ReadSingle();
+>>>>>>> origin/alpha_merge
                     if (animatorEnabled)
                         animator.SetFloat(par.nameHash, newFloatValue);
                 }
                 else if (par.type == AnimatorControllerParameterType.Bool)
                 {
+<<<<<<< HEAD
                     bool newBoolValue = reader.ReadBool();
+=======
+                    bool newBoolValue = reader.ReadBoolean();
+>>>>>>> origin/alpha_merge
                     if (animatorEnabled)
                         animator.SetBool(par.nameHash, newBoolValue);
                 }
@@ -378,16 +438,28 @@ namespace Mirror
                     if (animator.IsInTransition(i))
                     {
                         AnimatorStateInfo st = animator.GetNextAnimatorStateInfo(i);
+<<<<<<< HEAD
                         writer.WriteInt(st.fullPathHash);
                         writer.WriteFloat(st.normalizedTime);
+=======
+                        writer.WriteInt32(st.fullPathHash);
+                        writer.WriteSingle(st.normalizedTime);
+>>>>>>> origin/alpha_merge
                     }
                     else
                     {
                         AnimatorStateInfo st = animator.GetCurrentAnimatorStateInfo(i);
+<<<<<<< HEAD
                         writer.WriteInt(st.fullPathHash);
                         writer.WriteFloat(st.normalizedTime);
                     }
                     writer.WriteFloat(animator.GetLayerWeight(i));
+=======
+                        writer.WriteInt32(st.fullPathHash);
+                        writer.WriteSingle(st.normalizedTime);
+                    }
+                    writer.WriteSingle(animator.GetLayerWeight(i));
+>>>>>>> origin/alpha_merge
                 }
                 WriteParameters(writer, initialState);
                 return true;
@@ -407,9 +479,15 @@ namespace Mirror
             {
                 for (int i = 0; i < animator.layerCount; i++)
                 {
+<<<<<<< HEAD
                     int stateHash = reader.ReadInt();
                     float normalizedTime = reader.ReadFloat();
                     animator.SetLayerWeight(i, reader.ReadFloat());
+=======
+                    int stateHash = reader.ReadInt32();
+                    float normalizedTime = reader.ReadSingle();
+                    animator.SetLayerWeight(i, reader.ReadSingle());
+>>>>>>> origin/alpha_merge
                     animator.Play(stateHash, i, normalizedTime);
                 }
 
@@ -524,7 +602,11 @@ namespace Mirror
             if (!clientAuthority)
                 return;
 
+<<<<<<< HEAD
             //Debug.Log($"OnAnimationMessage for netId {netId}");
+=======
+            // Debug.Log("OnAnimationMessage for netId=" + netId);
+>>>>>>> origin/alpha_merge
 
             // handle and broadcast
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(parameters))
@@ -585,6 +667,7 @@ namespace Mirror
             RpcOnAnimationResetTriggerClientMessage(hash);
         }
 
+<<<<<<< HEAD
         [Command]
         void CmdSetAnimatorSpeed(float newSpeed)
         {
@@ -593,6 +676,8 @@ namespace Mirror
             animatorSpeed = newSpeed;
         }
 
+=======
+>>>>>>> origin/alpha_merge
         #endregion
 
         #region client message handlers

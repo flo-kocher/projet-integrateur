@@ -11,6 +11,10 @@ namespace Mirror.SimpleWeb
         readonly TcpConfig tcpConfig;
         Connection conn;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/alpha_merge
         internal WebSocketClientStandAlone(int maxMessageSize, int maxMessagesPerTick, TcpConfig tcpConfig) : base(maxMessageSize, maxMessagesPerTick)
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
@@ -25,6 +29,7 @@ namespace Mirror.SimpleWeb
         public override void Connect(Uri serverAddress)
         {
             state = ClientState.Connecting;
+<<<<<<< HEAD
 
             // create connection here before thread so that send queue exist before connected
             TcpClient client = new TcpClient();
@@ -33,6 +38,8 @@ namespace Mirror.SimpleWeb
             // create connection object here so dispose correctly disconnects on failed connect
             conn = new Connection(client, AfterConnectionDisposed);
 
+=======
+>>>>>>> origin/alpha_merge
             Thread receiveThread = new Thread(() => ConnectAndReceiveLoop(serverAddress));
             receiveThread.IsBackground = true;
             receiveThread.Start();
@@ -42,8 +49,16 @@ namespace Mirror.SimpleWeb
         {
             try
             {
+<<<<<<< HEAD
                 // connection created above
                 TcpClient client = conn.client;
+=======
+                TcpClient client = new TcpClient();
+                tcpConfig.ApplyTo(client);
+
+                // create connection object here so dispose correctly disconnects on failed connect
+                conn = new Connection(client, AfterConnectionDisposed);
+>>>>>>> origin/alpha_merge
                 conn.receiveThread = Thread.CurrentThread;
 
                 try

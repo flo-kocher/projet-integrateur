@@ -32,7 +32,11 @@ namespace Mirror.SimpleWeb
 
                 string expectedResponse = Convert.ToBase64String(keySumHash);
                 string handshake =
+<<<<<<< HEAD
                     $"GET {uri.PathAndQuery} HTTP/1.1\r\n" +
+=======
+                    $"GET /chat HTTP/1.1\r\n" +
+>>>>>>> origin/alpha_merge
                     $"Host: {uri.Host}:{uri.Port}\r\n" +
                     $"Upgrade: websocket\r\n" +
                     $"Connection: Upgrade\r\n" +
@@ -55,7 +59,11 @@ namespace Mirror.SimpleWeb
                 string responseString = Encoding.ASCII.GetString(responseBuffer, 0, lengthOrNull.Value);
 
                 string acceptHeader = "Sec-WebSocket-Accept: ";
+<<<<<<< HEAD
                 int startIndex = responseString.IndexOf(acceptHeader, StringComparison.InvariantCultureIgnoreCase) + acceptHeader.Length;
+=======
+                int startIndex = responseString.IndexOf(acceptHeader) + acceptHeader.Length;
+>>>>>>> origin/alpha_merge
                 int endIndex = responseString.IndexOf("\r\n", startIndex);
                 string responseKey = responseString.Substring(startIndex, endIndex - startIndex);
 

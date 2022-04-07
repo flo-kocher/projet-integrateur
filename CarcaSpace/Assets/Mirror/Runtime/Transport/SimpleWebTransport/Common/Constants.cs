@@ -32,11 +32,14 @@ namespace Mirror.SimpleWeb
         public const int ShortLength = 2;
 
         /// <summary>
+<<<<<<< HEAD
         /// bytes for long length
         /// </summary>
         public const int LongLength = 8;
 
         /// <summary>
+=======
+>>>>>>> origin/alpha_merge
         /// Message mask is always 4 bytes
         /// </summary>
         public const int MaskSize = 4;

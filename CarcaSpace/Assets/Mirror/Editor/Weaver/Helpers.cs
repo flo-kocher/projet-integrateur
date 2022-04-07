@@ -1,18 +1,27 @@
 using System.IO;
+<<<<<<< HEAD
 using System.Linq;
 using System.Reflection;
 using Mono.CecilX;
+=======
+using System.Reflection;
+>>>>>>> origin/alpha_merge
 
 namespace Mirror.Weaver
 {
     static class Helpers
     {
         // This code is taken from SerializationWeaver
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/alpha_merge
         public static string UnityEngineDllDirectoryName()
         {
             string directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
             return directoryName?.Replace(@"file:\", "");
         }
+<<<<<<< HEAD
 
         public static bool IsEditorAssembly(AssemblyDefinition currentAssembly)
         {
@@ -22,5 +31,7 @@ namespace Mirror.Weaver
                 assemblyReference.Name.StartsWith(nameof(UnityEditor))
             );
         }
+=======
+>>>>>>> origin/alpha_merge
     }
 }

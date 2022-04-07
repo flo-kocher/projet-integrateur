@@ -15,21 +15,52 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         {
             if (characterController == null)
                 characterController = GetComponent<CharacterController>();
+<<<<<<< HEAD
 
             characterController.enabled = false;
             GetComponent<Rigidbody>().isKinematic = true;
             GetComponent<NetworkTransform>().clientAuthority = true;
+=======
+        }
+
+        void Start()
+        {
+            characterController.enabled = isLocalPlayer;
+>>>>>>> origin/alpha_merge
         }
 
         public override void OnStartLocalPlayer()
         {
+<<<<<<< HEAD
             characterController.enabled = true;
+=======
+            Camera.main.orthographic = false;
+            Camera.main.transform.SetParent(transform);
+            Camera.main.transform.localPosition = new Vector3(0f, 3f, -8f);
+            Camera.main.transform.localEulerAngles = new Vector3(10f, 0f, 0f);
+        }
+
+        void OnDisable()
+        {
+            if (isLocalPlayer && Camera.main != null)
+            {
+                Camera.main.orthographic = true;
+                Camera.main.transform.SetParent(null);
+                SceneManager.MoveGameObjectToScene(Camera.main.gameObject, SceneManager.GetActiveScene());
+                Camera.main.transform.localPosition = new Vector3(0f, 70f, 0f);
+                Camera.main.transform.localEulerAngles = new Vector3(90f, 0f, 0f);
+            }
+>>>>>>> origin/alpha_merge
         }
 
         [Header("Movement Settings")]
         public float moveSpeed = 8f;
         public float turnSensitivity = 5f;
+<<<<<<< HEAD
         public float maxTurnSpeed = 100f;
+=======
+        public float maxTurnSpeed = 150f;
+>>>>>>> origin/alpha_merge
 
         [Header("Diagnostics")]
         public float horizontal;
@@ -42,7 +73,11 @@ namespace Mirror.Examples.MultipleAdditiveScenes
 
         void Update()
         {
+<<<<<<< HEAD
             if (!isLocalPlayer || characterController == null || !characterController.enabled)
+=======
+            if (!isLocalPlayer || !characterController.enabled)
+>>>>>>> origin/alpha_merge
                 return;
 
             horizontal = Input.GetAxis("Horizontal");
@@ -74,7 +109,11 @@ namespace Mirror.Examples.MultipleAdditiveScenes
 
         void FixedUpdate()
         {
+<<<<<<< HEAD
             if (!isLocalPlayer || characterController == null || !characterController.enabled)
+=======
+            if (!isLocalPlayer || characterController == null)
+>>>>>>> origin/alpha_merge
                 return;
 
             transform.Rotate(0f, turn * Time.fixedDeltaTime, 0f);

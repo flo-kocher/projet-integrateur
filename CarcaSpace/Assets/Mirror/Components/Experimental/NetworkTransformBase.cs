@@ -21,8 +21,11 @@ using UnityEngine;
 
 namespace Mirror.Experimental
 {
+<<<<<<< HEAD
     // Deprecated 2022-01-18
     [Obsolete("Use the default NetworkTransform instead, it has proper snapshot interpolation.")]
+=======
+>>>>>>> origin/alpha_merge
     public abstract class NetworkTransformBase : NetworkBehaviour
     {
         // target transform to sync. can be on a child.
@@ -463,7 +466,11 @@ namespace Mirror.Experimental
         {
             DoTeleport(newPosition, Compression.DecompressQuaternion(newPackedRotation));
 
+<<<<<<< HEAD
             // only send finished if is owner and is ClientAuthority on server
+=======
+            // only send finished if is owner and is ClientAuthority on server 
+>>>>>>> origin/alpha_merge
             if (hasAuthority && isClientAuthority)
                 CmdTeleportFinished();
         }

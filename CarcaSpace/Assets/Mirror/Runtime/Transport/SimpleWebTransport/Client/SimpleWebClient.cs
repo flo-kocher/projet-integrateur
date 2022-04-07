@@ -28,7 +28,11 @@ namespace Mirror.SimpleWeb
 
         readonly int maxMessagesPerTick;
         protected readonly int maxMessageSize;
+<<<<<<< HEAD
         public readonly ConcurrentQueue<Message> receiveQueue = new ConcurrentQueue<Message>();
+=======
+        protected readonly ConcurrentQueue<Message> receiveQueue = new ConcurrentQueue<Message>();
+>>>>>>> origin/alpha_merge
         protected readonly BufferPool bufferPool;
 
         protected ClientState state;
@@ -47,6 +51,7 @@ namespace Mirror.SimpleWeb
         public event Action<ArraySegment<byte>> onData;
         public event Action<Exception> onError;
 
+<<<<<<< HEAD
         /// <summary>
         /// Processes all new messages
         /// </summary>
@@ -66,6 +71,14 @@ namespace Mirror.SimpleWeb
             // check enabled every time in case behaviour was disabled after data
             while (
                 (skipEnabled || behaviour.enabled) &&
+=======
+        public void ProcessMessageQueue(MonoBehaviour behaviour)
+        {
+            int processedCount = 0;
+            // check enabled every time in case behaviour was disabled after data
+            while (
+                behaviour.enabled &&
+>>>>>>> origin/alpha_merge
                 processedCount < maxMessagesPerTick &&
                 // Dequeue last
                 receiveQueue.TryDequeue(out Message next)

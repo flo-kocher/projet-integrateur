@@ -4,8 +4,13 @@ using UnityEngine;
 namespace Mirror.Discovery
 {
     [DisallowMultipleComponent]
+<<<<<<< HEAD
     [AddComponentMenu("Network/Network Discovery HUD")]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-discovery")]
+=======
+    [AddComponentMenu("Network/NetworkDiscoveryHUD")]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkDiscovery.html")]
+>>>>>>> origin/alpha_merge
     [RequireComponent(typeof(NetworkDiscovery))]
     public class NetworkDiscoveryHUD : MonoBehaviour
     {
@@ -31,16 +36,27 @@ namespace Mirror.Discovery
             if (NetworkManager.singleton == null)
                 return;
 
+<<<<<<< HEAD
             if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
                 DrawGUI();
 
             if (NetworkServer.active || NetworkClient.active)
                 StopButtons();
+=======
+            if (NetworkServer.active || NetworkClient.active)
+                return;
+
+            if (!NetworkClient.isConnected && !NetworkServer.active && !NetworkClient.active)
+                DrawGUI();
+>>>>>>> origin/alpha_merge
         }
 
         void DrawGUI()
         {
+<<<<<<< HEAD
             GUILayout.BeginArea(new Rect(10, 10, 300, 500));
+=======
+>>>>>>> origin/alpha_merge
             GUILayout.BeginHorizontal();
 
             if (GUILayout.Button("Find Servers"))
@@ -62,6 +78,10 @@ namespace Mirror.Discovery
             {
                 discoveredServers.Clear();
                 NetworkManager.singleton.StartServer();
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/alpha_merge
                 networkDiscovery.AdvertiseServer();
             }
 
@@ -79,6 +99,7 @@ namespace Mirror.Discovery
                     Connect(info);
 
             GUILayout.EndScrollView();
+<<<<<<< HEAD
             GUILayout.EndArea();
         }
 
@@ -115,11 +136,16 @@ namespace Mirror.Discovery
             }
 
             GUILayout.EndArea();
+=======
+>>>>>>> origin/alpha_merge
         }
 
         void Connect(ServerResponse info)
         {
+<<<<<<< HEAD
             networkDiscovery.StopDiscovery();
+=======
+>>>>>>> origin/alpha_merge
             NetworkManager.singleton.StartClient(info.uri);
         }
 

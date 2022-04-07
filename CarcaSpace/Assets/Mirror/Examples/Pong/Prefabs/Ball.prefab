@@ -128,7 +128,11 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
+<<<<<<< HEAD
   m_Material: {fileID: 6200000, guid: 97a3e4cddb8635c4eba1265f44d106bf, type: 2}
+=======
+  m_Material: {fileID: 0}
+>>>>>>> origin/alpha_merge
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
@@ -148,7 +152,11 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
+<<<<<<< HEAD
   m_AssetId: 5f7a7f34494ed40268eff49dbf9168bf
+=======
+  m_AssetId: 
+>>>>>>> origin/alpha_merge
   hasSpawned: 0
 --- !u!114 &114692463781779748
 MonoBehaviour:
@@ -181,6 +189,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   clientAuthority: 0
+<<<<<<< HEAD
   sendInterval: 0.05
   syncPosition: 1
   syncRotation: 0
@@ -195,3 +204,11 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+=======
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 1
+  interpolateScale: 0
+  syncScale: 0
+>>>>>>> origin/alpha_merge

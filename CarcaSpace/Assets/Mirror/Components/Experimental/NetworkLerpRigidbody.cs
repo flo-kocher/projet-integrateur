@@ -2,8 +2,13 @@ using UnityEngine;
 
 namespace Mirror.Experimental
 {
+<<<<<<< HEAD
     [AddComponentMenu("Network/ Experimental/Network Lerp Rigidbody")]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-lerp-rigidbody")]
+=======
+    [AddComponentMenu("Network/Experimental/NetworkLerpRigidbody")]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkLerpRigidbody.html")]
+>>>>>>> origin/alpha_merge
     public class NetworkLerpRigidbody : NetworkBehaviour
     {
         [Header("Settings")]
@@ -85,7 +90,11 @@ namespace Mirror.Experimental
             target.velocity = Vector3.Lerp(target.velocity, targetVelocity, lerpVelocityAmount);
             target.position = Vector3.Lerp(target.position, targetPosition, lerpPositionAmount);
             // add velocity to position as position would have moved on server at that velocity
+<<<<<<< HEAD
             target.position += target.velocity * Time.fixedDeltaTime;
+=======
+            targetPosition += target.velocity * Time.fixedDeltaTime;
+>>>>>>> origin/alpha_merge
 
             // TODO does this also need to sync acceleration so and update velocity?
         }

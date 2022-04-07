@@ -1,5 +1,9 @@
 using System;
+<<<<<<< HEAD
 using System.Runtime.CompilerServices;
+=======
+using System.Runtime.InteropServices;
+>>>>>>> origin/alpha_merge
 using System.Security.Cryptography;
 using UnityEngine;
 
@@ -16,6 +20,22 @@ namespace Mirror
     // Handles requests to unspawn objects on the client
     public delegate void UnSpawnDelegate(GameObject spawned);
 
+<<<<<<< HEAD
+=======
+    // invoke type for Cmd/Rpc
+    public enum MirrorInvokeType
+    {
+        Command,
+        ClientRpc
+    }
+
+    [Obsolete("Version has never been used, neither by UNET nor by Mirror.")]
+    public enum Version
+    {
+        Current = 1
+    }
+
+>>>>>>> origin/alpha_merge
     // channels are const ints instead of an enum so people can add their own
     // channels (can't extend an enum otherwise).
     //
@@ -25,8 +45,52 @@ namespace Mirror
     // add custom channels anymore.
     public static class Channels
     {
+<<<<<<< HEAD
         public const int Reliable = 0;   // ordered
         public const int Unreliable = 1; // unordered
+=======
+        public const int Reliable = 0;      // ordered
+        public const int Unreliable = 1;    // unordered
+
+        [Obsolete("Use Channels.Reliable instead")]
+        public const int DefaultReliable = Reliable;
+        [Obsolete("Use Channels.Unreliable instead")]
+        public const int DefaultUnreliable = Unreliable;
+    }
+
+    // -- helpers for float conversion without allocations --
+    [StructLayout(LayoutKind.Explicit)]
+    internal struct UIntFloat
+    {
+        [FieldOffset(0)]
+        public float floatValue;
+
+        [FieldOffset(0)]
+        public uint intValue;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    internal struct UIntDouble
+    {
+        [FieldOffset(0)]
+        public double doubleValue;
+
+        [FieldOffset(0)]
+        public ulong longValue;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    internal struct UIntDecimal
+    {
+        [FieldOffset(0)]
+        public ulong longValue1;
+
+        [FieldOffset(8)]
+        public ulong longValue2;
+
+        [FieldOffset(0)]
+        public decimal decimalValue;
+>>>>>>> origin/alpha_merge
     }
 
     public static class Utils
@@ -65,11 +129,16 @@ namespace Mirror
 
             if (prefab == null)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Failed to find prefab parent for scene object [name:{gameObject.name}]");
+=======
+                Debug.LogError("Failed to find prefab parent for scene object [name:" + gameObject.name + "]");
+>>>>>>> origin/alpha_merge
                 return false;
             }
             return true;
         }
+<<<<<<< HEAD
 
         // is a 2D point in screen? (from ummorpg)
         // (if width = 1024, then indices from 0..1023 are valid (=1024 indices)
@@ -99,5 +168,7 @@ namespace Mirror
 
             return null;
         }
+=======
+>>>>>>> origin/alpha_merge
     }
 }

@@ -1,7 +1,10 @@
 ﻿// Pool to avoid allocations (from libuv2k)
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Runtime.CompilerServices;
+=======
+>>>>>>> origin/alpha_merge
 
 namespace Mirror
 {
@@ -14,6 +17,7 @@ namespace Mirror
         // we use a Func<T> generator
         readonly Func<T> objectGenerator;
 
+<<<<<<< HEAD
         public Pool(Func<T> objectGenerator, int initialCapacity)
         {
             this.objectGenerator = objectGenerator;
@@ -30,6 +34,17 @@ namespace Mirror
 
         // return an element to the pool
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+=======
+        public Pool(Func<T> objectGenerator)
+        {
+            this.objectGenerator = objectGenerator;
+        }
+
+        // take an element from the pool, or create a new one if empty
+        public T Take() => objects.Count > 0 ? objects.Pop() : objectGenerator();
+
+        // return an element to the pool
+>>>>>>> origin/alpha_merge
         public void Return(T item) => objects.Push(item);
 
         // count to see how many objects are in the pool. useful for tests.

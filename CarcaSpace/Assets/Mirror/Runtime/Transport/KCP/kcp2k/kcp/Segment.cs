@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+using System.Collections.Generic;
+>>>>>>> origin/alpha_merge
 using System.IO;
 
 namespace kcp2k
@@ -7,7 +11,11 @@ namespace kcp2k
     {
         internal uint conv;     // conversation
         internal uint cmd;      // command, e.g. Kcp.CMD_ACK etc.
+<<<<<<< HEAD
         internal uint frg;      // fragment (sent as 1 byte)
+=======
+        internal uint frg;      // fragment
+>>>>>>> origin/alpha_merge
         internal uint wnd;      // window size that the receive can currently receive
         internal uint ts;       // timestamp
         internal uint sn;       // serial number
@@ -15,6 +23,7 @@ namespace kcp2k
         internal uint resendts; // resend timestamp
         internal int rto;
         internal uint fastack;
+<<<<<<< HEAD
         internal uint xmit;     // retransmit count
 
         // we need an auto scaling byte[] with a WriteBytes function.
@@ -22,6 +31,33 @@ namespace kcp2k
         // note: no need to pool it, because Segment is already pooled.
         // -> MTU as initial capacity to avoid most runtime resizing/allocations
         internal MemoryStream data = new MemoryStream(Kcp.MTU_DEF);
+=======
+        internal uint xmit;
+        // we need a auto scaling byte[] with a WriteBytes function.
+        // MemoryStream does that perfectly, no need to reinvent the wheel.
+        // note: no need to pool it, because Segment is already pooled.
+        internal MemoryStream data = new MemoryStream();
+
+        // pool ////////////////////////////////////////////////////////////////
+        internal static readonly Stack<Segment> Pool = new Stack<Segment>(32);
+
+        public static Segment Take()
+        {
+            if (Pool.Count > 0)
+            {
+                Segment seg = Pool.Pop();
+                return seg;
+            }
+            return new Segment();
+        }
+
+        public static void Return(Segment seg)
+        {
+            seg.Reset();
+            Pool.Push(seg);
+        }
+        ////////////////////////////////////////////////////////////////////////
+>>>>>>> origin/alpha_merge
 
         // ikcp_encode_seg
         // encode a segment into buffer
@@ -30,9 +66,12 @@ namespace kcp2k
             int offset_ = offset;
             offset += Utils.Encode32U(ptr, offset, conv);
             offset += Utils.Encode8u(ptr, offset, (byte)cmd);
+<<<<<<< HEAD
             // IMPORTANT kcp encodes 'frg' as 1 byte.
             // so we can only support up to 255 fragments.
             // (which limits max message size to around 288 KB)
+=======
+>>>>>>> origin/alpha_merge
             offset += Utils.Encode8u(ptr, offset, (byte)frg);
             offset += Utils.Encode16U(ptr, offset, (ushort)wnd);
             offset += Utils.Encode32U(ptr, offset, ts);

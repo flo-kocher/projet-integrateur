@@ -1,6 +1,9 @@
 using System;
+<<<<<<< HEAD
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+=======
+>>>>>>> origin/alpha_merge
 
 namespace Mirror
 {
@@ -29,6 +32,7 @@ namespace Mirror
             return func.Method.Name;
 #endif
         }
+<<<<<<< HEAD
 
         // helper function to copy to List<T>
         // C# only provides CopyTo(T[])
@@ -38,5 +42,7 @@ namespace Mirror
             // foreach allocates. use AddRange.
             destination.AddRange(source);
         }
+=======
+>>>>>>> origin/alpha_merge
     }
 }

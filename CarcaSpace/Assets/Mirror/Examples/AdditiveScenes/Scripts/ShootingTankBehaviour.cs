@@ -1,6 +1,10 @@
 using UnityEngine;
 
+<<<<<<< HEAD
 namespace Mirror.Examples.AdditiveScenes
+=======
+namespace Mirror.Examples.Additive
+>>>>>>> origin/alpha_merge
 {
     // This script demonstrates the NetworkAnimator and how to leverage
     // the built-in observers system to track players.

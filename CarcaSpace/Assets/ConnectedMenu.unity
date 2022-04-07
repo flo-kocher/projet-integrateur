@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 502215642}
   - component: {fileID: 502215641}
   m_Layer: 5
-  m_Name: Image
+  m_Name: TextBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1835,7 +1835,7 @@ GameObject:
   - component: {fileID: 958058004}
   - component: {fileID: 958058007}
   m_Layer: 5
-  m_Name: Multiplayer
+  m_Name: Create Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2323,7 +2323,7 @@ GameObject:
   - component: {fileID: 1510574431}
   - component: {fileID: 1510574430}
   m_Layer: 5
-  m_Name: Text
+  m_Name: 'CreateGameText '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2381,7 +2381,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: Multiplayer
+  m_Text: Create Game
 --- !u!222 &1510574431
 CanvasRenderer:
   m_ObjectHideFlags: 0

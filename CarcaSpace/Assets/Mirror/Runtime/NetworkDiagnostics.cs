@@ -29,6 +29,7 @@ namespace Mirror
         /// <summary>Event for when Mirror sends a message. Can be subscribed to.</summary>
         public static event Action<MessageInfo> OutMessageEvent;
 
+<<<<<<< HEAD
         /// <summary>Event for when Mirror receives a message. Can be subscribed to.</summary>
         public static event Action<MessageInfo> InMessageEvent;
 
@@ -40,6 +41,8 @@ namespace Mirror
             OutMessageEvent = null;
         }
 
+=======
+>>>>>>> origin/alpha_merge
         internal static void OnSend<T>(T message, int channel, int bytes, int count)
             where T : struct, NetworkMessage
         {
@@ -50,6 +53,12 @@ namespace Mirror
             }
         }
 
+<<<<<<< HEAD
+=======
+        /// <summary>Event for when Mirror receives a message. Can be subscribed to.</summary>
+        public static event Action<MessageInfo> InMessageEvent;
+
+>>>>>>> origin/alpha_merge
         internal static void OnReceive<T>(T message, int channel, int bytes)
             where T : struct, NetworkMessage
         {

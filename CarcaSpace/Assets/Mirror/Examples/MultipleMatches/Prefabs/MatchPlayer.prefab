@@ -10,7 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1204658229548937417}
   - component: {fileID: 7660209086417859164}
+<<<<<<< HEAD
   - component: {fileID: -3992624706284245286}
+=======
+  - component: {fileID: -3043620344775994659}
+>>>>>>> origin/alpha_merge
   m_Layer: 0
   m_Name: MatchPlayer
   m_TagString: Untagged
@@ -46,10 +50,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneId: 0
   serverOnly: 0
+<<<<<<< HEAD
   visible: 0
   m_AssetId: 11d2414f1e120a14c98cba6866e5348f
   hasSpawned: 0
 --- !u!114 &-3992624706284245286
+=======
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &-3043620344775994659
+>>>>>>> origin/alpha_merge
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,8 +68,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 3559083313143303799}
   m_Enabled: 1
   m_EditorHideFlags: 0
+<<<<<<< HEAD
   m_Script: {fileID: 11500000, guid: 5d17e718851449a6879986e45c458fb7, type: 3}
+=======
+  m_Script: {fileID: 11500000, guid: 1020a74962faada4b807ac5dc053a4cf, type: 3}
+>>>>>>> origin/alpha_merge
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+<<<<<<< HEAD
+=======
+  currentMatchDebug: 
+>>>>>>> origin/alpha_merge

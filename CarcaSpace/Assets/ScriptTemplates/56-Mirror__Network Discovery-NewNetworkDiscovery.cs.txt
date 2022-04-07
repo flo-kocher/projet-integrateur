@@ -3,7 +3,12 @@ using Mirror;
 using Mirror.Discovery;
 
 /*
+<<<<<<< HEAD
     Documentation: https://mirror-networking.gitbook.io/docs/components/network-discovery
+=======
+	Discovery Guide: https://mirror-networking.com/docs/Guides/NetworkDiscovery.html
+    Documentation: https://mirror-networking.com/docs/Components/NetworkDiscovery.html
+>>>>>>> origin/alpha_merge
     API Reference: https://mirror-networking.com/docs/api/Mirror.Discovery.NetworkDiscovery.html
 */
 

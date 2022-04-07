@@ -6,7 +6,10 @@ using UnityEngine;
 
 namespace Mirror
 {
+<<<<<<< HEAD
     [AddComponentMenu("Network/ Interest Management/ Spatial Hash/Spatial Hashing Interest Management")]
+=======
+>>>>>>> origin/alpha_merge
     public class SpatialHashingInterestManagement : InterestManagement
     {
         [Tooltip("The maximum range that objects will be visible at.")]
@@ -31,7 +34,11 @@ namespace Mirror
         public bool showSlider;
 
         // the grid
+<<<<<<< HEAD
         Grid2D<NetworkConnectionToClient> grid = new Grid2D<NetworkConnectionToClient>();
+=======
+        Grid2D<NetworkConnection> grid = new Grid2D<NetworkConnection>();
+>>>>>>> origin/alpha_merge
 
         // project 3d world position to grid position
         Vector2Int ProjectToGrid(Vector3 position) =>
@@ -39,7 +46,11 @@ namespace Mirror
             ? Vector2Int.RoundToInt(new Vector2(position.x, position.z) / resolution)
             : Vector2Int.RoundToInt(new Vector2(position.x, position.y) / resolution);
 
+<<<<<<< HEAD
         public override bool OnCheckObserver(NetworkIdentity identity, NetworkConnectionToClient newObserver)
+=======
+        public override bool OnCheckObserver(NetworkIdentity identity, NetworkConnection newObserver)
+>>>>>>> origin/alpha_merge
         {
             // calculate projected positions
             Vector2Int projected = ProjectToGrid(identity.transform.position);
@@ -52,7 +63,11 @@ namespace Mirror
             return (projected - observerProjected).sqrMagnitude <= 2;
         }
 
+<<<<<<< HEAD
         public override void OnRebuildObservers(NetworkIdentity identity, HashSet<NetworkConnectionToClient> newObservers)
+=======
+        public override void OnRebuildObservers(NetworkIdentity identity, HashSet<NetworkConnection> newObservers, bool initialize)
+>>>>>>> origin/alpha_merge
         {
             // add everyone in 9 neighbour grid
             // -> pass observers to GetWithNeighbours directly to avoid allocations
@@ -61,6 +76,7 @@ namespace Mirror
             grid.GetWithNeighbours(current, newObservers);
         }
 
+<<<<<<< HEAD
         [ServerCallback]
         public override void Reset()
         {
@@ -74,6 +90,14 @@ namespace Mirror
         {
             // NOTE: unlike Scene/MatchInterestManagement, this rebuilds ALL
             //       entities every INTERVAL. consider the other approach later.
+=======
+        // update everyone's position in the grid
+        // (internal so we can update from tests)
+        internal void Update()
+        {
+            // only on server
+            if (!NetworkServer.active) return;
+>>>>>>> origin/alpha_merge
 
             // IMPORTANT: refresh grid every update!
             // => newly spawned entities get observers assigned via
@@ -111,6 +135,7 @@ namespace Mirror
             // rebuild all spawned entities' observers every 'interval'
             // this will call OnRebuildObservers which then returns the
             // observers at grid[position] for each entity.
+<<<<<<< HEAD
             if (NetworkTime.localTime >= lastRebuildTime + rebuildInterval)
             {
                 RebuildAll();
@@ -120,6 +145,15 @@ namespace Mirror
 
 // OnGUI allocates even if it does nothing. avoid in release.
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
+=======
+            if (NetworkTime.time >= lastRebuildTime + rebuildInterval)
+            {
+                RebuildAll();
+                lastRebuildTime = NetworkTime.time;
+            }
+        }
+
+>>>>>>> origin/alpha_merge
         // slider from dotsnet. it's nice to play around with in the benchmark
         // demo.
         void OnGUI()
@@ -139,6 +173,9 @@ namespace Mirror
             GUILayout.EndHorizontal();
             GUILayout.EndArea();
         }
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> origin/alpha_merge
     }
 }

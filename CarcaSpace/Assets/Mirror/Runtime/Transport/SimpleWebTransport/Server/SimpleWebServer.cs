@@ -52,7 +52,10 @@ namespace Mirror.SimpleWeb
                 server.Send(id, buffer);
             }
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/alpha_merge
         public void SendOne(int connectionId, ArraySegment<byte> source)
         {
             ArrayBuffer buffer = bufferPool.Take(source.Count);
@@ -71,6 +74,7 @@ namespace Mirror.SimpleWeb
             return server.GetClientAddress(connectionId);
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// Processes all new messages
         /// </summary>
@@ -90,6 +94,14 @@ namespace Mirror.SimpleWeb
             // check enabled every time in case behaviour was disabled after data
             while (
                 (skipEnabled || behaviour.enabled) &&
+=======
+        public void ProcessMessageQueue(MonoBehaviour behaviour)
+        {
+            int processedCount = 0;
+            // check enabled every time in case behaviour was disabled after data
+            while (
+                behaviour.enabled &&
+>>>>>>> origin/alpha_merge
                 processedCount < maxMessagesPerTick &&
                 // Dequeue last
                 server.receiveQueue.TryDequeue(out Message next)

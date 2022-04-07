@@ -16,7 +16,11 @@ namespace Mirror.Discovery
     /// <see cref="NetworkDiscovery">NetworkDiscovery</see> for a sample implementation
     /// </summary>
     [DisallowMultipleComponent]
+<<<<<<< HEAD
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-discovery")]
+=======
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkDiscovery.html")]
+>>>>>>> origin/alpha_merge
     public abstract class NetworkDiscoveryBase<Request, Response> : MonoBehaviour
         where Request : NetworkMessage
         where Response : NetworkMessage
@@ -30,11 +34,19 @@ namespace Mirror.Discovery
         [SerializeField]
         [Tooltip("The UDP port the server will listen for multi-cast messages")]
         protected int serverBroadcastListenPort = 47777;
+<<<<<<< HEAD
 
         [SerializeField]
         [Tooltip("If true, broadcasts a discovery request every ActiveDiscoveryInterval seconds")]
         public bool enableActiveDiscovery = true;
 
+=======
+        
+        [SerializeField]
+        [Tooltip("If true, broadcasts a discovery request every ActiveDiscoveryInterval seconds")]
+        public bool enableActiveDiscovery = true;
+        
+>>>>>>> origin/alpha_merge
         [SerializeField]
         [Tooltip("Time in seconds between multi-cast messages")]
         [Range(1, 60)]
@@ -75,6 +87,7 @@ namespace Mirror.Discovery
         // Ensure the ports are cleared no matter when Game/Unity UI exits
         void OnApplicationQuit()
         {
+<<<<<<< HEAD
             //Debug.Log("NetworkDiscoveryBase OnApplicationQuit");
             Shutdown();
         }
@@ -88,12 +101,17 @@ namespace Mirror.Discovery
         void OnDestroy()
         {
             //Debug.Log("NetworkDiscoveryBase OnDestroy");
+=======
+>>>>>>> origin/alpha_merge
             Shutdown();
         }
 
         void Shutdown()
         {
+<<<<<<< HEAD
             EndpMulticastLock();
+=======
+>>>>>>> origin/alpha_merge
             if (serverUdpClient != null)
             {
                 try
@@ -150,7 +168,10 @@ namespace Mirror.Discovery
 
         public async Task ServerListenAsync()
         {
+<<<<<<< HEAD
             BeginMulticastLock();
+=======
+>>>>>>> origin/alpha_merge
             while (true)
             {
                 try
@@ -177,7 +198,11 @@ namespace Mirror.Discovery
 
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(udpReceiveResult.Buffer))
             {
+<<<<<<< HEAD
                 long handshake = networkReader.ReadLong();
+=======
+                long handshake = networkReader.ReadInt64();
+>>>>>>> origin/alpha_merge
                 if (handshake != secretHandshake)
                 {
                     // message is not for us
@@ -210,7 +235,11 @@ namespace Mirror.Discovery
             {
                 try
                 {
+<<<<<<< HEAD
                     writer.WriteLong(secretHandshake);
+=======
+                    writer.WriteInt64(secretHandshake);
+>>>>>>> origin/alpha_merge
 
                     writer.Write(info);
 
@@ -238,6 +267,7 @@ namespace Mirror.Discovery
         /// <returns>The message to be sent back to the client or null</returns>
         protected abstract Response ProcessRequest(Request request, IPEndPoint endpoint);
 
+<<<<<<< HEAD
         // Android Multicast fix: https://github.com/vis2k/Mirror/pull/2887
 #if UNITY_ANDROID
         AndroidJavaObject multicastLock;
@@ -274,6 +304,9 @@ namespace Mirror.Discovery
         }
 
 #endregion
+=======
+        #endregion
+>>>>>>> origin/alpha_merge
 
         #region Client
 
@@ -299,7 +332,10 @@ namespace Mirror.Discovery
             catch (Exception)
             {
                 // Free the port if we took it
+<<<<<<< HEAD
                 //Debug.LogError("NetworkDiscoveryBase StartDiscovery Exception");
+=======
+>>>>>>> origin/alpha_merge
                 Shutdown();
                 throw;
             }
@@ -314,7 +350,10 @@ namespace Mirror.Discovery
         /// </summary>
         public void StopDiscovery()
         {
+<<<<<<< HEAD
             //Debug.Log("NetworkDiscoveryBase StopDiscovery");
+=======
+>>>>>>> origin/alpha_merge
             Shutdown();
         }
 
@@ -324,6 +363,7 @@ namespace Mirror.Discovery
         /// <returns>ClientListenAsync Task</returns>
         public async Task ClientListenAsync()
         {
+<<<<<<< HEAD
             // while clientUpdClient to fix: 
             // https://github.com/vis2k/Mirror/pull/2908
             //
@@ -336,6 +376,9 @@ namespace Mirror.Discovery
             // thread, and is super noisy in the output. As well as causes issues on 
             // the quest.
             while (clientUdpClient != null)
+=======
+            while (true)
+>>>>>>> origin/alpha_merge
             {
                 try
                 {
@@ -361,17 +404,24 @@ namespace Mirror.Discovery
             if (clientUdpClient == null)
                 return;
 
+<<<<<<< HEAD
             if (NetworkClient.isConnected)
             {
                 StopDiscovery();
                 return;
             }
 
+=======
+>>>>>>> origin/alpha_merge
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Broadcast, serverBroadcastListenPort);
 
             using (PooledNetworkWriter writer = NetworkWriterPool.GetWriter())
             {
+<<<<<<< HEAD
                 writer.WriteLong(secretHandshake);
+=======
+                writer.WriteInt64(secretHandshake);
+>>>>>>> origin/alpha_merge
 
                 try
                 {
@@ -408,7 +458,11 @@ namespace Mirror.Discovery
 
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(udpReceiveResult.Buffer))
             {
+<<<<<<< HEAD
                 if (networkReader.ReadLong() != secretHandshake)
+=======
+                if (networkReader.ReadInt64() != secretHandshake)
+>>>>>>> origin/alpha_merge
                     return;
 
                 Response response = networkReader.Read<Response>();

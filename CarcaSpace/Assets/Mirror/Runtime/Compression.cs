@@ -1,6 +1,10 @@
 // Quaternion compression from DOTSNET
+<<<<<<< HEAD
 using System;
 using System.Runtime.CompilerServices;
+=======
+
+>>>>>>> origin/alpha_merge
 using UnityEngine;
 
 namespace Mirror
@@ -14,20 +18,32 @@ namespace Mirror
 
         // helper function to find largest absolute element
         // returns the index of the largest one
+<<<<<<< HEAD
         public static int LargestAbsoluteComponentIndex(Vector4 value, out float largestAbs, out Vector3 withoutLargest)
+=======
+        public static int LargestAbsoluteComponentIndex(Vector4 value, out float largest, out Vector3 withoutLargest)
+>>>>>>> origin/alpha_merge
         {
             // convert to abs
             Vector4 abs = new Vector4(Mathf.Abs(value.x), Mathf.Abs(value.y), Mathf.Abs(value.z), Mathf.Abs(value.w));
 
+<<<<<<< HEAD
             // set largest to first abs (x)
             largestAbs = abs.x;
             withoutLargest = new Vector3(value.y, value.z, value.w);
             int largestIndex = 0;
+=======
+            // set largest to first value (x)
+            largest = value.x;
+            withoutLargest = new Vector3(value.y, value.z, value.w);
+            int index = 0;
+>>>>>>> origin/alpha_merge
 
             // compare to the others, starting at second value
             // performance for 100k calls
             //   for-loop:       25ms
             //   manual checks:  22ms
+<<<<<<< HEAD
             if (abs.y > largestAbs)
             {
                 largestIndex = 1;
@@ -48,6 +64,28 @@ namespace Mirror
             }
 
             return largestIndex;
+=======
+            if (abs.y > largest)
+            {
+                index = 1;
+                largest = abs.y;
+                withoutLargest = new Vector3(value.x, value.z, value.w);
+            }
+            if (abs.z > largest)
+            {
+                index = 2;
+                largest = abs.z;
+                withoutLargest = new Vector3(value.x, value.y, value.w);
+            }
+            if (abs.w > largest)
+            {
+                index = 3;
+                largest = abs.w;
+                withoutLargest = new Vector3(value.x, value.y, value.z);
+            }
+
+            return index;
+>>>>>>> origin/alpha_merge
         }
 
         // scale a float within min/max range to an ushort between min/max range
@@ -78,7 +116,10 @@ namespace Mirror
         const ushort TenBitsMax = 0x3FF;
 
         // helper function to access 'nth' component of quaternion
+<<<<<<< HEAD
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+=======
+>>>>>>> origin/alpha_merge
         static float QuaternionElement(Quaternion q, int element)
         {
             switch (element)
@@ -139,7 +180,10 @@ namespace Mirror
         // Quaternion normalizeSAFE from ECS math.normalizesafe()
         // => useful to produce valid quaternions even if client sends invalid
         //    data
+<<<<<<< HEAD
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+=======
+>>>>>>> origin/alpha_merge
         static Quaternion QuaternionNormalizeSafe(Quaternion value)
         {
             // The smallest positive normal number representable in a float.
@@ -192,6 +236,7 @@ namespace Mirror
             //    in NaN from deserializing invalid values!
             return QuaternionNormalizeSafe(new Quaternion(value.x, value.y, value.z, value.w));
         }
+<<<<<<< HEAD
 
         // varint compression //////////////////////////////////////////////////
         // compress ulong varint.
@@ -357,5 +402,7 @@ namespace Mirror
             ulong data = DecompressVarUInt(reader);
             return ((long)(data >> 1)) ^ -((long)data & 1);
         }
+=======
+>>>>>>> origin/alpha_merge
     }
 }

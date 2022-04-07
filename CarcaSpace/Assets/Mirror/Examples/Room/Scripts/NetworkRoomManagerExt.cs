@@ -1,9 +1,13 @@
 using UnityEngine;
+<<<<<<< HEAD
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 */
+=======
+using UnityEngine.SceneManagement;
+>>>>>>> origin/alpha_merge
 
 namespace Mirror.Examples.NetworkRoom
 {
@@ -22,7 +26,13 @@ namespace Mirror.Examples.NetworkRoom
         {
             // spawn the initial batch of Rewards
             if (sceneName == GameplayScene)
+<<<<<<< HEAD
                 Spawner.InitialSpawn();
+=======
+            {
+                Spawner.InitialSpawn();
+            }
+>>>>>>> origin/alpha_merge
         }
 
         /// <summary>
@@ -33,7 +43,11 @@ namespace Mirror.Examples.NetworkRoom
         /// <param name="roomPlayer"></param>
         /// <param name="gamePlayer"></param>
         /// <returns>true unless some code in here decides it needs to abort the replacement</returns>
+<<<<<<< HEAD
         public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
+=======
+        public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)
+>>>>>>> origin/alpha_merge
         {
             PlayerScore playerScore = gamePlayer.GetComponent<PlayerScore>();
             playerScore.index = roomPlayer.GetComponent<NetworkRoomPlayer>().index;

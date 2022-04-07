@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+<<<<<<< HEAD
 using System.Linq;
+=======
+>>>>>>> origin/alpha_merge
 using AOT;
 
 namespace Mirror.SimpleWeb
@@ -14,6 +17,7 @@ namespace Mirror.SimpleWeb
         /// </summary>
         int index;
 
+<<<<<<< HEAD
         /// <summary>
         /// Queue for messages sent by high level while still connecting, they will be sent after onOpen is called.
         /// <para>
@@ -23,6 +27,8 @@ namespace Mirror.SimpleWeb
         /// </summary>
         Queue<byte[]> ConnectingSendQueue;
 
+=======
+>>>>>>> origin/alpha_merge
         internal WebSocketClientWebGl(int maxMessageSize, int maxMessagesPerTick) : base(maxMessageSize, maxMessagesPerTick)
         {
 #if !UNITY_WEBGL || UNITY_EDITOR
@@ -54,6 +60,7 @@ namespace Mirror.SimpleWeb
                 return;
             }
 
+<<<<<<< HEAD
             if (state == ClientState.Connected)
             {
                 SimpleWebJSLib.Send(index, segment.Array, segment.Offset, segment.Count);
@@ -64,12 +71,16 @@ namespace Mirror.SimpleWeb
                     ConnectingSendQueue = new Queue<byte[]>();
                 ConnectingSendQueue.Enqueue(segment.ToArray());
             }
+=======
+            SimpleWebJSLib.Send(index, segment.Array, 0, segment.Count);
+>>>>>>> origin/alpha_merge
         }
 
         void onOpen()
         {
             receiveQueue.Enqueue(new Message(EventType.Connected));
             state = ClientState.Connected;
+<<<<<<< HEAD
 
             if (ConnectingSendQueue != null)
             {
@@ -80,6 +91,8 @@ namespace Mirror.SimpleWeb
                 }
                 ConnectingSendQueue = null;
             }
+=======
+>>>>>>> origin/alpha_merge
         }
 
         void onClose()

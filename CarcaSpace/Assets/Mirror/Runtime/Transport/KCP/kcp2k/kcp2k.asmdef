@@ -1,15 +1,24 @@
 {
     "name": "kcp2k",
+<<<<<<< HEAD
     "references": [
         "GUID:63c380d6dae6946209ed0832388a657c"
     ],
+=======
+    "references": [],
+    "optionalUnityReferences": [],
+>>>>>>> origin/alpha_merge
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
+<<<<<<< HEAD
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
+=======
+    "defineConstraints": []
+>>>>>>> origin/alpha_merge
 }

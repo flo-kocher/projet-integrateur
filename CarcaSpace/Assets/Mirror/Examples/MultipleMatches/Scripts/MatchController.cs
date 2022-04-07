@@ -5,7 +5,13 @@ using UnityEngine.UI;
 
 namespace Mirror.Examples.MultipleMatch
 {
+<<<<<<< HEAD
     [RequireComponent(typeof(NetworkMatch))]
+=======
+#pragma warning disable 618
+    [RequireComponent(typeof(NetworkMatchChecker))]
+#pragma warning restore 618
+>>>>>>> origin/alpha_merge
     public class MatchController : NetworkBehaviour
     {
         internal readonly SyncDictionary<NetworkIdentity, MatchPlayerData> matchPlayerData = new SyncDictionary<NetworkIdentity, MatchPlayerData>();
@@ -253,7 +259,11 @@ namespace Mirror.Examples.MultipleMatch
             StartCoroutine(ServerEndMatch(sender, false));
         }
 
+<<<<<<< HEAD
         public void OnPlayerDisconnected(NetworkConnectionToClient conn)
+=======
+        public void OnPlayerDisconnected(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             // Check that the disconnecting client is a player in this match
             if (player1 == conn.identity || player2 == conn.identity)
@@ -262,7 +272,11 @@ namespace Mirror.Examples.MultipleMatch
             }
         }
 
+<<<<<<< HEAD
         public IEnumerator ServerEndMatch(NetworkConnectionToClient conn, bool disconnected)
+=======
+        public IEnumerator ServerEndMatch(NetworkConnection conn, bool disconnected)
+>>>>>>> origin/alpha_merge
         {
             canvasController.OnPlayerDisconnected -= OnPlayerDisconnected;
 

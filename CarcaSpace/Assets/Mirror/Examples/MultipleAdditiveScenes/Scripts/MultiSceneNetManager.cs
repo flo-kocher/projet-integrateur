@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+<<<<<<< HEAD
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 */
 
+=======
+>>>>>>> origin/alpha_merge
 namespace Mirror.Examples.MultipleAdditiveScenes
 {
     [AddComponentMenu("")]
@@ -39,14 +42,22 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
+<<<<<<< HEAD
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+=======
+        public override void OnServerAddPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             StartCoroutine(OnServerAddPlayerDelayed(conn));
         }
 
         // This delay is mostly for the host player that loads too fast for the
         // server to have subscenes async loaded from OnStartServer ahead of it.
+<<<<<<< HEAD
         IEnumerator OnServerAddPlayerDelayed(NetworkConnectionToClient conn)
+=======
+        IEnumerator OnServerAddPlayerDelayed(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             // wait for server to async load all subscenes for game instances
             while (!subscenesLoaded)
@@ -65,13 +76,21 @@ namespace Mirror.Examples.MultipleAdditiveScenes
             playerScore.scoreIndex = clientIndex / subScenes.Count;
             playerScore.matchIndex = clientIndex % subScenes.Count;
 
+<<<<<<< HEAD
+=======
+            clientIndex++;
+
+>>>>>>> origin/alpha_merge
             // Do this only on server, not on clients
             // This is what allows the NetworkSceneChecker on player and scene objects
             // to isolate matches per scene instance on server.
             if (subScenes.Count > 0)
                 SceneManager.MoveGameObjectToScene(conn.identity.gameObject, subScenes[clientIndex % subScenes.Count]);
+<<<<<<< HEAD
 
             clientIndex++;
+=======
+>>>>>>> origin/alpha_merge
         }
 
         #endregion

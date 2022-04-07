@@ -172,7 +172,11 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+<<<<<<< HEAD
   - {fileID: 2100000, guid: 2082151ae101a9445990e8a0fe9142da, type: 2}
+=======
+  - {fileID: 2100000, guid: bbe2c7293af197640a2b40018e79b9a6, type: 2}
+>>>>>>> origin/alpha_merge
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -247,15 +251,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Port: 7777
+<<<<<<< HEAD
   DualMode: 1
   NoDelay: 1
   Interval: 10
   Timeout: 10000
+=======
+  NoDelay: 1
+  Interval: 10
+>>>>>>> origin/alpha_merge
   FastResend: 2
   CongestionWindow: 0
   SendWindowSize: 4096
   ReceiveWindowSize: 4096
+<<<<<<< HEAD
   NonAlloc: 1
+=======
+>>>>>>> origin/alpha_merge
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
@@ -276,11 +288,21 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
+<<<<<<< HEAD
+=======
+  serverBatching: 0
+  serverBatchInterval: 0
+>>>>>>> origin/alpha_merge
   offlineScene: 
   onlineScene: 
   transport: {fileID: 492096634}
   networkAddress: localhost
   maxConnections: 100
+<<<<<<< HEAD
+=======
+  disconnectInactiveConnections: 0
+  disconnectInactiveTimeout: 60
+>>>>>>> origin/alpha_merge
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 844717362685181648, guid: 4ab0a427bdc13244499c6e044ad7eb40,
     type: 3}
@@ -299,7 +321,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 6
+=======
+  m_RootOrder: 5
+>>>>>>> origin/alpha_merge
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &492096637
 MonoBehaviour:
@@ -313,6 +339,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6442dc8070ceb41f094e44de0bf87274, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
+=======
+  showGUI: 1
+>>>>>>> origin/alpha_merge
   offsetX: 0
   offsetY: 0
 --- !u!1 &746548597
@@ -327,7 +357,11 @@ GameObject:
   - component: {fileID: 746548600}
   - component: {fileID: 746548599}
   m_Layer: 5
+<<<<<<< HEAD
   m_Name: Image
+=======
+  m_Name: Image (2)
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,7 +461,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+<<<<<<< HEAD
   rigidbody3d: {fileID: 1019217379}
+=======
+  rigidbody3d: {fileID: 0}
+>>>>>>> origin/alpha_merge
   force: 500
 --- !u!114 &1019217377
 MonoBehaviour:
@@ -442,6 +480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
+<<<<<<< HEAD
   syncInterval: 0.1
   clientAuthority: 0
   sendInterval: 0.05
@@ -458,6 +497,16 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+=======
+  syncInterval: 0
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 1
+  interpolateScale: 0
+  syncScale: 0
+>>>>>>> origin/alpha_merge
 --- !u!114 &1019217378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,7 +538,11 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
+<<<<<<< HEAD
   m_Constraints: 122
+=======
+  m_Constraints: 0
+>>>>>>> origin/alpha_merge
   m_CollisionDetection: 0
 --- !u!135 &1019217380
 SphereCollider:
@@ -559,7 +612,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1019217375}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: -3, y: 0.5, z: 0}
+=======
+  m_LocalPosition: {x: -1.5, y: 0.5, z: 0}
+>>>>>>> origin/alpha_merge
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -695,7 +752,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+<<<<<<< HEAD
   rigidbody3d: {fileID: 1200292995}
+=======
+  rigidbody3d: {fileID: 0}
+>>>>>>> origin/alpha_merge
   force: 500
 --- !u!114 &1200292992
 MonoBehaviour:
@@ -710,7 +771,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
+<<<<<<< HEAD
   syncInterval: 0.1
+=======
+  syncInterval: 0
+>>>>>>> origin/alpha_merge
   target: {fileID: 1200292995}
   clientAuthority: 0
   syncVelocity: 1
@@ -732,6 +797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   syncMode: 0
+<<<<<<< HEAD
   syncInterval: 0.1
   clientAuthority: 0
   sendInterval: 0.05
@@ -748,6 +814,16 @@ MonoBehaviour:
   showGizmos: 0
   showOverlay: 0
   overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+=======
+  syncInterval: 0
+  clientAuthority: 0
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 1
+  interpolateScale: 0
+  syncScale: 0
+>>>>>>> origin/alpha_merge
 --- !u!114 &1200292994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,7 +855,11 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 0
+<<<<<<< HEAD
   m_Constraints: 122
+=======
+  m_Constraints: 0
+>>>>>>> origin/alpha_merge
   m_CollisionDetection: 0
 --- !u!135 &1200292996
 SphereCollider:
@@ -849,7 +929,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1200292990}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 0, y: 0.5, z: 0}
+=======
+  m_LocalPosition: {x: 1.5, y: 0.5, z: 0}
+>>>>>>> origin/alpha_merge
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -867,7 +951,11 @@ GameObject:
   - component: {fileID: 1282619066}
   - component: {fileID: 1282619065}
   m_Layer: 5
+<<<<<<< HEAD
   m_Name: Image
+=======
+  m_Name: Image (1)
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -942,7 +1030,11 @@ GameObject:
   - component: {fileID: 1592570047}
   - component: {fileID: 1592570046}
   m_Layer: 5
+<<<<<<< HEAD
   m_Name: Text
+=======
+  m_Name: Text (2)
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -987,7 +1079,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
+<<<<<<< HEAD
     m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+=======
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+>>>>>>> origin/alpha_merge
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
@@ -1065,7 +1161,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
+<<<<<<< HEAD
     m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+=======
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+>>>>>>> origin/alpha_merge
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0
@@ -1254,13 +1354,18 @@ RectTransform:
   - {fileID: 1282619064}
   - {fileID: 746548598}
   m_Father: {fileID: 0}
+<<<<<<< HEAD
   m_RootOrder: 7
+=======
+  m_RootOrder: 6
+>>>>>>> origin/alpha_merge
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+<<<<<<< HEAD
 --- !u!1 &1945586487
 GameObject:
   m_ObjectHideFlags: 0
@@ -1425,6 +1530,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> origin/alpha_merge
 --- !u!1 &2029351939
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,7 +1544,11 @@ GameObject:
   - component: {fileID: 2029351942}
   - component: {fileID: 2029351941}
   m_Layer: 5
+<<<<<<< HEAD
   m_Name: Text
+=======
+  m_Name: Text (1)
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1482,7 +1593,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
+<<<<<<< HEAD
     m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
+=======
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 3}
+>>>>>>> origin/alpha_merge
     m_FontSize: 24
     m_FontStyle: 0
     m_BestFit: 0

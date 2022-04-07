@@ -2,12 +2,16 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+<<<<<<< HEAD
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 */
 
 namespace Mirror.Examples.AdditiveScenes
+=======
+namespace Mirror.Examples.Additive
+>>>>>>> origin/alpha_merge
 {
     [AddComponentMenu("")]
     public class AdditiveNetworkManager : NetworkManager
@@ -30,6 +34,7 @@ namespace Mirror.Examples.AdditiveScenes
             Instantiate(Zone);
         }
 
+<<<<<<< HEAD
         public override void OnStopServer()
         {
             StartCoroutine(UnloadScenes());
@@ -40,6 +45,8 @@ namespace Mirror.Examples.AdditiveScenes
             StartCoroutine(UnloadScenes());
         }
 
+=======
+>>>>>>> origin/alpha_merge
         IEnumerator LoadSubScenes()
         {
             Debug.Log("Loading Scenes");
@@ -51,6 +58,19 @@ namespace Mirror.Examples.AdditiveScenes
             }
         }
 
+<<<<<<< HEAD
+=======
+        public override void OnStopServer()
+        {
+            StartCoroutine(UnloadScenes());
+        }
+
+        public override void OnStopClient()
+        {
+            StartCoroutine(UnloadScenes());
+        }
+
+>>>>>>> origin/alpha_merge
         IEnumerator UnloadScenes()
         {
             Debug.Log("Unloading Subscenes");

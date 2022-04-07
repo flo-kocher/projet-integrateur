@@ -243,8 +243,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     m_RemovedComponents:
     - {fileID: -8786580539857106334, guid: a104de86221e66a48832c222471d4f1e, type: 3}
+=======
+    m_RemovedComponents: []
+>>>>>>> origin/alpha_merge
   m_SourcePrefab: {fileID: 100100000, guid: a104de86221e66a48832c222471d4f1e, type: 3}
 --- !u!4 &535961556 stripped
 Transform:
@@ -339,8 +343,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     m_RemovedComponents:
     - {fileID: -8786580539857106334, guid: a104de86221e66a48832c222471d4f1e, type: 3}
+=======
+    m_RemovedComponents: []
+>>>>>>> origin/alpha_merge
   m_SourcePrefab: {fileID: 100100000, guid: a104de86221e66a48832c222471d4f1e, type: 3}
 --- !u!4 &1069065321 stripped
 Transform:
@@ -435,8 +443,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     m_RemovedComponents:
     - {fileID: -8786580539857106334, guid: a104de86221e66a48832c222471d4f1e, type: 3}
+=======
+    m_RemovedComponents: []
+>>>>>>> origin/alpha_merge
   m_SourcePrefab: {fileID: 100100000, guid: a104de86221e66a48832c222471d4f1e, type: 3}
 --- !u!4 &1072549450 stripped
 Transform:
@@ -460,7 +472,10 @@ GameObject:
   - component: {fileID: 1305256740}
   - component: {fileID: 1305256739}
   - component: {fileID: 1305256738}
+<<<<<<< HEAD
   - component: {fileID: 1305256746}
+=======
+>>>>>>> origin/alpha_merge
   m_Layer: 0
   m_Name: PlayArea
   m_TagString: Untagged
@@ -595,6 +610,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 --- !u!114 &1305256746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -612,6 +628,8 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 
   hasSpawned: 0
+=======
+>>>>>>> origin/alpha_merge
 --- !u!1 &1713236906
 GameObject:
   m_ObjectHideFlags: 0
@@ -742,8 +760,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     m_RemovedComponents:
     - {fileID: -8786580539857106334, guid: a104de86221e66a48832c222471d4f1e, type: 3}
+=======
+    m_RemovedComponents: []
+>>>>>>> origin/alpha_merge
   m_SourcePrefab: {fileID: 100100000, guid: a104de86221e66a48832c222471d4f1e, type: 3}
 --- !u!4 &2061474489 stripped
 Transform:

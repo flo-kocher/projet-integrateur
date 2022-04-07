@@ -123,7 +123,11 @@ namespace Mirror.SimpleWeb
     [Serializable]
     public class ReadHelperException : Exception
     {
+<<<<<<< HEAD
         public ReadHelperException(string message) : base(message) { }
+=======
+        public ReadHelperException(string message) : base(message) {}
+>>>>>>> origin/alpha_merge
 
         protected ReadHelperException(SerializationInfo info, StreamingContext context) : base(info, context)
         {

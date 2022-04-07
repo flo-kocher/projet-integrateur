@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Concurrent;
+<<<<<<< HEAD
 using System.Collections.Generic;
+=======
+>>>>>>> origin/alpha_merge
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -38,6 +41,7 @@ namespace Mirror.SimpleWeb
             }
         }
 
+<<<<<<< HEAD
         struct Header
         {
             public int payloadLength;
@@ -46,6 +50,8 @@ namespace Mirror.SimpleWeb
             public bool finished;
         }
 
+=======
+>>>>>>> origin/alpha_merge
         public static void Loop(Config config)
         {
             (Connection conn, int maxMessageSize, bool expectMask, ConcurrentQueue<Message> queue, BufferPool _) = config;
@@ -78,6 +84,10 @@ namespace Mirror.SimpleWeb
             catch (ObjectDisposedException e) { Log.InfoException(e); }
             catch (ReadHelperException e)
             {
+<<<<<<< HEAD
+=======
+                // log as info only
+>>>>>>> origin/alpha_merge
                 Log.InfoException(e);
             }
             catch (SocketException e)
@@ -115,6 +125,7 @@ namespace Mirror.SimpleWeb
             (Connection conn, int maxMessageSize, bool expectMask, ConcurrentQueue<Message> queue, BufferPool bufferPool) = config;
             Stream stream = conn.stream;
 
+<<<<<<< HEAD
             Header header = ReadHeader(config, buffer);
 
             int msgOffset = header.offset;
@@ -179,11 +190,17 @@ namespace Mirror.SimpleWeb
 
             // read 2
             header.offset = ReadHelper.Read(stream, buffer, header.offset, Constants.HeaderMinSize);
+=======
+            int offset = 0;
+            // read 2
+            offset = ReadHelper.Read(stream, buffer, offset, Constants.HeaderMinSize);
+>>>>>>> origin/alpha_merge
             // log after first blocking call
             Log.Verbose($"Message From {conn}");
 
             if (MessageProcessor.NeedToReadShortLength(buffer))
             {
+<<<<<<< HEAD
                 header.offset = ReadHelper.Read(stream, buffer, header.offset, Constants.ShortLength);
             }
             if (MessageProcessor.NeedToReadLongLength(buffer))
@@ -207,12 +224,43 @@ namespace Mirror.SimpleWeb
             Log.Verbose($"Header ln:{header.payloadLength} op:{header.opcode} mask:{expectMask}");
 
             return header;
+=======
+                offset = ReadHelper.Read(stream, buffer, offset, Constants.ShortLength);
+            }
+
+            MessageProcessor.ValidateHeader(buffer, maxMessageSize, expectMask);
+
+            if (expectMask)
+            {
+                offset = ReadHelper.Read(stream, buffer, offset, Constants.MaskSize);
+            }
+
+            int opcode = MessageProcessor.GetOpcode(buffer);
+            int payloadLength = MessageProcessor.GetPayloadLength(buffer);
+
+            Log.Verbose($"Header ln:{payloadLength} op:{opcode} mask:{expectMask}");
+            Log.DumpBuffer($"Raw Header", buffer, 0, offset);
+
+            int msgOffset = offset;
+            offset = ReadHelper.Read(stream, buffer, offset, payloadLength);
+
+            switch (opcode)
+            {
+                case 2:
+                    HandleArrayMessage(config, buffer, msgOffset, payloadLength);
+                    break;
+                case 8:
+                    HandleCloseMessage(config, buffer, msgOffset, payloadLength);
+                    break;
+            }
+>>>>>>> origin/alpha_merge
         }
 
         static void HandleArrayMessage(Config config, byte[] buffer, int msgOffset, int payloadLength)
         {
             (Connection conn, int _, bool expectMask, ConcurrentQueue<Message> queue, BufferPool bufferPool) = config;
 
+<<<<<<< HEAD
             ArrayBuffer arrayBuffer = CopyMessageToBuffer(bufferPool, expectMask, buffer, msgOffset, payloadLength);
 
             // dump after mask off
@@ -223,6 +271,8 @@ namespace Mirror.SimpleWeb
 
         static ArrayBuffer CopyMessageToBuffer(BufferPool bufferPool, bool expectMask, byte[] buffer, int msgOffset, int payloadLength)
         {
+=======
+>>>>>>> origin/alpha_merge
             ArrayBuffer arrayBuffer = bufferPool.Take(payloadLength);
 
             if (expectMask)
@@ -236,7 +286,14 @@ namespace Mirror.SimpleWeb
                 arrayBuffer.CopyFrom(buffer, msgOffset, payloadLength);
             }
 
+<<<<<<< HEAD
             return arrayBuffer;
+=======
+            // dump after mask off
+            Log.DumpBuffer($"Message", arrayBuffer);
+
+            queue.Enqueue(new Message(conn.connId, arrayBuffer));
+>>>>>>> origin/alpha_merge
         }
 
         static void HandleCloseMessage(Config config, byte[] buffer, int msgOffset, int payloadLength)

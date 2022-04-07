@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+=======
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+>>>>>>> origin/alpha_merge
 using UnityEngine.Serialization;
 
 namespace Mirror
@@ -15,13 +21,22 @@ namespace Mirror
     /// <para>NetworkRoomManager is derived from NetworkManager, and so it implements many of the virtual functions provided by the NetworkManager class. To avoid accidentally replacing functionality of the NetworkRoomManager, there are new virtual functions on the NetworkRoomManager that begin with "OnRoom". These should be used on classes derived from NetworkRoomManager instead of the virtual functions on NetworkManager.</para>
     /// <para>The OnRoom*() functions have empty implementations on the NetworkRoomManager base class, so the base class functions do not have to be called.</para>
     /// </remarks>
+<<<<<<< HEAD
     [AddComponentMenu("Network/Network Room Manager")]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-room-manager")]
+=======
+    [AddComponentMenu("Network/NetworkRoomManager")]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkRoomManager.html")]
+>>>>>>> origin/alpha_merge
     public class NetworkRoomManager : NetworkManager
     {
         public struct PendingPlayer
         {
+<<<<<<< HEAD
             public NetworkConnectionToClient conn;
+=======
+            public NetworkConnection conn;
+>>>>>>> origin/alpha_merge
             public GameObject roomPlayer;
         }
 
@@ -150,7 +165,11 @@ namespace Mirror
         /// <para>The default implementation of this function calls NetworkServer.SetClientReady() to continue the network setup process.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
+<<<<<<< HEAD
         public override void OnServerReady(NetworkConnectionToClient conn)
+=======
+        public override void OnServerReady(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             Debug.Log("NetworkRoomManager OnServerReady");
             base.OnServerReady(conn);
@@ -165,9 +184,15 @@ namespace Mirror
             }
         }
 
+<<<<<<< HEAD
         void SceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
         {
             Debug.Log($"NetworkRoom SceneLoadedForPlayer scene: {SceneManager.GetActiveScene().path} {conn}");
+=======
+        void SceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer)
+        {
+            // Debug.LogFormat(LogType.Log, "NetworkRoom SceneLoadedForPlayer scene: {0} {1}", SceneManager.GetActiveScene().path, conn);
+>>>>>>> origin/alpha_merge
 
             if (IsSceneActive(RoomScene))
             {
@@ -245,7 +270,11 @@ namespace Mirror
         /// <para>Unity calls this on the Server when a Client connects to the Server. Use an override to tell the NetworkManager what to do when a client connects to the server.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
+<<<<<<< HEAD
         public override void OnServerConnect(NetworkConnectionToClient conn)
+=======
+        public override void OnServerConnect(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             if (numPlayers >= maxConnections)
             {
@@ -269,7 +298,11 @@ namespace Mirror
         /// <para>This is called on the Server when a Client disconnects from the Server. Use an override to decide what should happen when a disconnection is detected.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
+<<<<<<< HEAD
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
+=======
+        public override void OnServerDisconnect(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             if (conn.identity != null)
             {
@@ -299,11 +332,14 @@ namespace Mirror
 
             OnRoomServerDisconnect(conn);
             base.OnServerDisconnect(conn);
+<<<<<<< HEAD
 
 #if UNITY_SERVER
             if (numPlayers < 1)
                 StopServer();
 #endif
+=======
+>>>>>>> origin/alpha_merge
         }
 
         // Sequential index used in round-robin deployment of players into instances and score positioning
@@ -314,7 +350,11 @@ namespace Mirror
         /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
+<<<<<<< HEAD
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+=======
+        public override void OnServerAddPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             // increment the index before adding the player, so first player starts at 1
             clientIndex++;
@@ -326,7 +366,11 @@ namespace Mirror
 
                 allPlayersReady = false;
 
+<<<<<<< HEAD
                 //Debug.Log("NetworkRoomManager.OnServerAddPlayer playerPrefab: {roomPlayerPrefab.name}");
+=======
+                // Debug.LogFormat(LogType.Log, "NetworkRoomManager.OnServerAddPlayer playerPrefab:{0}", roomPlayerPrefab.name);
+>>>>>>> origin/alpha_merge
 
                 GameObject newRoomGameObject = OnRoomServerCreateRoomPlayer(conn);
                 if (newRoomGameObject == null)
@@ -405,13 +449,21 @@ namespace Mirror
         /// </summary>
         public override void OnStartServer()
         {
+<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(RoomScene))
+=======
+            if (string.IsNullOrEmpty(RoomScene))
+>>>>>>> origin/alpha_merge
             {
                 Debug.LogError("NetworkRoomManager RoomScene is empty. Set the RoomScene in the inspector for the NetworkRoomManager");
                 return;
             }
 
+<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(GameplayScene))
+=======
+            if (string.IsNullOrEmpty(GameplayScene))
+>>>>>>> origin/alpha_merge
             {
                 Debug.LogError("NetworkRoomManager PlayScene is empty. Set the PlayScene in the inspector for the NetworkRoomManager");
                 return;
@@ -470,6 +522,7 @@ namespace Mirror
         /// Called on the client when connected to a server.
         /// <para>The default implementation of this function sets the client as ready and adds a player. Override the function to dictate what happens when the client connects.</para>
         /// </summary>
+<<<<<<< HEAD
         public override void OnClientConnect()
         {
 #pragma warning disable 618
@@ -477,18 +530,33 @@ namespace Mirror
             OnRoomClientConnect(NetworkClient.connection);
 #pragma warning restore 618
             base.OnClientConnect();
+=======
+        /// <param name="conn">Connection to the server.</param>
+        public override void OnClientConnect(NetworkConnection conn)
+        {
+            OnRoomClientConnect(conn);
+            base.OnClientConnect(conn);
+>>>>>>> origin/alpha_merge
         }
 
         /// <summary>
         /// Called on clients when disconnected from a server.
         /// <para>This is called on the client when it disconnects from the server. Override this function to decide what happens when the client disconnects.</para>
         /// </summary>
+<<<<<<< HEAD
         public override void OnClientDisconnect()
         {
 #pragma warning disable 618
             OnRoomClientDisconnect(NetworkClient.connection);
 #pragma warning restore 618
             base.OnClientDisconnect();
+=======
+        /// <param name="conn">Connection to the server.</param>
+        public override void OnClientDisconnect(NetworkConnection conn)
+        {
+            OnRoomClientDisconnect(conn);
+            base.OnClientDisconnect(conn);
+>>>>>>> origin/alpha_merge
         }
 
         /// <summary>
@@ -505,7 +573,12 @@ namespace Mirror
         /// Called on clients when a scene has completed loaded, when the scene load was initiated by the server.
         /// <para>Scene changes can cause player objects to be destroyed. The default implementation of OnClientSceneChanged in the NetworkManager is to add a player object for the connection if no player object exists.</para>
         /// </summary>
+<<<<<<< HEAD
         public override void OnClientSceneChanged()
+=======
+        /// <param name="conn">Connection of the client</param>
+        public override void OnClientSceneChanged(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             if (IsSceneActive(RoomScene))
             {
@@ -515,11 +588,16 @@ namespace Mirror
             else
                 CallOnClientExitRoom();
 
+<<<<<<< HEAD
             base.OnClientSceneChanged();
 #pragma warning disable 618
             // obsolete method calls new method
             OnRoomClientSceneChanged(NetworkClient.connection);
 #pragma warning restore 618
+=======
+            base.OnClientSceneChanged(conn);
+            OnRoomClientSceneChanged(conn);
+>>>>>>> origin/alpha_merge
         }
 
         #endregion
@@ -550,13 +628,21 @@ namespace Mirror
         /// This is called on the server when a new client connects to the server.
         /// </summary>
         /// <param name="conn">The new connection.</param>
+<<<<<<< HEAD
         public virtual void OnRoomServerConnect(NetworkConnectionToClient conn) {}
+=======
+        public virtual void OnRoomServerConnect(NetworkConnection conn) {}
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// This is called on the server when a client disconnects.
         /// </summary>
         /// <param name="conn">The connection that disconnected.</param>
+<<<<<<< HEAD
         public virtual void OnRoomServerDisconnect(NetworkConnectionToClient conn) {}
+=======
+        public virtual void OnRoomServerDisconnect(NetworkConnection conn) {}
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// This is called on the server when a networked scene finishes loading.
@@ -570,7 +656,11 @@ namespace Mirror
         /// </summary>
         /// <param name="conn">The connection the player object is for.</param>
         /// <returns>The new room-player object.</returns>
+<<<<<<< HEAD
         public virtual GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
+=======
+        public virtual GameObject OnRoomServerCreateRoomPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             return null;
         }
@@ -582,7 +672,11 @@ namespace Mirror
         /// <param name="conn">The connection the player object is for.</param>
         /// <param name="roomPlayer">The room player object for this connection.</param>
         /// <returns>A new GamePlayer object.</returns>
+<<<<<<< HEAD
         public virtual GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
+=======
+        public virtual GameObject OnRoomServerCreateGamePlayer(NetworkConnection conn, GameObject roomPlayer)
+>>>>>>> origin/alpha_merge
         {
             return null;
         }
@@ -590,10 +684,17 @@ namespace Mirror
         /// <summary>
         /// This allows customization of the creation of the GamePlayer object on the server.
         /// <para>This is only called for subsequent GamePlay scenes after the first one.</para>
+<<<<<<< HEAD
         /// <para>See <see cref="OnRoomServerCreateGamePlayer(NetworkConnectionToClient, GameObject)">OnRoomServerCreateGamePlayer(NetworkConnection, GameObject)</see> to customize the player object for the initial GamePlay scene.</para>
         /// </summary>
         /// <param name="conn">The connection the player object is for.</param>
         public virtual void OnRoomServerAddPlayer(NetworkConnectionToClient conn)
+=======
+        /// <para>See <see cref="OnRoomServerCreateGamePlayer(NetworkConnection, GameObject)">OnRoomServerCreateGamePlayer(NetworkConnection, GameObject)</see> to customize the player object for the initial GamePlay scene.</para>
+        /// </summary>
+        /// <param name="conn">The connection the player object is for.</param>
+        public virtual void OnRoomServerAddPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             base.OnServerAddPlayer(conn);
         }
@@ -607,7 +708,11 @@ namespace Mirror
         /// <param name="roomPlayer">The room player object.</param>
         /// <param name="gamePlayer">The game player object.</param>
         /// <returns>False to not allow this player to replace the room player.</returns>
+<<<<<<< HEAD
         public virtual bool OnRoomServerSceneLoadedForPlayer(NetworkConnectionToClient conn, GameObject roomPlayer, GameObject gamePlayer)
+=======
+        public virtual bool OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)
+>>>>>>> origin/alpha_merge
         {
             return true;
         }
@@ -645,24 +750,38 @@ namespace Mirror
         /// <summary>
         /// This is called on the client when it connects to server.
         /// </summary>
+<<<<<<< HEAD
         public virtual void OnRoomClientConnect() {}
 
         // Deprecated 2021-10-30
         [Obsolete("Remove NetworkConnection from your override and use NetworkClient.connection instead.")]
         public virtual void OnRoomClientConnect(NetworkConnection conn) => OnRoomClientConnect();
+=======
+        /// <param name="conn">The connection that connected.</param>
+        public virtual void OnRoomClientConnect(NetworkConnection conn) {}
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// This is called on the client when disconnected from a server.
         /// </summary>
+<<<<<<< HEAD
         public virtual void OnRoomClientDisconnect() {}
 
         // Deprecated 2021-10-30
         [Obsolete("Remove NetworkConnection from your override and use NetworkClient.connection instead.")]
         public virtual void OnRoomClientDisconnect(NetworkConnection conn) => OnRoomClientDisconnect();
+=======
+        /// <param name="conn">The connection that disconnected.</param>
+        public virtual void OnRoomClientDisconnect(NetworkConnection conn) {}
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// This is called on the client when a client is started.
         /// </summary>
+<<<<<<< HEAD
+=======
+        /// <param name="roomClient">The connection for the room.</param>
+>>>>>>> origin/alpha_merge
         public virtual void OnRoomStartClient() {}
 
         /// <summary>
@@ -673,11 +792,16 @@ namespace Mirror
         /// <summary>
         /// This is called on the client when the client is finished loading a new networked scene.
         /// </summary>
+<<<<<<< HEAD
         public virtual void OnRoomClientSceneChanged() {}
 
         // Deprecated 2021-10-30
         [Obsolete("Remove NetworkConnection from your override and use NetworkClient.connection instead.")]
         public virtual void OnRoomClientSceneChanged(NetworkConnection conn) => OnRoomClientSceneChanged();
+=======
+        /// <param name="conn">The connection that finished loading a new networked scene.</param>
+        public virtual void OnRoomClientSceneChanged(NetworkConnection conn) {}
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// Called on the client when adding a player to the room fails.

@@ -19,7 +19,10 @@ namespace Mirror.SimpleWeb
             verbose = 4,
         }
 
+<<<<<<< HEAD
         public static ILogger logger = Debug.unityLogger;
+=======
+>>>>>>> origin/alpha_merge
         public static Levels level = Levels.none;
 
         public static string BufferToString(byte[] buffer, int offset = 0, int? length = null)
@@ -33,7 +36,11 @@ namespace Mirror.SimpleWeb
             if (level < Levels.verbose)
                 return;
 
+<<<<<<< HEAD
             logger.Log(LogType.Log, $"VERBOSE: <color=cyan>{label}: {BufferToString(buffer, offset, length)}</color>");
+=======
+            Debug.Log($"VERBOSE: <color=blue>{label}: {BufferToString(buffer, offset, length)}</color>");
+>>>>>>> origin/alpha_merge
         }
 
         [Conditional(SIMPLEWEB_LOG_ENABLED)]
@@ -42,7 +49,11 @@ namespace Mirror.SimpleWeb
             if (level < Levels.verbose)
                 return;
 
+<<<<<<< HEAD
             logger.Log(LogType.Log, $"VERBOSE: <color=cyan>{label}: {BufferToString(arrayBuffer.array, 0, arrayBuffer.count)}</color>");
+=======
+            Debug.Log($"VERBOSE: <color=blue>{label}: {BufferToString(arrayBuffer.array, 0, arrayBuffer.count)}</color>");
+>>>>>>> origin/alpha_merge
         }
 
         [Conditional(SIMPLEWEB_LOG_ENABLED)]
@@ -52,9 +63,15 @@ namespace Mirror.SimpleWeb
                 return;
 
             if (showColor)
+<<<<<<< HEAD
                 logger.Log(LogType.Log, $"VERBOSE: <color=cyan>{msg}</color>");
             else
                 logger.Log(LogType.Log, $"VERBOSE: {msg}");
+=======
+                Debug.Log($"VERBOSE: <color=blue>{msg}</color>");
+            else
+                Debug.Log($"VERBOSE: {msg}");
+>>>>>>> origin/alpha_merge
         }
 
         [Conditional(SIMPLEWEB_LOG_ENABLED)]
@@ -64,9 +81,15 @@ namespace Mirror.SimpleWeb
                 return;
 
             if (showColor)
+<<<<<<< HEAD
                 logger.Log(LogType.Log, $"INFO: <color=cyan>{msg}</color>");
             else
                 logger.Log(LogType.Log, $"INFO: {msg}");
+=======
+                Debug.Log($"INFO: <color=blue>{msg}</color>");
+            else
+                Debug.Log($"INFO: {msg}");
+>>>>>>> origin/alpha_merge
         }
 
         /// <summary>
@@ -80,7 +103,11 @@ namespace Mirror.SimpleWeb
             if (level < Levels.info)
                 return;
 
+<<<<<<< HEAD
             logger.Log(LogType.Log, $"INFO_EXCEPTION: <color=cyan>{e.GetType().Name}</color> Message: {e.Message}\n{e.StackTrace}\n\n");
+=======
+            Debug.Log($"INFO_EXCEPTION: <color=blue>{e.GetType().Name}</color> Message: {e.Message}");
+>>>>>>> origin/alpha_merge
         }
 
         [Conditional(SIMPLEWEB_LOG_ENABLED), Conditional(DEBUG)]
@@ -90,9 +117,15 @@ namespace Mirror.SimpleWeb
                 return;
 
             if (showColor)
+<<<<<<< HEAD
                 logger.Log(LogType.Warning, $"WARN: <color=orange>{msg}</color>");
             else
                 logger.Log(LogType.Warning, $"WARN: {msg}");
+=======
+                Debug.LogWarning($"WARN: <color=orange>{msg}</color>");
+            else
+                Debug.LogWarning($"WARN: {msg}");
+>>>>>>> origin/alpha_merge
         }
 
         [Conditional(SIMPLEWEB_LOG_ENABLED), Conditional(DEBUG)]
@@ -102,15 +135,25 @@ namespace Mirror.SimpleWeb
                 return;
 
             if (showColor)
+<<<<<<< HEAD
                 logger.Log(LogType.Error, $"ERROR: <color=red>{msg}</color>");
             else
                 logger.Log(LogType.Error, $"ERROR: {msg}");
+=======
+                Debug.LogError($"ERROR: <color=red>{msg}</color>");
+            else
+                Debug.LogError($"ERROR: {msg}");
+>>>>>>> origin/alpha_merge
         }
 
         public static void Exception(Exception e)
         {
             // always log Exceptions
+<<<<<<< HEAD
             logger.Log(LogType.Error, $"EXCEPTION: <color=red>{e.GetType().Name}</color> Message: {e.Message}\n{e.StackTrace}\n\n");
+=======
+            Debug.LogError($"EXCEPTION: <color=red>{e.GetType().Name}</color> Message: {e.Message}");
+>>>>>>> origin/alpha_merge
         }
     }
 }

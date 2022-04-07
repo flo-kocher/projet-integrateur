@@ -4,7 +4,11 @@ using System.Collections.Generic;
 
 namespace Mirror
 {
+<<<<<<< HEAD
     public class SyncSet<T> : SyncObject, ISet<T>
+=======
+    public class SyncSet<T> : ISet<T>, SyncObject
+>>>>>>> origin/alpha_merge
     {
         public delegate void SyncSetChanged(Operation op, T item);
 
@@ -27,6 +31,7 @@ namespace Mirror
             internal T item;
         }
 
+<<<<<<< HEAD
         // list of changes.
         // -> insert/delete/clear is only ONE change
         // -> changing the same slot 10x caues 10 changes.
@@ -34,6 +39,9 @@ namespace Mirror
         // TODO Dictionary<key, change> to avoid ever growing changes / redundant changes!
         readonly List<Change> changes = new List<Change>();
 
+=======
+        readonly List<Change> changes = new List<Change>();
+>>>>>>> origin/alpha_merge
         // how many changes we need to ignore
         // this is needed because when we initialize the list,
         // we might later receive changes that have already been applied
@@ -45,7 +53,11 @@ namespace Mirror
             this.objects = objects;
         }
 
+<<<<<<< HEAD
         public override void Reset()
+=======
+        public void Reset()
+>>>>>>> origin/alpha_merge
         {
             IsReadOnly = false;
             changes.Clear();
@@ -53,9 +65,17 @@ namespace Mirror
             objects.Clear();
         }
 
+<<<<<<< HEAD
         // throw away all the changes
         // this should be called after a successful sync
         public override void ClearChanges() => changes.Clear();
+=======
+        public bool IsDirty => changes.Count > 0;
+
+        // throw away all the changes
+        // this should be called after a successful sync
+        public void Flush() => changes.Clear();
+>>>>>>> origin/alpha_merge
 
         void AddOperation(Operation op, T item)
         {
@@ -70,21 +90,32 @@ namespace Mirror
                 item = item
             };
 
+<<<<<<< HEAD
             if (IsRecording())
             {
                 changes.Add(change);
                 OnDirty?.Invoke();
             }
+=======
+            changes.Add(change);
+>>>>>>> origin/alpha_merge
 
             Callback?.Invoke(op, item);
         }
 
         void AddOperation(Operation op) => AddOperation(op, default);
 
+<<<<<<< HEAD
         public override void OnSerializeAll(NetworkWriter writer)
         {
             // if init,  write the full list content
             writer.WriteUInt((uint)objects.Count);
+=======
+        public void OnSerializeAll(NetworkWriter writer)
+        {
+            // if init,  write the full list content
+            writer.WriteUInt32((uint)objects.Count);
+>>>>>>> origin/alpha_merge
 
             foreach (T obj in objects)
             {
@@ -95,6 +126,7 @@ namespace Mirror
             // thus the client will need to skip all the pending changes
             // or they would be applied again.
             // So we write how many changes are pending
+<<<<<<< HEAD
             writer.WriteUInt((uint)changes.Count);
         }
 
@@ -102,6 +134,15 @@ namespace Mirror
         {
             // write all the queued up changes
             writer.WriteUInt((uint)changes.Count);
+=======
+            writer.WriteUInt32((uint)changes.Count);
+        }
+
+        public void OnSerializeDelta(NetworkWriter writer)
+        {
+            // write all the queued up changes
+            writer.WriteUInt32((uint)changes.Count);
+>>>>>>> origin/alpha_merge
 
             for (int i = 0; i < changes.Count; i++)
             {
@@ -124,13 +165,21 @@ namespace Mirror
             }
         }
 
+<<<<<<< HEAD
         public override void OnDeserializeAll(NetworkReader reader)
+=======
+        public void OnDeserializeAll(NetworkReader reader)
+>>>>>>> origin/alpha_merge
         {
             // This list can now only be modified by synchronization
             IsReadOnly = true;
 
             // if init,  write the full list content
+<<<<<<< HEAD
             int count = (int)reader.ReadUInt();
+=======
+            int count = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
 
             objects.Clear();
             changes.Clear();
@@ -144,15 +193,26 @@ namespace Mirror
             // We will need to skip all these changes
             // the next time the list is synchronized
             // because they have already been applied
+<<<<<<< HEAD
             changesAhead = (int)reader.ReadUInt();
         }
 
         public override void OnDeserializeDelta(NetworkReader reader)
+=======
+            changesAhead = (int)reader.ReadUInt32();
+        }
+
+        public void OnDeserializeDelta(NetworkReader reader)
+>>>>>>> origin/alpha_merge
         {
             // This list can now only be modified by synchronization
             IsReadOnly = true;
 
+<<<<<<< HEAD
             int changesCount = (int)reader.ReadUInt();
+=======
+            int changesCount = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
 
             for (int i = 0; i < changesCount; i++)
             {

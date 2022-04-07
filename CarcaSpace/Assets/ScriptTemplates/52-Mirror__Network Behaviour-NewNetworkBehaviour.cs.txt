@@ -1,9 +1,18 @@
+<<<<<<< HEAD
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/guides/networkbehaviour
+=======
+using UnityEngine;
+using Mirror;
+using System.Collections.Generic;
+
+/*
+	Documentation: https://mirror-networking.com/docs/Guides/NetworkBehaviour.html
+>>>>>>> origin/alpha_merge
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkBehaviour.html
 */
 
@@ -45,6 +54,7 @@ public class #SCRIPTNAME# : NetworkBehaviour
     public override void OnStartLocalPlayer() { }
 
     /// <summary>
+<<<<<<< HEAD
     /// Called when the local player object is being stopped.
     /// <para>This happens before OnStopClient(), as it may be triggered by an ownership message from the server, or because the player object is being destroyed. This is an appropriate place to deactivate components or functionality that should only be active for the local player, such as cameras and input.</para>
     /// </summary>
@@ -54,6 +64,11 @@ public class #SCRIPTNAME# : NetworkBehaviour
     /// This is invoked on behaviours that have authority, based on context and <see cref="NetworkIdentity.hasAuthority">NetworkIdentity.hasAuthority</see>.
     /// <para>This is called after <see cref="OnStartServer">OnStartServer</see> and before <see cref="OnStartClient">OnStartClient.</see></para>
     /// <para>When <see cref="NetworkIdentity.AssignClientAuthority">AssignClientAuthority</see> is called on the server, this will be called on the client that owns the object. When an object is spawned with <see cref="NetworkServer.Spawn">NetworkServer.Spawn</see> with a NetworkConnectionToClient parameter included, this will be called on the client that owns the object.</para>
+=======
+    /// This is invoked on behaviours that have authority, based on context and <see cref="NetworkIdentity.hasAuthority">NetworkIdentity.hasAuthority</see>.
+    /// <para>This is called after <see cref="OnStartServer">OnStartServer</see> and before <see cref="OnStartClient">OnStartClient.</see></para>
+    /// <para>When <see cref="NetworkIdentity.AssignClientAuthority">AssignClientAuthority</see> is called on the server, this will be called on the client that owns the object. When an object is spawned with <see cref="NetworkServer.Spawn">NetworkServer.Spawn</see> with a NetworkConnection parameter included, this will be called on the client that owns the object.</para>
+>>>>>>> origin/alpha_merge
     /// </summary>
     public override void OnStartAuthority() { }
 

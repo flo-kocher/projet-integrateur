@@ -54,6 +54,10 @@ namespace Mirror.SimpleWeb
             listener?.Stop();
             acceptThread = null;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/alpha_merge
             Log.Info("Server stopped, Closing all connections...");
             // make copy so that foreach doesn't break if values are removed
             Connection[] connectionsCopy = connections.Values.ToArray();
@@ -221,7 +225,11 @@ namespace Mirror.SimpleWeb
             }
             else
             {
+<<<<<<< HEAD
                 Log.Error($"Cant get address of connection {id} because connection was not found in dictionary");
+=======
+                Log.Error($"Cant close connection to {id} because connection was not found in dictionary");
+>>>>>>> origin/alpha_merge
                 return null;
             }
         }

@@ -1,10 +1,13 @@
 using UnityEngine;
 
+<<<<<<< HEAD
 /*
 	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
 	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
 */
 
+=======
+>>>>>>> origin/alpha_merge
 namespace Mirror.Examples.Pong
 {
     // Custom NetworkManager that simply assigns the correct racket positions when
@@ -17,7 +20,11 @@ namespace Mirror.Examples.Pong
         public Transform rightRacketSpawn;
         GameObject ball;
 
+<<<<<<< HEAD
         public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+=======
+        public override void OnServerAddPlayer(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             // add player at correct spawn position
             Transform start = numPlayers == 0 ? leftRacketSpawn : rightRacketSpawn;
@@ -32,7 +39,11 @@ namespace Mirror.Examples.Pong
             }
         }
 
+<<<<<<< HEAD
         public override void OnServerDisconnect(NetworkConnectionToClient conn)
+=======
+        public override void OnServerDisconnect(NetworkConnection conn)
+>>>>>>> origin/alpha_merge
         {
             // destroy ball
             if (ball != null)

@@ -10,8 +10,13 @@ namespace Mirror
         {
             string typeName = typeof(T).Name;
 
+<<<<<<< HEAD
             string[] guidsFound = AssetDatabase.FindAssets($"t:Script {typeName}");
             if (guidsFound.Length >= 1 && !string.IsNullOrWhiteSpace(guidsFound[0]))
+=======
+            string[] guidsFound = AssetDatabase.FindAssets($"t:Script " + typeName);
+            if (guidsFound.Length >= 1 && !string.IsNullOrEmpty(guidsFound[0]))
+>>>>>>> origin/alpha_merge
             {
                 if (guidsFound.Length > 1)
                 {

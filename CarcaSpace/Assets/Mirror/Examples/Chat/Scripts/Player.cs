@@ -1,9 +1,15 @@
+<<<<<<< HEAD
 using System.Collections.Generic;
+=======
+using System;
+using UnityEngine;
+>>>>>>> origin/alpha_merge
 
 namespace Mirror.Examples.Chat
 {
     public class Player : NetworkBehaviour
     {
+<<<<<<< HEAD
         public static readonly HashSet<string> playerNames = new HashSet<string>();
 
         [SyncVar(hook = nameof(OnPlayerNameChanged))]
@@ -24,6 +30,24 @@ namespace Mirror.Examples.Chat
         public override void OnStartServer()
         {
             playerName = (string)connectionToClient.authenticationData;
+=======
+        [SyncVar]
+        public string playerName;
+
+        public static event Action<Player, string> OnMessage;
+
+        [Command]
+        public void CmdSend(string message)
+        {
+            if (message.Trim() != "")
+                RpcReceive(message.Trim());
+        }
+
+        [ClientRpc]
+        public void RpcReceive(string message)
+        {
+            OnMessage?.Invoke(this, message);
+>>>>>>> origin/alpha_merge
         }
     }
 }

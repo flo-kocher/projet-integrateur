@@ -147,13 +147,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34755345}
+<<<<<<< HEAD
   m_LocalRotation: {x: 0, y: 0.3826836, z: -0, w: -0.92387944}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+>>>>>>> origin/alpha_merge
   m_LocalPosition: {x: 20, y: 1, z: -20}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 47225731}
+<<<<<<< HEAD
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 315, z: 0}
+=======
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> origin/alpha_merge
 --- !u!23 &34755347
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -230,8 +239,13 @@ Transform:
   m_Children:
   - {fileID: 1727677799}
   - {fileID: 62078680}
+<<<<<<< HEAD
   - {fileID: 589935541}
   - {fileID: 34755346}
+=======
+  - {fileID: 34755346}
+  - {fileID: 589935541}
+>>>>>>> origin/alpha_merge
   m_Father: {fileID: 909502395}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -260,13 +274,21 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 62078679}
+<<<<<<< HEAD
   m_LocalRotation: {x: 0, y: 0.9238796, z: -0, w: -0.38268325}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+>>>>>>> origin/alpha_merge
   m_LocalPosition: {x: 20, y: 1, z: 20}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 47225731}
   m_RootOrder: 1
+<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 225, z: 0}
+=======
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> origin/alpha_merge
 --- !u!23 &62078681
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -323,7 +345,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 160176456, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
       propertyPath: m_RootOrder
+<<<<<<< HEAD
       value: 2
+=======
+      value: 0
+>>>>>>> origin/alpha_merge
       objectReference: {fileID: 0}
     - target: {fileID: 160176456, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -367,11 +393,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 160176457, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
       propertyPath: m_Name
+<<<<<<< HEAD
       value: Tank
       objectReference: {fileID: 0}
     - target: {fileID: 160176459, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
       propertyPath: sceneId
       value: 1579907432
+=======
+      value: reconTank
+      objectReference: {fileID: 0}
+    - target: {fileID: 160176458, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
+      propertyPath: forceHidden
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 160176459, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
+      propertyPath: sceneId
+      value: 1521238664
+>>>>>>> origin/alpha_merge
       objectReference: {fileID: 0}
     - target: {fileID: 160176459, guid: ab222ed73ada1ac4ba2f61e843d7627c, type: 3}
       propertyPath: m_AssetId
@@ -535,13 +573,22 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589935540}
+<<<<<<< HEAD
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+>>>>>>> origin/alpha_merge
   m_LocalPosition: {x: -20, y: 1, z: -20}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children: []
   m_Father: {fileID: 47225731}
+<<<<<<< HEAD
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
+=======
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> origin/alpha_merge
 --- !u!23 &589935542
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -781,10 +828,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sphere
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 855244094988030909, guid: f6d08eb9a8e35d84fa30a7e3ae64181a,
         type: 3}
       propertyPath: m_RootOrder
       value: 0
+=======
+    - target: {fileID: 855244094988030908, guid: f6d08eb9a8e35d84fa30a7e3ae64181a,
+        type: 3}
+      propertyPath: forceHidden
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 855244094988030909, guid: f6d08eb9a8e35d84fa30a7e3ae64181a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+>>>>>>> origin/alpha_merge
       objectReference: {fileID: 0}
     - target: {fileID: 855244094988030909, guid: f6d08eb9a8e35d84fa30a7e3ae64181a,
         type: 3}
@@ -1113,10 +1172,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+<<<<<<< HEAD
     - target: {fileID: 6852530814182375318, guid: 12a4c14e672c00b4b840f937d824b890,
         type: 3}
       propertyPath: sceneId
       value: 4277306991
+=======
+    - target: {fileID: 6852530814182375317, guid: 12a4c14e672c00b4b840f937d824b890,
+        type: 3}
+      propertyPath: forceHidden
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6852530814182375318, guid: 12a4c14e672c00b4b840f937d824b890,
+        type: 3}
+      propertyPath: sceneId
+      value: 1418438611
+>>>>>>> origin/alpha_merge
       objectReference: {fileID: 0}
     - target: {fileID: 6852530814182375318, guid: 12a4c14e672c00b4b840f937d824b890,
         type: 3}
@@ -1158,9 +1229,15 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+<<<<<<< HEAD
   - {fileID: 748207075}
   - {fileID: 901271863}
   - {fileID: 160176456}
+=======
+  - {fileID: 160176456}
+  - {fileID: 901271863}
+  - {fileID: 748207075}
+>>>>>>> origin/alpha_merge
   - {fileID: 1284471874}
   - {fileID: 47225731}
   m_Father: {fileID: 0}
@@ -1260,6 +1337,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1047741290}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+<<<<<<< HEAD
 --- !u!1 &1072006166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 160176457, guid: ab222ed73ada1ac4ba2f61e843d7627c,
@@ -1279,6 +1357,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visRange: 10
+=======
+>>>>>>> origin/alpha_merge
 --- !u!1 &1172568541
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,9 +1861,14 @@ GameObject:
   - component: {fileID: 1661834281}
   - component: {fileID: 1661834278}
   - component: {fileID: 1661834280}
+<<<<<<< HEAD
   - component: {fileID: 1661834282}
   m_Layer: 0
   m_Name: NetworkManager
+=======
+  m_Layer: 0
+  m_Name: Network
+>>>>>>> origin/alpha_merge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1806,6 +1891,11 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
+<<<<<<< HEAD
+=======
+  serverBatching: 0
+  serverBatchInterval: 0
+>>>>>>> origin/alpha_merge
   offlineScene: 
   onlineScene: 
   transport: {fileID: 1661834280}
@@ -1849,15 +1939,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Port: 7777
+<<<<<<< HEAD
   DualMode: 1
   NoDelay: 1
   Interval: 10
   Timeout: 10000
+=======
+  NoDelay: 1
+  Interval: 10
+>>>>>>> origin/alpha_merge
   FastResend: 2
   CongestionWindow: 0
   SendWindowSize: 4096
   ReceiveWindowSize: 4096
+<<<<<<< HEAD
   NonAlloc: 1
+=======
+>>>>>>> origin/alpha_merge
   debugLog: 0
   statisticsGUI: 0
   statisticsLog: 0
@@ -1876,6 +1974,7 @@ MonoBehaviour:
   showGUI: 1
   offsetX: 0
   offsetY: 0
+<<<<<<< HEAD
 --- !u!114 &1661834282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1890,6 +1989,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   visRange: 5
   rebuildInterval: 0.1
+=======
+>>>>>>> origin/alpha_merge
 --- !u!1 &1727677796
 GameObject:
   m_ObjectHideFlags: 0
@@ -1962,13 +2063,21 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727677796}
+<<<<<<< HEAD
   m_LocalRotation: {x: 0, y: 0.92387956, z: 0, w: 0.38268343}
+=======
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+>>>>>>> origin/alpha_merge
   m_LocalPosition: {x: -20, y: 1, z: 20}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children: []
   m_Father: {fileID: 47225731}
   m_RootOrder: 0
+<<<<<<< HEAD
   m_LocalEulerAnglesHint: {x: 0, y: 135, z: 0}
+=======
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+>>>>>>> origin/alpha_merge
 --- !u!1 &1816951099
 GameObject:
   m_ObjectHideFlags: 0
@@ -2094,5 +2203,13 @@ PrefabInstance:
       propertyPath: m_SceneId
       value: 2061538488
       objectReference: {fileID: 0}
+<<<<<<< HEAD
+=======
+    - target: {fileID: 5697694911122891659, guid: e1971f4a8c7661546bc509b44bd91b80,
+        type: 3}
+      propertyPath: forceHidden
+      value: 0
+      objectReference: {fileID: 0}
+>>>>>>> origin/alpha_merge
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e1971f4a8c7661546bc509b44bd91b80, type: 3}

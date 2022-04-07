@@ -4,7 +4,31 @@ using System.Collections.Generic;
 
 namespace Mirror
 {
+<<<<<<< HEAD
     public class SyncList<T> : SyncObject, IList<T>, IReadOnlyList<T>
+=======
+    // Deprecated 10/02/2020
+    [Obsolete("Use SyncList<string> instead")]
+    public class SyncListString : SyncList<string> {}
+
+    // Deprecated 10/02/2020
+    [Obsolete("Use SyncList<float> instead")]
+    public class SyncListFloat : SyncList<float> {}
+
+    // Deprecated 10/02/2020
+    [Obsolete("Use SyncList<int> instead")]
+    public class SyncListInt : SyncList<int> {}
+
+    // Deprecated 10/02/2020
+    [Obsolete("Use SyncList<uint> instead")]
+    public class SyncListUInt : SyncList<uint> {}
+
+    // Deprecated 10/02/2020
+    [Obsolete("Use SyncList<bool> instead")]
+    public class SyncListBool : SyncList<bool> {}
+
+    public class SyncList<T> : IList<T>, IReadOnlyList<T>, SyncObject
+>>>>>>> origin/alpha_merge
     {
         public delegate void SyncListChanged(Operation op, int itemIndex, T oldItem, T newItem);
 
@@ -31,12 +55,16 @@ namespace Mirror
             internal T item;
         }
 
+<<<<<<< HEAD
         // list of changes.
         // -> insert/delete/clear is only ONE change
         // -> changing the same slot 10x caues 10 changes.
         // -> note that this grows until next sync(!)
         readonly List<Change> changes = new List<Change>();
 
+=======
+        readonly List<Change> changes = new List<Change>();
+>>>>>>> origin/alpha_merge
         // how many changes we need to ignore
         // this is needed because when we initialize the list,
         // we might later receive changes that have already been applied
@@ -57,11 +85,21 @@ namespace Mirror
             this.objects = objects;
         }
 
+<<<<<<< HEAD
         // throw away all the changes
         // this should be called after a successful sync
         public override void ClearChanges() => changes.Clear();
 
         public override void Reset()
+=======
+        public bool IsDirty => changes.Count > 0;
+
+        // throw away all the changes
+        // this should be called after a successful sync
+        public void Flush() => changes.Clear();
+
+        public void Reset()
+>>>>>>> origin/alpha_merge
         {
             IsReadOnly = false;
             changes.Clear();
@@ -83,19 +121,30 @@ namespace Mirror
                 item = newItem
             };
 
+<<<<<<< HEAD
             if (IsRecording())
             {
                 changes.Add(change);
                 OnDirty?.Invoke();
             }
+=======
+            changes.Add(change);
+>>>>>>> origin/alpha_merge
 
             Callback?.Invoke(op, itemIndex, oldItem, newItem);
         }
 
+<<<<<<< HEAD
         public override void OnSerializeAll(NetworkWriter writer)
         {
             // if init,  write the full list content
             writer.WriteUInt((uint)objects.Count);
+=======
+        public void OnSerializeAll(NetworkWriter writer)
+        {
+            // if init,  write the full list content
+            writer.WriteUInt32((uint)objects.Count);
+>>>>>>> origin/alpha_merge
 
             for (int i = 0; i < objects.Count; i++)
             {
@@ -107,6 +156,7 @@ namespace Mirror
             // thus the client will need to skip all the pending changes
             // or they would be applied again.
             // So we write how many changes are pending
+<<<<<<< HEAD
             writer.WriteUInt((uint)changes.Count);
         }
 
@@ -114,6 +164,15 @@ namespace Mirror
         {
             // write all the queued up changes
             writer.WriteUInt((uint)changes.Count);
+=======
+            writer.WriteUInt32((uint)changes.Count);
+        }
+
+        public void OnSerializeDelta(NetworkWriter writer)
+        {
+            // write all the queued up changes
+            writer.WriteUInt32((uint)changes.Count);
+>>>>>>> origin/alpha_merge
 
             for (int i = 0; i < changes.Count; i++)
             {
@@ -130,25 +189,41 @@ namespace Mirror
                         break;
 
                     case Operation.OP_REMOVEAT:
+<<<<<<< HEAD
                         writer.WriteUInt((uint)change.index);
+=======
+                        writer.WriteUInt32((uint)change.index);
+>>>>>>> origin/alpha_merge
                         break;
 
                     case Operation.OP_INSERT:
                     case Operation.OP_SET:
+<<<<<<< HEAD
                         writer.WriteUInt((uint)change.index);
+=======
+                        writer.WriteUInt32((uint)change.index);
+>>>>>>> origin/alpha_merge
                         writer.Write(change.item);
                         break;
                 }
             }
         }
 
+<<<<<<< HEAD
         public override void OnDeserializeAll(NetworkReader reader)
+=======
+        public void OnDeserializeAll(NetworkReader reader)
+>>>>>>> origin/alpha_merge
         {
             // This list can now only be modified by synchronization
             IsReadOnly = true;
 
             // if init,  write the full list content
+<<<<<<< HEAD
             int count = (int)reader.ReadUInt();
+=======
+            int count = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
 
             objects.Clear();
             changes.Clear();
@@ -162,15 +237,26 @@ namespace Mirror
             // We will need to skip all these changes
             // the next time the list is synchronized
             // because they have already been applied
+<<<<<<< HEAD
             changesAhead = (int)reader.ReadUInt();
         }
 
         public override void OnDeserializeDelta(NetworkReader reader)
+=======
+            changesAhead = (int)reader.ReadUInt32();
+        }
+
+        public void OnDeserializeDelta(NetworkReader reader)
+>>>>>>> origin/alpha_merge
         {
             // This list can now only be modified by synchronization
             IsReadOnly = true;
 
+<<<<<<< HEAD
             int changesCount = (int)reader.ReadUInt();
+=======
+            int changesCount = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
 
             for (int i = 0; i < changesCount; i++)
             {
@@ -202,7 +288,11 @@ namespace Mirror
                         break;
 
                     case Operation.OP_INSERT:
+<<<<<<< HEAD
                         index = (int)reader.ReadUInt();
+=======
+                        index = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
                         newItem = reader.Read<T>();
                         if (apply)
                         {
@@ -211,7 +301,11 @@ namespace Mirror
                         break;
 
                     case Operation.OP_REMOVEAT:
+<<<<<<< HEAD
                         index = (int)reader.ReadUInt();
+=======
+                        index = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
                         if (apply)
                         {
                             oldItem = objects[index];
@@ -220,7 +314,11 @@ namespace Mirror
                         break;
 
                     case Operation.OP_SET:
+<<<<<<< HEAD
                         index = (int)reader.ReadUInt();
+=======
+                        index = (int)reader.ReadUInt32();
+>>>>>>> origin/alpha_merge
                         newItem = reader.Read<T>();
                         if (apply)
                         {

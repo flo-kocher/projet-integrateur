@@ -73,7 +73,11 @@ namespace Mirror
 
         public override bool HasPreviewGUI()
         {
+<<<<<<< HEAD
             // need to check if target is null to stop MissingReferenceException
+=======
+            // need to check if target is null to stop MissingReferenceException 
+>>>>>>> origin/alpha_merge
             return target != null && target is GameObject gameObject && gameObject.GetComponent<NetworkIdentity>() != null;
         }
 
@@ -180,9 +184,15 @@ namespace Mirror
                 observerRect.x += 20;
                 observerRect.y += observerRect.height;
 
+<<<<<<< HEAD
                 foreach (KeyValuePair<int, NetworkConnectionToClient> kvp in identity.observers)
                 {
                     GUI.Label(observerRect, $"{kvp.Value.address}:{kvp.Value}", styles.componentName);
+=======
+                foreach (KeyValuePair<int, NetworkConnection> kvp in identity.observers)
+                {
+                    GUI.Label(observerRect, kvp.Value.address + ":" + kvp.Value, styles.componentName);
+>>>>>>> origin/alpha_merge
                     observerRect.y += observerRect.height;
                     Y = observerRect.y;
                 }
@@ -196,7 +206,11 @@ namespace Mirror
             if (identity.connectionToClient != null)
             {
                 Rect ownerRect = new Rect(initialX, Y + 10, 400, 20);
+<<<<<<< HEAD
                 GUI.Label(ownerRect, new GUIContent($"Client Authority: {identity.connectionToClient}"), styles.labelStyle);
+=======
+                GUI.Label(ownerRect, new GUIContent("Client Authority: " + identity.connectionToClient), styles.labelStyle);
+>>>>>>> origin/alpha_merge
                 Y += ownerRect.height;
             }
             return Y;
@@ -277,7 +291,11 @@ namespace Mirror
         NetworkIdentityInfo GetAssetId(NetworkIdentity identity)
         {
             string assetId = identity.assetId.ToString();
+<<<<<<< HEAD
             if (string.IsNullOrWhiteSpace(assetId))
+=======
+            if (string.IsNullOrEmpty(assetId))
+>>>>>>> origin/alpha_merge
             {
                 assetId = "<object has no prefab>";
             }

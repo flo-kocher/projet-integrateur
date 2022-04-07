@@ -12,6 +12,7 @@ namespace kcp2k
         //            => we need the MTU to fit channel + message!
         readonly byte[] rawReceiveBuffer = new byte[Kcp.MTU_DEF];
 
+<<<<<<< HEAD
         // helper function to resolve host to IPAddress
         public static bool ResolveHostname(string hostname, out IPAddress[] addresses)
         {
@@ -96,6 +97,24 @@ namespace kcp2k
             }
             // otherwise call OnDisconnected to let the user know.
             else OnDisconnected();
+=======
+        public void Connect(string host, ushort port, bool noDelay, uint interval = Kcp.INTERVAL, int fastResend = 0, bool congestionWindow = true, uint sendWindowSize = Kcp.WND_SND, uint receiveWindowSize = Kcp.WND_RCV)
+        {
+            Log.Info($"KcpClient: connect to {host}:{port}");
+            IPAddress[] ipAddress = Dns.GetHostAddresses(host);
+            if (ipAddress.Length < 1)
+                throw new SocketException((int)SocketError.HostNotFound);
+
+            remoteEndpoint = new IPEndPoint(ipAddress[0], port);
+            socket = new Socket(remoteEndpoint.AddressFamily, SocketType.Dgram, ProtocolType.Udp);
+            socket.Connect(remoteEndpoint);
+            SetupKcp(noDelay, interval, fastResend, congestionWindow, sendWindowSize, receiveWindowSize);
+
+            // client should send handshake to server as very first message
+            SendHandshake();
+
+            RawReceive();
+>>>>>>> origin/alpha_merge
         }
 
         // call from transport update
@@ -107,7 +126,11 @@ namespace kcp2k
                 {
                     while (socket.Poll(0, SelectMode.SelectRead))
                     {
+<<<<<<< HEAD
                         int msgLength = ReceiveFrom(rawReceiveBuffer);
+=======
+                        int msgLength = socket.ReceiveFrom(rawReceiveBuffer, ref remoteEndpoint);
+>>>>>>> origin/alpha_merge
                         // IMPORTANT: detect if buffer was too small for the
                         //            received msgLength. otherwise the excess
                         //            data would be silently lost.

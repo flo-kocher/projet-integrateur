@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 V1.17 [2022-01-09]
 - perf: server/client MaximizeSendReceiveBuffersToOSLimit option to set send/recv
   buffer sizes to OS limit. avoids drops due to small buffers under heavy load.
@@ -57,6 +58,8 @@ V1.8 [2021-02-14]
 - fix: KcpConnection.SendData: don't allow sending empty messages anymore. disconnect
   and log a warning to make it completely obvious.
 
+=======
+>>>>>>> origin/alpha_merge
 V1.7 [2021-01-13]
 - fix: unreliable messages reset timeout now too
 - perf: KcpConnection OnCheckEnabled callback changed to a simple 'paused' boolean.

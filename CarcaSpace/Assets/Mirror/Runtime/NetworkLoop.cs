@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // our ideal update looks like this:
+=======
+﻿// our ideal update looks like this:
+>>>>>>> origin/alpha_merge
 //   transport.process_incoming()
 //   update_world()
 //   transport.process_outgoing()
@@ -40,11 +44,16 @@ using UnityEngine.Experimental.PlayerLoop;
 
 namespace Mirror
 {
+<<<<<<< HEAD
     public static class NetworkLoop
+=======
+    internal static class NetworkLoop
+>>>>>>> origin/alpha_merge
     {
         // helper enum to add loop to begin/end of subSystemList
         internal enum AddMode { Beginning, End }
 
+<<<<<<< HEAD
         // callbacks in case someone needs to use early/lateupdate too.
         public static Action OnEarlyUpdate;
         public static Action OnLateUpdate;
@@ -57,6 +66,8 @@ namespace Mirror
             OnLateUpdate = null;
         }
 
+=======
+>>>>>>> origin/alpha_merge
         // helper function to find an update function's index in a player loop
         // type. this is used for testing to guarantee our functions are added
         // at the beginning/end properly.
@@ -158,10 +169,17 @@ namespace Mirror
         }
 
         // hook into Unity runtime to actually add our custom functions
+<<<<<<< HEAD
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void RuntimeInitializeOnLoad()
         {
             //Debug.Log("Mirror: adding Network[Early/Late]Update to Unity...");
+=======
+        [RuntimeInitializeOnLoadMethod]
+        static void RuntimeInitializeOnLoad()
+        {
+            Debug.Log("Mirror: adding Network[Early/Late]Update to Unity...");
+>>>>>>> origin/alpha_merge
 
             // get loop
             // 2019 has GetCURRENTPlayerLoop which is safe to use without
@@ -189,18 +207,28 @@ namespace Mirror
 
         static void NetworkEarlyUpdate()
         {
+<<<<<<< HEAD
             //Debug.Log($"NetworkEarlyUpdate {Time.time}");
             NetworkServer.NetworkEarlyUpdate();
             NetworkClient.NetworkEarlyUpdate();
             // invoke event after mirror has done it's early updating.
             OnEarlyUpdate?.Invoke();
+=======
+            //Debug.Log("NetworkEarlyUpdate @ " + Time.time);
+            NetworkServer.NetworkEarlyUpdate();
+            NetworkClient.NetworkEarlyUpdate();
+>>>>>>> origin/alpha_merge
         }
 
         static void NetworkLateUpdate()
         {
+<<<<<<< HEAD
             //Debug.Log($"NetworkLateUpdate {Time.time}");
             // invoke event before mirror does its final late updating.
             OnLateUpdate?.Invoke();
+=======
+            //Debug.Log("NetworkLateUpdate @ " + Time.time);
+>>>>>>> origin/alpha_merge
             NetworkServer.NetworkLateUpdate();
             NetworkClient.NetworkLateUpdate();
         }

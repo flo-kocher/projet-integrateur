@@ -62,7 +62,11 @@ namespace Mirror
             else
             {
                 NetworkIdentity identity = go.GetComponent<NetworkIdentity>();
+<<<<<<< HEAD
                 label = new GUIContent(go.name, identity != null ? $"AssetId: [{identity.assetId}]" : "No Network Identity");
+=======
+                label = new GUIContent(go.name, identity != null ? "AssetId: [" + identity.assetId + "]" : "No Network Identity");
+>>>>>>> origin/alpha_merge
             }
 
             GameObject newGameObject = (GameObject)EditorGUI.ObjectField(r, label, go, typeof(GameObject), false);
@@ -71,7 +75,11 @@ namespace Mirror
             {
                 if (newGameObject != null && !newGameObject.GetComponent<NetworkIdentity>())
                 {
+<<<<<<< HEAD
                     Debug.LogError($"Prefab {newGameObject} cannot be added as spawnable as it doesn't have a NetworkIdentity.");
+=======
+                    Debug.LogError("Prefab " + newGameObject + " cannot be added as spawnable as it doesn't have a NetworkIdentity.");
+>>>>>>> origin/alpha_merge
                     return;
                 }
                 prefab.objectReferenceValue = newGameObject;

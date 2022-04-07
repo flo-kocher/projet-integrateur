@@ -11,6 +11,7 @@ namespace kcp2k
     {
         // events
         public Action<int> OnConnected;
+<<<<<<< HEAD
         public Action<int, ArraySegment<byte>, KcpChannel> OnData;
         public Action<int> OnDisconnected;
 
@@ -23,6 +24,12 @@ namespace kcp2k
         public bool MaximizeSendReceiveBuffersToOSLimit;
 
         // kcp configuration
+=======
+        public Action<int, ArraySegment<byte>> OnData;
+        public Action<int> OnDisconnected;
+
+        // configuration
+>>>>>>> origin/alpha_merge
         // NoDelay is recommended to reduce latency. This also scales better
         // without buffers getting full.
         public bool NoDelay;
@@ -44,6 +51,7 @@ namespace kcp2k
         //  8192, 8192 for 20k monsters
         public uint SendWindowSize;
         public uint ReceiveWindowSize;
+<<<<<<< HEAD
         // timeout in milliseconds
         public int Timeout;
         // maximum retransmission attempts until dead_link
@@ -53,6 +61,17 @@ namespace kcp2k
         protected Socket socket;
         EndPoint newClientEP;
 
+=======
+
+        // state
+        Socket socket;
+#if UNITY_SWITCH
+        // switch does not support ipv6
+        EndPoint newClientEP = new IPEndPoint(IPAddress.Any, 0);
+#else
+        EndPoint newClientEP = new IPEndPoint(IPAddress.IPv6Any, 0);
+#endif
+>>>>>>> origin/alpha_merge
         // IMPORTANT: raw receive buffer always needs to be of 'MTU' size, even
         //            if MaxMessageSize is larger. kcp always sends in MTU
         //            segments and having a buffer smaller than MTU would
@@ -64,29 +83,42 @@ namespace kcp2k
         public Dictionary<int, KcpServerConnection> connections = new Dictionary<int, KcpServerConnection>();
 
         public KcpServer(Action<int> OnConnected,
+<<<<<<< HEAD
                          Action<int, ArraySegment<byte>, KcpChannel> OnData,
                          Action<int> OnDisconnected,
                          bool DualMode,
+=======
+                         Action<int, ArraySegment<byte>> OnData,
+                         Action<int> OnDisconnected,
+>>>>>>> origin/alpha_merge
                          bool NoDelay,
                          uint Interval,
                          int FastResend = 0,
                          bool CongestionWindow = true,
                          uint SendWindowSize = Kcp.WND_SND,
+<<<<<<< HEAD
                          uint ReceiveWindowSize = Kcp.WND_RCV,
                          int Timeout = KcpConnection.DEFAULT_TIMEOUT,
                          uint MaxRetransmits = Kcp.DEADLINK,
                          bool MaximizeSendReceiveBuffersToOSLimit = false)
+=======
+                         uint ReceiveWindowSize = Kcp.WND_RCV)
+>>>>>>> origin/alpha_merge
         {
             this.OnConnected = OnConnected;
             this.OnData = OnData;
             this.OnDisconnected = OnDisconnected;
+<<<<<<< HEAD
             this.DualMode = DualMode;
+=======
+>>>>>>> origin/alpha_merge
             this.NoDelay = NoDelay;
             this.Interval = Interval;
             this.FastResend = FastResend;
             this.CongestionWindow = CongestionWindow;
             this.SendWindowSize = SendWindowSize;
             this.ReceiveWindowSize = ReceiveWindowSize;
+<<<<<<< HEAD
             this.Timeout = Timeout;
             this.MaxRetransmits = MaxRetransmits;
             this.MaximizeSendReceiveBuffersToOSLimit = MaximizeSendReceiveBuffersToOSLimit;
@@ -95,10 +127,13 @@ namespace kcp2k
             newClientEP = DualMode
                           ? new IPEndPoint(IPAddress.IPv6Any, 0)
                           : new IPEndPoint(IPAddress.Any, 0);
+=======
+>>>>>>> origin/alpha_merge
         }
 
         public bool IsActive() => socket != null;
 
+<<<<<<< HEAD
         // if connections drop under heavy load, increase to OS limit.
         // if still not enough, increase the OS limit.
         void ConfigureSocketBufferSizes()
@@ -118,6 +153,8 @@ namespace kcp2k
             else Log.Info($"KcpServer: RecvBuf = {socket.ReceiveBufferSize} SendBuf = {socket.SendBufferSize}. If connections drop under heavy load, enable {nameof(MaximizeSendReceiveBuffersToOSLimit)} to increase it to OS limit. If they still drop, increase the OS limit.");
         }
 
+=======
+>>>>>>> origin/alpha_merge
         public void Start(ushort port)
         {
             // only start once
@@ -127,6 +164,7 @@ namespace kcp2k
             }
 
             // listen
+<<<<<<< HEAD
             if (DualMode)
             {
                 // IPv6 socket with DualMode
@@ -143,6 +181,17 @@ namespace kcp2k
 
             // configure socket buffer size.
             ConfigureSocketBufferSizes();
+=======
+#if UNITY_SWITCH
+            // Switch does not support ipv6
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            socket.Bind(new IPEndPoint(IPAddress.Any, port));
+#else
+            socket = new Socket(AddressFamily.InterNetworkV6, SocketType.Dgram, ProtocolType.Udp);
+            socket.DualMode = true;
+            socket.Bind(new IPEndPoint(IPAddress.IPv6Any, port));
+#endif
+>>>>>>> origin/alpha_merge
         }
 
         public void Send(int connectionId, ArraySegment<byte> segment, KcpChannel channel)
@@ -170,6 +219,7 @@ namespace kcp2k
             return "";
         }
 
+<<<<<<< HEAD
         // EndPoint & Receive functions can be overwritten for where-allocation:
         // https://github.com/vis2k/where-allocation
         protected virtual int ReceiveFrom(byte[] buffer, out int connectionHash)
@@ -197,6 +247,8 @@ namespace kcp2k
         protected virtual KcpServerConnection CreateConnection() =>
             new KcpServerConnection(socket, newClientEP, NoDelay, Interval, FastResend, CongestionWindow, SendWindowSize, ReceiveWindowSize, Timeout, MaxRetransmits);
 
+=======
+>>>>>>> origin/alpha_merge
         // process incoming messages. should be called before updating the world.
         HashSet<int> connectionsToRemove = new HashSet<int>();
         public void TickIncoming()
@@ -205,10 +257,19 @@ namespace kcp2k
             {
                 try
                 {
+<<<<<<< HEAD
                     // receive
                     int msgLength = ReceiveFrom(rawReceiveBuffer, out int connectionId);
                     //Log.Info($"KCP: server raw recv {msgLength} bytes = {BitConverter.ToString(buffer, 0, msgLength)}");
 
+=======
+                    int msgLength = socket.ReceiveFrom(rawReceiveBuffer, 0, rawReceiveBuffer.Length, SocketFlags.None, ref newClientEP);
+                    //Log.Info($"KCP: server raw recv {msgLength} bytes = {BitConverter.ToString(buffer, 0, msgLength)}");
+
+                    // calculate connectionId from endpoint
+                    int connectionId = newClientEP.GetHashCode();
+
+>>>>>>> origin/alpha_merge
                     // IMPORTANT: detect if buffer was too small for the received
                     //            msgLength. otherwise the excess data would be
                     //            silently lost.
@@ -218,9 +279,14 @@ namespace kcp2k
                         // is this a new connection?
                         if (!connections.TryGetValue(connectionId, out KcpServerConnection connection))
                         {
+<<<<<<< HEAD
                             // create a new KcpConnection based on last received
                             // EndPoint. can be overwritten for where-allocation.
                             connection = CreateConnection();
+=======
+                            // create a new KcpConnection
+                            connection = new KcpServerConnection(socket, newClientEP, NoDelay, Interval, FastResend, CongestionWindow, SendWindowSize, ReceiveWindowSize);
+>>>>>>> origin/alpha_merge
 
                             // DO NOT add to connections yet. only if the first message
                             // is actually the kcp handshake. otherwise it's either:
@@ -251,7 +317,11 @@ namespace kcp2k
 
                                 // add to connections dict after being authenticated.
                                 connections.Add(connectionId, connection);
+<<<<<<< HEAD
                                 Log.Info($"KCP: server added connection({connectionId})");
+=======
+                                Log.Info($"KCP: server added connection({connectionId}): {newClientEP}");
+>>>>>>> origin/alpha_merge
 
                                 // setup Data + Disconnected events only AFTER the
                                 // handshake. we don't want to fire OnServerDisconnected
@@ -259,11 +329,19 @@ namespace kcp2k
                                 // internet.
 
                                 // setup data event
+<<<<<<< HEAD
                                 connection.OnData = (message, channel) =>
                                 {
                                     // call mirror event
                                     //Log.Info($"KCP: OnServerDataReceived({connectionId}, {BitConverter.ToString(message.Array, message.Offset, message.Count)})");
                                     OnData.Invoke(connectionId, message, channel);
+=======
+                                connection.OnData = (message) =>
+                                {
+                                    // call mirror event
+                                    //Log.Info($"KCP: OnServerDataReceived({connectionId}, {BitConverter.ToString(message.Array, message.Offset, message.Count)})");
+                                    OnData.Invoke(connectionId, message);
+>>>>>>> origin/alpha_merge
                                 };
 
                                 // setup disconnected event
@@ -352,5 +430,22 @@ namespace kcp2k
             socket?.Close();
             socket = null;
         }
+<<<<<<< HEAD
+=======
+
+        // pause/unpause to safely support mirror scene handling and to
+        // immediately pause the receive while loop if needed.
+        public void Pause()
+        {
+            foreach (KcpServerConnection connection in connections.Values)
+                connection.Pause();
+        }
+
+        public void Unpause()
+        {
+            foreach (KcpServerConnection connection in connections.Values)
+                connection.Unpause();
+        }
+>>>>>>> origin/alpha_merge
     }
 }

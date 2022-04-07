@@ -85,6 +85,7 @@ namespace Telepathy
                 // start listener on all IPv4 and IPv6 address via .Create
                 listener = TcpListener.Create(port);
                 listener.Server.NoDelay = NoDelay;
+<<<<<<< HEAD
                 // IMPORTANT: do not set send/receive timeouts on listener.
                 // On linux setting the recv timeout will cause the blocking 
                 // Accept call to timeout with EACCEPT (which mono interprets 
@@ -94,6 +95,10 @@ namespace Telepathy
                 //
                 //listener.Server.SendTimeout = SendTimeout;
                 //listener.Server.ReceiveTimeout = ReceiveTimeout;
+=======
+                listener.Server.SendTimeout = SendTimeout;
+                listener.Server.ReceiveTimeout = ReceiveTimeout;
+>>>>>>> origin/alpha_merge
                 listener.Start();
                 Log.Info("Server: listening port=" + port);
 

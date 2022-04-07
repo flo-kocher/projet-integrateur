@@ -2,16 +2,26 @@
     "name": "Mirror.Examples",
     "references": [
         "Mirror",
+<<<<<<< HEAD
         "Mirror.Components",
         "Unity.TextMeshPro"
     ],
+=======
+        "Mirror.Components"
+    ],
+    "optionalUnityReferences": [],
+>>>>>>> origin/alpha_merge
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,
+<<<<<<< HEAD
     "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
+=======
+    "defineConstraints": []
+>>>>>>> origin/alpha_merge
 }

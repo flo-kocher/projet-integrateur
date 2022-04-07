@@ -1,8 +1,15 @@
+<<<<<<< HEAD
 using System.Net.Sockets;
 
 namespace Mirror.SimpleWeb
 {
     [System.Serializable]
+=======
+﻿using System.Net.Sockets;
+
+namespace Mirror.SimpleWeb
+{
+>>>>>>> origin/alpha_merge
     public struct TcpConfig
     {
         public readonly bool noDelay;

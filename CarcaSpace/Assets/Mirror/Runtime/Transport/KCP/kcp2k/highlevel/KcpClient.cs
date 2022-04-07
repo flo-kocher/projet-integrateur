@@ -8,20 +8,29 @@ namespace kcp2k
     {
         // events
         public Action OnConnected;
+<<<<<<< HEAD
         public Action<ArraySegment<byte>, KcpChannel> OnData;
+=======
+        public Action<ArraySegment<byte>> OnData;
+>>>>>>> origin/alpha_merge
         public Action OnDisconnected;
 
         // state
         public KcpClientConnection connection;
         public bool connected;
 
+<<<<<<< HEAD
         public KcpClient(Action OnConnected, Action<ArraySegment<byte>, KcpChannel> OnData, Action OnDisconnected)
+=======
+        public KcpClient(Action OnConnected, Action<ArraySegment<byte>> OnData, Action OnDisconnected)
+>>>>>>> origin/alpha_merge
         {
             this.OnConnected = OnConnected;
             this.OnData = OnData;
             this.OnDisconnected = OnDisconnected;
         }
 
+<<<<<<< HEAD
         // CreateConnection can be overwritten for where-allocation:
         // https://github.com/vis2k/where-allocation
         protected virtual KcpClientConnection CreateConnection() =>
@@ -38,6 +47,9 @@ namespace kcp2k
                             int timeout = KcpConnection.DEFAULT_TIMEOUT,
                             uint maxRetransmits = Kcp.DEADLINK,
                             bool maximizeSendReceiveBuffersToOSLimit = false)
+=======
+        public void Connect(string address, ushort port, bool noDelay, uint interval, int fastResend = 0, bool congestionWindow = true, uint sendWindowSize = Kcp.WND_SND, uint receiveWindowSize = Kcp.WND_RCV)
+>>>>>>> origin/alpha_merge
         {
             if (connected)
             {
@@ -45,8 +57,12 @@ namespace kcp2k
                 return;
             }
 
+<<<<<<< HEAD
             // create connection
             connection = CreateConnection();
+=======
+            connection = new KcpClientConnection();
+>>>>>>> origin/alpha_merge
 
             // setup events
             connection.OnAuthenticated = () =>
@@ -55,10 +71,17 @@ namespace kcp2k
                 connected = true;
                 OnConnected.Invoke();
             };
+<<<<<<< HEAD
             connection.OnData = (message, channel) =>
             {
                 //Log.Debug($"KCP: OnClientData({BitConverter.ToString(message.Array, message.Offset, message.Count)})");
                 OnData.Invoke(message, channel);
+=======
+            connection.OnData = (message) =>
+            {
+                //Log.Debug($"KCP: OnClientData({BitConverter.ToString(message.Array, message.Offset, message.Count)})");
+                OnData.Invoke(message);
+>>>>>>> origin/alpha_merge
             };
             connection.OnDisconnected = () =>
             {
@@ -69,6 +92,7 @@ namespace kcp2k
             };
 
             // connect
+<<<<<<< HEAD
             connection.Connect(address,
                                port,
                                noDelay,
@@ -80,6 +104,9 @@ namespace kcp2k
                                timeout,
                                maxRetransmits,
                                maximizeSendReceiveBuffersToOSLimit);
+=======
+            connection.Connect(address, port, noDelay, interval, fastResend, congestionWindow, sendWindowSize, receiveWindowSize);
+>>>>>>> origin/alpha_merge
         }
 
         public void Send(ArraySegment<byte> segment, KcpChannel channel)
@@ -131,5 +158,13 @@ namespace kcp2k
             TickIncoming();
             TickOutgoing();
         }
+<<<<<<< HEAD
+=======
+
+        // pause/unpause to safely support mirror scene handling and to
+        // immediately pause the receive while loop if needed.
+        public void Pause() => connection?.Pause();
+        public void Unpause() => connection?.Unpause();
+>>>>>>> origin/alpha_merge
     }
 }

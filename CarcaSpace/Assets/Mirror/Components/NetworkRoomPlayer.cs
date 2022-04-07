@@ -7,8 +7,13 @@ namespace Mirror
     /// <para>The RoomPrefab object of the NetworkRoomManager must have this component on it. This component holds basic room player data required for the room to function. Game specific data for room players can be put in other components on the RoomPrefab or in scripts derived from NetworkRoomPlayer.</para>
     /// </summary>
     [DisallowMultipleComponent]
+<<<<<<< HEAD
     [AddComponentMenu("Network/Network Room Player")]
     [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-room-player")]
+=======
+    [AddComponentMenu("Network/NetworkRoomPlayer")]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkRoomPlayer.html")]
+>>>>>>> origin/alpha_merge
     public class NetworkRoomPlayer : NetworkBehaviour
     {
         /// <summary>
@@ -126,7 +131,11 @@ namespace Mirror
         #region Optional UI
 
         /// <summary>
+<<<<<<< HEAD
         /// Render a UI for the room. Override to provide your own UI
+=======
+        /// Render a UI for the room.   Override to provide your on UI
+>>>>>>> origin/alpha_merge
         /// </summary>
         public virtual void OnGUI()
         {

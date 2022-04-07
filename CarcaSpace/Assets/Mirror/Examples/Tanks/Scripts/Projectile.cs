@@ -4,7 +4,11 @@ namespace Mirror.Examples.Tanks
 {
     public class Projectile : NetworkBehaviour
     {
+<<<<<<< HEAD
         public float destroyAfter = 2;
+=======
+        public float destroyAfter = 5;
+>>>>>>> origin/alpha_merge
         public Rigidbody rigidBody;
         public float force = 1000;
 
@@ -27,8 +31,13 @@ namespace Mirror.Examples.Tanks
             NetworkServer.Destroy(gameObject);
         }
 
+<<<<<<< HEAD
         // ServerCallback because we don't want a warning
         // if OnTriggerEnter is called on the client
+=======
+        // ServerCallback because we don't want a warning if OnTriggerEnter is
+        // called on the client
+>>>>>>> origin/alpha_merge
         [ServerCallback]
         void OnTriggerEnter(Collider co)
         {

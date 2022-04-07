@@ -1,4 +1,9 @@
 using System;
+<<<<<<< HEAD
+=======
+using System.Collections;
+using System.Collections.Generic;
+>>>>>>> origin/alpha_merge
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -9,8 +14,17 @@ namespace Mirror
     [CanEditMultipleObjects]
     public class NetworkBehaviourInspector : Editor
     {
+<<<<<<< HEAD
         bool syncsAnything;
         SyncObjectCollectionsDrawer syncObjectCollectionsDrawer;
+=======
+        /// <summary>
+        /// List of all visible syncVars in target class
+        /// </summary>
+        protected List<string> syncVarNames = new List<string>();
+        bool syncsAnything;
+        SyncListDrawer syncListDrawer;
+>>>>>>> origin/alpha_merge
 
         // does this type sync anything? otherwise we don't need to show syncInterval
         bool SyncsAnything(Type scriptClass)
@@ -38,7 +52,14 @@ namespace Mirror
             // search for SyncObjects manually.
             // Any SyncObject should be added to syncObjects when unity creates an
             // object so we can check length of list so see if sync objects exists
+<<<<<<< HEAD
             return ((NetworkBehaviour)serializedObject.targetObject).HasSyncObjects();
+=======
+            FieldInfo syncObjectsField = scriptClass.GetField("syncObjects", BindingFlags.NonPublic | BindingFlags.Instance);
+            List<SyncObject> syncObjects = (List<SyncObject>)syncObjectsField.GetValue(serializedObject.targetObject);
+
+            return syncObjects.Count > 0;
+>>>>>>> origin/alpha_merge
         }
 
         void OnEnable()
@@ -51,7 +72,20 @@ namespace Mirror
 
             Type scriptClass = target.GetType();
 
+<<<<<<< HEAD
             syncObjectCollectionsDrawer = new SyncObjectCollectionsDrawer(serializedObject.targetObject);
+=======
+            syncVarNames = new List<string>();
+            foreach (FieldInfo field in InspectorHelper.GetAllFields(scriptClass, typeof(NetworkBehaviour)))
+            {
+                if (field.IsSyncVar() && field.IsVisibleField())
+                {
+                    syncVarNames.Add(field.Name);
+                }
+            }
+
+            syncListDrawer = new SyncListDrawer(serializedObject.targetObject);
+>>>>>>> origin/alpha_merge
 
             syncsAnything = SyncsAnything(scriptClass);
         }
@@ -59,6 +93,7 @@ namespace Mirror
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
+<<<<<<< HEAD
             DrawSyncObjectCollections();
             DrawDefaultSyncSettings();
         }
@@ -73,6 +108,26 @@ namespace Mirror
         }
 
         // Draws SyncSettings if the NetworkBehaviour has anything to sync
+=======
+            DrawDefaultSyncLists();
+            DrawDefaultSyncSettings();
+        }
+
+        /// <summary>
+        /// Draws Sync Objects that are IEnumerable
+        /// </summary>
+        protected void DrawDefaultSyncLists()
+        {
+            // Need this check in case OnEnable returns early
+            if (syncListDrawer == null) { return; }
+
+            syncListDrawer.Draw();
+        }
+
+        /// <summary>
+        /// Draws SyncSettings if the NetworkBehaviour has anything to sync
+        /// </summary>
+>>>>>>> origin/alpha_merge
         protected void DrawDefaultSyncSettings()
         {
             // does it sync anything? then show extra properties
@@ -92,4 +147,76 @@ namespace Mirror
             serializedObject.ApplyModifiedProperties();
         }
     }
+<<<<<<< HEAD
+=======
+    public class SyncListDrawer
+    {
+        readonly UnityEngine.Object targetObject;
+        readonly List<SyncListField> syncListFields;
+
+        public SyncListDrawer(UnityEngine.Object targetObject)
+        {
+            this.targetObject = targetObject;
+            syncListFields = new List<SyncListField>();
+            foreach (FieldInfo field in InspectorHelper.GetAllFields(targetObject.GetType(), typeof(NetworkBehaviour)))
+            {
+                if (field.IsSyncObject() && field.IsVisibleSyncObject())
+                {
+                    syncListFields.Add(new SyncListField(field));
+                }
+            }
+        }
+
+        public void Draw()
+        {
+            if (syncListFields.Count == 0) { return; }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Sync Lists", EditorStyles.boldLabel);
+
+            for (int i = 0; i < syncListFields.Count; i++)
+            {
+                DrawSyncList(syncListFields[i]);
+            }
+        }
+
+        void DrawSyncList(SyncListField syncListField)
+        {
+            syncListField.visible = EditorGUILayout.Foldout(syncListField.visible, syncListField.label);
+            if (syncListField.visible)
+            {
+                using (new EditorGUI.IndentLevelScope())
+                {
+                    object fieldValue = syncListField.field.GetValue(targetObject);
+                    if (fieldValue is IEnumerable synclist)
+                    {
+                        int index = 0;
+                        foreach (object item in synclist)
+                        {
+                            string itemValue = item != null ? item.ToString() : "NULL";
+                            string itemLabel = "Element " + index;
+                            EditorGUILayout.LabelField(itemLabel, itemValue);
+
+                            index++;
+                        }
+                    }
+                }
+            }
+        }
+
+        class SyncListField
+        {
+            public bool visible;
+            public readonly FieldInfo field;
+            public readonly string label;
+
+            public SyncListField(FieldInfo field)
+            {
+                this.field = field;
+                visible = false;
+                label = field.Name + "  [" + field.FieldType.Name + "]";
+            }
+        }
+    }
+>>>>>>> origin/alpha_merge
 }

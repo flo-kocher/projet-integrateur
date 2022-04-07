@@ -5,6 +5,7 @@ namespace Mirror.Weaver
 {
     public static class SyncObjectInitializer
     {
+<<<<<<< HEAD
         // generates code like:
         // this.InitSyncObject(m_sizes);
         public static void GenerateSyncObjectInitializer(ILProcessor worker, WeaverTypes weaverTypes, FieldDefinition fd)
@@ -14,6 +15,12 @@ namespace Mirror.Weaver
             worker.Emit(OpCodes.Ldarg_0);
             worker.Emit(OpCodes.Ldfld, fd);
             worker.Emit(OpCodes.Call, weaverTypes.InitSyncObjectReference);
+=======
+        public static void GenerateSyncObjectInitializer(ILProcessor worker, FieldDefinition fd)
+        {
+            // register syncobject in network behaviour
+            GenerateSyncObjectRegistration(worker, fd);
+>>>>>>> origin/alpha_merge
         }
 
         public static bool ImplementsSyncObject(TypeReference typeRef)
@@ -26,7 +33,11 @@ namespace Mirror.Weaver
                     return false;
                 }
 
+<<<<<<< HEAD
                 return typeRef.Resolve().IsDerivedFrom<SyncObject>();
+=======
+                return typeRef.Resolve().ImplementsInterface<SyncObject>();
+>>>>>>> origin/alpha_merge
             }
             catch
             {
@@ -35,5 +46,21 @@ namespace Mirror.Weaver
 
             return false;
         }
+<<<<<<< HEAD
+=======
+
+        /*
+            // generates code like:
+            this.InitSyncObject(m_sizes);
+        */
+        static void GenerateSyncObjectRegistration(ILProcessor worker, FieldDefinition fd)
+        {
+            worker.Emit(OpCodes.Ldarg_0);
+            worker.Emit(OpCodes.Ldarg_0);
+            worker.Emit(OpCodes.Ldfld, fd);
+
+            worker.Emit(OpCodes.Call, WeaverTypes.InitSyncObjectReference);
+        }
+>>>>>>> origin/alpha_merge
     }
 }

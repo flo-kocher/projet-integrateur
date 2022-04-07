@@ -5,6 +5,7 @@ namespace Mirror.Examples.Basic
 {
     public class Player : NetworkBehaviour
     {
+<<<<<<< HEAD
         // Events that the PlayerUI will subscribe to
         public event System.Action<byte> OnPlayerNumberChanged;
         public event System.Action<Color32> OnPlayerColorChanged;
@@ -20,6 +21,28 @@ namespace Mirror.Examples.Basic
         PlayerUI playerUI = null;
 
         #region SyncVars
+=======
+        // Events that the UI will subscribe to
+        public event System.Action<int> OnPlayerNumberChanged;
+        public event System.Action<Color32> OnPlayerColorChanged;
+        public event System.Action<int> OnPlayerDataChanged;
+
+        // Players List to manage playerNumber
+        internal static readonly List<Player> playersList = new List<Player>();
+
+        internal static void ResetPlayerNumbers()
+        {
+            int playerNumber = 0;
+            foreach (Player player in playersList)
+            {
+                player.playerNumber = playerNumber++;
+            }
+        }
+
+        [Header("Player UI")]
+        public GameObject playerUIPrefab;
+        GameObject playerUI;
+>>>>>>> origin/alpha_merge
 
         [Header("SyncVars")]
 
@@ -27,7 +50,17 @@ namespace Mirror.Examples.Basic
         /// This is appended to the player name text, e.g. "Player 01"
         /// </summary>
         [SyncVar(hook = nameof(PlayerNumberChanged))]
+<<<<<<< HEAD
         public byte playerNumber = 0;
+=======
+        public int playerNumber = 0;
+
+        /// <summary>
+        /// This is updated by UpdateData which is called from OnStartServer via InvokeRepeating
+        /// </summary>
+        [SyncVar(hook = nameof(PlayerDataChanged))]
+        public int playerData = 0;
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// Random color for the playerData text, assigned in OnStartServer
@@ -35,6 +68,7 @@ namespace Mirror.Examples.Basic
         [SyncVar(hook = nameof(PlayerColorChanged))]
         public Color32 playerColor = Color.white;
 
+<<<<<<< HEAD
         /// <summary>
         /// This is updated by UpdateData which is called from OnStartServer via InvokeRepeating
         /// </summary>
@@ -43,16 +77,30 @@ namespace Mirror.Examples.Basic
 
         // This is called by the hook of playerNumber SyncVar above
         void PlayerNumberChanged(byte _, byte newPlayerNumber)
+=======
+        // This is called by the hook of playerNumber SyncVar above
+        void PlayerNumberChanged(int _, int newPlayerNumber)
+>>>>>>> origin/alpha_merge
         {
             OnPlayerNumberChanged?.Invoke(newPlayerNumber);
         }
 
+<<<<<<< HEAD
+=======
+        // This is called by the hook of playerData SyncVar above
+        void PlayerDataChanged(int _, int newPlayerData)
+        {
+            OnPlayerDataChanged?.Invoke(newPlayerData);
+        }
+
+>>>>>>> origin/alpha_merge
         // This is called by the hook of playerColor SyncVar above
         void PlayerColorChanged(Color32 _, Color32 newPlayerColor)
         {
             OnPlayerColorChanged?.Invoke(newPlayerColor);
         }
 
+<<<<<<< HEAD
         // This is called by the hook of playerData SyncVar above
         void PlayerDataChanged(ushort _, ushort newPlayerData)
         {
@@ -63,6 +111,8 @@ namespace Mirror.Examples.Basic
 
         #region Server
 
+=======
+>>>>>>> origin/alpha_merge
         /// <summary>
         /// This is invoked for NetworkBehaviour objects when they become active on the server.
         /// <para>This could be triggered by NetworkServer.Listen() for objects in the scene, or by NetworkServer.Spawn() for objects that are dynamically created.</para>
@@ -78,13 +128,17 @@ namespace Mirror.Examples.Basic
             // set the Player Color SyncVar
             playerColor = Random.ColorHSV(0f, 1f, 0.9f, 0.9f, 1f, 1f);
 
+<<<<<<< HEAD
             // set the initial player data
             playerData = (ushort)Random.Range(100, 1000);
 
+=======
+>>>>>>> origin/alpha_merge
             // Start generating updates
             InvokeRepeating(nameof(UpdateData), 1, 1);
         }
 
+<<<<<<< HEAD
         // This is called from BasicNetManager OnServerAddPlayer and OnServerDisconnect
         // Player numbers are reset whenever a player joins / leaves
         [ServerCallback]
@@ -102,6 +156,8 @@ namespace Mirror.Examples.Basic
             playerData = (ushort)Random.Range(100, 1000);
         }
 
+=======
+>>>>>>> origin/alpha_merge
         /// <summary>
         /// Invoked on the server when the object is unspawned
         /// <para>Useful for saving object data in persistent storage</para>
@@ -112,9 +168,18 @@ namespace Mirror.Examples.Basic
             playersList.Remove(this);
         }
 
+<<<<<<< HEAD
         #endregion
 
         #region Client
+=======
+        // This only runs on the server, called from OnStartServer via InvokeRepeating
+        [ServerCallback]
+        void UpdateData()
+        {
+            playerData = Random.Range(100, 1000);
+        }
+>>>>>>> origin/alpha_merge
 
         /// <summary>
         /// Called on every NetworkBehaviour when it is activated on a client.
@@ -122,6 +187,7 @@ namespace Mirror.Examples.Basic
         /// </summary>
         public override void OnStartClient()
         {
+<<<<<<< HEAD
             Debug.Log("OnStartClient");
 
             // Instantiate the player UI as child of the Players Panel
@@ -134,12 +200,25 @@ namespace Mirror.Examples.Basic
             OnPlayerDataChanged = playerUI.OnPlayerDataChanged;
 
             // Invoke all event handlers with the initial data from spawn payload
+=======
+            // Activate the main panel
+            ((BasicNetManager)NetworkManager.singleton).mainPanel.gameObject.SetActive(true);
+
+            // Instantiate the player UI as child of the Players Panel
+            playerUI = Instantiate(playerUIPrefab, ((BasicNetManager)NetworkManager.singleton).playersPanel);
+
+            // Set this player object in PlayerUI to wire up event handlers
+            playerUI.GetComponent<PlayerUI>().SetPlayer(this, isLocalPlayer);
+
+            // Invoke all event handlers with the current data
+>>>>>>> origin/alpha_merge
             OnPlayerNumberChanged.Invoke(playerNumber);
             OnPlayerColorChanged.Invoke(playerColor);
             OnPlayerDataChanged.Invoke(playerData);
         }
 
         /// <summary>
+<<<<<<< HEAD
         /// Called when the local player object has been set up.
         /// <para>This happens after OnStartClient(), as it is triggered by an ownership message from the server. This is an appropriate place to activate components or functionality that should only be active for the local player, such as cameras and input.</para>
         /// </summary>
@@ -165,11 +244,14 @@ namespace Mirror.Examples.Basic
         }
 
         /// <summary>
+=======
+>>>>>>> origin/alpha_merge
         /// This is invoked on clients when the server has caused this object to be destroyed.
         /// <para>This can be used as a hook to invoke effects or do client specific cleanup.</para>
         /// </summary>
         public override void OnStopClient()
         {
+<<<<<<< HEAD
             // disconnect event handlers
             OnPlayerNumberChanged = null;
             OnPlayerColorChanged = null;
@@ -180,5 +262,14 @@ namespace Mirror.Examples.Basic
         }
 
         #endregion
+=======
+            // Remove this player's UI object
+            Destroy(playerUI);
+
+            // Disable the main panel for local player
+            if (isLocalPlayer)
+                ((BasicNetManager)NetworkManager.singleton).mainPanel.gameObject.SetActive(false);
+        }
+>>>>>>> origin/alpha_merge
     }
 }

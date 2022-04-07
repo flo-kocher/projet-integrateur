@@ -78,6 +78,15 @@ namespace Mirror.SimpleWeb
 
         void OnValidate()
         {
+<<<<<<< HEAD
+=======
+            if (maxMessageSize > ushort.MaxValue)
+            {
+                Debug.LogWarning($"max supported value for maxMessageSize is {ushort.MaxValue}");
+                maxMessageSize = ushort.MaxValue;
+            }
+
+>>>>>>> origin/alpha_merge
             Log.level = _logLevels;
         }
 
@@ -160,7 +169,11 @@ namespace Mirror.SimpleWeb
             client?.Disconnect();
         }
 
+<<<<<<< HEAD
         public override void ClientSend(ArraySegment<byte> segment, int channelId)
+=======
+        public override void ClientSend(int channelId, ArraySegment<byte> segment)
+>>>>>>> origin/alpha_merge
         {
             if (!ClientConnected())
             {
@@ -203,7 +216,11 @@ namespace Mirror.SimpleWeb
                 Debug.LogError("SimpleWebServer Already Started");
             }
 
+<<<<<<< HEAD
             SslConfig config = SslConfigLoader.Load(sslEnabled, sslCertJson, sslProtocols);
+=======
+            SslConfig config = SslConfigLoader.Load(this);
+>>>>>>> origin/alpha_merge
             server = new SimpleWebServer(serverMaxMessagesPerTick, TcpConfig, maxMessageSize, handshakeMaxSize, config);
 
             server.onConnect += OnServerConnected.Invoke;
@@ -228,17 +245,31 @@ namespace Mirror.SimpleWeb
             server = null;
         }
 
+<<<<<<< HEAD
         public override void ServerDisconnect(int connectionId)
+=======
+        public override bool ServerDisconnect(int connectionId)
+>>>>>>> origin/alpha_merge
         {
             if (!ServerActive())
             {
                 Debug.LogError("SimpleWebServer Not Active");
+<<<<<<< HEAD
             }
 
             server.KickClient(connectionId);
         }
 
         public override void ServerSend(int connectionId, ArraySegment<byte> segment, int channelId)
+=======
+                return false;
+            }
+
+            return server.KickClient(connectionId);
+        }
+
+        public override void ServerSend(int connectionId, int channelId, ArraySegment<byte> segment)
+>>>>>>> origin/alpha_merge
         {
             if (!ServerActive())
             {
@@ -259,6 +290,10 @@ namespace Mirror.SimpleWeb
             }
 
             server.SendOne(connectionId, segment);
+<<<<<<< HEAD
+=======
+            return;
+>>>>>>> origin/alpha_merge
         }
 
         public override string ServerGetClientAddress(int connectionId)

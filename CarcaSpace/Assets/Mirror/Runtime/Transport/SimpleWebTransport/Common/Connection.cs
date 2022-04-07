@@ -32,6 +32,10 @@ namespace Mirror.SimpleWeb
             this.onDispose = onDispose;
         }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/alpha_merge
         /// <summary>
         /// disposes client and stops threads
         /// </summary>
@@ -82,6 +86,7 @@ namespace Mirror.SimpleWeb
 
         public override string ToString()
         {
+<<<<<<< HEAD
             if (hasDisposed)
             {
                 return $"[Conn:{connId}, Disposed]";
@@ -91,6 +96,10 @@ namespace Mirror.SimpleWeb
                 System.Net.EndPoint endpoint = client?.Client?.RemoteEndPoint;
                 return $"[Conn:{connId}, endPoint:{endpoint}]";
             }
+=======
+            System.Net.EndPoint endpoint = client?.Client?.RemoteEndPoint;
+            return $"[Conn:{connId}, endPoint:{endpoint}]";
+>>>>>>> origin/alpha_merge
         }
     }
 }

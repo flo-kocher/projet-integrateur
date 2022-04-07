@@ -9,10 +9,20 @@ namespace Mirror
     {
         public const int LocalConnectionId = 0;
 
+<<<<<<< HEAD
         /// <summary>NetworkIdentities that this connection can see</summary>
         // DEPRECATED 2022-02-05
         [Obsolete("Cast to NetworkConnectionToClient to access .observing")]
         public HashSet<NetworkIdentity> observing => ((NetworkConnectionToClient)this).observing;
+=======
+        // NetworkIdentities that this connection can see
+        // TODO move to server's NetworkConnectionToClient?
+        internal readonly HashSet<NetworkIdentity> observing = new HashSet<NetworkIdentity>();
+
+        // TODO this is NetworkServer.handlers on server and NetworkClient.handlers on client.
+        //      maybe use them directly. avoid extra state.
+        Dictionary<int, NetworkMessageDelegate> messageHandlers;
+>>>>>>> origin/alpha_merge
 
         /// <summary>Unique identifier for this connection that is assigned by the transport layer.</summary>
         // assigned by transport, this id is unique for every connection on server.
@@ -45,6 +55,7 @@ namespace Mirror
         //            fixes a bug where DestroyOwnedObjects wouldn't find the
         //            netId anymore: https://github.com/vis2k/Mirror/issues/1380
         //            Works fine with NetworkIdentity pointers though.
+<<<<<<< HEAD
         // DEPRECATED 2022-02-05
         [Obsolete("Cast to NetworkConnectionToClient to access .clientOwnedObjects")]
         public HashSet<NetworkIdentity> clientOwnedObjects => ((NetworkConnectionToClient)this).clientOwnedObjects;
@@ -68,6 +79,9 @@ namespace Mirror
         //       because the server receives different batch timestamps from
         //       different connections.
         public double remoteTimeStamp { get; internal set; }
+=======
+        public readonly HashSet<NetworkIdentity> clientOwnedObjects = new HashSet<NetworkIdentity>();
+>>>>>>> origin/alpha_merge
 
         internal NetworkConnection()
         {
@@ -79,6 +93,7 @@ namespace Mirror
         internal NetworkConnection(int networkConnectionId) : this()
         {
             connectionId = networkConnectionId;
+<<<<<<< HEAD
         }
 
         // TODO if we only have Reliable/Unreliable, then we could initialize
@@ -97,11 +112,36 @@ namespace Mirror
                 batches[channelId] = batch;
             }
             return batch;
+=======
+            // TODO why isn't lastMessageTime set in here like in the other ctor?
+        }
+
+        /// <summary>Disconnects this connection.</summary>
+        public abstract void Disconnect();
+
+        internal void SetHandlers(Dictionary<int, NetworkMessageDelegate> handlers)
+        {
+            messageHandlers = handlers;
+        }
+
+        /// <summary>Send a NetworkMessage to this connection over the given channel.</summary>
+        public void Send<T>(T msg, int channelId = Channels.Reliable)
+            where T : struct, NetworkMessage
+        {
+            using (PooledNetworkWriter writer = NetworkWriterPool.GetWriter())
+            {
+                // pack message and send allocation free
+                MessagePacking.Pack(msg, writer);
+                NetworkDiagnostics.OnSend(msg, channelId, writer.Position, 1);
+                Send(writer.ToArraySegment(), channelId);
+            }
+>>>>>>> origin/alpha_merge
         }
 
         // validate packet size before sending. show errors if too big/small.
         // => it's best to check this here, we can't assume that all transports
         //    would check max size and show errors internally. best to do it
+<<<<<<< HEAD
         //    in one place in Mirror.
         // => it's important to log errors, so the user knows what went wrong.
         protected static bool ValidatePacketSize(ArraySegment<byte> segment, int channelId)
@@ -110,6 +150,15 @@ namespace Mirror
             if (segment.Count > max)
             {
                 Debug.LogError($"NetworkConnection.ValidatePacketSize: cannot send packet larger than {max} bytes, was {segment.Count} bytes");
+=======
+        //    in one place in hlapi.
+        // => it's important to log errors, so the user knows what went wrong.
+        protected static bool ValidatePacketSize(ArraySegment<byte> segment, int channelId)
+        {
+            if (segment.Count > Transport.activeTransport.GetMaxPacketSize(channelId))
+            {
+                Debug.LogError($"NetworkConnection.ValidatePacketSize: cannot send packet larger than {Transport.activeTransport.GetMaxPacketSize(channelId)} bytes, was {segment.Count} bytes");
+>>>>>>> origin/alpha_merge
                 return false;
             }
 
@@ -124,6 +173,7 @@ namespace Mirror
             return true;
         }
 
+<<<<<<< HEAD
         // Send stage one: NetworkMessage<T>
         /// <summary>Send a NetworkMessage to this connection over the given channel.</summary>
         public void Send<T>(T message, int channelId = Channels.Reliable)
@@ -197,6 +247,90 @@ namespace Mirror
                             writer.Position = 0;
                         }
                     }
+=======
+        // internal because no one except Mirror should send bytes directly to
+        // the client. they would be detected as a message. send messages instead.
+        internal abstract void Send(ArraySegment<byte> segment, int channelId = Channels.Reliable);
+
+        public override string ToString() => $"connection({connectionId})";
+
+        // TODO move to server's NetworkConnectionToClient?
+        internal void AddToObserving(NetworkIdentity netIdentity)
+        {
+            observing.Add(netIdentity);
+
+            // spawn identity for this conn
+            NetworkServer.ShowForConnection(netIdentity, this);
+        }
+
+        // TODO move to server's NetworkConnectionToClient?
+        internal void RemoveFromObserving(NetworkIdentity netIdentity, bool isDestroyed)
+        {
+            observing.Remove(netIdentity);
+
+            if (!isDestroyed)
+            {
+                // hide identity for this conn
+                NetworkServer.HideForConnection(netIdentity, this);
+            }
+        }
+
+        // TODO move to server's NetworkConnectionToClient?
+        internal void RemoveObservers()
+        {
+            foreach (NetworkIdentity netIdentity in observing)
+            {
+                netIdentity.RemoveObserverInternal(this);
+            }
+            observing.Clear();
+        }
+
+        // helper function
+        protected bool UnpackAndInvoke(NetworkReader reader, int channelId)
+        {
+            if (MessagePacking.Unpack(reader, out int msgType))
+            {
+                // try to invoke the handler for that message
+                if (messageHandlers.TryGetValue(msgType, out NetworkMessageDelegate msgDelegate))
+                {
+                    msgDelegate.Invoke(this, reader, channelId);
+                    lastMessageTime = Time.time;
+                    return true;
+                }
+                else
+                {
+                    // Debug.Log("Unknown message ID " + msgType + " " + this + ". May be due to no existing RegisterHandler for this message.");
+                    return false;
+                }
+            }
+            else
+            {
+                Debug.LogError("Closed connection: " + this + ". Invalid message header.");
+                Disconnect();
+                return false;
+            }
+        }
+
+        // called when receiving data from the transport
+        internal void TransportReceive(ArraySegment<byte> buffer, int channelId)
+        {
+            if (buffer.Count < MessagePacking.HeaderSize)
+            {
+                Debug.LogError($"ConnectionRecv {this} Message was too short (messages should start with message id)");
+                Disconnect();
+                return;
+            }
+
+            // unpack message
+            using (PooledNetworkReader reader = NetworkReaderPool.GetReader(buffer))
+            {
+                // the other end might batch multiple messages into one packet.
+                // we need to try to unpack multiple times.
+                while (reader.Position < reader.Length)
+                {
+                    if (!UnpackAndInvoke(reader, channelId))
+                        break;
+>>>>>>> origin/alpha_merge
                 }
             }
         }
@@ -204,6 +338,7 @@ namespace Mirror
         /// <summary>Check if we received a message within the last 'timeout' seconds.</summary>
         internal virtual bool IsAlive(float timeout) => Time.time - lastMessageTime < timeout;
 
+<<<<<<< HEAD
         /// <summary>Disconnects this connection.</summary>
         // for future reference, here is how Disconnects work in Mirror.
         //
@@ -225,5 +360,32 @@ namespace Mirror
         public abstract void Disconnect();
 
         public override string ToString() => $"connection({connectionId})";
+=======
+        internal void AddOwnedObject(NetworkIdentity obj)
+        {
+            clientOwnedObjects.Add(obj);
+        }
+
+        internal void RemoveOwnedObject(NetworkIdentity obj)
+        {
+            clientOwnedObjects.Remove(obj);
+        }
+
+        internal void DestroyOwnedObjects()
+        {
+            // create a copy because the list might be modified when destroying
+            HashSet<NetworkIdentity> tmp = new HashSet<NetworkIdentity>(clientOwnedObjects);
+            foreach (NetworkIdentity netIdentity in tmp)
+            {
+                if (netIdentity != null)
+                {
+                    NetworkServer.Destroy(netIdentity.gameObject);
+                }
+            }
+
+            // clear the hashset because we destroyed them all
+            clientOwnedObjects.Clear();
+        }
+>>>>>>> origin/alpha_merge
     }
 }

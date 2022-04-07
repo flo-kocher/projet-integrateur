@@ -8,7 +8,11 @@
     "optionalUnityReferences": [],
     "includePlatforms": [],
     "excludePlatforms": [],
+<<<<<<< HEAD
     "allowUnsafeCode": true,
+=======
+    "allowUnsafeCode": false,
+>>>>>>> origin/alpha_merge
     "overrideReferences": false,
     "precompiledReferences": [],
     "autoReferenced": true,

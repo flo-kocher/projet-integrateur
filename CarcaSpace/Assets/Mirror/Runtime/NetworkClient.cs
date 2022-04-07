@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+<<<<<<< HEAD
 using Mirror.RemoteCalls;
+=======
+>>>>>>> origin/alpha_merge
 using UnityEngine;
 
 namespace Mirror
@@ -9,11 +12,16 @@ namespace Mirror
     public enum ConnectState
     {
         None,
+<<<<<<< HEAD
         // connecting between Connect() and OnTransportConnected()
         Connecting,
         Connected,
         // disconnecting between Disconnect() and OnTransportDisconnected()
         Disconnecting,
+=======
+        Connecting,
+        Connected,
+>>>>>>> origin/alpha_merge
         Disconnected
     }
 
@@ -21,6 +29,7 @@ namespace Mirror
     public static class NetworkClient
     {
         // message handlers by messageId
+<<<<<<< HEAD
         internal static readonly Dictionary<ushort, NetworkMessageDelegate> handlers =
             new Dictionary<ushort, NetworkMessageDelegate>();
 
@@ -28,6 +37,10 @@ namespace Mirror
         // client sees OBSERVED spawned ones.
         public static readonly Dictionary<uint, NetworkIdentity> spawned =
             new Dictionary<uint, NetworkIdentity>();
+=======
+        static readonly Dictionary<int, NetworkMessageDelegate> handlers =
+            new Dictionary<int, NetworkMessageDelegate>();
+>>>>>>> origin/alpha_merge
 
         /// <summary>Client's NetworkConnection to server.</summary>
         public static NetworkConnection connection { get; internal set; }
@@ -40,6 +53,14 @@ namespace Mirror
         //      way better for security if we can check states in callbacks
         public static bool ready;
 
+<<<<<<< HEAD
+=======
+        /// <summary>The NetworkConnection object that is currently "ready".</summary>
+        // TODO this is from UNET. it's redundant and we should probably obsolete it.
+        [Obsolete("NetworkClient.readyConnection is redundant. Use NetworkClient.connection and use NetworkClient.ready to check if it's ready.")]
+        public static NetworkConnection readyConnection => ready ? connection : null;
+
+>>>>>>> origin/alpha_merge
         /// <summary>NetworkIdentity of the localPlayer </summary>
         public static NetworkIdentity localPlayer { get; internal set; }
 
@@ -61,17 +82,27 @@ namespace Mirror
         /// <summary>Check if client is connected (after connecting).</summary>
         public static bool isConnected => connectState == ConnectState.Connected;
 
+<<<<<<< HEAD
         /// <summary>True if client is running in host mode.</summary>
         public static bool isHostClient => connection is LocalConnectionToServer;
+=======
+        /// <summary>NetworkClient can connect to local server in host mode too</summary>
+        public static bool isLocalClient => connection is LocalConnectionToServer;
+>>>>>>> origin/alpha_merge
 
         // OnConnected / OnDisconnected used to be NetworkMessages that were
         // invoked. this introduced a bug where external clients could send
         // Connected/Disconnected messages over the network causing undefined
         // behaviour.
+<<<<<<< HEAD
         // => public so that custom NetworkManagers can hook into it
         public static Action OnConnectedEvent;
         public static Action OnDisconnectedEvent;
         public static Action<Exception> OnErrorEvent;
+=======
+        internal static Action OnConnectedEvent;
+        internal static Action OnDisconnectedEvent;
+>>>>>>> origin/alpha_merge
 
         /// <summary>Registered spawnable prefabs by assetId.</summary>
         public static readonly Dictionary<Guid, GameObject> prefabs =
@@ -84,13 +115,18 @@ namespace Mirror
             new Dictionary<Guid, UnSpawnDelegate>();
 
         // spawning
+<<<<<<< HEAD
         // internal for tests
         internal static bool isSpawnFinished;
+=======
+        static bool isSpawnFinished;
+>>>>>>> origin/alpha_merge
 
         // Disabled scene objects that can be spawned again, by sceneId.
         internal static readonly Dictionary<ulong, NetworkIdentity> spawnableObjects =
             new Dictionary<ulong, NetworkIdentity>();
 
+<<<<<<< HEAD
         static Unbatcher unbatcher = new Unbatcher();
 
         // interest management component (optional)
@@ -106,18 +142,31 @@ namespace Mirror
             Transport.activeTransport.OnClientConnected = OnTransportConnected;
             Transport.activeTransport.OnClientDataReceived = OnTransportData;
             Transport.activeTransport.OnClientDisconnected = OnTransportDisconnected;
+=======
+        // initialization //////////////////////////////////////////////////////
+        static void AddTransportHandlers()
+        {
+            Transport.activeTransport.OnClientConnected = OnConnected;
+            Transport.activeTransport.OnClientDataReceived = OnDataReceived;
+            Transport.activeTransport.OnClientDisconnected = OnDisconnected;
+>>>>>>> origin/alpha_merge
             Transport.activeTransport.OnClientError = OnError;
         }
 
         internal static void RegisterSystemHandlers(bool hostMode)
         {
+<<<<<<< HEAD
             // host mode client / remote client react to some messages differently.
+=======
+            // host mode client / regular client react to some messages differently.
+>>>>>>> origin/alpha_merge
             // but we still need to add handlers for all of them to avoid
             // 'message id not found' errors.
             if (hostMode)
             {
                 RegisterHandler<ObjectDestroyMessage>(OnHostClientObjectDestroy);
                 RegisterHandler<ObjectHideMessage>(OnHostClientObjectHide);
+<<<<<<< HEAD
                 RegisterHandler<NetworkPongMessage>(_ => {}, false);
                 RegisterHandler<SpawnMessage>(OnHostClientSpawn);
                 // host mode doesn't need spawning
@@ -126,6 +175,16 @@ namespace Mirror
                 RegisterHandler<ObjectSpawnFinishedMessage>(_ => {});
                 // host mode doesn't need state updates
                 RegisterHandler<EntityStateMessage>(_ => {});
+=======
+                RegisterHandler<NetworkPongMessage>(msg => {}, false);
+                RegisterHandler<SpawnMessage>(OnHostClientSpawn);
+                // host mode doesn't need spawning
+                RegisterHandler<ObjectSpawnStartedMessage>(msg => {});
+                // host mode doesn't need spawning
+                RegisterHandler<ObjectSpawnFinishedMessage>(msg => {});
+                // host mode doesn't need state updates
+                RegisterHandler<UpdateVarsMessage>(msg => {});
+>>>>>>> origin/alpha_merge
             }
             else
             {
@@ -135,11 +194,16 @@ namespace Mirror
                 RegisterHandler<SpawnMessage>(OnSpawn);
                 RegisterHandler<ObjectSpawnStartedMessage>(OnObjectSpawnStarted);
                 RegisterHandler<ObjectSpawnFinishedMessage>(OnObjectSpawnFinished);
+<<<<<<< HEAD
                 RegisterHandler<EntityStateMessage>(OnEntityStateMessage);
             }
 
             // These handlers are the same for host and remote clients
             RegisterHandler<ChangeOwnerMessage>(OnChangeOwner);
+=======
+                RegisterHandler<UpdateVarsMessage>(OnUpdateVarsMessage);
+            }
+>>>>>>> origin/alpha_merge
             RegisterHandler<RpcMessage>(OnRPCMessage);
         }
 
@@ -147,7 +211,11 @@ namespace Mirror
         /// <summary>Connect client to a NetworkServer by address.</summary>
         public static void Connect(string address)
         {
+<<<<<<< HEAD
             // Debug.Log($"Client Connect: {address}");
+=======
+            // Debug.Log("Client Connect: " + address);
+>>>>>>> origin/alpha_merge
             Debug.Assert(Transport.activeTransport != null, "There was no active transport when calling NetworkClient.Connect, If you are calling Connect manually then make sure to set 'Transport.activeTransport' first");
 
             RegisterSystemHandlers(false);
@@ -157,13 +225,23 @@ namespace Mirror
             connectState = ConnectState.Connecting;
             Transport.activeTransport.ClientConnect(address);
 
+<<<<<<< HEAD
             connection = new NetworkConnectionToServer();
+=======
+            // setup all the handlers
+            connection = new NetworkConnectionToServer();
+            connection.SetHandlers(handlers);
+>>>>>>> origin/alpha_merge
         }
 
         /// <summary>Connect client to a NetworkServer by Uri.</summary>
         public static void Connect(Uri uri)
         {
+<<<<<<< HEAD
             // Debug.Log($"Client Connect: {uri}");
+=======
+            // Debug.Log("Client Connect: " + uri);
+>>>>>>> origin/alpha_merge
             Debug.Assert(Transport.activeTransport != null, "There was no active transport when calling NetworkClient.Connect, If you are calling Connect manually then make sure to set 'Transport.activeTransport' first");
 
             RegisterSystemHandlers(false);
@@ -173,7 +251,13 @@ namespace Mirror
             connectState = ConnectState.Connecting;
             Transport.activeTransport.ClientConnect(uri);
 
+<<<<<<< HEAD
             connection = new NetworkConnectionToServer();
+=======
+            // setup all the handlers
+            connection = new NetworkConnectionToServer();
+            connection.SetHandlers(handlers);
+>>>>>>> origin/alpha_merge
         }
 
         // TODO why are there two connect host methods?
@@ -193,6 +277,10 @@ namespace Mirror
             connectionToClient.connectionToServer = connectionToServer;
 
             connection = connectionToServer;
+<<<<<<< HEAD
+=======
+            connection.SetHandlers(handlers);
+>>>>>>> origin/alpha_merge
 
             // create server connection to local client
             NetworkServer.SetLocalConnection(connectionToClient);
@@ -221,6 +309,7 @@ namespace Mirror
         /// <summary>Disconnect from server.</summary>
         public static void Disconnect()
         {
+<<<<<<< HEAD
             // only if connected or connecting.
             // don't disconnect() again if already in the process of
             // disconnecting or fully disconnected.
@@ -247,14 +336,67 @@ namespace Mirror
         // transport events ////////////////////////////////////////////////////
         // called by Transport
         static void OnTransportConnected()
+=======
+            connectState = ConnectState.Disconnected;
+            ready = false;
+
+            // local or remote connection?
+            if (isLocalClient)
+            {
+                if (isConnected)
+                {
+                    // call client OnDisconnected with connection to server
+                    // => previously we used to send a DisconnectMessage to
+                    //    NetworkServer.localConnection. this would queue the
+                    //    message until NetworkClient.Update processes it.
+                    // => invoking the client's OnDisconnected event directly
+                    //    here makes tests fail. so let's do it exactly the same
+                    //    order as before by queueing the event for next Update!
+                    //OnDisconnectedEvent?.Invoke(connection);
+                    ((LocalConnectionToServer)connection).QueueDisconnectedEvent();
+                }
+                NetworkServer.RemoveLocalConnection();
+            }
+            else
+            {
+                if (connection != null)
+                {
+                    connection.Disconnect();
+                    connection = null;
+                }
+            }
+        }
+
+        /// <summary>Disconnect host mode.</summary>
+        // this is needed to call DisconnectMessage for the host client too.
+        public static void DisconnectLocalServer()
+        {
+            // only if host connection is running
+            if (NetworkServer.localConnection != null)
+            {
+                // TODO ConnectLocalServer manually sends a ConnectMessage to the
+                // local connection. should we send a DisconnectMessage here too?
+                // (if we do then we get an Unknown Message ID log)
+                //NetworkServer.localConnection.Send(new DisconnectMessage());
+                NetworkServer.OnDisconnected(NetworkServer.localConnection.connectionId);
+            }
+        }
+
+        // transport events ////////////////////////////////////////////////////
+        static void OnConnected()
+>>>>>>> origin/alpha_merge
         {
             if (connection != null)
             {
                 // reset network time stats
+<<<<<<< HEAD
                 NetworkTime.ResetStatics();
 
                 // reset unbatcher in case any batches from last session remain.
                 unbatcher = new Unbatcher();
+=======
+                NetworkTime.Reset();
+>>>>>>> origin/alpha_merge
 
                 // the handler may want to send messages to the client
                 // thus we should set the connected state before calling the handler
@@ -265,6 +407,7 @@ namespace Mirror
             else Debug.LogError("Skipped Connect message handling because connection is null.");
         }
 
+<<<<<<< HEAD
         // helper function
         static bool UnpackAndInvoke(NetworkReader reader, int channelId)
         {
@@ -386,10 +529,18 @@ namespace Mirror
                 {
                     Debug.LogError($"Still had {unbatcher.BatchesCount} batches remaining after processing, even though processing was not interrupted by a scene change. This should never happen, as it would cause ever growing batches.\nPossible reasons:\n* A message didn't deserialize as much as it serialized\n*There was no message handler for a message id, so the reader wasn't read until the end.");
                 }
+=======
+        internal static void OnDataReceived(ArraySegment<byte> data, int channelId)
+        {
+            if (connection != null)
+            {
+                connection.TransportReceive(data, channelId);
+>>>>>>> origin/alpha_merge
             }
             else Debug.LogError("Skipped Data message handling because connection is null.");
         }
 
+<<<<<<< HEAD
         // called by Transport
         // IMPORTANT: often times when disconnecting, we call this from Mirror
         //            too because we want to remove the connection and handle
@@ -397,12 +548,16 @@ namespace Mirror
         //            => which is fine as long as we guarantee it only runs once
         //            => which we do by setting the state to Disconnected!
         internal static void OnTransportDisconnected()
+=======
+        static void OnDisconnected()
+>>>>>>> origin/alpha_merge
         {
             // StopClient called from user code triggers Disconnected event
             // from transport which calls StopClient again, so check here
             // and short circuit running the Shutdown process twice.
             if (connectState == ConnectState.Disconnected) return;
 
+<<<<<<< HEAD
             // Raise the event before changing ConnectState
             // because 'active' depends on this during shutdown
             if (connection != null) OnDisconnectedEvent?.Invoke();
@@ -421,6 +576,15 @@ namespace Mirror
             Debug.LogException(exception);
             OnErrorEvent?.Invoke(exception);
         }
+=======
+            connectState = ConnectState.Disconnected;
+            ready = false;
+
+            if (connection != null) OnDisconnectedEvent?.Invoke();
+        }
+
+        static void OnError(Exception exception) => Debug.LogException(exception);
+>>>>>>> origin/alpha_merge
 
         // send ////////////////////////////////////////////////////////////////
         /// <summary>Send a NetworkMessage to the server over the given channel.</summary>
@@ -440,10 +604,30 @@ namespace Mirror
 
         // message handlers ////////////////////////////////////////////////////
         /// <summary>Register a handler for a message type T. Most should require authentication.</summary>
+<<<<<<< HEAD
         public static void RegisterHandler<T>(Action<T> handler, bool requireAuthentication = true)
             where T : struct, NetworkMessage
         {
             ushort msgType = MessagePacking.GetId<T>();
+=======
+        [Obsolete("Use RegisterHandler<T> version without NetworkConnection parameter. It always points to NetworkClient.connection anyway.")]
+        public static void RegisterHandler<T>(Action<NetworkConnection, T> handler, bool requireAuthentication = true)
+            where T : struct, NetworkMessage
+        {
+            int msgType = MessagePacking.GetId<T>();
+            if (handlers.ContainsKey(msgType))
+            {
+                Debug.LogWarning($"NetworkClient.RegisterHandler replacing handler for {typeof(T).FullName}, id={msgType}. If replacement is intentional, use ReplaceHandler instead to avoid this warning.");
+            }
+            handlers[msgType] = MessagePacking.WrapHandler(handler, requireAuthentication);
+        }
+
+        /// <summary>Register a handler for a message type T. Most should require authentication.</summary>
+        public static void RegisterHandler<T>(Action<T> handler, bool requireAuthentication = true)
+            where T : struct, NetworkMessage
+        {
+            int msgType = MessagePacking.GetId<T>();
+>>>>>>> origin/alpha_merge
             if (handlers.ContainsKey(msgType))
             {
                 Debug.LogWarning($"NetworkClient.RegisterHandler replacing handler for {typeof(T).FullName}, id={msgType}. If replacement is intentional, use ReplaceHandler instead to avoid this warning.");
@@ -451,6 +635,7 @@ namespace Mirror
             // we use the same WrapHandler function for server and client.
             // so let's wrap it to ignore the NetworkConnection parameter.
             // it's not needed on client. it's always NetworkClient.connection.
+<<<<<<< HEAD
             void HandlerWrapped(NetworkConnection _, T value) => handler(value);
             handlers[msgType] = MessagePacking.WrapHandler((Action<NetworkConnection, T>) HandlerWrapped, requireAuthentication);
         }
@@ -462,12 +647,28 @@ namespace Mirror
             where T : struct, NetworkMessage
         {
             ushort msgType = MessagePacking.GetId<T>();
+=======
+            Action<NetworkConnection, T> handlerWrapped = (_, value) => { handler(value); };
+            handlers[msgType] = MessagePacking.WrapHandler(handlerWrapped, requireAuthentication);
+        }
+
+        /// <summary>Replace a handler for a particular message type. Should require authentication by default.</summary>
+        // TODO does anyone even use that? consider removing
+        public static void ReplaceHandler<T>(Action<NetworkConnection, T> handler, bool requireAuthentication = true)
+            where T : struct, NetworkMessage
+        {
+            int msgType = MessagePacking.GetId<T>();
+>>>>>>> origin/alpha_merge
             handlers[msgType] = MessagePacking.WrapHandler(handler, requireAuthentication);
         }
 
         /// <summary>Replace a handler for a particular message type. Should require authentication by default.</summary>
+<<<<<<< HEAD
         // RegisterHandler throws a warning (as it should) if a handler is assigned twice
         // Use of ReplaceHandler makes it clear the user intended to replace the handler
+=======
+        // TODO does anyone even use that? consider removing
+>>>>>>> origin/alpha_merge
         public static void ReplaceHandler<T>(Action<T> handler, bool requireAuthentication = true)
             where T : struct, NetworkMessage
         {
@@ -479,7 +680,11 @@ namespace Mirror
             where T : struct, NetworkMessage
         {
             // use int to minimize collisions
+<<<<<<< HEAD
             ushort msgType = MessagePacking.GetId<T>();
+=======
+            int msgType = MessagePacking.GetId<T>();
+>>>>>>> origin/alpha_merge
             return handlers.Remove(msgType);
         }
 
@@ -511,7 +716,11 @@ namespace Mirror
             NetworkIdentity[] identities = prefab.GetComponentsInChildren<NetworkIdentity>();
             if (identities.Length > 1)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Prefab '{prefab.name}' has multiple NetworkIdentity components. There should only be one NetworkIdentity on a prefab, and it must be on the root object.");
+=======
+                Debug.LogWarning($"Prefab '{prefab.name}' has multiple NetworkIdentity components. There should only be one NetworkIdentity on a prefab, and it must be on the root object.");
+>>>>>>> origin/alpha_merge
             }
 
             if (prefabs.ContainsKey(prefab.assetId))
@@ -615,7 +824,11 @@ namespace Mirror
             NetworkIdentity identity = prefab.GetComponent<NetworkIdentity>();
             if (identity == null)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Could not register handler for '{prefab.name}' since it contains no NetworkIdentity component");
+=======
+                Debug.LogError("Could not register handler for '" + prefab.name + "' since it contains no NetworkIdentity component");
+>>>>>>> origin/alpha_merge
                 return;
             }
 
@@ -665,7 +878,11 @@ namespace Mirror
             NetworkIdentity identity = prefab.GetComponent<NetworkIdentity>();
             if (identity == null)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Could not register handler for '{prefab.name}' since it contains no NetworkIdentity component");
+=======
+                Debug.LogError("Could not register handler for '" + prefab.name + "' since it contains no NetworkIdentity component");
+>>>>>>> origin/alpha_merge
                 return;
             }
 
@@ -710,10 +927,17 @@ namespace Mirror
             NetworkIdentity[] identities = prefab.GetComponentsInChildren<NetworkIdentity>();
             if (identities.Length > 1)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Prefab '{prefab.name}' has multiple NetworkIdentity components. There should only be one NetworkIdentity on a prefab, and it must be on the root object.");
             }
 
             //Debug.Log($"Registering custom prefab {prefab.name} as asset:{assetId} {spawnHandler.GetMethodName()}/{unspawnHandler.GetMethodName()}");
+=======
+                Debug.LogWarning($"Prefab '{prefab.name}' has multiple NetworkIdentity components. There should only be one NetworkIdentity on a prefab, and it must be on the root object.");
+            }
+
+            // Debug.Log("Registering custom prefab '" + prefab.name + "' as asset:" + assetId + " " + spawnHandler.GetMethodName() + "/" + unspawnHandler.GetMethodName());
+>>>>>>> origin/alpha_merge
 
             spawnHandlers[assetId] = spawnHandler;
             unspawnHandlers[assetId] = unspawnHandler;
@@ -732,7 +956,11 @@ namespace Mirror
             NetworkIdentity identity = prefab.GetComponent<NetworkIdentity>();
             if (identity == null)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Could not register handler for '{prefab.name}' since it contains no NetworkIdentity component");
+=======
+                Debug.LogError("Could not register handler for '" + prefab.name + "' since it contains no NetworkIdentity component");
+>>>>>>> origin/alpha_merge
                 return;
             }
 
@@ -776,10 +1004,17 @@ namespace Mirror
             NetworkIdentity[] identities = prefab.GetComponentsInChildren<NetworkIdentity>();
             if (identities.Length > 1)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Prefab '{prefab.name}' has multiple NetworkIdentity components. There should only be one NetworkIdentity on a prefab, and it must be on the root object.");
             }
 
             //Debug.Log($"Registering custom prefab {prefab.name} as asset:{assetId} {spawnHandler.GetMethodName()}/{unspawnHandler.GetMethodName()}");
+=======
+                Debug.LogWarning($"Prefab '{prefab.name}' has multiple NetworkIdentity components. There should only be one NetworkIdentity on a prefab, and it must be on the root object.");
+            }
+
+            // Debug.Log("Registering custom prefab '" + prefab.name + "' as asset:" + assetId + " " + spawnHandler.GetMethodName() + "/" + unspawnHandler.GetMethodName());
+>>>>>>> origin/alpha_merge
 
             spawnHandlers[assetId] = spawnHandler;
             unspawnHandlers[assetId] = unspawnHandler;
@@ -797,7 +1032,11 @@ namespace Mirror
             NetworkIdentity identity = prefab.GetComponent<NetworkIdentity>();
             if (identity == null)
             {
+<<<<<<< HEAD
                 Debug.LogError($"Could not unregister '{prefab.name}' since it contains no NetworkIdentity component");
+=======
+                Debug.LogError("Could not unregister '" + prefab.name + "' since it contains no NetworkIdentity component");
+>>>>>>> origin/alpha_merge
                 return;
             }
 
@@ -864,7 +1103,11 @@ namespace Mirror
                 Debug.LogError($"assetId '{assetId}' is already used by prefab '{prefabs[assetId].name}'");
             }
 
+<<<<<<< HEAD
             // Debug.Log("RegisterSpawnHandler asset {assetId} {spawnHandler.GetMethodName()}/{unspawnHandler.GetMethodName()}");
+=======
+            // Debug.Log("RegisterSpawnHandler asset '" + assetId + "' " + spawnHandler.GetMethodName() + "/" + unspawnHandler.GetMethodName());
+>>>>>>> origin/alpha_merge
 
             spawnHandlers[assetId] = spawnHandler;
             unspawnHandlers[assetId] = unspawnHandler;
@@ -903,7 +1146,11 @@ namespace Mirror
         // the players object for example.
         public static bool Ready()
         {
+<<<<<<< HEAD
             // Debug.Log($"NetworkClient.Ready() called with connection {conn}");
+=======
+            // Debug.Log("NetworkClient.Ready() called with connection [" + conn + "]");
+>>>>>>> origin/alpha_merge
             if (ready)
             {
                 Debug.LogError("NetworkClient is already ready. It shouldn't be called twice.");
@@ -928,6 +1175,12 @@ namespace Mirror
             return true;
         }
 
+<<<<<<< HEAD
+=======
+        [Obsolete("NetworkClient.Ready doesn't need a NetworkConnection parameter anymore. It always uses NetworkClient.connection anyway.")]
+        public static bool Ready(NetworkConnection conn) => Ready();
+
+>>>>>>> origin/alpha_merge
         // add player //////////////////////////////////////////////////////////
         // called from message handler for Owner message
         internal static void InternalAddPlayer(NetworkIdentity identity)
@@ -975,11 +1228,21 @@ namespace Mirror
                 return false;
             }
 
+<<<<<<< HEAD
             // Debug.Log($"NetworkClient.AddPlayer() called with connection {readyConnection}");
+=======
+            // Debug.Log("NetworkClient.AddPlayer() called with connection [" + readyConnection + "]");
+>>>>>>> origin/alpha_merge
             connection.Send(new AddPlayerMessage());
             return true;
         }
 
+<<<<<<< HEAD
+=======
+        [Obsolete("NetworkClient.AddPlayer doesn't need a NetworkConnection parameter anymore. It always uses NetworkClient.connection anyway.")]
+        public static bool AddPlayer(NetworkConnection readyConn) => AddPlayer();
+
+>>>>>>> origin/alpha_merge
         // spawning ////////////////////////////////////////////////////////////
         internal static void ApplySpawnPayload(NetworkIdentity identity, SpawnMessage message)
         {
@@ -1011,6 +1274,7 @@ namespace Mirror
                 }
             }
 
+<<<<<<< HEAD
             spawned[message.netId] = identity;
 
             // the initial spawn with OnObjectSpawnStarted/Finished calls all
@@ -1019,6 +1283,11 @@ namespace Mirror
             // this only happens once though.
             // for all future spawns, we need to call OnStartClient/LocalPlayer
             // here immediately since there won't be another OnObjectSpawnFinished.
+=======
+            NetworkIdentity.spawned[message.netId] = identity;
+
+            // objects spawned as part of initial state are started on a second pass
+>>>>>>> origin/alpha_merge
             if (isSpawnFinished)
             {
                 identity.NotifyAuthority();
@@ -1045,7 +1314,11 @@ namespace Mirror
                 return false;
             }
 
+<<<<<<< HEAD
             identity = message.sceneId == 0 ? SpawnPrefab(message) : SpawnSceneObject(message.sceneId);
+=======
+            identity = message.sceneId == 0 ? SpawnPrefab(message) : SpawnSceneObject(message);
+>>>>>>> origin/alpha_merge
 
             if (identity == null)
             {
@@ -1058,7 +1331,11 @@ namespace Mirror
 
         static NetworkIdentity GetExistingObject(uint netid)
         {
+<<<<<<< HEAD
             spawned.TryGetValue(netid, out NetworkIdentity localObject);
+=======
+            NetworkIdentity.spawned.TryGetValue(netid, out NetworkIdentity localObject);
+>>>>>>> origin/alpha_merge
             return localObject;
         }
 
@@ -1067,7 +1344,11 @@ namespace Mirror
             if (GetPrefab(message.assetId, out GameObject prefab))
             {
                 GameObject obj = GameObject.Instantiate(prefab, message.position, message.rotation);
+<<<<<<< HEAD
                 //Debug.Log($"Client spawn handler instantiating [netId{message.netId} asset ID:{message.assetId} pos:{message.position} rotation:{message.rotation}]");
+=======
+                //Debug.Log("Client spawn handler instantiating [netId:" + msg.netId + " asset ID:" + msg.assetId + " pos:" + msg.position + " rotation: " + msg.rotation + "]");
+>>>>>>> origin/alpha_merge
                 return obj.GetComponent<NetworkIdentity>();
             }
             if (spawnHandlers.TryGetValue(message.assetId, out SpawnHandlerDelegate handler))
@@ -1090,12 +1371,21 @@ namespace Mirror
             return null;
         }
 
+<<<<<<< HEAD
         static NetworkIdentity SpawnSceneObject(ulong sceneId)
         {
             NetworkIdentity identity = GetAndRemoveSceneObject(sceneId);
             if (identity == null)
             {
                 Debug.LogError($"Spawn scene object not found for {sceneId:X}. Make sure that client and server use exactly the same project. This only happens if the hierarchy gets out of sync.");
+=======
+        static NetworkIdentity SpawnSceneObject(SpawnMessage message)
+        {
+            NetworkIdentity identity = GetAndRemoveSceneObject(message.sceneId);
+            if (identity == null)
+            {
+                Debug.LogError($"Spawn scene object not found for {message.sceneId:X} SpawnableObjects.Count={spawnableObjects.Count}");
+>>>>>>> origin/alpha_merge
 
                 // dump the whole spawnable objects dict for easier debugging
                 //foreach (KeyValuePair<ulong, NetworkIdentity> kvp in spawnableObjects)
@@ -1158,7 +1448,11 @@ namespace Mirror
             // paul: Initialize the objects in the same order as they were
             // initialized in the server. This is important if spawned objects
             // use data from scene objects
+<<<<<<< HEAD
             foreach (NetworkIdentity identity in spawned.Values.OrderBy(uv => uv.netId))
+=======
+            foreach (NetworkIdentity identity in NetworkIdentity.spawned.Values.OrderBy(uv => uv.netId))
+>>>>>>> origin/alpha_merge
             {
                 identity.NotifyAuthority();
                 identity.OnStartClient();
@@ -1175,7 +1469,11 @@ namespace Mirror
             // loop below does not get NullReferenceException
             // see https://github.com/vis2k/Mirror/pull/2240
             // TODO fix scene logic so that client scene doesn't have null objects
+<<<<<<< HEAD
             foreach (KeyValuePair<uint, NetworkIdentity> kvp in spawned)
+=======
+            foreach (KeyValuePair<uint, NetworkIdentity> kvp in NetworkIdentity.spawned)
+>>>>>>> origin/alpha_merge
             {
                 if (kvp.Value == null)
                 {
@@ -1186,7 +1484,11 @@ namespace Mirror
             // can't modify NetworkIdentity.spawned inside foreach so need 2nd loop to remove
             foreach (uint id in removeFromSpawned)
             {
+<<<<<<< HEAD
                 spawned.Remove(id);
+=======
+                NetworkIdentity.spawned.Remove(id);
+>>>>>>> origin/alpha_merge
             }
             removeFromSpawned.Clear();
         }
@@ -1194,23 +1496,42 @@ namespace Mirror
         // host mode callbacks /////////////////////////////////////////////////
         static void OnHostClientObjectDestroy(ObjectDestroyMessage message)
         {
+<<<<<<< HEAD
             //Debug.Log($"NetworkClient.OnLocalObjectObjDestroy netId:{message.netId}");
             spawned.Remove(message.netId);
+=======
+            // Debug.Log("NetworkClient.OnLocalObjectObjDestroy netId:" + msg.netId);
+
+            // TODO why do we do this?
+            // in host mode, .spawned is shared between server and client.
+            // removing it on client would remove it on server.
+            // huh.
+            NetworkIdentity.spawned.Remove(message.netId);
+>>>>>>> origin/alpha_merge
         }
 
         static void OnHostClientObjectHide(ObjectHideMessage message)
         {
+<<<<<<< HEAD
             //Debug.Log($"ClientScene::OnLocalObjectObjHide netId:{message.netId}");
             if (spawned.TryGetValue(message.netId, out NetworkIdentity localObject) &&
                 localObject != null)
             {
                 if (aoi != null)
                     aoi.SetHostVisibility(localObject, false);
+=======
+            // Debug.Log("ClientScene::OnLocalObjectObjHide netId:" + msg.netId);
+            if (NetworkIdentity.spawned.TryGetValue(message.netId, out NetworkIdentity localObject) &&
+                localObject != null)
+            {
+                localObject.OnSetHostVisibility(false);
+>>>>>>> origin/alpha_merge
             }
         }
 
         internal static void OnHostClientSpawn(SpawnMessage message)
         {
+<<<<<<< HEAD
             // on host mode, the object already exist in NetworkServer.spawned.
             // simply add it to NetworkClient.spawned too.
             if (NetworkServer.spawned.TryGetValue(message.netId, out NetworkIdentity localObject) && localObject != null)
@@ -1218,39 +1539,67 @@ namespace Mirror
                 spawned[message.netId] = localObject;
 
                 // now do the actual 'spawning' on host mode
+=======
+            if (NetworkIdentity.spawned.TryGetValue(message.netId, out NetworkIdentity localObject) &&
+                localObject != null)
+            {
+>>>>>>> origin/alpha_merge
                 if (message.isLocalPlayer)
                     InternalAddPlayer(localObject);
 
                 localObject.hasAuthority = message.isOwner;
                 localObject.NotifyAuthority();
                 localObject.OnStartClient();
+<<<<<<< HEAD
 
                 if (aoi != null)
                     aoi.SetHostVisibility(localObject, true);
 
+=======
+                localObject.OnSetHostVisibility(true);
+>>>>>>> origin/alpha_merge
                 CheckForLocalPlayer(localObject);
             }
         }
 
         // client-only mode callbacks //////////////////////////////////////////
+<<<<<<< HEAD
         static void OnEntityStateMessage(EntityStateMessage message)
         {
             // Debug.Log($"NetworkClient.OnUpdateVarsMessage {msg.netId}");
             if (spawned.TryGetValue(message.netId, out NetworkIdentity localObject) && localObject != null)
+=======
+        static void OnUpdateVarsMessage(UpdateVarsMessage message)
+        {
+            // Debug.Log("NetworkClient.OnUpdateVarsMessage " + msg.netId);
+            if (NetworkIdentity.spawned.TryGetValue(message.netId, out NetworkIdentity localObject) && localObject != null)
+>>>>>>> origin/alpha_merge
             {
                 using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(message.payload))
                     localObject.OnDeserializeAllSafely(networkReader, false);
             }
+<<<<<<< HEAD
             else Debug.LogWarning($"Did not find target for sync message for {message.netId} . Note: this can be completely normal because UDP messages may arrive out of order, so this message might have arrived after a Destroy message.");
+=======
+            else Debug.LogWarning("Did not find target for sync message for " + message.netId + " . Note: this can be completely normal because UDP messages may arrive out of order, so this message might have arrived after a Destroy message.");
+>>>>>>> origin/alpha_merge
         }
 
         static void OnRPCMessage(RpcMessage message)
         {
+<<<<<<< HEAD
             // Debug.Log($"NetworkClient.OnRPCMessage hash:{msg.functionHash} netId:{msg.netId}");
             if (spawned.TryGetValue(message.netId, out NetworkIdentity identity))
             {
                 using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(message.payload))
                     identity.HandleRemoteCall(message.componentIndex, message.functionHash, RemoteCallType.ClientRpc, networkReader);
+=======
+            // Debug.Log("NetworkClient.OnRPCMessage hash:" + msg.functionHash + " netId:" + msg.netId);
+            if (NetworkIdentity.spawned.TryGetValue(message.netId, out NetworkIdentity identity))
+            {
+                using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(message.payload))
+                    identity.HandleRemoteCall(message.componentIndex, message.functionHash, MirrorInvokeType.ClientRpc, networkReader);
+>>>>>>> origin/alpha_merge
             }
         }
 
@@ -1267,6 +1616,7 @@ namespace Mirror
             }
         }
 
+<<<<<<< HEAD
         internal static void OnChangeOwner(ChangeOwnerMessage message)
         {
             NetworkIdentity identity = GetExistingObject(message.netId);
@@ -1296,6 +1646,8 @@ namespace Mirror
             CheckForLocalPlayer(identity);
         }
 
+=======
+>>>>>>> origin/alpha_merge
         internal static void CheckForLocalPlayer(NetworkIdentity identity)
         {
             if (identity == localPlayer)
@@ -1304,19 +1656,29 @@ namespace Mirror
                 // OnStartLocalPlayer in all scripts on the same GO
                 identity.connectionToServer = connection;
                 identity.OnStartLocalPlayer();
+<<<<<<< HEAD
                 // Debug.Log($"NetworkClient.OnOwnerMessage player:{identity.name}");
+=======
+                // Debug.Log("NetworkClient.OnOwnerMessage - player=" + identity.name);
+>>>>>>> origin/alpha_merge
             }
         }
 
         // destroy /////////////////////////////////////////////////////////////
         static void DestroyObject(uint netId)
         {
+<<<<<<< HEAD
             // Debug.Log($"NetworkClient.OnObjDestroy netId: {netId}");
             if (spawned.TryGetValue(netId, out NetworkIdentity localObject) && localObject != null)
             {
                 if (localObject.isLocalPlayer)
                     localObject.OnStopLocalPlayer();
 
+=======
+            // Debug.Log("NetworkClient.OnObjDestroy netId:" + netId);
+            if (NetworkIdentity.spawned.TryGetValue(netId, out NetworkIdentity localObject) && localObject != null)
+            {
+>>>>>>> origin/alpha_merge
                 localObject.OnStopClient();
 
                 // user handling
@@ -1341,9 +1703,15 @@ namespace Mirror
                 }
 
                 // remove from dictionary no matter how it is unspawned
+<<<<<<< HEAD
                 spawned.Remove(netId);
             }
             //else Debug.LogWarning($"Did not find target for destroy message for {netId}");
+=======
+                NetworkIdentity.spawned.Remove(netId);
+            }
+            //else Debug.LogWarning("Did not find target for destroy message for " + netId);
+>>>>>>> origin/alpha_merge
         }
 
         // update //////////////////////////////////////////////////////////////
@@ -1366,11 +1734,16 @@ namespace Mirror
                 localConnection.Update();
             }
             // remote connection?
+<<<<<<< HEAD
             else if (connection is NetworkConnectionToServer remoteConnection)
+=======
+            else
+>>>>>>> origin/alpha_merge
             {
                 // only update things while connected
                 if (active && connectState == ConnectState.Connected)
                 {
+<<<<<<< HEAD
                     // update NetworkTime
                     NetworkTime.UpdateClient();
 
@@ -1380,10 +1753,24 @@ namespace Mirror
             }
 
             // process all outgoing messages after updating the world
+=======
+                    NetworkTime.UpdateClient();
+                }
+            }
+
+            // process all incoming messages after updating the world
+>>>>>>> origin/alpha_merge
             if (Transport.activeTransport != null)
                 Transport.activeTransport.ClientLateUpdate();
         }
 
+<<<<<<< HEAD
+=======
+        // obsolete to not break people's projects. Update was public.
+        [Obsolete("NetworkClient.Update is now called internally from our custom update loop. No need to call Update manually anymore.")]
+        public static void Update() => NetworkLateUpdate();
+
+>>>>>>> origin/alpha_merge
         // shutdown ////////////////////////////////////////////////////////////
         /// <summary>Destroys all networked objects on the client.</summary>
         // Note: NetworkServer.CleanupNetworkIdentities does the same on server.
@@ -1394,6 +1781,7 @@ namespace Mirror
             // we need the Try/Catch so that the rest of the shutdown does not get stopped
             try
             {
+<<<<<<< HEAD
                 foreach (NetworkIdentity identity in spawned.Values)
                 {
                     if (identity != null && identity.gameObject != null)
@@ -1403,6 +1791,13 @@ namespace Mirror
 
                         identity.OnStopClient();
 
+=======
+                foreach (NetworkIdentity identity in NetworkIdentity.spawned.Values)
+                {
+                    if (identity != null && identity.gameObject != null)
+                    {
+                        identity.OnStopClient();
+>>>>>>> origin/alpha_merge
                         bool wasUnspawned = InvokeUnSpawnHandler(identity.assetId, identity.gameObject);
                         if (!wasUnspawned)
                         {
@@ -1421,7 +1816,11 @@ namespace Mirror
                         }
                     }
                 }
+<<<<<<< HEAD
                 spawned.Clear();
+=======
+                NetworkIdentity.spawned.Clear();
+>>>>>>> origin/alpha_merge
             }
             catch (InvalidOperationException e)
             {
@@ -1431,6 +1830,7 @@ namespace Mirror
         }
 
         /// <summary>Shutdown the client.</summary>
+<<<<<<< HEAD
         // RuntimeInitializeOnLoadMethod -> fast playmode without domain reload
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         public static void Shutdown()
@@ -1454,12 +1854,25 @@ namespace Mirror
             // sets previousLocalPlayer to null
             NetworkIdentity.ResetStatics();
 
+=======
+        public static void Shutdown()
+        {
+            Debug.Log("Shutting down client.");
+            ClearSpawners();
+            spawnableObjects.Clear();
+            ready = false;
+            isSpawnFinished = false;
+            DestroyAllClientObjects();
+            connectState = ConnectState.None;
+            handlers.Clear();
+>>>>>>> origin/alpha_merge
             // disconnect the client connection.
             // we do NOT call Transport.Shutdown, because someone only called
             // NetworkClient.Shutdown. we can't assume that the server is
             // supposed to be shut down too!
             if (Transport.activeTransport != null)
                 Transport.activeTransport.ClientDisconnect();
+<<<<<<< HEAD
 
             // reset statics
             connectState = ConnectState.None;
@@ -1476,6 +1889,8 @@ namespace Mirror
             OnConnectedEvent = null;
             OnDisconnectedEvent = null;
             OnErrorEvent = null;
+=======
+>>>>>>> origin/alpha_merge
         }
     }
 }

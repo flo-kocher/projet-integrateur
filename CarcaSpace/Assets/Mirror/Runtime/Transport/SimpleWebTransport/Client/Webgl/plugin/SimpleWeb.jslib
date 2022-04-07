@@ -27,6 +27,7 @@ function IsConnected(index) {
 }
 
 function Connect(addressPtr, openCallbackPtr, closeCallBackPtr, messageCallbackPtr, errorCallbackPtr) {
+<<<<<<< HEAD
     // fix for unity 2021 because unity bug in .jslib
     if (typeof Runtime === "undefined") {
         // if unity doesn't create Runtime, then make it here
@@ -37,6 +38,9 @@ function Connect(addressPtr, openCallbackPtr, closeCallBackPtr, messageCallbackP
     }
 
     const address = UTF8ToString(addressPtr);
+=======
+    const address = Pointer_stringify(addressPtr);
+>>>>>>> origin/alpha_merge
     console.log("Connecting to " + address);
     // Create webSocket connection.
     webSocket = new WebSocket(address);
@@ -111,4 +115,8 @@ const SimpleWebLib = {
     Send
 };
 autoAddDeps(SimpleWebLib, '$SimpleWeb');
+<<<<<<< HEAD
 mergeInto(LibraryManager.library, SimpleWebLib);
+=======
+mergeInto(LibraryManager.library, SimpleWebLib);
+>>>>>>> origin/alpha_merge

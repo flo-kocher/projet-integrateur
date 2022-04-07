@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿using System;
 using System.IO;
+=======
+﻿using System.IO;
+>>>>>>> origin/alpha_merge
 using System.Net.Sockets;
 
 namespace Telepathy
@@ -17,11 +21,15 @@ namespace Telepathy
             {
                 return stream.Read(buffer, offset, size);
             }
+<<<<<<< HEAD
             // IOException happens if we voluntarily closed our own connection.
+=======
+>>>>>>> origin/alpha_merge
             catch (IOException)
             {
                 return 0;
             }
+<<<<<<< HEAD
             // ObjectDisposedException can be thrown if Client.Disconnect()
             // disposes the stream, while we are still trying to read here.
             // catching it fixes https://github.com/vis2k/Telepathy/pull/104
@@ -29,6 +37,8 @@ namespace Telepathy
             {
                 return 0;
             }
+=======
+>>>>>>> origin/alpha_merge
         }
 
         // helper function to read EXACTLY 'n' bytes

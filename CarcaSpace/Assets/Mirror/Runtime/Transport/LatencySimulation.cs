@@ -2,10 +2,13 @@
 //
 // reliable: latency
 // unreliable: latency, loss, scramble (unreliable isn't ordered so we scramble)
+<<<<<<< HEAD
 //
 // IMPORTANT: use Time.unscaledTime instead of Time.time.
 //            some games might have Time.timeScale modified.
 //            see also: https://github.com/vis2k/Mirror/issues/2907
+=======
+>>>>>>> origin/alpha_merge
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -80,7 +83,11 @@ namespace Mirror
             // no spikes isn't realistic.
             // sin is too predictable / no realistic.
             // perlin is still deterministic and random enough.
+<<<<<<< HEAD
             float spike = Noise(Time.unscaledTime * latencySpikeSpeedMultiplier) * latencySpikeMultiplier;
+=======
+            float spike = Noise(Time.time * latencySpikeSpeedMultiplier) * latencySpikeMultiplier;
+>>>>>>> origin/alpha_merge
 
             // base latency
             switch (channeldId)
@@ -95,7 +102,11 @@ namespace Mirror
         }
 
         // helper function to simulate a send with latency/loss/scramble
+<<<<<<< HEAD
         void SimulateSend(int connectionId, ArraySegment<byte> segment, int channelId, float latency, List<QueuedMessage> reliableQueue, List<QueuedMessage> unreliableQueue)
+=======
+        void SimulateSend(int connectionId, int channelId, ArraySegment<byte> segment, float latency, List<QueuedMessage> reliableQueue, List<QueuedMessage> unreliableQueue)
+>>>>>>> origin/alpha_merge
         {
             // segment is only valid after returning. copy it.
             // (allocates for now. it's only for testing anyway.)
@@ -107,7 +118,11 @@ namespace Mirror
             {
                 connectionId = connectionId,
                 bytes = bytes,
+<<<<<<< HEAD
                 time = Time.unscaledTime + latency
+=======
+                time = Time.time + latency
+>>>>>>> origin/alpha_merge
             };
 
             switch (channelId)
@@ -165,10 +180,17 @@ namespace Mirror
             unreliableClientToServer.Clear();
         }
 
+<<<<<<< HEAD
         public override void ClientSend(ArraySegment<byte> segment, int channelId)
         {
             float latency = SimulateLatency(channelId);
             SimulateSend(0, segment, channelId, latency, reliableClientToServer, unreliableClientToServer);
+=======
+        public override void ClientSend(int channelId, ArraySegment<byte> segment)
+        {
+            float latency = SimulateLatency(channelId);
+            SimulateSend(0, channelId, segment, latency, reliableClientToServer, unreliableClientToServer);
+>>>>>>> origin/alpha_merge
         }
 
         public override Uri ServerUri() => wrap.ServerUri();
@@ -177,12 +199,21 @@ namespace Mirror
 
         public override string ServerGetClientAddress(int connectionId) => wrap.ServerGetClientAddress(connectionId);
 
+<<<<<<< HEAD
         public override void ServerDisconnect(int connectionId) => wrap.ServerDisconnect(connectionId);
 
         public override void ServerSend(int connectionId, ArraySegment<byte> segment, int channelId)
         {
             float latency = SimulateLatency(channelId);
             SimulateSend(connectionId, segment, channelId, latency, reliableServerToClient, unreliableServerToClient);
+=======
+        public override bool ServerDisconnect(int connectionId) => wrap.ServerDisconnect(connectionId);
+
+        public override void ServerSend(int connectionId, int channelId, ArraySegment<byte> segment)
+        {
+            float latency = SimulateLatency(channelId);
+            SimulateSend(connectionId, channelId, segment, latency, reliableServerToClient, unreliableServerToClient);
+>>>>>>> origin/alpha_merge
         }
 
         public override void ServerStart()
@@ -210,10 +241,17 @@ namespace Mirror
             {
                 // check the first message time
                 QueuedMessage message = reliableClientToServer[0];
+<<<<<<< HEAD
                 if (message.time <= Time.unscaledTime)
                 {
                     // send and eat
                     wrap.ClientSend(new ArraySegment<byte>(message.bytes), Channels.Reliable);
+=======
+                if (message.time <= Time.time)
+                {
+                    // send and eat
+                    wrap.ClientSend(Channels.Reliable, new ArraySegment<byte>(message.bytes));
+>>>>>>> origin/alpha_merge
                     reliableClientToServer.RemoveAt(0);
                 }
                 // not enough time elapsed yet
@@ -225,10 +263,17 @@ namespace Mirror
             {
                 // check the first message time
                 QueuedMessage message = unreliableClientToServer[0];
+<<<<<<< HEAD
                 if (message.time <= Time.unscaledTime)
                 {
                     // send and eat
                     wrap.ClientSend(new ArraySegment<byte>(message.bytes), Channels.Unreliable);
+=======
+                if (message.time <= Time.time)
+                {
+                    // send and eat
+                    wrap.ClientSend(Channels.Unreliable, new ArraySegment<byte>(message.bytes));
+>>>>>>> origin/alpha_merge
                     unreliableClientToServer.RemoveAt(0);
                 }
                 // not enough time elapsed yet
@@ -245,10 +290,17 @@ namespace Mirror
             {
                 // check the first message time
                 QueuedMessage message = reliableServerToClient[0];
+<<<<<<< HEAD
                 if (message.time <= Time.unscaledTime)
                 {
                     // send and eat
                     wrap.ServerSend(message.connectionId, new ArraySegment<byte>(message.bytes), Channels.Reliable);
+=======
+                if (message.time <= Time.time)
+                {
+                    // send and eat
+                    wrap.ServerSend(message.connectionId, Channels.Reliable, new ArraySegment<byte>(message.bytes));
+>>>>>>> origin/alpha_merge
                     reliableServerToClient.RemoveAt(0);
                 }
                 // not enough time elapsed yet
@@ -260,10 +312,17 @@ namespace Mirror
             {
                 // check the first message time
                 QueuedMessage message = unreliableServerToClient[0];
+<<<<<<< HEAD
                 if (message.time <= Time.unscaledTime)
                 {
                     // send and eat
                     wrap.ServerSend(message.connectionId, new ArraySegment<byte>(message.bytes), Channels.Unreliable);
+=======
+                if (message.time <= Time.time)
+                {
+                    // send and eat
+                    wrap.ServerSend(message.connectionId, Channels.Unreliable, new ArraySegment<byte>(message.bytes));
+>>>>>>> origin/alpha_merge
                     unreliableServerToClient.RemoveAt(0);
                 }
                 // not enough time elapsed yet
@@ -274,7 +333,11 @@ namespace Mirror
             wrap.ServerLateUpdate();
         }
 
+<<<<<<< HEAD
         public override int GetBatchThreshold(int channelId) => wrap.GetBatchThreshold(channelId);
+=======
+        public override int GetMaxBatchSize(int channelId) => wrap.GetMaxBatchSize(channelId);
+>>>>>>> origin/alpha_merge
         public override int GetMaxPacketSize(int channelId = 0) => wrap.GetMaxPacketSize(channelId);
 
         public override void Shutdown() => wrap.Shutdown();

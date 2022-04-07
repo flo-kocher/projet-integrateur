@@ -8,8 +8,11 @@ namespace Mirror.Examples.Tanks
         [Header("Components")]
         public NavMeshAgent agent;
         public Animator animator;
+<<<<<<< HEAD
         public TextMesh healthBar;
         public Transform turret;
+=======
+>>>>>>> origin/alpha_merge
 
         [Header("Movement")]
         public float rotationSpeed = 100;
@@ -19,6 +22,7 @@ namespace Mirror.Examples.Tanks
         public GameObject projectilePrefab;
         public Transform projectileMount;
 
+<<<<<<< HEAD
         [Header("Stats")]
         [SyncVar] public int health = 4;
 
@@ -48,6 +52,27 @@ namespace Mirror.Examples.Tanks
                 }
 
                 RotateTurret();
+=======
+        void Update()
+        {
+            // movement for local player
+            if (!isLocalPlayer) return;
+
+            // rotate
+            float horizontal = Input.GetAxis("Horizontal");
+            transform.Rotate(0, horizontal * rotationSpeed * Time.deltaTime, 0);
+
+            // move
+            float vertical = Input.GetAxis("Vertical");
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            agent.velocity = forward * Mathf.Max(vertical, 0) * agent.speed;
+            animator.SetBool("Moving", agent.velocity != Vector3.zero);
+
+            // shoot
+            if (Input.GetKeyDown(shootKey))
+            {
+                CmdFire();
+>>>>>>> origin/alpha_merge
             }
         }
 
@@ -55,7 +80,11 @@ namespace Mirror.Examples.Tanks
         [Command]
         void CmdFire()
         {
+<<<<<<< HEAD
             GameObject projectile = Instantiate(projectilePrefab, projectileMount.position, projectileMount.rotation);
+=======
+            GameObject projectile = Instantiate(projectilePrefab, projectileMount.position, transform.rotation);
+>>>>>>> origin/alpha_merge
             NetworkServer.Spawn(projectile);
             RpcOnFire();
         }
@@ -66,6 +95,7 @@ namespace Mirror.Examples.Tanks
         {
             animator.SetTrigger("Shoot");
         }
+<<<<<<< HEAD
 
         [ServerCallback]
         void OnTriggerEnter(Collider other)
@@ -89,5 +119,7 @@ namespace Mirror.Examples.Tanks
                 turret.transform.LookAt(lookRotation);
             }
         }
+=======
+>>>>>>> origin/alpha_merge
     }
 }

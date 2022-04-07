@@ -37,8 +37,13 @@ namespace Mirror.Examples.MultipleMatch
         public void SetMatchInfo(MatchInfo infos)
         {
             matchId = infos.matchId;
+<<<<<<< HEAD
             matchName.text = $"Match {infos.matchId.ToString().Substring(0, 8)}";
             playerCount.text = $"{infos.players} / {infos.maxPlayers}";
+=======
+            matchName.text = "Match " + infos.matchId.ToString().Substring(0, 8);
+            playerCount.text = infos.players + " / " + infos.maxPlayers;
+>>>>>>> origin/alpha_merge
         }
     }
 }
