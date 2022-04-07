@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class MultiplayerMenu : MonoBehaviour
 {
-    private Button Solo;
+    private Button Create;
     private Button JoinFriends;
     private Button addPlayers;
     private Button subPlayers;
@@ -17,14 +17,14 @@ public class MultiplayerMenu : MonoBehaviour
          SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
     }
 
-    public void EnterSoloMenu()
+    public void EnterCreateMenu()
     {
-        SceneManager.LoadScene("game interface",LoadSceneMode.Single);
+        SceneManager.LoadScene("CreatingGame",LoadSceneMode.Single);
     }
 
     public void EnterJoinFriendsMenu()
     {
-        SceneManager.LoadScene("JFMenu",LoadSceneMode.Single);
+        SceneManager.LoadScene("JoiningMenu",LoadSceneMode.Single);
     }
     public void addPlayer()
     {
@@ -58,14 +58,10 @@ public class MultiplayerMenu : MonoBehaviour
         text.text = nbPlayers.ToString();
     }
     void Start() {
-        Solo = GameObject.Find("Solo").GetComponent<Button>();
+        Create = GameObject.Find("Create Game").GetComponent<Button>();
         JoinFriends = GameObject.Find("JoinFriends").GetComponent<Button>();
-        addPlayers = GameObject.Find("right-arrow").GetComponent<Button>();
-        subPlayers = GameObject.Find("left-arrow").GetComponent<Button>();
-
-        Solo.onClick.AddListener(EnterSoloMenu);
+        
+        Create.onClick.AddListener(EnterCreateMenu);
         JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
-        addPlayers.onClick.AddListener(addPlayer);
-        subPlayers.onClick.AddListener(substractPlayer);
     }
 }
