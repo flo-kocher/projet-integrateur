@@ -27,13 +27,13 @@ public class MultiplayerMenu : MonoBehaviour
     }
     
     void Start() {
-        Create = GameObject.Find("CreateGame").GetComponent<Button>();
-        JoinFriends = GameObject.Find("JoinFriends").GetComponent<Button>();
+        // Create = GameObject.Find("CreateGame").GetComponent<Button>();
+        // JoinFriends = GameObject.Find("JoinFriends").GetComponent<Button>();
         // addPlayers = GameObject.Find("right-arrow").GetComponent<Button>();
         // subPlayers = GameObject.Find("left-arrow").GetComponent<Button>();
 
-        Create.onClick.AddListener(EnterCreateMenu);
-        JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
+        // Create.onClick.AddListener(EnterCreateMenu);
+        // JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
         // addPlayers.onClick.AddListener(addPlayer);
         // subPlayers.onClick.AddListener(substractPlayer);
     }
