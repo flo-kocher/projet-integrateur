@@ -11,9 +11,14 @@ public class MultiplayerMenu : MonoBehaviour
     
     private Text text;
     private Mask mask;
+
+    [SerializeField] InputField joinMatchInput ; 
+    [SerializeField] InputField playerNumberInput ; 
+    [SerializeField] Button joinButton ;
+    [SerializeField] Button hostButton ;
     public void EnterMultiplayerMenu()
     {
-         SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
+        SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
     }
 
     public void EnterCreateMenu()
@@ -24,6 +29,18 @@ public class MultiplayerMenu : MonoBehaviour
     public void EnterJoinFriendsMenu()
     {
         SceneManager.LoadScene("JoiningMenu",LoadSceneMode.Single);
+    }
+
+    public void Host(){
+        joinMatchInput.interactable = false ;
+        joinButton.interactable = false ; 
+        hostButton.interactable = false ;  
+    }
+
+    public void Join(){
+        joinMatchInput.interactable = false ;
+        joinButton.interactable = false ; 
+        hostButton.interactable = false ;  
     }
     
     void Start() {

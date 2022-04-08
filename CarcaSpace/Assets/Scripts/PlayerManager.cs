@@ -10,6 +10,9 @@ public class PlayerManager : NetworkBehaviour
     // compteur de Meeple synchronisé entre tous les clients
     [SyncVar]
     public int compteurMeeple = 0;
+
+    //Joueur Local 
+    public static PlayerManager localPlayer ;
     // listes tous les Prefabs qui sont instanciés dans le jeu
     public GameObject grid;
     public GameObject temp;
@@ -65,6 +68,12 @@ public class PlayerManager : NetworkBehaviour
     public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
 
     // méthode se lançant au démarrage du client
+
+    void Start(){
+        if(isLocalPlayer){
+            localPlayer = this ;
+        }
+    }
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -246,6 +255,7 @@ public class PlayerManager : NetworkBehaviour
         tabPos[4] = milieu;
     }
 
+
     // Demande du client au serveur du tirage d'une tuile de manière aléatoire
     [Command]
     public void CmdDealTiles()
@@ -406,4 +416,24 @@ public class PlayerManager : NetworkBehaviour
 
         }        
     }
+
+
+
+    public void HostGame(){
+        string matchId = MatchMaker.GetRandomMatchId();
+        //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
+        int x = 2 ;
+        CmdHostGame(x,matchId);
+    }
+
+    [Command]
+
+    void CmdHostGame(int playerNumber, string matchId){
+        if(MatchMaker.instance.HostGame()){
+            Debug.Log("Game hosted successfully\n");
+        }else{
+            Debug.Log("Host failed \n");
+        }
+    }
+
 }
