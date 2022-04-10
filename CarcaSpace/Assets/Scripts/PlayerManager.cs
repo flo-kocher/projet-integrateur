@@ -427,9 +427,8 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [Command]
-
     void CmdHostGame(int playerNumber, string matchId){
-        if(MatchMaker.instance.HostGame()){
+        if(MatchMaker.instance.HostGame(playerNumber , matchId , localPlayer)){
             Debug.Log("Game hosted successfully\n");
         }else{
             Debug.Log("Host failed \n");

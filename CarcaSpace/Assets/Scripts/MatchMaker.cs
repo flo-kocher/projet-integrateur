@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking ;
 using Mirror ; 
 
 
@@ -8,10 +9,12 @@ using Mirror ;
 public class Match{
     public string MatchId ;
     public SyncListGameObject players = new SyncListGameObject();
+    int nbPlayers ; 
     //constructeur
-    public Match(string MatchId , GameObject  player){
+    public Match(int nbPlayers,string MatchId , GameObject  player){
         this.MatchId = MatchId ;
         players.Add(player);
+        this.nbPlayers = nbPlayers ;
     }
 
     public Match(){
@@ -30,9 +33,15 @@ public class SyncListMatch : SyncList<Match> {
 public class SyncListGameObject : SyncList<GameObject> {
 
 }
+
+
 public class MatchMaker : NetworkBehaviour  
 {
     public static MatchMaker instance;
+    //Liste de parties 
+    public SyncListMatch matches = new SyncListMatch();
+
+    public SyncList<string> matchIDS = new SyncList<string>();
 
     void Start(){
 
@@ -53,8 +62,18 @@ public class MatchMaker : NetworkBehaviour
         return _id ; 
     }
 
-    public bool HostGame(){
-        
+    public bool HostGame(int playerNumber, string matchId,GameObject player){     
+        //one verifie si le meme id n'esxiste pas deja dans la liste
+        if(!matchIDS.Contains(matchId)){
+            matchIDS.Add(matchId);
+            matches.Add(new Match(playerNumber,matchId,player));
+            Debug.Log("Match Generated \n");
+            return true ;
+        }else{
+            Debug.Log("Match Id already exists \n");
+            return false ; 
+        }
+
     }
 
 }
