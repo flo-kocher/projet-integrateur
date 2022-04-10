@@ -1,9 +1,10 @@
 using System.Collections;
+using System ;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking ;
 using Mirror ; 
-
+using Security.Cryptography ; 
 
 [System.Serializable]
 public class Match{
@@ -74,6 +75,12 @@ public class MatchMaker : NetworkBehaviour
             return false ; 
         }
 
+    }
+
+    public static class MatchExtensions{
+        public static Guid ToGuid(this string id){
+            MD5CryptoServiceProvider provider ; 
+        }
     }
 
 }

@@ -11,6 +11,9 @@ public class PlayerManager : NetworkBehaviour
     [SyncVar]
     public int compteurMeeple = 0;
 
+    NetworkMatch netMatchChecker;
+
+
     //Joueur Local 
     public static PlayerManager localPlayer ;
     // listes tous les Prefabs qui sont instanciés dans le jeu
@@ -73,6 +76,7 @@ public class PlayerManager : NetworkBehaviour
         if(isLocalPlayer){
             localPlayer = this ;
         }
+        netMatchChecker = GetComponent<netMatchChecker>();
     }
     public override void OnStartClient()
     {
@@ -430,6 +434,7 @@ public class PlayerManager : NetworkBehaviour
     void CmdHostGame(int playerNumber, string matchId){
         if(MatchMaker.instance.HostGame(playerNumber , matchId , localPlayer)){
             Debug.Log("Game hosted successfully\n");
+            //netMatchChecker.matchId = matchId.ToGuid();
         }else{
             Debug.Log("Host failed \n");
         }
