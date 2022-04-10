@@ -8,10 +8,10 @@ using Mirror ;
 [System.Serializable]
 public class Match{
     public string MatchId ;
-    public SyncListGameObject players = new SyncListGameObject();
+    public List<PlayerManager> players = new List<PlayerManager>();
     int nbPlayers ; 
     //constructeur
-    public Match(int nbPlayers,string MatchId , GameObject  player){
+    public Match(int nbPlayers,string MatchId , PlayerManager  player){
         this.MatchId = MatchId ;
         players.Add(player);
         this.nbPlayers = nbPlayers ;
@@ -62,7 +62,7 @@ public class MatchMaker : NetworkBehaviour
         return _id ; 
     }
 
-    public bool HostGame(int playerNumber, string matchId,GameObject player){     
+    public bool HostGame(int playerNumber, string matchId,PlayerManager player){     
         //one verifie si le meme id n'esxiste pas deja dans la liste
         if(!matchIDS.Contains(matchId)){
             matchIDS.Add(matchId);
