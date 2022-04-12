@@ -76,7 +76,7 @@ public class PlayerManager : NetworkBehaviour
         if(isLocalPlayer){
             localPlayer = this ;
         }
-        netMatchChecker = GetComponent<netMatchChecker>();
+        
     }
     public override void OnStartClient()
     {

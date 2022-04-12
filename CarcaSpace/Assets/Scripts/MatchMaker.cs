@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking ;
 using Mirror ; 
-using Security.Cryptography ; 
+using System.Security.Cryptography;
+using System.Text;
+
+
+
 
 [System.Serializable]
 public class Match{
@@ -51,7 +55,7 @@ public class MatchMaker : NetworkBehaviour
     public static string GetRandomMatchId(){
         string _id = string.Empty ; 
         for(int i = 0 ; i<5 ; i++){
-            int random  = Random.Range(0,36);
+            int random  = UnityEngine.Random.Range(0,36);
             // ca veut dire que c'est une lettre
             if(random<26){
                 //Pour avoir en Majuscules
@@ -77,10 +81,15 @@ public class MatchMaker : NetworkBehaviour
 
     }
 
-    public static class MatchExtensions{
-        public static Guid ToGuid(this string id){
-            MD5CryptoServiceProvider provider ; 
-        }
-    }
+    
 
 }
+public static class MatchExtensions {
+        public static Guid ToGuid (this string id) {
+            MD5CryptoServiceProvider provider = new MD5CryptoServiceProvider ();
+            byte[] inputBytes = Encoding.Default.GetBytes (id);
+            byte[] hashBytes = provider.ComputeHash (inputBytes);
+
+            return new Guid (hashBytes);
+        }
+    }
