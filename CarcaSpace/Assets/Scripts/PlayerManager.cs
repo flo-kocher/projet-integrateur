@@ -5,6 +5,26 @@ using Mirror;
 using UnityEngine.UI;
 using System;
 
+struct CurrentRoads {
+    //Variable declaration
+    public string Name;
+    public int Size;
+    public List<GameObject> CurrentTiles;
+
+    /*
+        rajoute soit les coordonnées de l'extremité 1 et l'extremité 2 
+        soit mettre peut être le Go direct de l'extremité 1 et le Go de la 2
+        soit peut être lister la listes des Go qui font partie du chemin avec le premier est l'extrémité 1 et le second l'extremité 2
+    */
+   
+    //Constructor (not necessary, but helpful)
+    public CurrentRoads(string name, int size, List<GameObject> currentTiles) {
+        this.Name = name;
+        this.Size = size;
+        this.CurrentTiles = new List<GameObject>();
+    }
+}
+
 public class PlayerManager : NetworkBehaviour
 {
     // compteur de Meeple synchronisé entre tous les clients
@@ -63,6 +83,9 @@ public class PlayerManager : NetworkBehaviour
 
     // liste des clients connectes
     public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
+
+    //
+    public List<GameObject> plateau = new List<GameObject>();
 
     // méthode se lançant au démarrage du client
     public override void OnStartClient()
@@ -246,6 +269,23 @@ public class PlayerManager : NetworkBehaviour
         tabPos[4] = milieu;
     }
 
+    void roadIsClosed()
+    {
+        //CurrentRoads road1 = new CurrentRoads("Road 1");
+        //Debug.Log(road1.Name);
+
+        //if struct.size == 1 alors la tile dans la liste est l'extrémité1 et extremite2
+        //if struct.size > 1 alors l'extrémité1 est le premier élément et l'éxtrémité2 est le dernier elt
+        /*
+        if(cond)
+            CurrentRoads road = new CurrentRoads(i); // variavle globale du nbr de structure pour pas qu'on ait plusieurs fois les mêmes noms
+            attributs a init etc...
+
+            puis on le rajoute à une liste de structures
+
+        */
+    }
+
     // Demande du client au serveur du tirage d'une tuile de manière aléatoire
     [Command]
     public void CmdDealTiles()
@@ -291,6 +331,9 @@ public class PlayerManager : NetworkBehaviour
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
                 //Debug.Log("je suis dans rpc if");
+                plateau.Add(go);
+                roadIsClosed();
+                //Debug.Log(plateau.Count);
             }
             else
             {
@@ -298,6 +341,9 @@ public class PlayerManager : NetworkBehaviour
                 go.SetActive(true);
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
                 //Debug.Log("je suis dans rpc else");
+                plateau.Add(go);
+                roadIsClosed();
+                //Debug.Log(plateau.Count);
             }
         }
         else if (action == "Played")
@@ -407,3 +453,5 @@ public class PlayerManager : NetworkBehaviour
         }        
     }
 }
+
+
