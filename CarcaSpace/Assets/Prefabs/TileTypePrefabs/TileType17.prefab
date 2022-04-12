@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 1896199557465541959}
   - component: {fileID: 1896199557465541996}
   - component: {fileID: 1896199557465541694}
-  - component: {fileID: 1896199557465541695}
   - component: {fileID: 1896199557465541693}
   - component: {fileID: 1896199557465541682}
   - component: {fileID: 1896199557465541692}
   - component: {fileID: 1896199557465542060}
   - component: {fileID: 1896199557465542068}
   - component: {fileID: -8490158594761781242}
+  - component: {fileID: 2845071769101495591}
   m_Layer: 0
   m_Name: TileType17
   m_TagString: Untagged
@@ -74,23 +74,6 @@ MonoBehaviour:
   leve: 0
   tourne: 0
   couche: 0
---- !u!114 &1896199557465541695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1896199557465541930}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38fcce5302016b34c9d956a7f519a103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  haut: 0
-  gauche: 0
-  bas: 0
-  droite: 0
-  milieu: 0
 --- !u!114 &1896199557465541693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,9 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44284d65d961a4707b96cfabfa0c58da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.1
+  syncMode: 0
+  syncInterval: 0.1
+  PlayerManager: {fileID: 0}
   speed: 5
-  plateau: {fileID: 0}
 --- !u!114 &1896199557465541692
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,12 +171,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  north: 0
-  east: 1
-  south: 2
-  west: 3
-  middle: 4
-  blazon: 0
+  haut: 1
+  gauche: 3
+  bas: 3
+  droite: 3
+  milieu: 0
+  coordX: 0
+  coordY: 0
+  r: {fileID: 0}
+--- !u!114 &2845071769101495591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1896199557465541930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fcce5302016b34c9d956a7f519a103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  haut: 1
+  gauche: 3
+  bas: 3
+  droite: 3
+  milieu: 0
+  coordX: 0
+  coordY: 0
 --- !u!1 &1896199557465541936
 GameObject:
   m_ObjectHideFlags: 0

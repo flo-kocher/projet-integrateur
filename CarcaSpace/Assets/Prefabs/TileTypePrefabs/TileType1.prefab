@@ -499,13 +499,13 @@ GameObject:
   - component: {fileID: 4793412428863025589}
   - component: {fileID: 4793412428863025566}
   - component: {fileID: 4793412428863025356}
-  - component: {fileID: 4793412428863025357}
   - component: {fileID: 4793412428863025359}
   - component: {fileID: 4793412428863025344}
   - component: {fileID: 4793412428863025358}
   - component: {fileID: 4793412428863025502}
   - component: {fileID: 4793412428863025478}
-  - component: {fileID: -6836327402120459302}
+  - component: {fileID: -8168235520166218449}
+  - component: {fileID: -2244741470892647417}
   m_Layer: 0
   m_Name: TileType1
   m_TagString: Untagged
@@ -562,23 +562,6 @@ MonoBehaviour:
   leve: 0
   tourne: 0
   couche: 0
---- !u!114 &4793412428863025357
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4793412428863025624}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38fcce5302016b34c9d956a7f519a103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  haut: 0
-  gauche: 0
-  bas: 0
-  droite: 0
-  milieu: 0
 --- !u!114 &4793412428863025359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,9 +589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44284d65d961a4707b96cfabfa0c58da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.1
+  syncMode: 0
+  syncInterval: 0.1
+  PlayerManager: {fileID: 0}
   speed: 5
-  plateau: {fileID: 0}
 --- !u!114 &4793412428863025358
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,7 +645,26 @@ MonoBehaviour:
   compressRotation: 0
   interpolateScale: 1
   syncScale: 1
---- !u!114 &-6836327402120459302
+--- !u!114 &-8168235520166218449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4793412428863025624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fcce5302016b34c9d956a7f519a103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  haut: 1
+  gauche: 1
+  bas: 1
+  droite: 1
+  milieu: 7
+  coordX: 0
+  coordY: 0
+--- !u!114 &-2244741470892647417
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -675,9 +678,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  north: 0
-  east: 1
-  south: 2
-  west: 3
-  middle: 4
-  blazon: 0
+  haut: 1
+  gauche: 1
+  bas: 1
+  droite: 1
+  milieu: 7
+  coordX: 0
+  coordY: 0
+  r: {fileID: 0}

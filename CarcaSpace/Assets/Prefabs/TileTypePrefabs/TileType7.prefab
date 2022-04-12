@@ -499,13 +499,13 @@ GameObject:
   - component: {fileID: 6772691831277187227}
   - component: {fileID: 6772691831277187248}
   - component: {fileID: 6772691831277187554}
-  - component: {fileID: 6772691831277187555}
   - component: {fileID: 6772691831277187553}
   - component: {fileID: 6772691831277187566}
   - component: {fileID: 6772691831277187552}
   - component: {fileID: 6772691831277187184}
   - component: {fileID: 6772691831277187176}
   - component: {fileID: 7546196254419817089}
+  - component: {fileID: 5764144864403615747}
   m_Layer: 0
   m_Name: TileType7
   m_TagString: Untagged
@@ -562,23 +562,6 @@ MonoBehaviour:
   leve: 0
   tourne: 0
   couche: 0
---- !u!114 &6772691831277187555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6772691831277187318}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38fcce5302016b34c9d956a7f519a103, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  haut: 0
-  gauche: 0
-  bas: 0
-  droite: 0
-  milieu: 0
 --- !u!114 &6772691831277187553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,9 +589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44284d65d961a4707b96cfabfa0c58da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.1
+  syncMode: 0
+  syncInterval: 0.1
+  PlayerManager: {fileID: 0}
   speed: 5
-  plateau: {fileID: 0}
 --- !u!114 &6772691831277187552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,9 +659,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  north: 0
-  east: 1
-  south: 2
-  west: 3
-  middle: 4
-  blazon: 0
+  haut: 1
+  gauche: 1
+  bas: 3
+  droite: 1
+  milieu: 7
+  coordX: 0
+  coordY: 0
+  r: {fileID: 0}
+--- !u!114 &5764144864403615747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6772691831277187318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38fcce5302016b34c9d956a7f519a103, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  haut: 1
+  gauche: 1
+  bas: 3
+  droite: 1
+  milieu: 7
+  coordX: 0
+  coordY: 0

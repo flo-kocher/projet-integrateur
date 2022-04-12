@@ -28,11 +28,13 @@ public abstract class tile_type : NetworkBehaviour
     void Start()
     {
         r = this.GetComponent<rotateZ>();
+        /*
         haut = Type_land.Plaine;
         gauche = Type_land.Chemin;
         bas = Type_land.Plaine;
         droite = Type_land.Chemin;
         milieu = Type_land.Chemin;
+        */
     }
 
     // Update is called once per frame
@@ -60,6 +62,13 @@ public abstract class tile_type : NetworkBehaviour
         droite = bas;
         bas = gauche;
         gauche = cp;
+
+        this.GetComponent<Constraints>().haut = haut;
+        this.GetComponent<Constraints>().gauche = gauche;
+        this.GetComponent<Constraints>().bas = bas;
+        this.GetComponent<Constraints>().droite = droite;
+        //this.GetComponent<Constraints>().milieu = milieu;
+
     }
 
     protected void rotate_right()
@@ -69,6 +78,12 @@ public abstract class tile_type : NetworkBehaviour
         gauche = bas;
         bas = droite;
         droite = cp;
+
+        this.GetComponent<Constraints>().haut = haut;
+        this.GetComponent<Constraints>().gauche = gauche;
+        this.GetComponent<Constraints>().bas = bas;
+        this.GetComponent<Constraints>().droite = droite;
+        //this.GetComponent<Constraints>().milieu = milieu;
     }
 
     public abstract int getNbrTuile();

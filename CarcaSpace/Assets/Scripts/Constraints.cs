@@ -20,11 +20,13 @@ public class Constraints : MonoBehaviour
     void Start()
     {
         //Debug.Log(transform.eulerAngles.z);
+        /*
         haut = Type_land.Rien;
         gauche = Type_land.Rien;
         bas = Type_land.Rien;
         droite = Type_land.Rien;
         milieu = Type_land.Rien;
+        */
     }
 /*
 rotation a gauche : 90
@@ -109,7 +111,7 @@ rotation deux fois : 180 ou -180
     */
     
 // recuper les valeurs des quatre voisins direct en partant de celui du dessus puis dans le sens horaire
-    void Voisin(int x, int y, GameObject[] voisins) 
+    public void Voisin(GameObject[] voisins) 
     {
         voisins[0] = GameObject.Find(coordX + "/" + (coordY+1));
         voisins[1] = GameObject.Find((coordX+1) + "/" + coordY);
@@ -128,7 +130,7 @@ rotation deux fois : 180 ou -180
         if(poser.GetComponent<Constraints>().bas != Type_land.Rien && poser.GetComponent<Constraints>().haut != Type_land.Rien && poser.GetComponent<Constraints>().droite != Type_land.Rien && poser.GetComponent<Constraints>().gauche != Type_land.Rien){
             return false;
         }
-        Voisin(coordY, coordY, voisins);
+        Voisin(voisins);
 
         // Bas
         if(voisins[0] != null && voisins[0].GetComponent<Constraints>().bas != Type_land.Rien && voisins[0].GetComponent<Constraints>().bas != h){
@@ -157,22 +159,4 @@ rotation deux fois : 180 ou -180
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

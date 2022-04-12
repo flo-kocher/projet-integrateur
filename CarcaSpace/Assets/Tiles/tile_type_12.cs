@@ -12,11 +12,17 @@ public class tile_type_12 : tile_type
     void Start()
     {
         r = this.GetComponent<rotateZ>();
-        haut = Type_land.Plaine;
-        gauche = Type_land.Chemin;
-        bas = Type_land.Plaine;
+        haut = Type_land.Ville;
+        gauche = Type_land.Ville;
+        bas = Type_land.Chemin;
         droite = Type_land.Chemin;
-        milieu = Type_land.Chemin;
+        milieu = Type_land.Rien;
+        
+        this.GetComponent<Constraints>().haut = haut;
+        this.GetComponent<Constraints>().gauche = gauche;
+        this.GetComponent<Constraints>().bas = bas;
+        this.GetComponent<Constraints>().droite = droite;
+        this.GetComponent<Constraints>().milieu = milieu;
     }
 
     // Update is called once per frame
