@@ -13,6 +13,12 @@ public class PlayerManager : NetworkBehaviour
 
     NetworkMatch netMatchChecker;
 
+    //en sync var car elle va etre display chez tous les clients 
+    [SyncVar]
+    public string matchID ; 
+
+    [SyncVar] public int playerIndex;
+
 
     //Joueur Local 
     public static PlayerManager localPlayer ;
@@ -247,6 +253,7 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
         instatiateTiles();
+        
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
         
@@ -431,13 +438,53 @@ public class PlayerManager : NetworkBehaviour
     }
 
     [Command]
-    void CmdHostGame(int playerNumber, string matchId){
-        if(MatchMaker.instance.HostGame(playerNumber , matchId , localPlayer)){
+    void CmdHostGame(int playerNumber, string _matchId){
+        matchID = _matchId ;
+        if(MatchMaker.instance.HostGame(playerNumber , _matchId , localPlayer)){
             Debug.Log("Game hosted successfully\n");
-            //netMatchChecker.matchId = matchId.ToGuid();
+            netMatchChecker.matchId = _matchId.ToGuid();
+            TargetHostGame(true,_matchId);
+
         }else{
             Debug.Log("Host failed \n");
+            TargetHostGame(false,matchID);
         }
+    }
+
+    [TargetRpc]
+    void TargetHostGame(bool sucess,string matchId){
+        Debug.Log($"Match ID is {matchId}");
+        MultiplayerMenu.instance.hostSucc(sucess);
+    }
+
+    public void JoinGame (string _inputID) {
+        string matchID = MatchMaker.GetRandomMatchId();
+        CmdJoinGame (_inputID);
+    }
+
+    [Command]
+    void CmdJoinGame (string _matchID) {
+        matchID = _matchID;
+        if (MatchMaker.instance.JoinGame (_matchID,localPlayer)) {
+            Debug.Log ($"<color=green>Game Joined successfully</color>");
+            netMatchChecker.matchId = _matchID.ToGuid ();
+            TargetJoinGame (true, _matchID);
+
+            //Host
+            if (isServer /*&& playerLobbyUI */!= null) {
+                //playerLobbyUI.SetActive (true);
+            }
+        } else {
+            Debug.Log ($"<color=red>Game Joined failed</color>");
+            TargetJoinGame (false, _matchID);
+        }
+    }
+
+    [TargetRpc]
+    void TargetJoinGame (bool success, string _matchID) {
+        matchID = _matchID;
+        Debug.Log ($"MatchID: {matchID} == {_matchID}");
+        MultiplayerMenu.instance.joinSucc(success);
     }
 
 }

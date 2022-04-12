@@ -81,9 +81,25 @@ public class MatchMaker : NetworkBehaviour
 
     }
 
-    
-
+    public bool JoinGame(string _matchId,PlayerManager _player){     
+        //one verifie si le meme id n'esxiste pas deja dans la liste
+        if(!matchIDS.Contains(_matchId)){
+            for(int i = 0 ; i < matches.Count ; i ++ ){
+                if(matches[i].MatchId == _matchId){
+                    matches[i].players.Add(_player);
+                    break ; 
+                }
+            }
+            Debug.Log("Match Joined \n");
+            return true ;
+        }else{
+            Debug.Log("Match Id does not  \n");
+            return false ; 
+        }
+    }
 }
+
+//Fonction qui sert a creer un gamecode
 public static class MatchExtensions {
         public static Guid ToGuid (this string id) {
             MD5CryptoServiceProvider provider = new MD5CryptoServiceProvider ();

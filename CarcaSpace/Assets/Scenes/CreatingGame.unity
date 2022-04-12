@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 61862389}
   - component: {fileID: 61862392}
   - component: {fileID: 61862393}
+  - component: {fileID: 61862394}
   m_Layer: 5
   m_Name: Create Game
   m_TagString: Untagged
@@ -444,10 +445,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
+  lobbyCanvas: {fileID: 0}
+--- !u!114 &61862394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 61862387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 245865565
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &215393856
 GameObject:
   m_ObjectHideFlags: 0
@@ -1566,6 +1587,7 @@ GameObject:
   - component: {fileID: 1161787434}
   - component: {fileID: 1161787433}
   - component: {fileID: 1161787436}
+  - component: {fileID: 1161787437}
   m_Layer: 5
   m_Name: CreategGameStart
   m_TagString: Untagged
@@ -1699,10 +1721,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
+  lobbyCanvas: {fileID: 0}
+--- !u!114 &1161787437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161787431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 1767669071
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1222171972
 GameObject:
   m_ObjectHideFlags: 0
@@ -1875,8 +1917,8 @@ MonoBehaviour:
   runInBackground: 1
   autoStartServerBuild: 1
   serverTickRate: 30
-  offlineScene: 
-  onlineScene: 
+  offlineScene: Assets/Scenes/CreatingGame.unity
+  onlineScene: Assets/Scenes/Lobby.unity
   transport: {fileID: 1294025934}
   networkAddress: localhost
   maxConnections: 100
@@ -2361,6 +2403,7 @@ GameObject:
   - component: {fileID: 2014814176}
   - component: {fileID: 2014814175}
   - component: {fileID: 2014814179}
+  - component: {fileID: 2014814180}
   m_Layer: 5
   m_Name: JoinFriends
   m_TagString: Untagged
@@ -2400,10 +2443,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
+  lobbyCanvas: {fileID: 0}
 --- !u!114 &2014814176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2510,6 +2556,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 162ca750997993c4d88ecd24ae695ba6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2014814180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014814173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3613613438
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &2041549205
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,6 +2664,7 @@ GameObject:
   - component: {fileID: 2054274167}
   - component: {fileID: 2054274166}
   - component: {fileID: 2054274170}
+  - component: {fileID: 2054274171}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2704,7 +2768,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 451457708}
   joinButton: {fileID: 0}
   hostButton: {fileID: 1161787433}
+  lobbyCanvas: {fileID: 0}
+--- !u!114 &2054274171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054274165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2757156669
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0

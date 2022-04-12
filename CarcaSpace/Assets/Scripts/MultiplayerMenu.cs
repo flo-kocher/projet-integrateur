@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Mirror ; 
 
-public class MultiplayerMenu : MonoBehaviour
+public class MultiplayerMenu : NetworkBehaviour
 {
+
+    public static MultiplayerMenu instance ; 
     private Button Create;
     private Button JoinFriends;
     
@@ -16,6 +19,13 @@ public class MultiplayerMenu : MonoBehaviour
     [SerializeField] InputField playerNumberInput ; 
     [SerializeField] Button joinButton ;
     [SerializeField] Button hostButton ;
+
+    [SerializeField]  Canvas lobbyCanvas ; 
+
+
+    void Start() {
+        instance = this ; 
+    }
     public void EnterMultiplayerMenu()
     {
         SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
@@ -31,10 +41,22 @@ public class MultiplayerMenu : MonoBehaviour
         SceneManager.LoadScene("JoiningMenu",LoadSceneMode.Single);
     }
 
-    public void Host(){
+    public void Host(string _matchId,GameObject _player)
+    {
         joinMatchInput.interactable = false ;
         joinButton.interactable = false ; 
         hostButton.interactable = false ;  
+    }
+
+    //pour reactiver les boutons si echec
+    public void hostSucc(bool success){
+        if(success){
+            SceneManager.LoadScene("Lobby");
+        }else{
+            joinMatchInput.interactable = true ;
+            joinButton.interactable = true ; 
+            hostButton.interactable = true ;  
+        }
     }
 
     public void Join(){
@@ -42,16 +64,17 @@ public class MultiplayerMenu : MonoBehaviour
         joinButton.interactable = false ; 
         hostButton.interactable = false ;  
     }
-    
-    void Start() {
-        // Create = GameObject.Find("CreateGame").GetComponent<Button>();
-        // JoinFriends = GameObject.Find("JoinFriends").GetComponent<Button>();
-        // addPlayers = GameObject.Find("right-arrow").GetComponent<Button>();
-        // subPlayers = GameObject.Find("left-arrow").GetComponent<Button>();
 
-        // Create.onClick.AddListener(EnterCreateMenu);
-        // JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
-        // addPlayers.onClick.AddListener(addPlayer);
-        // subPlayers.onClick.AddListener(substractPlayer);
+    //pour reactiver les boutons si echec
+    public void joinSucc(bool success){
+        if(success){
+
+        }else{
+            joinMatchInput.interactable = true ;
+            joinButton.interactable = true ; 
+            hostButton.interactable = true ;  
+        }
     }
+    
+    
 }
