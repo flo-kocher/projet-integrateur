@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Mirror ; 
+//using Mirror ; 
 
-public class MultiplayerMenu : NetworkBehaviour
+public class MultiplayerMenu : MonoBehaviour
 {
 
     public static MultiplayerMenu instance ; 

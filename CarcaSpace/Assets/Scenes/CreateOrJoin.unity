@@ -336,12 +336,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
-  joinButton: {fileID: 0}
-  hostButton: {fileID: 0}
+  joinButton: {fileID: 66587686}
+  hostButton: {fileID: 958058004}
   lobbyCanvas: {fileID: 0}
 --- !u!114 &66587690
 MonoBehaviour:
@@ -923,8 +921,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
