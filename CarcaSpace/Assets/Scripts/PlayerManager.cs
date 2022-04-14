@@ -272,11 +272,15 @@ public class PlayerManager : NetworkBehaviour
         tabPos[4] = milieu;
     }
 
-    void roadIsClosed(GameObject tile_laid) // (tuile posé)
+    public void roadIsClosed(GameObject tile_laid) // (tuile posé)
     {
+        // récupération de ses coordonnées sur la grid
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
+
         //Debug.Log("je suis dans roadisclosed");
-        Debug.Log(tile_laid);
-        Debug.Log(tile_laid.GetComponent<Constraints>().haut);
+        //Debug.Log(tile_laid);
+        //Debug.Log(tile_laid.GetComponent<Constraints>().haut);
         //CurrentRoads road1 = new CurrentRoads("Road 1",size);
         //Debug.Log(road1.Name);
 
@@ -291,16 +295,32 @@ public class PlayerManager : NetworkBehaviour
 
         */
 
+        /*
         if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin){
             Debug.Log("je sors");
             return;
         }
-            
-        
+        */
+
+        //récupérer les voisins du Go parmis les tuiles du plateau
         GameObject[] voisins = new GameObject[4];
-        tile_laid.GetComponent<Constraints>().Voisin(voisins);
-        Debug.Log("voisins 0 " +voisins[0]);
+        for(int i = 0; i < plateau.Count; i++)
+        {
+            Debug.Log("plat : " + plateau[i]);
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                voisins[0] = plateau[i]; // haut
+            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[1] = plateau[i]; // gauche
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                voisins[2] = plateau[i]; // bas
+            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[3] = plateau[i]; // droite
+        }
+        Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
         
+    
+        
+        //puis lancer l'algo quoi
 
     }
 
@@ -351,7 +371,7 @@ public class PlayerManager : NetworkBehaviour
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
                 //Debug.Log("je suis dans rpc if");
                 plateau.Add(go);
-                roadIsClosed(go);
+                //roadIsClosed(go);
                 //Debug.Log(plateau.Count);
             }
             else
@@ -361,7 +381,7 @@ public class PlayerManager : NetworkBehaviour
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
                 //Debug.Log("je suis dans rpc else");
                 plateau.Add(go);
-                roadIsClosed(go);
+                //roadIsClosed(go);
                 //Debug.Log(plateau.Count);
             }
         }

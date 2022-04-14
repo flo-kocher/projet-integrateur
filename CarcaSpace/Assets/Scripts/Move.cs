@@ -135,6 +135,9 @@ public class Move : NetworkBehaviour {
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
         PlayerManager.CmdSpawnStars(tabExample, x, y);
+        PlayerManager.roadIsClosed(go);
+
+
       }
     }
   }

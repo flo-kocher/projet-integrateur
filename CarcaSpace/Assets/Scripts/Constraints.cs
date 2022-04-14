@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public enum Type_land
 {
   Rien, Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye, Continue
@@ -114,9 +115,20 @@ rotation deux fois : 180 ou -180
     public void Voisin(GameObject[] voisins) 
     {
         voisins[0] = GameObject.Find(coordX + "/" + (coordY+1));
-        voisins[1] = GameObject.Find((coordX+1) + "/" + coordY);
+        voisins[1] = GameObject.Find((coordX-1) + "/" + coordY);
         voisins[2] = GameObject.Find(coordX + "/" + (coordY-1));
-        voisins[3] = GameObject.Find((coordX-1) + "/" + coordY);
+        voisins[3] = GameObject.Find((coordX+1) + "/" + coordY);
+    }
+
+    public void Voisin_tuiles(GameObject[] voisins) 
+    {
+
+        /*
+        voisins[0] = GameObject.Find(coordX + "/" + (coordY+1));
+        voisins[1] = GameObject.Find((coordX-1) + "/" + coordY);
+        voisins[2] = GameObject.Find(coordX + "/" + (coordY-1));
+        voisins[3] = GameObject.Find((coordX+1) + "/" + coordY);
+        */
     }
 
     public bool verif(Type_land h, Type_land b, Type_land d, Type_land g)
