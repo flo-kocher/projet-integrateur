@@ -686,7 +686,7 @@ MonoBehaviour:
   minPlayers: 2
   roomPlayerPrefab: {fileID: 0}
   RoomScene: Assets/Scenes/Lobby.unity
-  GameplayScene: Assets/game interface.unity
+  GameplayScene: 
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0

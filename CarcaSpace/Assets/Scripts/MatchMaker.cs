@@ -13,8 +13,10 @@ using System.Text;
 [System.Serializable]
 public class Match{
     public string MatchId ;
-    public List<PlayerManager> players = new List<PlayerManager>();
+    public bool inMatch;
     int nbPlayers ; 
+    public List<PlayerManager> players = new List<PlayerManager>();
+    
     //constructeur
     public Match(int nbPlayers,string MatchId , PlayerManager  player){
         this.MatchId = MatchId ;

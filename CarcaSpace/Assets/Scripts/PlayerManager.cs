@@ -433,6 +433,7 @@ public class PlayerManager : NetworkBehaviour
 
     public void HostGame(){
         string matchId = MatchMaker.GetRandomMatchId();
+        Debug.Log($"Created Match With ID {matchId}");
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
         CmdHostGame(x,matchId);
@@ -460,7 +461,6 @@ public class PlayerManager : NetworkBehaviour
     }
 
     public void JoinGame (string _inputID) {
-        string matchID = MatchMaker.GetRandomMatchId();
         CmdJoinGame (_inputID);
     }
 
