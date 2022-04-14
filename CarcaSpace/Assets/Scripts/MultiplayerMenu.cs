@@ -63,12 +63,15 @@ public class MultiplayerMenu : MonoBehaviour
         joinMatchInput.interactable = false ;
         joinButton.interactable = false ; 
         hostButton.interactable = false ;  
+
+        PlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper ());
     }
 
     //pour reactiver les boutons si echec
     public void joinSucc(bool success){
         if(success){
-
+            SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
+            //spawn les "Cartes des joeuurs ici " 
         }else{
             joinMatchInput.interactable = true ;
             joinButton.interactable = true ; 

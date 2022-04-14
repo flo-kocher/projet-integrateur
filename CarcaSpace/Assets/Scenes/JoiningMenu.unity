@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 58736007}
   - component: {fileID: 58736006}
   - component: {fileID: 58736005}
-  - component: {fileID: 58736009}
   m_Layer: 5
   m_Name: CreateGame
   m_TagString: Untagged
@@ -275,23 +274,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 58736003}
   m_CullTransparentMesh: 1
---- !u!114 &58736009
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58736003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1093681917
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &120489573
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,7 +993,6 @@ GameObject:
   - component: {fileID: 890944337}
   - component: {fileID: 890944336}
   - component: {fileID: 890944339}
-  - component: {fileID: 890944340}
   m_Layer: 5
   m_Name: JoinFriends
   m_TagString: Untagged
@@ -1138,23 +1119,6 @@ MonoBehaviour:
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
---- !u!114 &890944340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 890944334}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1926440475
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &905926531
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,7 +1540,6 @@ GameObject:
   - component: {fileID: 1552222411}
   - component: {fileID: 1552222410}
   - component: {fileID: 1552222414}
-  - component: {fileID: 1552222415}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1684,23 +1647,6 @@ MonoBehaviour:
   joinButton: {fileID: 120489575}
   hostButton: {fileID: 58736006}
   lobbyCanvas: {fileID: 0}
---- !u!114 &1552222415
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552222409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 732728984
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1639853477
 GameObject:
   m_ObjectHideFlags: 0

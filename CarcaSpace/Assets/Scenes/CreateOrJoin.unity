@@ -202,7 +202,6 @@ GameObject:
   - component: {fileID: 66587687}
   - component: {fileID: 66587686}
   - component: {fileID: 66587689}
-  - component: {fileID: 66587690}
   m_Layer: 5
   m_Name: JoinFriends
   m_TagString: Untagged
@@ -331,7 +330,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 66587684}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
@@ -341,23 +340,6 @@ MonoBehaviour:
   joinButton: {fileID: 66587686}
   hostButton: {fileID: 958058004}
   lobbyCanvas: {fileID: 0}
---- !u!114 &66587690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 66587684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 2993570990
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &502215639
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +769,6 @@ GameObject:
   - component: {fileID: 958058005}
   - component: {fileID: 958058004}
   - component: {fileID: 958058007}
-  - component: {fileID: 958058008}
   m_Layer: 5
   m_Name: CreateGame
   m_TagString: Untagged
@@ -916,7 +897,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958058002}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
@@ -926,23 +907,6 @@ MonoBehaviour:
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
---- !u!114 &958058008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 958058002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 1315722805
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1248313223
 GameObject:
   m_ObjectHideFlags: 0
