@@ -30,6 +30,6 @@ EditorBuildSettings:
     path: Assets/Scenes/ProfileMenu.unity
     guid: bc55a0b31b0a05144b392376b0e57531
   - enabled: 1
-    path: Assets/game interface.unity
+    path: Assets/Scenes/game interface.unity
     guid: 0c21fb0cc18664970a8bcc6417e5c56d
   m_configObjects: {}
