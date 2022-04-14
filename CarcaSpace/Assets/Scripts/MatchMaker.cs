@@ -12,13 +12,20 @@ using System.Text;
 
 [System.Serializable]
 public class Match{
+    //Code de la partie 
     public string MatchId ;
     public bool inMatch;
+    //nb Joueurs Max choisi par le host 
     int nbPlayers ; 
+    //si le match est full ou pas 
+    public bool matchFull;
+    //Liste des joueurs dans la partie 
     public List<PlayerManager> players = new List<PlayerManager>();
     
     //constructeur
     public Match(int nbPlayers,string MatchId , PlayerManager  player){
+        matchFull = false ; 
+        inMatch = false ;
         this.MatchId = MatchId ;
         players.Add(player);
         this.nbPlayers = nbPlayers ;
@@ -31,27 +38,30 @@ public class Match{
 
 
 
-[System.Serializable]
-public class SyncListMatch : SyncList<Match> {
+// [System.Serializable]
+// public class SyncListMatch : SyncList<Match> {
+// }
 
-}
-
-[System.Serializable]
-public class SyncListGameObject : SyncList<GameObject> {
-
-}
+// [System.Serializable]
+// public class SyncListGameObject : SyncList<GameObject> {
+// }
 
 
 public class MatchMaker : NetworkBehaviour  
 {
     public static MatchMaker instance;
+
+
     //Liste de parties 
     public SyncListMatch matches = new SyncListMatch();
 
+    //Liste match ids  
     public SyncList<string> matchIDS = new SyncList<string>();
 
-    void Start(){
+    [SerializeField] int maxPlayers = 5 ; 
 
+    void Start(){
+        instance = this ; 
     }
     // Retourne un code pour la partie 
     public static string GetRandomMatchId(){
@@ -69,11 +79,13 @@ public class MatchMaker : NetworkBehaviour
         return _id ; 
     }
 
-    public bool HostGame(int playerNumber, string matchId,PlayerManager player){     
+    public bool HostGame(int _playerNumber, string _matchId,PlayerManager player){     
         //one verifie si le meme id n'esxiste pas deja dans la liste
-        if(!matchIDS.Contains(matchId)){
+        if(!matchIDS.Contains(_matchId)){
             matchIDS.Add(matchId);
-            matches.Add(new Match(playerNumber,matchId,player));
+            Match match = new Match(playerNumber,_matchId,player) ;
+            matches.Add(match);
+            playerIndex = 1;
             Debug.Log("Match Generated \n");
             return true ;
         }else{
@@ -84,21 +96,50 @@ public class MatchMaker : NetworkBehaviour
     }
 
     public bool JoinGame(string _matchId,PlayerManager _player){     
+
+        
         //one verifie si le meme id n'esxiste pas deja dans la liste
-        if(!matchIDS.Contains(_matchId)){
-            for(int i = 0 ; i < matches.Count ; i ++ ){
-                if(matches[i].MatchId == _matchId){
-                    matches[i].players.Add(_player);
-                    break ; 
+       if (matchIDs.Contains (_matchID)) {
+
+                for (int i = 0; i < matches.Count; i++) {
+                    if (matches[i].matchID == _matchID) {
+                        if (!matches[i].inMatch && !matches[i].matchFull) {
+                            matches[i].players.Add (_player);
+                            _player.currentMatch = matches[i];
+                            playerIndex = matches[i].players.Count;
+
+                            matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
+
+                            if (matches[i].players.Count == maxMatchPlayers) {
+                                matches[i].matchFull = true;
+                            }
+
+                            break;
+                        } else {
+                            return false;
+                        }
+                    }
                 }
+
+                Debug.Log ($"Match joined");
+                return true;
+            } else {
+                Debug.Log ($"Match ID does not exist");
+                return false;
             }
-            Debug.Log("Match Joined \n");
-            return true ;
-        }else{
-            Debug.Log("Match Id does not  \n");
-            return false ; 
+    }
+    public void BeginGame (string _matchID) {
+        for (int i = 0; i < matches.Count; i++) {
+            if (matches[i].matchID == _matchID) {
+                matches[i].inMatch = true;
+                foreach (var player in matches[i].players) {
+                    player.StartGame ();
+                }
+                break;
+            }
         }
     }
+
 }
 
 //Fonction qui sert a creer un gamecode

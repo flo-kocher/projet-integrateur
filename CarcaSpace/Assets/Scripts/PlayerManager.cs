@@ -489,4 +489,32 @@ public class PlayerManager : NetworkBehaviour
         MultiplayerMenu.instance.joinSucc(success);
     }
 
+    public void StartGame () { //Server
+        TargetBeginGame ();
+    }
+
+    [TargetRpc]
+    void TargetBeginGame () {
+        Debug.Log ($"MatchID: {matchID} | Beginning");
+        //Additively load game scene
+        SceneManager.LoadScene ("game interface", LoadSceneMode.Additive);
+    }
+
+    public void BeginGame () {
+        CmdBeginGame ();
+    }
+
+    [Command]
+    void CmdBeginGame () {
+        MatchMaker.instance.BeginGame (matchID);
+        Debug.Log ($"<color=red>Game Beginning</color>");
+    }
+
+
+    [Command]
+     void CmdBeginGame () {
+        MatchMaker.instance.BeginGame (matchID);
+        Debug.Log ($"<color=red>Game Beginning</color>");
+    }
+
 }

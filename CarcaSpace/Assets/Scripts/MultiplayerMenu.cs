@@ -16,10 +16,16 @@ public class MultiplayerMenu : MonoBehaviour
     private Text text;
     private Mask mask;
 
+    // ou l'on rentre le code de la partie 
     [SerializeField] InputField joinMatchInput ; 
+
+    //ou l'on rentre le nombre de joueurs
     [SerializeField] InputField playerNumberInput ; 
     [SerializeField] Button joinButton ;
     [SerializeField] Button hostButton ;
+
+    //Bouton ready pour les joeuurs non implemente encore 
+    [SerializeField] Button readyButton ; 
 
     [SerializeField]  Canvas lobbyCanvas ; 
     public PlayerManager PlayerManager ; 
