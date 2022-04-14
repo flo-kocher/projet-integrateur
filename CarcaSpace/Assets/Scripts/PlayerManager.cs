@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
@@ -435,6 +436,7 @@ public class PlayerManager : NetworkBehaviour
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
         CmdHostGame(x,matchId);
+        SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
     }
 
     [Command]

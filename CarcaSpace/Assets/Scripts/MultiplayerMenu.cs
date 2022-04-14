@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ public class MultiplayerMenu : MonoBehaviour
     [SerializeField] Button hostButton ;
 
     [SerializeField]  Canvas lobbyCanvas ; 
+    public PlayerManager PlayerManager ; 
+
 
 
     void Start() {
@@ -41,11 +44,14 @@ public class MultiplayerMenu : MonoBehaviour
         SceneManager.LoadScene("JoiningMenu",LoadSceneMode.Single);
     }
 
-    public void Host(string _matchId,GameObject _player)
+    public void Host()
     {
-        joinMatchInput.interactable = false ;
-        joinButton.interactable = false ; 
+        //joinMatchInput.interactable = false ;
+        //joinButton.interactable = false ; 
         hostButton.interactable = false ;  
+
+        
+        PlayerManager.HostGame();
     }
 
     //pour reactiver les boutons si echec
@@ -53,8 +59,8 @@ public class MultiplayerMenu : MonoBehaviour
         if(success){
             SceneManager.LoadScene("Lobby");
         }else{
-            joinMatchInput.interactable = true ;
-            joinButton.interactable = true ; 
+            // joinMatchInput.interactable = true ;
+            // joinButton.interactable = true ; 
             hostButton.interactable = true ;  
         }
     }
@@ -62,7 +68,7 @@ public class MultiplayerMenu : MonoBehaviour
     public void Join(){
         joinMatchInput.interactable = false ;
         joinButton.interactable = false ; 
-        hostButton.interactable = false ;  
+        //hostButton.interactable = false ;  
 
         PlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper ());
     }
@@ -75,7 +81,7 @@ public class MultiplayerMenu : MonoBehaviour
         }else{
             joinMatchInput.interactable = true ;
             joinButton.interactable = true ; 
-            hostButton.interactable = true ;  
+            // hostButton.interactable = true ;  
         }
     }
     

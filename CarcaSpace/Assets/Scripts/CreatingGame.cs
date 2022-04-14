@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class CreatingGame : MonoBehaviour
 {
     private Button addPlayers;
@@ -23,7 +24,7 @@ public class CreatingGame : MonoBehaviour
         mask = GameObject.Find("right-arrow").GetComponent<Mask>();
 
         int nbPlayers = int.Parse(text.text);
-         nbPlayers++ ;
+        nbPlayers++ ;
         if(nbPlayers == 2){
             //mask.showMaskGraphic = true;
         }
@@ -42,7 +43,7 @@ public class CreatingGame : MonoBehaviour
             nbPlayers --;
             if(nbPlayers == 2)
             {
-               // mask.showMaskGraphic = false;
+            // mask.showMaskGraphic = false;
             }
         }
         

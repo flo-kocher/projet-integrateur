@@ -657,7 +657,6 @@ GameObject:
   - component: {fileID: 443220381}
   - component: {fileID: 443220380}
   - component: {fileID: 443220383}
-  - component: {fileID: 443220384}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -805,23 +804,6 @@ MonoBehaviour:
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
---- !u!114 &443220384
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 443220378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 419448499
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &562972179
 GameObject:
   m_ObjectHideFlags: 0
