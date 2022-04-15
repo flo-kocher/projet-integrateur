@@ -434,15 +434,17 @@ public class PlayerManager : NetworkBehaviour
         }        
     }
     
-
+    public void startClient(){
+        // pour lancer le client sans le hud 
+        NetworkManager.StartClient(); 
+    }
 
 
     public void HostGame(){
         string matchId = MatchMaker.GetRandomMatchId();
         Debug.Log($"Created Match With ID {matchId}");
 
-        // pour lancer le client sans le hud 
-        NetworkManager.StartClient(); 
+        
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
         CmdHostGame(x,matchId);

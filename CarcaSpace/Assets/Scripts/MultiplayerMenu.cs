@@ -36,6 +36,7 @@ public class MultiplayerMenu : MonoBehaviour
 
     void Start() {
         instance = this ; 
+        PlayerManager.localPlayer.startClient();
     }
     public void EnterMultiplayerMenu()
     {
@@ -78,7 +79,6 @@ public class MultiplayerMenu : MonoBehaviour
         //hostButton.interactable = false ;  
 
         PlayerManager.localPlayer.JoinGame (joinMatchInput.text);
-        NetworkManager.StartClient(); 
     }
 
     //pour reactiver les boutons si echec
