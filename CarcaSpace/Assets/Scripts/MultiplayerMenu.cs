@@ -67,7 +67,7 @@ public class MultiplayerMenu : MonoBehaviour
         if(success){
             SceneManager.LoadScene("Lobby");
         }else{
-            // joinMatchInput.interactable = true ;
+            // joinMatchInput.interactable = true ; 
             // joinButton.interactable = true ; 
             hostButton.interactable = true ;  
         }

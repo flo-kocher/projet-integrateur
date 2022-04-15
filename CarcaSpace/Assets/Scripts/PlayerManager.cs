@@ -483,11 +483,11 @@ public class PlayerManager : NetworkBehaviour
             netMatchChecker.matchId = _matchID.ToGuid ();
             TargetJoinGame (true, _matchID);
 
-            //Host
-            if (isServer /*&& playerLobbyUI */!= null) {
-                //playerLobbyUI.SetActive (true);
-            }
-        } else {
+            // //Host
+            // if (isServer /*&& playerLobbyUI */!= null) {
+            //     //playerLobbyUI.SetActive (true);
+            // }
+        // } else {
             Debug.Log ($"<color=red>Game Joined failed</color>");
             TargetJoinGame (false, _matchID);
         }
