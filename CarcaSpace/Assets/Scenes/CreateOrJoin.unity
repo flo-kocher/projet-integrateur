@@ -339,7 +339,9 @@ MonoBehaviour:
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 66587686}
   hostButton: {fileID: 958058004}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
+  PlayerManager: {fileID: 0}
 --- !u!1 &502215639
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,12 +843,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 102900000, guid: 65a6369f22c6c3448abe7aa9bfec3019, type: 3}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
         m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -906,7 +908,9 @@ MonoBehaviour:
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
+  PlayerManager: {fileID: 0}
 --- !u!1 &1248313223
 GameObject:
   m_ObjectHideFlags: 0

@@ -24,6 +24,8 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] GameObject playerLobbyUI;
 
+    [SerializeField] NetworkManager NetworkManager;
+
     //Joueur Local 
     public static PlayerManager localPlayer ;
     // listes tous les Prefabs qui sont instanciés dans le jeu
@@ -431,12 +433,16 @@ public class PlayerManager : NetworkBehaviour
 
         }        
     }
+    
 
 
 
     public void HostGame(){
         string matchId = MatchMaker.GetRandomMatchId();
         Debug.Log($"Created Match With ID {matchId}");
+
+        // pour lancer le client sans le hud 
+        NetworkManager.StartClient(); 
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
         CmdHostGame(x,matchId);
