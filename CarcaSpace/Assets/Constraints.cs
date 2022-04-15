@@ -4,8 +4,14 @@ using UnityEngine;
 
 public enum Type_land
 {
-  Rien, Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye
+  Rien, Ville, Plaine, Chemin, Ville_blason, Arret_chemin, Abbaye, Continue
 }
+
+public enum Meeple
+{
+    Rien, Haut, Bas, Gauche, Droite, Milieu
+}
+
 public class Constraints : MonoBehaviour
 {
     public Type_land haut;
@@ -14,8 +20,10 @@ public class Constraints : MonoBehaviour
     public Type_land droite;
     public Type_land milieu;
     public Type_land rien;
+    public bool blason;
     public int coordX;
     public int coordY;
+    public Meeple meeple;
    
     // Start is called before the first frame update
     void Start()
@@ -26,88 +34,9 @@ public class Constraints : MonoBehaviour
         bas = Type_land.Rien;
         droite = Type_land.Rien;
         milieu = Type_land.Rien;
+        blason = false;
+        meeple = Meeple.Rien;
     }
-/*
-rotation a gauche : 90
-rotation a droite : -90
-rotation deux fois : 180 ou -180
-
-
-*/
-    // Update is called once per frame
-    void Update()
-    {
-        //call a chaque instant de rotation side switch
-        // ou call des que pression sur bouton gauche ou droite
-
-        //attention si on fait trop vite, l'animation a pas le temps de se faire
-        //donc ca decale tout
-       
-        
-    
-    }
-
-
-/*
-    // pas encore terminer/pas encore tester
-    void rotation_side_switch()
-    {
-        //rotation Z = 0 90 (-180 ou 180) -90
-        //private Vector3 r_values = tranform.Rotate.forward;
-        float rot_value_z = transform.eulerAngles.z;
-        if(83 < rot_value_z && rot_value_z < 97)
-        {
-            Debug.Log("tourner a 90");
-            string cp = haut;
-            haut = droite;
-            droite = bas;
-            bas = gauche;
-            gauche = cp;
-        }
-        else if(-97 < rot_value_z && rot_value_z < -83)
-        {
-            Debug.Log("tourner a -90");
-            string cp = haut;
-            haut = gauche;
-            gauche = bas;
-            bas = droite;
-            droite = cp;
-        }
-        else if( (178 < rot_value_z && rot_value_z < 182) || (-182 < rot_value_z && rot_value_z < -178))
-        {
-            Debug.Log("tourner a 180 -180");
-            string cp1 = haut;
-            haut = bas;
-            bas = cp1;
-            string cp2 = gauche;
-            gauche = droite;
-            droite = cp2;
-        }
-            
-    }
-*/
-
-    // des pressions sur touche pour tourner faire les changements de valeurs
-
-    /*
-    void rotate_left()
-    {
-        Type_land cp = haut;
-        haut = droite;
-        droite = bas;
-        bas = gauche;
-        gauche = cp;
-    }
-
-    void rotate_right()
-    {
-        Type_land cp = haut;
-        haut = gauche;
-        gauche = bas;
-        bas = droite;
-        droite = cp;
-    }
-    */
 
 // Beaucoup a faire, il faut trouver un moyen de recuperer les pieces par rapport a leurs coordonnées
 // créer un script pour retenir les infos des pieces dans grid.
