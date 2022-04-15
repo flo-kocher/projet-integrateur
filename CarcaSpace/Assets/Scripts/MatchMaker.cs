@@ -53,7 +53,7 @@ public class MatchMaker : NetworkBehaviour
 
 
     //Liste de parties 
-    public SyncListMatch matches = new SyncListMatch();
+    public SyncList<Match> matches = new SyncList<Match> ();
 
     //Liste match ids  
     public SyncList<string> matchIDS = new SyncList<string>();
@@ -79,11 +79,14 @@ public class MatchMaker : NetworkBehaviour
         return _id ; 
     }
 
-    public bool HostGame(int _playerNumber, string _matchId,PlayerManager player){     
+    public bool HostGame(int _playerNumber, string _matchId,PlayerManager player,out int playerIndex){     
+        playerIndex = -1;
+
+
         //one verifie si le meme id n'esxiste pas deja dans la liste
         if(!matchIDS.Contains(_matchId)){
-            matchIDS.Add(matchId);
-            Match match = new Match(playerNumber,_matchId,player) ;
+            matchIDS.Add(_matchId);
+            Match match = new Match(_playerNumber,_matchId,player) ;
             matches.Add(match);
             playerIndex = 1;
             Debug.Log("Match Generated \n");
@@ -95,42 +98,40 @@ public class MatchMaker : NetworkBehaviour
 
     }
 
-    public bool JoinGame(string _matchId,PlayerManager _player){     
-
-        
+    public bool JoinGame(string _matchId,PlayerManager _player,out int playerIndex){     
+        playerIndex = -1;
         //one verifie si le meme id n'esxiste pas deja dans la liste
-       if (matchIDs.Contains (_matchID)) {
+       if (matchIDS.Contains (_matchId)) {
+            for (int i = 0; i < matches.Count; i++) {
+                if (matches[i].MatchId == _matchId) {
+                    if (!matches[i].inMatch && !matches[i].matchFull) {
+                        matches[i].players.Add (_player);
+                        _player.currentMatch = matches[i];
+                        playerIndex = matches[i].players.Count;
 
-                for (int i = 0; i < matches.Count; i++) {
-                    if (matches[i].matchID == _matchID) {
-                        if (!matches[i].inMatch && !matches[i].matchFull) {
-                            matches[i].players.Add (_player);
-                            _player.currentMatch = matches[i];
-                            playerIndex = matches[i].players.Count;
+                        matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
 
-                            matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
-
-                            if (matches[i].players.Count == maxMatchPlayers) {
-                                matches[i].matchFull = true;
-                            }
-
-                            break;
-                        } else {
-                            return false;
+                        if (matches[i].players.Count == maxPlayers) {
+                            matches[i].matchFull = true;
                         }
+
+                        break;
+                    } else {
+                        return false;
                     }
                 }
-
-                Debug.Log ($"Match joined");
-                return true;
-            } else {
-                Debug.Log ($"Match ID does not exist");
-                return false;
             }
+
+            Debug.Log ($"Match joined");
+            return true;
+        } else {
+            Debug.Log ($"Match ID does not exist");
+            return false;
+        }
     }
     public void BeginGame (string _matchID) {
         for (int i = 0; i < matches.Count; i++) {
-            if (matches[i].matchID == _matchID) {
+            if (matches[i].MatchId == _matchID) {
                 matches[i].inMatch = true;
                 foreach (var player in matches[i].players) {
                     player.StartGame ();

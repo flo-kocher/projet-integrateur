@@ -20,6 +20,9 @@ public class PlayerManager : NetworkBehaviour
 
     [SyncVar] public int playerIndex;
 
+    [SyncVar] public Match currentMatch;
+
+    [SerializeField] GameObject playerLobbyUI;
 
     //Joueur Local 
     public static PlayerManager localPlayer ;
@@ -443,7 +446,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     void CmdHostGame(int playerNumber, string _matchId){
         matchID = _matchId ;
-        if(MatchMaker.instance.HostGame(playerNumber , _matchId , localPlayer)){
+        if(MatchMaker.instance.HostGame(playerNumber , _matchId , localPlayer,out playerIndex)){
             Debug.Log("Game hosted successfully\n");
             netMatchChecker.matchId = _matchId.ToGuid();
             TargetHostGame(true,_matchId);
@@ -467,7 +470,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     void CmdJoinGame (string _matchID) {
         matchID = _matchID;
-        if (MatchMaker.instance.JoinGame (_matchID,localPlayer)) {
+        if (MatchMaker.instance.JoinGame (_matchID,localPlayer,out playerIndex)) {
             Debug.Log ($"<color=green>Game Joined successfully</color>");
             netMatchChecker.matchId = _matchID.ToGuid ();
             TargetJoinGame (true, _matchID);
@@ -504,11 +507,6 @@ public class PlayerManager : NetworkBehaviour
         CmdBeginGame ();
     }
 
-    [Command]
-    void CmdBeginGame () {
-        MatchMaker.instance.BeginGame (matchID);
-        Debug.Log ($"<color=red>Game Beginning</color>");
-    }
 
 
     [Command]
@@ -516,5 +514,21 @@ public class PlayerManager : NetworkBehaviour
         MatchMaker.instance.BeginGame (matchID);
         Debug.Log ($"<color=red>Game Beginning</color>");
     }
+
+
+    [Server]
+    public void PlayerCountUpdated (int playerCount) {
+        TargetPlayerCountUpdated (playerCount);
+    }
+
+    [TargetRpc]
+    void TargetPlayerCountUpdated (int playerCount) {
+        if (playerCount > 1) {
+            //playerLobbyUI.instance.SetStartButtonActive(true);
+        } else {
+            //playerLobbyUI.instance.SetStartButtonActive(false);
+        }
+    }
+
 
 }
