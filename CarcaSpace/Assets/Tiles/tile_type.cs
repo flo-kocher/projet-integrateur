@@ -22,6 +22,7 @@ public abstract class tile_type : NetworkBehaviour
     public static int nbrTuile = 30;
     public static bool finish = false;
 
+
     
 
     // Start is called before the first frame update

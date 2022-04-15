@@ -16,10 +16,13 @@ public class Constraints : MonoBehaviour
     public Type_land milieu;
     public int coordX;
     public int coordY;
+
+    public bool visite;
    
     // Start is called before the first frame update
     void Start()
     {
+        visite = false;
         //Debug.Log(transform.eulerAngles.z);
         /*
         haut = Type_land.Rien;

@@ -135,7 +135,18 @@ public class Move : NetworkBehaviour {
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
         PlayerManager.CmdSpawnStars(tabExample, x, y);
-        PlayerManager.roadIsClosed(go);
+        //PlayerManager.roadIsClosed(go);
+
+
+
+
+        //Debug.Log("martin a déjà fait l'algo depuis 4 semaines "+ PlayerManager.est_complet_chemin(go));
+
+
+
+
+        Debug.Log("bool town closed " + PlayerManager.townIsClosed(go));
+        PlayerManager.resetVisite();
 
 
       }

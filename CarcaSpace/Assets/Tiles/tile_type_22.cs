@@ -17,7 +17,7 @@ public class tile_type_22 : tile_type
         gauche = Type_land.Chemin;
         bas = Type_land.Chemin;
         droite = Type_land.Chemin;
-        milieu = Type_land.Continue;
+        milieu = Type_land.Chemin;
         
         this.GetComponent<Constraints>().haut = haut;
         this.GetComponent<Constraints>().gauche = gauche;
