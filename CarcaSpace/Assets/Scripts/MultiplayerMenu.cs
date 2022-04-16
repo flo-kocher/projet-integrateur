@@ -80,7 +80,7 @@ public class MultiplayerMenu : MonoBehaviour
         joinButton.interactable = false ; 
         //hostButton.interactable = false ;  
 
-        PlayerManager.localPlayer.JoinGame (joinMatchInput.text);
+        PlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
     }
 
     //pour reactiver les boutons si echec
