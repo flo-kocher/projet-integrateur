@@ -467,6 +467,8 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+
+    //a changer
     [TargetRpc]
     void TargetHostGame(bool sucess,string matchId){
         Debug.Log($"Match ID is {matchId}");
@@ -499,6 +501,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    // a changer
     [TargetRpc]
     void TargetJoinGame (bool success, string _matchID) {
         matchID = _matchID;

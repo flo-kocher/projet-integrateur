@@ -81,7 +81,7 @@ public class MatchMaker : NetworkBehaviour
 
     public bool HostGame(int _playerNumber, string _matchId,PlayerManager player,out int playerIndex){     
         playerIndex = -1;
-
+        //a changer
 
         //one verifie si le meme id n'esxiste pas deja dans la liste
         if(!matchIDS.Contains(_matchId)){
@@ -116,7 +116,6 @@ public class MatchMaker : NetworkBehaviour
                         if (matches[i].players.Count == maxPlayers) {
                             matches[i].matchFull = true;
                         }
-
                         break;
                     } else {
                         return false;
@@ -131,6 +130,7 @@ public class MatchMaker : NetworkBehaviour
             return false;
         }
     }
+    
     public void BeginGame (string _matchID) {
         for (int i = 0; i < matches.Count; i++) {
             if (matches[i].MatchId == _matchID) {

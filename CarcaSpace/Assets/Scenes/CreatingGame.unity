@@ -444,7 +444,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkRoomManager: {fileID: 0}
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
@@ -1884,7 +1883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkRoomManager: {fileID: 0}
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
@@ -2741,7 +2739,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkRoomManager: {fileID: 0}
   joinMatchInput: {fileID: 0}
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
@@ -2920,7 +2917,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017349533}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
   m_Name: 
@@ -2965,7 +2962,7 @@ MonoBehaviour:
   maxConnections: 5
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 5936959061422109294, guid: ad80e810685981c40a4975a56e677ced, type: 3}
-  autoCreatePlayer: 0
+  autoCreatePlayer: 1
   playerSpawnMethod: 0
   spawnPrefabs: []
   showRoomGUI: 1
@@ -3197,7 +3194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  networkRoomManager: {fileID: 2017349536}
   joinMatchInput: {fileID: 1816420442}
   playerNumberInput: {fileID: 451457708}
   joinButton: {fileID: 1009214897}
