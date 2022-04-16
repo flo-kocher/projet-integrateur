@@ -143,6 +143,25 @@ public class MatchMaker : NetworkBehaviour
         }
     }
 
+    public void PlayerDisconnected (PlayerManager player, string _matchID) {
+        for (int i = 0; i < matches.Count; i++) {
+            if (matches[i].MatchId == _matchID) {
+                int playerIndex = matches[i].players.IndexOf (player);
+                if (matches[i].players.Count > playerIndex) matches[i].players.RemoveAt (playerIndex);
+                Debug.Log ($"Player disconnected from match {_matchID} | {matches[i].players.Count} players remaining");
+
+                if (matches[i].players.Count == 0) {
+                    Debug.Log ($"No more players in Match. Terminating {_matchID}");
+                    matches.RemoveAt (i);
+                    matchIDS.Remove (_matchID);
+                } else {
+                    matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
+                }
+                break;
+            }
+        }
+    }
+
 }
 
 //Fonction qui sert a creer un gamecode

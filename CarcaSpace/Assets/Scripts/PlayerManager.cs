@@ -14,6 +14,8 @@ public class PlayerManager : NetworkBehaviour
 
     NetworkMatch netMatchChecker;
 
+    Guid netIDGuid;
+
     //en sync var car elle va etre display chez tous les clients 
     [SyncVar]
     public string matchID ; 
@@ -82,6 +84,11 @@ public class PlayerManager : NetworkBehaviour
     // liste des clients connectes
     public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
 
+
+    void Awake () {
+            netMatchChecker = GetComponent<NetworkMatch> ();
+    }
+
     // méthode se lançant au démarrage du client
 
     void Start(){
@@ -97,6 +104,10 @@ public class PlayerManager : NetworkBehaviour
         grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
         ui = GameObject.Find("UI");
+
+        if (isLocalPlayer) {
+                localPlayer = this;
+            }
 
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
@@ -270,6 +281,9 @@ public class PlayerManager : NetworkBehaviour
         tabPos[2] = est;
         tabPos[3] = ouest;
         tabPos[4] = milieu;
+
+        netIDGuid = netId.ToString ().ToGuid ();
+        netMatchChecker.matchId = netIDGuid;
     }
 
 
@@ -449,12 +463,12 @@ public class PlayerManager : NetworkBehaviour
         
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
-        CmdHostGame(x,matchId);
+        CmdHostGame(matchId,x);
         SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
     }
 
     [Command]
-    void CmdHostGame(int playerNumber, string _matchId){
+    void CmdHostGame( string _matchId , int playerNumber ){
         matchID = _matchId ;
         if(MatchMaker.instance.HostGame(playerNumber , _matchId , localPlayer,out playerIndex)){
             Debug.Log("Game hosted successfully\n");
@@ -548,6 +562,40 @@ public class PlayerManager : NetworkBehaviour
             //playerLobbyUI.instance.SetStartButtonActive(true);
         } else {
             //playerLobbyUI.instance.SetStartButtonActive(false);
+        }
+    }
+
+    /* 
+            DISCONNECT
+        */
+
+    public void DisconnectGame () {
+        CmdDisconnectGame ();
+    }
+
+    [Command]
+    void CmdDisconnectGame () {
+        ServerDisconnect ();
+    }
+
+    void ServerDisconnect () {
+        MatchMaker.instance.PlayerDisconnected (this, matchID);
+        RpcDisconnectGame ();
+        netMatchChecker.matchId = netIDGuid;
+    }
+
+    [ClientRpc]
+    void RpcDisconnectGame () {
+        ClientDisconnect ();
+    }
+
+    void ClientDisconnect () {
+        if (playerLobbyUI != null) {
+            if (!isServer) {
+                Destroy (playerLobbyUI);
+            } else {
+                playerLobbyUI.SetActive (false);
+            }
         }
     }
 
