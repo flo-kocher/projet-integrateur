@@ -11,7 +11,7 @@ public class MultiplayerMenu : MonoBehaviour
 
     public static MultiplayerMenu instance ; 
 
-    [SerializeField] private NetworkRoomManager networkRoomManager  = null ;
+   // [SerializeField] private NetworkRoomManager networkRoomManager  = null ;
     private Button Create;
     private Button JoinFriends;
     

@@ -10,6 +10,7 @@ public class AutoHostClient : MonoBehaviour {
     void Start () {
         if (!Application.isBatchMode) { //Headless build
             Debug.Log ($"=== Client Build ===");
+            networkManager.networkAddress = "localhost";
             networkManager.StartClient ();
         } else {
             Debug.Log ($"=== Server Build ===");
