@@ -104,13 +104,15 @@ public class MatchMaker : NetworkBehaviour
        if (matchIDS.Contains (_matchId)) {
             for (int i = 0; i < matches.Count; i++) {
                 if (matches[i].MatchId == _matchId) {
+                    // on verifie s'il n'est pas deja dans la partie et si la partie est deja full 
                     if (!matches[i].inMatch && !matches[i].matchFull) {
+                        // on l'ajoute a la liste des  joueurs
                         matches[i].players.Add (_player);
                         _player.currentMatch = matches[i];
                         playerIndex = matches[i].players.Count;
 
                         matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
-
+                        // on met a jour matchfull 
                         if (matches[i].players.Count == maxPlayers) {
                             matches[i].matchFull = true;
                         }

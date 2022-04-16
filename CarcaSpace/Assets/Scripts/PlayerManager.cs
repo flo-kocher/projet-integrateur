@@ -24,7 +24,7 @@ public class PlayerManager : NetworkBehaviour
 
     [SerializeField] GameObject playerLobbyUI;
 
-    [SerializeField] NetworkManager NetworkManager;
+    //[SerializeField] NetworkManager NetworkManager;
 
     //Joueur Local 
     public static PlayerManager localPlayer ;
@@ -434,16 +434,18 @@ public class PlayerManager : NetworkBehaviour
         }        
     }
     
-    public void startClient(){
-        // pour lancer le client sans le hud 
-        NetworkManager.StartClient(); 
-    }
+   
 
 
     public void HostGame(){
         string matchId = MatchMaker.GetRandomMatchId();
         Debug.Log($"Created Match With ID {matchId}");
 
+
+        //Debug.Log("Launching Client");
+        //NetworkManager.StartHost(); 
+       // NetworkManager.StartClient(); 
+        
         
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
@@ -472,6 +474,10 @@ public class PlayerManager : NetworkBehaviour
     }
 
     public void JoinGame (string _inputID) {
+        // pour lancer le client sans le hud 
+        // Debug.Log("Launching Client");
+        // NetworkManager.StartClient(); 
+
         CmdJoinGame (_inputID);
     }
 
@@ -514,6 +520,10 @@ public class PlayerManager : NetworkBehaviour
     public void BeginGame () {
         CmdBeginGame ();
     }
+
+    // public void startClient(){
+
+    // }
 
 
 

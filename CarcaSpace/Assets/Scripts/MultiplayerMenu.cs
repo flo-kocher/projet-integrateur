@@ -4,12 +4,14 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using Mirror ; 
+using Mirror ; 
 
 public class MultiplayerMenu : MonoBehaviour
 {
 
     public static MultiplayerMenu instance ; 
+
+    [SerializeField] private NetworkRoomManager networkRoomManager  = null ;
     private Button Create;
     private Button JoinFriends;
     
@@ -36,7 +38,7 @@ public class MultiplayerMenu : MonoBehaviour
 
     void Start() {
         instance = this ; 
-        PlayerManager.localPlayer.startClient();
+        //PlayerManager.startClient();
     }
     public void EnterMultiplayerMenu()
     {
