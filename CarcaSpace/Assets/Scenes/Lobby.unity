@@ -485,8 +485,9 @@ MonoBehaviour:
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 289902891}
-  PlayerManager: {fileID: 0}
+  PlayerManager: {fileID: 7518173672430414833, guid: ad80e810685981c40a4975a56e677ced, type: 3}
 --- !u!1 &550552721
 GameObject:
   m_ObjectHideFlags: 0
@@ -594,6 +595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
+  maxPlayers: 5
 --- !u!114 &675434546
 MonoBehaviour:
   m_ObjectHideFlags: 0

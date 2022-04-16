@@ -448,6 +448,7 @@ MonoBehaviour:
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 0}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
   PlayerManager: {fileID: 0}
 --- !u!1 &343799650
@@ -1595,6 +1596,7 @@ MonoBehaviour:
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 1161787433}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
   PlayerManager: {fileID: 7518173672430414833, guid: ad80e810685981c40a4975a56e677ced, type: 3}
 --- !u!1 &1222171972
@@ -2183,6 +2185,7 @@ MonoBehaviour:
   playerNumberInput: {fileID: 0}
   joinButton: {fileID: 0}
   hostButton: {fileID: 1161787433}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
   PlayerManager: {fileID: 7518173672430414833, guid: ad80e810685981c40a4975a56e677ced, type: 3}
 --- !u!114 &2014814176
@@ -2397,7 +2400,7 @@ MonoBehaviour:
   onlineScene: Assets/Scenes/Lobby.unity
   transport: {fileID: 2017349535}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 5
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 5936959061422109294, guid: ad80e810685981c40a4975a56e677ced, type: 3}
   autoCreatePlayer: 1
@@ -2407,7 +2410,7 @@ MonoBehaviour:
   minPlayers: 1
   roomPlayerPrefab: {fileID: 5752367790728327173, guid: b0838735b16c0af4abfb36c2e6be4d2b, type: 3}
   RoomScene: Assets/Scenes/Lobby.unity
-  GameplayScene: Assets/Scenes/GameMenu.unity
+  GameplayScene: Assets/Scenes/game interface.unity
   _allPlayersReady: 1
   roomSlots: []
   clientIndex: 0
@@ -2623,5 +2626,6 @@ MonoBehaviour:
   playerNumberInput: {fileID: 451457708}
   joinButton: {fileID: 0}
   hostButton: {fileID: 1161787433}
+  readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
   PlayerManager: {fileID: 0}
