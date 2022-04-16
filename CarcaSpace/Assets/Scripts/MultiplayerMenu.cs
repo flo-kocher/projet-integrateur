@@ -32,7 +32,7 @@ public class MultiplayerMenu : MonoBehaviour
     [SerializeField]  Canvas lobbyCanvas ; 
 
     
-    public PlayerManager PlayerManager ; 
+    //public PlayerManager Player ; 
 
 
 
@@ -61,7 +61,7 @@ public class MultiplayerMenu : MonoBehaviour
         //joinButton.interactable = false ; 
         hostButton.interactable = false ;  
         
-        PlayerManager.HostGame();
+        PlayerManager.localPlayer.HostGame();
     }
 
     //pour reactiver les boutons si echec

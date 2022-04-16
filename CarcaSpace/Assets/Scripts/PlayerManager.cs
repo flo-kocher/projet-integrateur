@@ -31,6 +31,9 @@ public class PlayerManager : NetworkBehaviour
     //Joueur Local 
     public static PlayerManager localPlayer ;
     // listes tous les Prefabs qui sont instanciés dans le jeu
+
+
+    /********************************TUILES*****************************************/
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -58,6 +61,14 @@ public class PlayerManager : NetworkBehaviour
     public GameObject TileType22;
     public GameObject TileType23;
     public GameObject TileType24;
+
+
+  /********************************\TUILES*****************************************/
+
+
+
+
+
     // UI
     public GameObject ui;
     // étoiles qui correspondent aux emplacements où poser les Meeples
@@ -86,7 +97,7 @@ public class PlayerManager : NetworkBehaviour
 
 
     void Awake () {
-            netMatchChecker = GetComponent<NetworkMatch> ();
+        netMatchChecker = GetComponent<NetworkMatch> ();
     }
 
     // méthode se lançant au démarrage du client
@@ -106,8 +117,8 @@ public class PlayerManager : NetworkBehaviour
         ui = GameObject.Find("UI");
 
         if (isLocalPlayer) {
-                localPlayer = this;
-            }
+            localPlayer = this;
+        }
 
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
@@ -463,7 +474,7 @@ public class PlayerManager : NetworkBehaviour
         
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
         int x = 2 ;
-        CmdHostGame(matchId,x);
+        localPlayer.CmdHostGame(matchId,x);
         SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
     }
 

@@ -56,7 +56,7 @@ public class MatchMaker : NetworkBehaviour
     public SyncList<Match> matches = new SyncList<Match> ();
 
     //Liste match ids  
-    public SyncList<string> matchIDS = new SyncList<string>();
+    public SyncList<String> matchIDS = new SyncList<String>();
 
     [SerializeField] int maxPlayers = 5 ; 
 
@@ -88,8 +88,10 @@ public class MatchMaker : NetworkBehaviour
             matchIDS.Add(_matchId);
             Match match = new Match(_playerNumber,_matchId,player) ;
             matches.Add(match);
-            playerIndex = 1;
             Debug.Log("Match Generated \n");
+            player.currentMatch = match;
+            playerIndex = 1;
+            
             return true ;
         }else{
             Debug.Log("Match Id already exists \n");
