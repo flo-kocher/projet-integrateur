@@ -60,6 +60,9 @@ public class MultiplayerMenu : MonoBehaviour
         //joinMatchInput.interactable = false ;
         //joinButton.interactable = false ; 
         hostButton.interactable = false ;  
+        //convertir le nb de joueur en int 
+        // int playerNb =  System.Convert.ToInt32(playerNumberInput.text);
+        // Debug.Log($"Nb de joeur choisit {playerNb}");
         
         PlayerManager.localPlayer.HostGame();
     }

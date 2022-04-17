@@ -27,8 +27,9 @@ public class Match{
         matchFull = false ; 
         inMatch = false ;
         this.MatchId = MatchId ;
-        players.Add(player);
         this.nbPlayers = nbPlayers ;
+        players.Add(player);
+        
     }
 
     public Match(){
@@ -82,7 +83,7 @@ public class MatchMaker : NetworkBehaviour
     public bool HostGame(int _playerNumber, string _matchId,PlayerManager player,out int playerIndex){     
         playerIndex = -1;
         //a changer
-
+        Debug.Log("Je suis dans host matchmake \n");
         //one verifie si le meme id n'esxiste pas deja dans la liste
         if(!matchIDS.Contains(_matchId)){
             matchIDS.Add(_matchId);
