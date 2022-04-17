@@ -353,6 +353,7 @@ public void resetVisite()
 public int noeud = 0;
 public bool est_complet_chemin(GameObject tile_laid)
 {
+    Debug.Log("Carrefour ?" + tile_laid.GetComponent<Constraints>().carrefour);
     int x = tile_laid.GetComponent<Constraints>().coordX;
     int y = tile_laid.GetComponent<Constraints>().coordY;
 
@@ -389,7 +390,7 @@ public bool est_complet_chemin(GameObject tile_laid)
                 est_complet_chemin(voisins[0]);
                 }
         }
-    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
+    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
             {
                 if (voisins[1] == null)
                     {
@@ -415,7 +416,7 @@ public bool est_complet_chemin(GameObject tile_laid)
                 est_complet_chemin(voisins[2]);
                 }
             }
-    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
+    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
             {
                 if (voisins[3] == null)
                     {
