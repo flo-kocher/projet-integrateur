@@ -383,56 +383,57 @@ public bool est_complet_chemin(GameObject tile_laid)
                     noeud = 0;
                     return false;
                 }
-            if (!voisins[0].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[0].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
                 {
-                visite = true;
-                est_complet_chemin(voisin[0]);
+                tile_laid.GetComponent<Constraints>().visite = true;
+                est_complet_chemin(voisins[0]);
                 }
         }
-    if (tile_laid.GetComponent<Constraints>().droite == Type_land.chemin)
+    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
             {
                 if (voisins[1] == null)
                     {
                         noeud = 0;
                         return false;
                     }
-            if (!voisins[1].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[1].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
                 {
-                visite = true;
-                est_complet_chemin(voisin[1]);
+                tile_laid.GetComponent<Constraints>().visite = true;
+                est_complet_chemin(voisins[1]);
                 }
             }
-    if (tile_laid.GetComponent<Constraints>().bas == Type_land.chemin)
+    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
             {
                 if (voisins[2] == null)
                     {
                         noeud = 0;
                         return false;
                     }
-            if (!voisins[2].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[2].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
                 {
-                visite = true;
-                est_complet_chemin(voisin[2]);
+                tile_laid.GetComponent<Constraints>().visite = true;
+                est_complet_chemin(voisins[2]);
                 }
             }
-    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.chemin)
+    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
             {
                 if (voisins[3] == null)
                     {
                         noeud = 0;
                         return false;
                     }
-            if (!voisins[3].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[3].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
                 {
-                visite = true;
-                est_complet_chemin(voisin[3]);
+                tile_laid.GetComponent<Constraints>().visite = true;
+                est_complet_chemin(voisins[3]);
                 }
             } 
-    if ((voisins[0].visite && voisins[1].visite)||(voisins[0].visite && voisins[2].visite)||(voisins[0].visite && voisins[3].visite)||(voisins[1].visite && voisins[2].visite)||(voisins[1].visite && voisins[3].visite)||(voisins[2].visite && voisins[3].visite))
+    if ((voisins[0].GetComponent<Constraints>().visite && voisins[1].GetComponent<Constraints>().visite)||(voisins[0].GetComponent<Constraints>().visite && voisins[2].GetComponent<Constraints>().visite)||(voisins[0].GetComponent<Constraints>().visite && voisins[3].GetComponent<Constraints>().visite)||(voisins[1].GetComponent<Constraints>().visite && voisins[2].GetComponent<Constraints>().visite)||(voisins[1].GetComponent<Constraints>().visite && voisins[3].GetComponent<Constraints>().visite)||(voisins[2].GetComponent<Constraints>().visite && voisins[3].GetComponent<Constraints>().visite))
         {
             noeud = 0;
             return true;
         }
+    return false;
 }
 
 
