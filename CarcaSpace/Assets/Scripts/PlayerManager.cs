@@ -350,9 +350,6 @@ public void resetVisite()
 }
 
 
-// rajouter vérification du cas des intersections, et des tuiles 2 6 et 7 pour faire le cas début/fin de chemins
-// rajouter un Typeland FindeChemin ou Intersection pour ces cas là
-/*
 public int noeud = 0;
 public bool est_complet_chemin(GameObject tile_laid)
 {
@@ -386,10 +383,10 @@ public bool est_complet_chemin(GameObject tile_laid)
                     noeud = 0;
                     return false;
                 }
-            if (!voisins[0].visite)
+            if (!voisins[0].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
                 {
                 visite = true;
-                est_complet_chemin();
+                est_complet_chemin(voisin[0]);
                 }
         }
     if (tile_laid.GetComponent<Constraints>().droite == Type_land.chemin)
@@ -399,11 +396,11 @@ public bool est_complet_chemin(GameObject tile_laid)
                         noeud = 0;
                         return false;
                     }
-                if (!voisins[1].chemin)
-                    {
-                    visite = true;
-                    est_complet_chemin();
-                    }
+            if (!voisins[1].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+                {
+                visite = true;
+                est_complet_chemin(voisin[1]);
+                }
             }
     if (tile_laid.GetComponent<Constraints>().bas == Type_land.chemin)
             {
@@ -412,11 +409,11 @@ public bool est_complet_chemin(GameObject tile_laid)
                         noeud = 0;
                         return false;
                     }
-                if (!voisins[2].visite)
-                    {
-                    visite = true;
-                    est_complet_chemin();
-                    }
+            if (!voisins[2].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+                {
+                visite = true;
+                est_complet_chemin(voisin[2]);
+                }
             }
     if (tile_laid.GetComponent<Constraints>().gauche == Type_land.chemin)
             {
@@ -425,11 +422,11 @@ public bool est_complet_chemin(GameObject tile_laid)
                         noeud = 0;
                         return false;
                     }
-                if (!voisins[3].visite)
-                    {
-                    visite = true;
-                    est_complet_chemin();
-                    }
+            if (!voisins[3].visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+                {
+                visite = true;
+                est_complet_chemin(voisin[3]);
+                }
             } 
     if ((voisins[0].visite && voisins[1].visite)||(voisins[0].visite && voisins[2].visite)||(voisins[0].visite && voisins[3].visite)||(voisins[1].visite && voisins[2].visite)||(voisins[1].visite && voisins[3].visite)||(voisins[2].visite && voisins[3].visite))
         {
@@ -437,7 +434,7 @@ public bool est_complet_chemin(GameObject tile_laid)
             return true;
         }
 }
-*/
+
 
 
 // rajouter condition pour les tuiles 10 et 15 qu'il faut lancer l'algo 2 fois
