@@ -450,7 +450,6 @@ MonoBehaviour:
   hostButton: {fileID: 0}
   readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
-  PlayerManager: {fileID: 0}
 --- !u!1 &343799650
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,7 +756,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 2
+  m_Text: 0
 --- !u!222 &451457707
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1048,7 +1047,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 511652316}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 162ca750997993c4d88ecd24ae695ba6, type: 3}
   m_Name: 
@@ -1889,7 +1888,6 @@ MonoBehaviour:
   hostButton: {fileID: 1161787433}
   readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
-  PlayerManager: {fileID: 7518173672430414833, guid: ad80e810685981c40a4975a56e677ced, type: 3}
 --- !u!1 &1222171972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2745,7 +2743,6 @@ MonoBehaviour:
   hostButton: {fileID: 1161787433}
   readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
-  PlayerManager: {fileID: 7518173672430414833, guid: ad80e810685981c40a4975a56e677ced, type: 3}
 --- !u!114 &2014814176
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3200,4 +3197,3 @@ MonoBehaviour:
   hostButton: {fileID: 1161787433}
   readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
-  PlayerManager: {fileID: 7518173672430414833, guid: ad80e810685981c40a4975a56e677ced, type: 3}

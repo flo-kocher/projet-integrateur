@@ -59,7 +59,7 @@ public class logIn : MonoBehaviour{
             restAPI.downloadHandler = new DownloadHandlerBuffer();
 
             yield return restAPI.SendWebRequest();
-            if(restAPI.isNetworkError || restAPI.isHttpError){
+            if(restAPI.result == UnityWebRequest.Result.ProtocolError){
                 Debug.Log(restAPI.error);
                 Debug.Log(jsonData);
                 Debug.Log(restAPI.downloadHandler.error);
