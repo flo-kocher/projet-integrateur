@@ -138,10 +138,8 @@ public class Move : NetworkBehaviour {
         PlayerManager.CmdSpawnStars(tabExample, x, y);
         //PlayerManager.roadIsClosed(go);
         Debug.Log("Chemin fermé ? " + PlayerManager.est_complet_chemin(go));
-
-
-
-
+        PlayerManager.resetVisite();
+        
         Debug.Log("bool town closed " + PlayerManager.townIsClosed(go));
         PlayerManager.resetVisite();
 

@@ -373,6 +373,7 @@ public bool est_complet_chemin(GameObject tile_laid)
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
                 voisins[3] = plateau[i]; // droite
     }
+    Debug.Log("La tuile "+ tile_laid + " a comme voisins : V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
 
     if (noeud == 2)
         {
@@ -445,6 +446,9 @@ public bool est_complet_chemin(GameObject tile_laid)
 // rajouter condition pour les tuiles 10 et 15 qu'il faut lancer l'algo 2 fois
 public bool townIsClosed(GameObject tile_laid)
 {
+    if(tile_laid.GetComponent<Constraints>().haut != Type_land.Ville && tile_laid.GetComponent<Constraints>().bas != Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche != Type_land.Ville && tile_laid.GetComponent<Constraints>().droite != Type_land.Ville && tile_laid.GetComponent<Constraints>().haut != Type_land.Ville)
+        return false;
+    
     int x = tile_laid.GetComponent<Constraints>().coordX;
     int y = tile_laid.GetComponent<Constraints>().coordY;
 
@@ -461,7 +465,7 @@ public bool townIsClosed(GameObject tile_laid)
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
                 voisins[3] = plateau[i]; // droite
     }
-    //Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
+    Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
 
     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
     {
