@@ -54,6 +54,7 @@ public class Move : NetworkBehaviour {
               anim2 = true;
               // Il faut un bouton de validation
               this.GetComponent<rotateZ>().enabled = false;
+              this.GetComponent<tile_type>().enabled = false;
               // Type_land tg = tiles[z].haut;
               tile_type_1 dd = new tile_type_1();
               disapear.GetComponent<Constraints>().haut =
