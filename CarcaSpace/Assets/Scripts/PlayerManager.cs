@@ -103,9 +103,9 @@ public class PlayerManager : NetworkBehaviour
     // méthode se lançant au démarrage du client
 
     void Start(){
-        if(isLocalPlayer){
-            localPlayer = this ;
-        }
+        // if(isLocalPlayer){
+            // localPlayer = this ;
+        // }
         
     }
     public override void OnStartClient()
@@ -473,30 +473,33 @@ public class PlayerManager : NetworkBehaviour
         
         
         //il faudra get le nb de jouer set par le host et le mettre en arg a la place du 0 
-        int x = 2 ;
-        localPlayer.CmdHostGame(matchId,x);
+        CmdHostGame(matchId,2);
         SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
     }
 
     [Command]
     void CmdHostGame( string _matchId , int playerNumber ){
         matchID = _matchId ;
+
+        Debug.Log($"Match id est {matchID} et nb joueur {playerNumber}\n");
         if(MatchMaker.instance.HostGame(playerNumber , _matchId , localPlayer,out playerIndex)){
             Debug.Log("Game hosted successfully\n");
             netMatchChecker.matchId = _matchId.ToGuid();
-            TargetHostGame(true,_matchId);
+            TargetHostGame(true, _matchId, playerIndex);
 
         }else{
             Debug.Log("Host failed \n");
-            TargetHostGame(false,matchID);
+            TargetHostGame(false, _matchId, playerIndex);
         }
     }
 
 
     //a changer
     [TargetRpc]
-    void TargetHostGame(bool sucess,string matchId){
-        Debug.Log($"Match ID is {matchId}");
+    void TargetHostGame(bool sucess,string _matchId,int _playerIndex){
+        playerIndex = _playerIndex;
+        matchID = _matchId;
+        Debug.Log($"Match ID is {matchID}");
         MultiplayerMenu.instance.hostSucc(sucess);
     }
 
