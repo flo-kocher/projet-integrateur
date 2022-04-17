@@ -645,7 +645,7 @@ public bool townIsClosed(GameObject tile_laid)
                 GameObject star = Instantiate(Stars);
                 
                 star.SetActive(true);
-                Debug.Log("Stars à faire spawn : " + star);
+                //Debug.Log("Stars à faire spawn : " + star);
                 //NetworkServer.Spawn(star, connectionToClient);
                 star.name = "Star" + i;
                 star.transform.position = new Vector3(x + tabPos[i].x, y + tabPos[i].y, -0.1f);
@@ -661,7 +661,7 @@ public bool townIsClosed(GameObject tile_laid)
     [ClientRpc]
     void RpcShowStars(GameObject go , string action)
     {
-        Debug.Log("GO : " + go);
+        //Debug.Log("GO : " + go);
         if(action == "Dealt")
         {
             if(hasAuthority)

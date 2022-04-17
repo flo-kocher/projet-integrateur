@@ -37,8 +37,10 @@ public class Constraints : MonoBehaviour
        
     }
 
+    public string debug;
 
-// recuper les valeurs des quatre voisins direct en partant de celui du dessus puis dans le sens horaire
+
+// recuper les valeurs des quatre voisins direct en partant de celui du dessus puis dans le sens trigo
     public void Voisin(GameObject[] voisins) 
     {
         voisins[0] = GameObject.Find(coordX + "/" + (coordY+1));
@@ -73,27 +75,32 @@ public class Constraints : MonoBehaviour
 
         // Bas
         if(voisins[0] != null && voisins[0].GetComponent<Constraints>().bas != Type_land.Rien && voisins[0].GetComponent<Constraints>().bas != h){
+            debug = "0";
             return false;
         }
 
         // gauche
-        if(voisins[1] != null && voisins[1].GetComponent<Constraints>().gauche != Type_land.Rien && voisins[1].GetComponent<Constraints>().gauche != d){
+        if(voisins[1] != null && voisins[1].GetComponent<Constraints>().droite != Type_land.Rien && voisins[1].GetComponent<Constraints>().droite != g){
+            debug = "1";
             return false;
         }
         
         // haut
         if(voisins[2] != null && voisins[2].GetComponent<Constraints>().haut != Type_land.Rien && voisins[2].GetComponent<Constraints>().haut != b){
+            debug = "2";
             return false;
         }
         
         // droite
-        if(voisins[3] != null && voisins[3].GetComponent<Constraints>().droite != Type_land.Rien && voisins[3].GetComponent<Constraints>().droite != g){
+        if(voisins[3] != null && voisins[3].GetComponent<Constraints>().gauche != Type_land.Rien && voisins[3].GetComponent<Constraints>().gauche != d){
+            debug = "3";
             return false;
         }        
         if((voisins[0] != null && voisins[0].GetComponent<Constraints>().bas != Type_land.Rien) || (voisins[1] != null && voisins[1].GetComponent<Constraints>().gauche != Type_land.Rien) ||
         (voisins[2] != null && voisins[2].GetComponent<Constraints>().haut != Type_land.Rien) || (voisins[3] != null && voisins[3].GetComponent<Constraints>().droite != Type_land.Rien) ||
         this.GetComponent<tile_type_0>() != null)
             return true;
+            debug = "5";
         return false;
     }
 
