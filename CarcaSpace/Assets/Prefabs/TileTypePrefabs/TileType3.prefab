@@ -663,7 +663,7 @@ MonoBehaviour:
   gauche: 2
   bas: 2
   droite: 2
-  milieu: 6
+  milieu: 4
   coordX: 0
   coordY: 0
   r: {fileID: 0}
@@ -683,6 +683,10 @@ MonoBehaviour:
   gauche: 2
   bas: 2
   droite: 2
-  milieu: 6
+  milieu: 4
+  blason: 0
   coordX: 0
   coordY: 0
+  meeple: 0
+  visite: 0
+  carrefour: 0
