@@ -24,6 +24,7 @@ public class tile_type_22 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
+        this.GetComponent<Constraints>().carrefour = true;
     }
 
     // Update is called once per frame

@@ -18,11 +18,14 @@ public class Constraints : MonoBehaviour
     public int coordY;
 
     public bool visite;
+
+    public bool carrefour;
    
     // Start is called before the first frame update
     void Start()
     {
         visite = false;
+        carrefour = false;
         //Debug.Log(transform.eulerAngles.z);
         /*
         haut = Type_land.Rien;
