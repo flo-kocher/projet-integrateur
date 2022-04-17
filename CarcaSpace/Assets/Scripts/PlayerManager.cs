@@ -482,14 +482,16 @@ public class PlayerManager : NetworkBehaviour
         matchID = _matchId ;
 
         Debug.Log($"Match id est {matchID} et nb joueur {playerNumber}\n");
-        if(MatchMaker.instance.HostGame(playerNumber , _matchId , localPlayer,out playerIndex)){
+        Debug.Log($"Player is  {this}");
+        Debug.Log($"Player index is  {playerIndex}");
+        if(MatchMaker.instance.HostGame(playerNumber , matchID , this,out playerIndex)){
             Debug.Log("Game hosted successfully\n");
             netMatchChecker.matchId = _matchId.ToGuid();
-            TargetHostGame(true, _matchId, playerIndex);
+            TargetHostGame(true, matchID, playerIndex);
 
         }else{
             Debug.Log("Host failed \n");
-            TargetHostGame(false, _matchId, playerIndex);
+            TargetHostGame(false, matchID, playerIndex);
         }
     }
 
