@@ -12,8 +12,8 @@ public class MultiplayerMenu : MonoBehaviour
     public static MultiplayerMenu instance ; 
 
   
-    private Button Create;
-    private Button JoinFriends;
+    [SerializeField] Button Create;
+    [SerializeField] Button JoinFriends;
     
     private Text text;
     [SerializeField] Button addPlayers;
@@ -79,23 +79,36 @@ public class MultiplayerMenu : MonoBehaviour
     }
     void Start() {
         instance = this ; 
-        // Debug.Log($"Mode is {CreateOrJoin.instance.getMode()}");
-        // if(CreateOrJoin.instance.getMode()==false){
-        //     CanvasJoining.enabled = true ; 
-        // }else{
-        //     CanvasCreating.enabled = true ;
-        // }
+
+        Create.onClick.AddListener(EnterCreateMenu);
+        JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
+        
         
     }
 
     public void EnterCreateMenu()
     {
-        CanvasCreating.enabled = true ;
+        if(CanvasCreating.enabled == false){
+
+            CanvasCreating.enabled = true ;
+
+            CanvasJoining.enabled  = false ; 
+            CanvasLobby.enabled  = false ; 
+            CanvasMain.enabled  = false ;
+        }
+        
     }
 
     public void EnterJoinFriendsMenu()
     {
-        CanvasJoining.enabled = true ; 
+        if(CanvasJoining.enabled == false){
+
+            CanvasJoining.enabled = true ;
+
+            CanvasCreating.enabled  = false ; 
+            CanvasLobby.enabled  = false ; 
+            CanvasMain.enabled  = false ;
+        }
     }
 
     public void Host()

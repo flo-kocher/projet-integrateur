@@ -1332,6 +1332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acdd12eb844a3254fb3cb1df0e3cf525, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Create: {fileID: 1200372819}
+  JoinFriends: {fileID: 130018920}
   addPlayers: {fileID: 1851503081}
   subPlayers: {fileID: 1851503080}
   joinMatchInput: {fileID: 335076416}
