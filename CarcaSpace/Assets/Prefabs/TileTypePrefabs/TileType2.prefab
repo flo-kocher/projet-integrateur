@@ -198,6 +198,8 @@ MonoBehaviour:
   milieu: 6
   coordX: 0
   coordY: 0
+  visite: 0
+  carrefour: 1
 --- !u!1 &4848435182477518808
 GameObject:
   m_ObjectHideFlags: 0

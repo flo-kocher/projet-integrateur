@@ -25,7 +25,7 @@ public class Constraints : MonoBehaviour
     void Start()
     {
         visite = false;
-        carrefour = false;
+        //carrefour = false;
         //Debug.Log(transform.eulerAngles.z);
         /*
         haut = Type_land.Rien;
