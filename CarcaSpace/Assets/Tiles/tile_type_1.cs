@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class tile_type_1 : tile_type
 {
-    // his own static member
-    public static int nbrTuile = 30;
     public static bool finish = false;
+    public static int nbrTuile = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +16,8 @@ public class tile_type_1 : tile_type
         bas = Type_land.Ville;
         droite = Type_land.Ville;
         milieu = Type_land.Continue;
-        
+        blason = true;
+
         this.GetComponent<Constraints>().haut = haut;
         this.GetComponent<Constraints>().gauche = gauche;
         this.GetComponent<Constraints>().bas = bas;

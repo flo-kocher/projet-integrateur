@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class tile_type_0 : tile_type
 {
-
-
-    public static int nbrTuile = 30;
     public static bool finish = false;
+    public static int nbrTuile = 1;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +22,7 @@ public class tile_type_0 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
+        blason = false;
     }
 
     // Update is called once per frame
@@ -31,32 +30,38 @@ public class tile_type_0 : tile_type
     {
         if(Input.GetKeyDown("left") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne)){
+            if(!(r.leve || r.couche || r.tourne))
+            {
                 rotate_left();
             }
             
         }
         if(Input.GetKeyDown("right") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne)){
+            if(!(r.leve || r.couche || r.tourne))
+            {
                 rotate_right();
             }
         }
     }
 
-    public override int getNbrTuile(){
+    public override int getNbrTuile()
+    {
         return nbrTuile;
     }
 
-    public override void decrementNbrTuile(){
+    public override void decrementNbrTuile()
+    {
         nbrTuile--;
     }
 
-    public override bool getFinish(){
+    public override bool getFinish()
+    {
         return finish;
     }
 
-    public override void changeFinish(){
+    public override void changeFinish()
+    {
         finish = true;
     }
 }
