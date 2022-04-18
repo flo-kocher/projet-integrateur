@@ -407,7 +407,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 61862387}
   m_CullTransparentMesh: 1
-<<<<<<< HEAD
 --- !u!114 &61862393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,8 +425,6 @@ MonoBehaviour:
   hostButton: {fileID: 0}
   readyButton: {fileID: 0}
   lobbyCanvas: {fileID: 0}
-=======
->>>>>>> 36e8674644a70149be7811c41f27d99c2196a0fd
 --- !u!1 &343799650
 GameObject:
   m_ObjectHideFlags: 0
