@@ -471,6 +471,7 @@ public bool roadIsClosed(GameObject tile_laid)
     return false;
 }
 
+//faire algo pour vérifier que la tuile pioché n'est pas une tuille spé 
 
 
 // rajouter condition pour les tuiles 10 et 15 qu'il faut lancer l'algo 2 fois
@@ -496,8 +497,7 @@ public bool townIsClosed(GameObject tile_laid)
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
                 voisins[3] = plateau[i]; // droite
     }
-    Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
-
+    tile_laid.GetComponent<Constraints>().visite = true;
     // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
     {
@@ -511,7 +511,7 @@ public bool townIsClosed(GameObject tile_laid)
             townIsClosed(voisins[0]);
             }
     }
-    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
+    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
     {
         if (voisins[1] == null)
             {
@@ -535,7 +535,7 @@ public bool townIsClosed(GameObject tile_laid)
                 townIsClosed(voisins[2]);
                 }
         }
-    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
+    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
             if (voisins[3] == null)
                 {
