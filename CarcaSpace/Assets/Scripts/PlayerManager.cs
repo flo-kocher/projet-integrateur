@@ -380,8 +380,9 @@ public bool roadIsClosed(GameObject tile_laid)
         {
             return true;
         }  
-    if (tile_laid.GetComponent<Constraints>().milieu == Type_land.Chemin)
+    if (tile_laid.GetComponent<Constraints>().carrefour == true)
         noeud++;
+
     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
         {
             if (voisins[0] == null)
@@ -389,51 +390,79 @@ public bool roadIsClosed(GameObject tile_laid)
                     noeud = 0;
                     return false;
                 }
-            if (!voisins[0].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[0].GetComponent<Constraints>().visite)
                 {
-                tile_laid.GetComponent<Constraints>().visite = true;
-                roadIsClosed(voisins[0]);
+                if (voisins[0].GetComponent<Constraints>().carrefour == true)
+                    {
+                        noeud++;
+                    }
+                if (voisins[0].GetComponent<Constraints>().carrefour == false)
+                    {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    roadIsClosed(voisins[0]);
+                    }
                 }
         }
     if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
-            {
-                if (voisins[1] == null)
-                    {
-                        noeud = 0;
+        {
+             if (voisins[1] == null)
+                {
+                    noeud = 0;
                         return false;
                     }
-            if (!voisins[1].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[1].GetComponent<Constraints>().visite)
                 {
-                tile_laid.GetComponent<Constraints>().visite = true;
-                roadIsClosed(voisins[1]);
+                if (voisins[1].GetComponent<Constraints>().carrefour == true)
+                    {
+                        noeud++;
+                    }
+                if (voisins[1].GetComponent<Constraints>().carrefour == false)
+                    {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    roadIsClosed(voisins[1]);
+                    }
                 }
-            }
+        }
     if (tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
-            {
+        {
                 if (voisins[2] == null)
                     {
                         noeud = 0;
                         return false;
                     }
-            if (!voisins[2].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[2].GetComponent<Constraints>().visite)
                 {
-                tile_laid.GetComponent<Constraints>().visite = true;
-                roadIsClosed(voisins[2]);
+                if (voisins[2].GetComponent<Constraints>().carrefour == true)
+                    {
+                        noeud++;
+                    }
+                if (voisins[2].GetComponent<Constraints>().carrefour == false)
+                    {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    roadIsClosed(voisins[2]);
+                    }
                 }
-            }
+        }
     if (tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
-            {
+        {
                 if (voisins[3] == null)
                     {
                         noeud = 0;
                         return false;
                     }
-            if (!voisins[3].GetComponent<Constraints>().visite && tile_laid.GetComponent<Constraints>().carrefour == false)
+            if (!voisins[3].GetComponent<Constraints>().visite)
                 {
-                tile_laid.GetComponent<Constraints>().visite = true;
-                roadIsClosed(voisins[3]);
+                if (voisins[3].GetComponent<Constraints>().carrefour == true)
+                    {
+                        noeud++;
+                    }
+                if (voisins[3].GetComponent<Constraints>().carrefour == false)
+                    {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    roadIsClosed(voisins[3]);
+                    }
                 }
-            } 
+        } 
     if ((voisins[0].GetComponent<Constraints>().visite && voisins[1].GetComponent<Constraints>().visite)||(voisins[0].GetComponent<Constraints>().visite && voisins[2].GetComponent<Constraints>().visite)||(voisins[0].GetComponent<Constraints>().visite && voisins[3].GetComponent<Constraints>().visite)||(voisins[1].GetComponent<Constraints>().visite && voisins[2].GetComponent<Constraints>().visite)||(voisins[1].GetComponent<Constraints>().visite && voisins[3].GetComponent<Constraints>().visite)||(voisins[2].GetComponent<Constraints>().visite && voisins[3].GetComponent<Constraints>().visite))
         {
             noeud = 0;
@@ -449,6 +478,7 @@ public bool townIsClosed(GameObject tile_laid)
 {
     if(tile_laid.GetComponent<Constraints>().haut != Type_land.Ville && tile_laid.GetComponent<Constraints>().bas != Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche != Type_land.Ville && tile_laid.GetComponent<Constraints>().droite != Type_land.Ville && tile_laid.GetComponent<Constraints>().haut != Type_land.Ville)
         return false;
+
     
     int x = tile_laid.GetComponent<Constraints>().coordX;
     int y = tile_laid.GetComponent<Constraints>().coordY;
@@ -468,7 +498,8 @@ public bool townIsClosed(GameObject tile_laid)
     }
     Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
 
-    if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
+    // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
+    if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
     {
         if (voisins[0] == null)
             {
@@ -480,7 +511,7 @@ public bool townIsClosed(GameObject tile_laid)
             townIsClosed(voisins[0]);
             }
     }
-    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
     {
         if (voisins[1] == null)
             {
@@ -492,7 +523,7 @@ public bool townIsClosed(GameObject tile_laid)
             townIsClosed(voisins[1]);
             }
     }
-    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
+    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
             if (voisins[2] == null)
                 {
@@ -504,7 +535,7 @@ public bool townIsClosed(GameObject tile_laid)
                 townIsClosed(voisins[2]);
                 }
         }
-    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
             if (voisins[3] == null)
                 {

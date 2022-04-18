@@ -15,7 +15,7 @@ public class tile_type_15 : tile_type
         gauche = Type_land.Ville;
         bas = Type_land.Plaine;
         droite = Type_land.Ville;
-        milieu = Type_land.Rien;
+        milieu = Type_land.Plaine;
         blason = false;
         
         this.GetComponent<Constraints>().haut = haut;
