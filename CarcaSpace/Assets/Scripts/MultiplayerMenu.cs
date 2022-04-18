@@ -11,15 +11,15 @@ public class MultiplayerMenu : MonoBehaviour
 
     public static MultiplayerMenu instance ; 
 
-   // [SerializeField] private NetworkRoomManager networkRoomManager  = null ;
-    private Button Create;
-    private Button JoinFriends;
+  
+    [SerializeField] Button Create;
+    [SerializeField] Button JoinFriends;
     
     private Text text;
-    private Button addPlayers;
-    private Button subPlayers;
-    private Mask mask1;
-    private Mask mask2;
+    [SerializeField] Button addPlayers;
+    [SerializeField] Button subPlayers;
+    // private Mask mask1;
+    // private Mask mask2;
     // ou l'on rentre le code de la partie 
     [SerializeField] InputField joinMatchInput ; 
 
@@ -31,73 +31,88 @@ public class MultiplayerMenu : MonoBehaviour
     //Bouton ready pour les joeuurs non implemente encore 
     [SerializeField] Button readyButton ; 
 
-    [SerializeField]  Canvas lobbyCanvas ; 
+    [SerializeField]  Canvas CanvasCreating  ; 
+    [SerializeField]  Canvas CanvasJoining  ; 
+    [SerializeField]  Canvas CanvasLobby  ;
+
+    [SerializeField]  Canvas CanvasMain ;
+
+    
+    
 
     
     //public PlayerManager Player ; 
     public void addPlayer()
     {
-
-
-        int nbPlayers = int.Parse(text.text);
+        int nbPlayers = int.Parse(playerNumberInput.text);
         if(nbPlayers < 6){
             nbPlayers++ ;
             if(nbPlayers == 2){
-                mask2.showMaskGraphic = true;
+                // mask2.showMaskGraphic = true;
+                addPlayers.interactable=false;
             }
         }
         Debug.Log(nbPlayers);
-        text.text = nbPlayers.ToString();
+        playerNumberInput.text = nbPlayers.ToString();
     }
 
     public void substractPlayer()
     {
 
-        int nbPlayers = int.Parse(text.text);
+        int nbPlayers = int.Parse(playerNumberInput.text);
 
         if(nbPlayers >= 0)
         {
             nbPlayers--;
             if(nbPlayers == 2)
             {
-                mask2.showMaskGraphic = false;
+                // mask2.showMaskGraphic = false;
+                subPlayers.interactable=false;
+                
             }
         }
-        text.text = nbPlayers.ToString();
+        playerNumberInput.text = nbPlayers.ToString();
     }
 
-
+    void Awake(){
+        // CanvasLobby.enabled = true ;
+    }
     void Start() {
         instance = this ; 
-        //PlayerManager.startClient();
-        text = GameObject.Find("PlayerInput").GetComponent<Text>();
-        mask1 = GameObject.Find("right-arrow").GetComponent<Mask>();
-        mask2 = GameObject.Find("left-arrow").GetComponent<Mask>();
-        Create = GameObject.Find("CreateGame").GetComponent<Button>();
-        JoinFriends = GameObject.Find("JoinFriends").GetComponent<Button>();
-        addPlayers = GameObject.Find("right-arrow").GetComponent<Button>();
-        subPlayers = GameObject.Find("left-arrow").GetComponent<Button>();
+        Debug.Log("Launchin main canvas ");
+        CanvasMain.gameObject.SetActive (true) ;
 
-        //Create.onClick.AddListener(EnterCreateMenu);
+        Create.onClick.AddListener(EnterCreateMenu);
         JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
-        addPlayers.onClick.AddListener(addPlayer);
-        subPlayers.onClick.AddListener(substractPlayer);
-
-
-    }
-    public void EnterMultiplayerMenu()
-    {
-        SceneManager.LoadScene("MultiplayerMenu", LoadSceneMode.Single);
+        hostButton.onClick.AddListener(Host);
+        joinButton.onClick.AddListener(Join);
+        
+        
     }
 
     public void EnterCreateMenu()
     {
-        SceneManager.LoadScene("CreatingGame",LoadSceneMode.Single);
+        // if(CanvasCreating.gameObject.ActiveSelf == false){
+
+            CanvasCreating.gameObject.SetActive (true) ;
+
+            CanvasJoining.gameObject.SetActive (false) ;
+            CanvasLobby.gameObject.SetActive (false) ;
+            CanvasMain.gameObject.SetActive (false) ;
+        // }
+        
     }
 
     public void EnterJoinFriendsMenu()
     {
-        SceneManager.LoadScene("JoiningMenu",LoadSceneMode.Single);
+        // if(CanvasJoining.gameObject.ActiveSelf == false){
+
+            CanvasJoining.gameObject.SetActive (true) ;
+
+            CanvasCreating.gameObject.SetActive (false) ;
+            CanvasLobby.gameObject.SetActive (false) ;
+            CanvasMain.gameObject.SetActive (false) ;
+        // }
     }
 
     public void Host()
@@ -108,8 +123,8 @@ public class MultiplayerMenu : MonoBehaviour
         //convertir le nb de joueur en int 
         // int playerNb =  System.Convert.ToInt32(playerNumberInput.text);
         // Debug.Log($"Nb de joeur choisit {playerNb}");
-        
-        PlayerManager.localPlayer.HostGame();
+        Debug.Log($"Player is  {RoomPlayerManager.localPlayer}");
+        RoomPlayerManager.localPlayer.HostGame();
     }
 
     //pour reactiver les boutons si echec
@@ -128,13 +143,13 @@ public class MultiplayerMenu : MonoBehaviour
         joinButton.interactable = false ; 
         //hostButton.interactable = false ;  
 
-        PlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
+        RoomPlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
     }
 
     //pour reactiver les boutons si echec
     public void joinSucc(bool success){
         if(success){
-            SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
+            
             //spawn les "Cartes des joeuurs ici " 
         }else{
             joinMatchInput.interactable = true ;

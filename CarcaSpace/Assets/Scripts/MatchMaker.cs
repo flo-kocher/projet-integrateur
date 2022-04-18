@@ -20,10 +20,10 @@ public class Match{
     //si le match est full ou pas 
     public bool matchFull;
     //Liste des joueurs dans la partie 
-    public List<PlayerManager> players = new List<PlayerManager>();
+    public List<RoomPlayerManager> players = new List<RoomPlayerManager>();
     
     //constructeur
-    public Match(int nbPlayers,string MatchId , PlayerManager  player){
+    public Match(int nbPlayers,string MatchId , RoomPlayerManager  player){
         matchFull = false ; 
         inMatch = false ;
         this.MatchId = MatchId ;
@@ -80,7 +80,7 @@ public class MatchMaker : NetworkBehaviour
         return _id ; 
     }
 
-    public bool HostGame(int _playerNumber, string _matchId,PlayerManager player,out int playerIndex){     
+    public bool HostGame(int _playerNumber, string _matchId,RoomPlayerManager player,out int playerIndex){     
         playerIndex = -1;
         //a changer
         Debug.Log("Je suis dans host matchmake \n");
@@ -101,7 +101,7 @@ public class MatchMaker : NetworkBehaviour
 
     }
 
-    public bool JoinGame(string _matchId,PlayerManager _player,out int playerIndex){     
+    public bool JoinGame(string _matchId,RoomPlayerManager _player,out int playerIndex){     
         playerIndex = -1;
         //one verifie si le meme id n'esxiste pas deja dans la liste
        if (matchIDS.Contains (_matchId)) {
@@ -114,7 +114,7 @@ public class MatchMaker : NetworkBehaviour
                         _player.currentMatch = matches[i];
                         playerIndex = matches[i].players.Count;
 
-                        matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
+                        //matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
                         // on met a jour matchfull 
                         if (matches[i].players.Count == maxPlayers) {
                             matches[i].matchFull = true;
@@ -138,15 +138,15 @@ public class MatchMaker : NetworkBehaviour
         for (int i = 0; i < matches.Count; i++) {
             if (matches[i].MatchId == _matchID) {
                 matches[i].inMatch = true;
-                foreach (var player in matches[i].players) {
-                    player.StartGame ();
-                }
+                // foreach (var player in matches[i].players) {
+                //     player.StartGame ();
+                // }
                 break;
             }
         }
     }
 
-    public void PlayerDisconnected (PlayerManager player, string _matchID) {
+    public void PlayerDisconnected (RoomPlayerManager player, string _matchID) {
         for (int i = 0; i < matches.Count; i++) {
             if (matches[i].MatchId == _matchID) {
                 int playerIndex = matches[i].players.IndexOf (player);
@@ -158,7 +158,7 @@ public class MatchMaker : NetworkBehaviour
                     matches.RemoveAt (i);
                     matchIDS.Remove (_matchID);
                 } else {
-                    matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
+                    //matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
                 }
                 break;
             }
