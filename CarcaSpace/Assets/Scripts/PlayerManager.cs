@@ -532,11 +532,6 @@ public void roadIsClosed_Struct(GameObject tile_laid)
     }
     */
 
-
-}
-
-
->>>>>>> 03a290c47cb4b74b5c5833fc670bd2b584826301
 public int noeud = 0;
 public bool roadIsClosed(GameObject tile_laid)
 {
