@@ -532,6 +532,185 @@ public void roadIsClosed_Struct(GameObject tile_laid)
     }
     */
 
+
+public void roadIsClosed_Struct(GameObject tile_laid)
+{
+    if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
+    {
+        Debug.Log("Pas de composante Chemin sur ma tuile");
+        return;
+    }
+
+    int x = tile_laid.GetComponent<Constraints>().coordX;
+    int y = tile_laid.GetComponent<Constraints>().coordY;
+
+    GameObject[] voisins = new GameObject[4];
+    for(int i = 0; i < plateau.Count; i++)
+    {
+        Debug.Log("plat : " + plateau[i]);
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                voisins[0] = plateau[i]; // haut
+            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[1] = plateau[i]; // gauche
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                voisins[2] = plateau[i]; // bas
+            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[3] = plateau[i]; // droite
+    }
+    Debug.Log("La tuile "+ tile_laid + " a comme voisins : haut "+voisins[0]+" gauche "+voisins[1]+" bas "+voisins[2]+" droite "+voisins[3]);
+
+    // il n'y a pas de connexion de chemin, on crée une nouvelle structure
+    if( (tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin || voisins[0] == null) &&
+        (tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin || voisins[1] == null) &&
+        (tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin || voisins[2] == null) && 
+        (tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin || voisins[3] == null))
+    {
+        //créer une nouvelle structure
+        CurrentRoads road = new CurrentRoads("Road "+nb_of_struct_roads,tile_laid);
+        // ajout de la stucture à la liste_des_struct
+        list_of_struct_roads.Add(road);
+        Debug.Log("crea struct 1 " + list_of_struct_roads.Count);
+        //Debug.Log("struct-"+road.Name+"created");
+    }
+
+
+    // condition noir
+    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin && voisins[0] != null && voisins[0].GetComponent<Constraints>().bas == Type_land.Chemin)
+    {
+        Debug.Log("cas haut");
+        //rajouter tile_laid à la structure du voisin du haut
+        //CurrentRoads cp;
+        for(int i = 0; i < list_of_struct_roads.Count; i++)
+        {
+            CurrentRoads rd = list_of_struct_roads[i];
+            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+            {
+                if(rd.CurrentTiles[j] == voisins[0])
+                {
+                    //cp = rd;
+                    rd.CurrentTiles.Add(tile_laid);
+                    break;
+                }
+            }
+        }
+    } 
+    
+    
+    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin && voisins[1] != null && voisins[1].GetComponent<Constraints>().droite == Type_land.Chemin)
+    {
+        Debug.Log("cas gauche");
+        // rajouter tile_laid à la structure du voisin de gauche.
+        for(int i = 0; i < list_of_struct_roads.Count; i++)
+        {
+            CurrentRoads rd = list_of_struct_roads[i];
+            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+            {
+                Debug.Log("parcours d'un elt dans ma liste de tiles");
+                if(rd.CurrentTiles[j] == voisins[1])
+                {
+                    //cp = rd;
+                    rd.CurrentTiles.Add(tile_laid);
+                    break;
+                }
+            }
+        }
+    } 
+
+    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin && voisins[2] != null && voisins[2].GetComponent<Constraints>().haut == Type_land.Chemin)
+    {
+        Debug.Log("cas bas");
+        //rajouter tile_laid à la structure du voisin du bas
+        for(int i = 0; i < list_of_struct_roads.Count; i++)
+        {
+            CurrentRoads rd = list_of_struct_roads[i];
+            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+            {
+                if(rd.CurrentTiles[j] == voisins[2])
+                {
+                    //cp = rd;
+                    rd.CurrentTiles.Add(tile_laid);
+                    break;
+                }        
+            }
+        }
+    } 
+
+    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin && voisins[3] != null && voisins[3].GetComponent<Constraints>().droite == Type_land.Chemin)
+    {
+        Debug.Log("cas droite");
+        //rajouter tile_laid à la structure du voisin du droite
+        for(int i = 0; i < list_of_struct_roads.Count; i++)
+        {
+            CurrentRoads rd = list_of_struct_roads[i];
+            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+            {
+                if(rd.CurrentTiles[j] == voisins[3])
+                {
+                    //cp = rd;
+                    rd.CurrentTiles.Add(tile_laid);
+                    break;
+                }                
+            }
+        }
+    } 
+
+    // condition verte
+    // parcours la liste des struct actuelle
+    
+    int count = 0;
+    int indice_list_1 = -1;
+
+    // On parcours la liste_des_structs actu...
+    for( int i = 0; i< list_of_struct_roads.Count; i++)
+    {
+        // si notre tuile est commun a tous les structures
+        // alors on compte
+
+        /* on recupere un road */
+        CurrentRoads rd = list_of_struct_roads[i];
+        
+        /* pour chaque tuile appartenant a la liste de ce road...*/
+        for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+        {
+            /* si on trouve notre tuile alors... count++ */
+            if(rd.CurrentTiles[j] == tile_laid)
+            {
+                Debug.Log("dans count ++");
+                // si notre tuile appartient a un road_X
+                // on count++ puis on save l'indice du road_X
+                count ++;
+                if(count == 1)
+                    indice_list_1 = i;
+            }
+        }
+
+        Debug.Log("count : "+count);
+        if(count == 2)
+        {
+            for(int k = 0; k < list_of_struct_roads[indice_list_1].CurrentTiles.Count; k++)
+            {
+                
+                list_of_struct_roads[i].CurrentTiles.Add(list_of_struct_roads[indice_list_1].CurrentTiles[k]);
+            }
+            list_of_struct_roads[i].CurrentTiles.Remove(tile_laid);
+            list_of_struct_roads.RemoveAt(indice_list_1);
+            break;
+        }
+    }
+
+    
+    
+    /*
+    if(count == 2)
+    {
+        for(int i = 0; i < list_of_struct_roads.Co)
+    }
+    */
+
+
+}
+
+
 public int noeud = 0;
 public bool roadIsClosed(GameObject tile_laid)
 {
