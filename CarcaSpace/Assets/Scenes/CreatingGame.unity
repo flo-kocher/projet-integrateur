@@ -297,10 +297,7 @@ GameObject:
   - component: {fileID: 61862391}
   - component: {fileID: 61862390}
   - component: {fileID: 61862389}
-<<<<<<< HEAD
   - component: {fileID: 61862393}
-=======
->>>>>>> 36e8674644a70149be7811c41f27d99c2196a0fd
   m_Layer: 5
   m_Name: CreateGame
   m_TagString: Untagged
