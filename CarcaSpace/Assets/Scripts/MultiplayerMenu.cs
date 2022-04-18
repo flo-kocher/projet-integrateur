@@ -115,6 +115,14 @@ public class MultiplayerMenu : MonoBehaviour
         // }
     }
 
+    public void EnterLobby(){
+        CanvasLobby.gameObject.SetActive (true) ;
+
+        CanvasCreating.gameObject.SetActive (false) ;
+        CanvasJoining.gameObject.SetActive (false) ;
+        CanvasMain.gameObject.SetActive (false) ;
+    }
+
     public void Host()
     {
         //joinMatchInput.interactable = false ;
@@ -124,6 +132,7 @@ public class MultiplayerMenu : MonoBehaviour
         // int playerNb =  System.Convert.ToInt32(playerNumberInput.text);
         // Debug.Log($"Nb de joeur choisit {playerNb}");
         Debug.Log($"Player is  {RoomPlayerManager.localPlayer}");
+        EnterLobby();
         RoomPlayerManager.localPlayer.HostGame();
     }
 
@@ -142,7 +151,7 @@ public class MultiplayerMenu : MonoBehaviour
         joinMatchInput.interactable = false ;
         joinButton.interactable = false ; 
         //hostButton.interactable = false ;  
-
+        EnterLobby();
         RoomPlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
     }
 
