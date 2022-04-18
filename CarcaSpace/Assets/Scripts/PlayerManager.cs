@@ -350,12 +350,12 @@ public void resetVisite()
     }
 }
 
-
 public int noeud = 0;
 public bool roadIsClosed(GameObject tile_laid)
 {
     if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
         return false;
+     
 
     Debug.Log("Carrefour ?" + tile_laid.GetComponent<Constraints>().carrefour);
     int x = tile_laid.GetComponent<Constraints>().coordX;
@@ -472,7 +472,40 @@ public bool roadIsClosed(GameObject tile_laid)
 }
 
 //faire algo pour vérifier que la tuile pioché n'est pas une tuille spé 
+public bool drawshit(GameObject tile_laid)
+{
+            bool bool0;
+            bool bool1;
+            bool bool2;
+            bool bool3;
+            bool bool4;
+    if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
+    return false;
+     
 
+    Debug.Log("Carrefour ?" + tile_laid.GetComponent<Constraints>().carrefour);
+    int x = tile_laid.GetComponent<Constraints>().coordX;
+    int y = tile_laid.GetComponent<Constraints>().coordY;
+
+    GameObject[] voisins = new GameObject[4];
+    for(int i = 0; i < plateau.Count; i++)
+    {
+        Debug.Log("plat : " + plateau[i]);
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                voisins[0] = plateau[i]; // haut
+            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[1] = plateau[i]; // gauche
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                voisins[2] = plateau[i]; // bas
+            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[3] = plateau[i]; // droite
+    }
+    if(tile_laid.GetComponent<Constraints>().carrefour == true)
+        {
+                return (roadIsClosed(voisins[3]) | roadIsClosed(voisins[2]) | roadIsClosed(voisins[1]) | roadIsClosed(voisins[0]));
+        }
+    return roadIsClosed(tile_laid);
+}
 
 // rajouter condition pour les tuiles 10 et 15 qu'il faut lancer l'algo 2 fois
 public bool townIsClosed(GameObject tile_laid)

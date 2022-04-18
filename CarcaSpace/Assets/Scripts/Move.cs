@@ -137,7 +137,7 @@ public class Move : NetworkBehaviour {
         // faire spawn les étoiles sur le serveur et les clients
         PlayerManager.CmdSpawnStars(tabExample, x, y);
         //PlayerManager.roadIsClosed(go);
-        Debug.Log("Chemin fermé ? " + PlayerManager.roadIsClosed(go));
+        Debug.Log("Chemin fermé ? " + PlayerManager.drawshit(go));
         PlayerManager.resetVisite();
 
         Debug.Log("bool town closed " + PlayerManager.townIsClosed(go));
