@@ -75,40 +75,44 @@ public class MultiplayerMenu : MonoBehaviour
     }
 
     void Awake(){
-        CanvasLobby.enabled = true ;
+        // CanvasLobby.enabled = true ;
     }
     void Start() {
         instance = this ; 
+        Debug.Log("Launchin main canvas ");
+        CanvasMain.gameObject.SetActive (true) ;
 
         Create.onClick.AddListener(EnterCreateMenu);
         JoinFriends.onClick.AddListener(EnterJoinFriendsMenu);
+        hostButton.onClick.AddListener(Host);
+        joinButton.onClick.AddListener(Join);
         
         
     }
 
     public void EnterCreateMenu()
     {
-        if(CanvasCreating.enabled == false){
+        // if(CanvasCreating.gameObject.ActiveSelf == false){
 
-            CanvasCreating.enabled = true ;
+            CanvasCreating.gameObject.SetActive (true) ;
 
-            CanvasJoining.enabled  = false ; 
-            CanvasLobby.enabled  = false ; 
-            CanvasMain.enabled  = false ;
-        }
+            CanvasJoining.gameObject.SetActive (false) ;
+            CanvasLobby.gameObject.SetActive (false) ;
+            CanvasMain.gameObject.SetActive (false) ;
+        // }
         
     }
 
     public void EnterJoinFriendsMenu()
     {
-        if(CanvasJoining.enabled == false){
+        // if(CanvasJoining.gameObject.ActiveSelf == false){
 
-            CanvasJoining.enabled = true ;
+            CanvasJoining.gameObject.SetActive (true) ;
 
-            CanvasCreating.enabled  = false ; 
-            CanvasLobby.enabled  = false ; 
-            CanvasMain.enabled  = false ;
-        }
+            CanvasCreating.gameObject.SetActive (false) ;
+            CanvasLobby.gameObject.SetActive (false) ;
+            CanvasMain.gameObject.SetActive (false) ;
+        // }
     }
 
     public void Host()
@@ -119,8 +123,8 @@ public class MultiplayerMenu : MonoBehaviour
         //convertir le nb de joueur en int 
         // int playerNb =  System.Convert.ToInt32(playerNumberInput.text);
         // Debug.Log($"Nb de joeur choisit {playerNb}");
-        Debug.Log($"Player is  {PlayerManager.localPlayer}");
-        PlayerManager.localPlayer.HostGame();
+        Debug.Log($"Player is  {RoomPlayerManager.localPlayer}");
+        RoomPlayerManager.localPlayer.HostGame();
     }
 
     //pour reactiver les boutons si echec
@@ -139,13 +143,13 @@ public class MultiplayerMenu : MonoBehaviour
         joinButton.interactable = false ; 
         //hostButton.interactable = false ;  
 
-        PlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
+        RoomPlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
     }
 
     //pour reactiver les boutons si echec
     public void joinSucc(bool success){
         if(success){
-            SceneManager.LoadScene("Lobby",LoadSceneMode.Single);
+            
             //spawn les "Cartes des joeuurs ici " 
         }else{
             joinMatchInput.interactable = true ;
