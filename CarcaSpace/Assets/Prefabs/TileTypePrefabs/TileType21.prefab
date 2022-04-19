@@ -140,9 +140,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0800be78e5fb14155bfa707e9fa1bad3, type: 2}
-  - {fileID: 2100000, guid: af6c5f15128644f928df6fc4dfb3083b, type: 2}
-  - {fileID: 2100000, guid: 7b8a57fbf67f949cfaf93bf908da3b0a, type: 2}
+  - {fileID: 2100000, guid: 6dfb424e6f332604dbd4bb9131275031, type: 2}
+  - {fileID: 2100000, guid: 6dfb424e6f332604dbd4bb9131275031, type: 2}
+  - {fileID: 2100000, guid: 6dfb424e6f332604dbd4bb9131275031, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -663,7 +663,7 @@ MonoBehaviour:
   gauche: 3
   bas: 3
   droite: 3
-  milieu: 0
+  milieu: 3
   coordX: 0
   coordY: 0
   r: {fileID: 0}
@@ -683,6 +683,10 @@ MonoBehaviour:
   gauche: 3
   bas: 3
   droite: 3
-  milieu: 0
+  milieu: 3
+  blason: 0
   coordX: 0
   coordY: 0
+  meeple: 0
+  visite: 0
+  carrefour: 1

@@ -8,9 +8,6 @@ using Mirror ;
 
 public abstract class tile_type : NetworkBehaviour
 {
-
-    
-    
     public Type_land haut;
     public Type_land gauche;
     public Type_land bas;
@@ -19,8 +16,10 @@ public abstract class tile_type : NetworkBehaviour
     public int coordX;
     public int coordY;
     public rotateZ r;
-    public static int nbrTuile = 30;
+    public static int nbrTuile = 72; // sans rivière : 72, avec rivière : 84
     public static bool finish = false;
+    public static bool blason;
+
 
     
 
