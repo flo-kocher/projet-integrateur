@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class tile_type_10 : tile_type
 {
-
-
-    public static int nbrTuile = 30;
     public static bool finish = false;
+    public static int nbrTuile = 2;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +15,8 @@ public class tile_type_10 : tile_type
         gauche = Type_land.Plaine;
         bas = Type_land.Plaine;
         droite = Type_land.Ville;
-        milieu = Type_land.Rien;
+        milieu = Type_land.Plaine;
+        blason = false;
         
         this.GetComponent<Constraints>().haut = haut;
         this.GetComponent<Constraints>().gauche = gauche;
