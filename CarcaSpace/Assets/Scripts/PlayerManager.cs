@@ -88,6 +88,12 @@ public class PlayerManager : NetworkBehaviour
             this.CurrentTiles = new List<GameObject>();
             this.CurrentTiles.Add(tile);
         }
+/*
+        public methodeDeTriche()
+        {
+            //if()
+        }
+        */
     }
 
     public int nb_of_struct_roads;
@@ -166,11 +172,13 @@ public class PlayerManager : NetworkBehaviour
                    all_tiles.Add(TileType9);
                    all_tiles.Add(TileType9);
                    break;
+                   /*
                 case 10 : 
                    //tmp.AddComponent<tile_type_10>();
                    all_tiles.Add(TileType10);
                    all_tiles.Add(TileType10);
                    break;
+                   *:
                 case 11 : 
                    //tmp.AddComponent<tile_type_11>();
                    all_tiles.Add(TileType11);
@@ -192,24 +200,28 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType14);
                     }
                     break;
+                    /*
                 case 15 :
                     for(x=0;x<2;x++){
                         //tmp.AddComponent<tile_type_15>();
                         all_tiles.Add(TileType15);
                     }
                     break;
+                    */
                 case 16 :
                     for(x=0;x<4;x++){
                         //tmp.AddComponent<tile_type_16>();
                         all_tiles.Add(TileType16);
                     }
                     break;
+                    /*
                 case 17 :
                     for(x=0;x<2;x++){
                         //tmp.AddComponent<tile_type_17>();
                         all_tiles.Add(TileType17);
                     }
                     break;
+                    */
                 case 18 :
                     for(x=0;x<2;x++){
                         //tmp.AddComponent<tile_type_18>();
@@ -229,6 +241,7 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType20);
                     } 
                     break;
+                    /*
                 case 21 :
                    // tmp.AddComponent<tile_type_21>();
                     all_tiles.Add(TileType21);
@@ -239,6 +252,7 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType22);
                     }  
                     break;
+                    */
                 case 23:
                   for(x=0;x<7;x++){
                        // tmp.AddComponent<tile_type_23>();
@@ -368,7 +382,7 @@ public void roadIsClosed_Struct(GameObject tile_laid)
     GameObject[] voisins = new GameObject[4];
     for(int i = 0; i < plateau.Count; i++)
     {
-        Debug.Log("plat : " + plateau[i]);
+        //Debug.Log("plat : " + plateau[i]);
             if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = plateau[i]; // haut
             if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
@@ -539,7 +553,7 @@ public bool roadIsClosed(GameObject tile_laid)
     GameObject[] voisins = new GameObject[4];
     for(int i = 0; i < plateau.Count; i++)
     {
-        Debug.Log("plat : " + plateau[i]);
+        //Debug.Log("plat : " + plateau[i]);
             if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = plateau[i]; // haut
             if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
@@ -665,7 +679,7 @@ public bool drawshit(GameObject tile_laid)
     GameObject[] voisins = new GameObject[4];
     for(int i = 0; i < plateau.Count; i++)
     {
-        Debug.Log("plat : " + plateau[i]);
+        //Debug.Log("plat : " + plateau[i]);
             if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = plateau[i]; // haut
             if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
@@ -682,6 +696,7 @@ public bool drawshit(GameObject tile_laid)
     return roadIsClosed(tile_laid);
 }
 
+
 // rajouter condition pour les tuiles 10 et 15 qu'il faut lancer l'algo 2 fois
 public bool townIsClosed(GameObject tile_laid)
 {
@@ -695,7 +710,7 @@ public bool townIsClosed(GameObject tile_laid)
     GameObject[] voisins = new GameObject[4];
     for(int i = 0; i < plateau.Count; i++)
     {
-        Debug.Log("plat : " + plateau[i]);
+        //Debug.Log("plat : " + plateau[i]);
             if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = plateau[i]; // haut
             if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
