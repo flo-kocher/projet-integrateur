@@ -431,6 +431,37 @@ public void roadIsClosed_Struct(GameObject tile_laid)
     // condition verte
     // parcours la liste des struct actuelle
     
+
+
+
+
+    /*
+        virer l'ajout du go dans les deux structures et à la place juste regarder
+        si le go.gauche appartient à une structure et si le go.droite appartient à une autre structure
+
+        si go.gauche et go.droite appartient à la même alors le chemin est complet et forme une boucle
+        et sinon on fusionne juste les deux structure en une seule
+
+
+
+        il faut qu'on mette 3 if()
+
+        1er if qui fait le cas de la boucle sur elle -même donc si le go.gauche et le go.droite appartienne à la même structure
+                du coup faire le calculer de point avec les meeples etc.. et détruit la structure
+
+        2è if qui fait le cas de la fusion qui va fusionner les deux structures en une seule
+                du coup vérifier si on se retrouve avec 2 tuiles qui ferment/ouvrent des chemins et du coup calculer les points et détruire
+
+        3è if cas général où la tuile va juste se rajouter à une structure existante ou en créer une nouvelle
+                vérifier aussi si deux tuiles fermantes et calcule de points
+
+
+        
+ 
+
+
+
+    */
     int count = 0;
     int indice_list_1 = -1;
 
