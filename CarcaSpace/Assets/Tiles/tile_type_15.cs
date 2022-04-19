@@ -22,7 +22,7 @@ public class tile_type_15 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
-        this.GetComponent<Constraints>().posePossible = {false, true, false, true, false};
+        this.GetComponent<Constraints>().posePossible = new bool[5] {false, true, false, true, false};
     }
 
     // Update is called once per frame
