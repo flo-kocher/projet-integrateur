@@ -88,6 +88,12 @@ public class PlayerManager : NetworkBehaviour
             this.CurrentTiles = new List<GameObject>();
             this.CurrentTiles.Add(tile);
         }
+
+        // méthode qui check qui la liste des tuiles est fermé ou pas
+        public bool isClosed()
+        {
+            return true;
+        }
     }
 
     public int nb_of_struct_roads;
