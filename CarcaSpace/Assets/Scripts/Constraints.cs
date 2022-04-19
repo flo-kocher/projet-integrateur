@@ -25,7 +25,8 @@ public class Constraints : MonoBehaviour
     public int coordY;
     public Meeple meeple;
     public bool visite;
-    public bool carrefour;   
+    public bool carrefour;
+    static Vector2[] posePossible = {haut, gauche, bas, droite, milieu};
     // Start is called before the first frame update
     void Start()
     {

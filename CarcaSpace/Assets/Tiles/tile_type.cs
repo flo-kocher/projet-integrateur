@@ -66,8 +66,9 @@ public abstract class tile_type : NetworkBehaviour
         this.GetComponent<Constraints>().gauche = gauche;
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
+        static Vector2[] copie = this.GetComponent<Constraints>().posePossible;
+        this.GetComponent<Constraints>().posePossible = {copie[3], copie[0], copie[1], copie[2], milieu};
         //this.GetComponent<Constraints>().milieu = milieu;
-
     }
 
     protected void rotate_right()
@@ -82,6 +83,8 @@ public abstract class tile_type : NetworkBehaviour
         this.GetComponent<Constraints>().gauche = gauche;
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
+        static Vector2[] copie = this.GetComponent<Constraints>().posePossible;
+        this.GetComponent<Constraints>().posePossible = {copie[1], copie[2], copie[3], copie[0], milieu};
         //this.GetComponent<Constraints>().milieu = milieu;
     }
 

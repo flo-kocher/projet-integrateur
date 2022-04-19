@@ -23,6 +23,7 @@ public class tile_type_6 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
+        this.GetComponent<Constraints>().posePossible = {true, true, true, true, true}
         this.GetComponent<Constraints>().carrefour = true;
     }
 
