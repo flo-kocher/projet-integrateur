@@ -88,12 +88,12 @@ public class PlayerManager : NetworkBehaviour
             this.CurrentTiles = new List<GameObject>();
             this.CurrentTiles.Add(tile);
         }
-/*
-        public methodeDeTriche()
+
+        // méthode qui check qui la liste des tuiles est fermé ou pas
+        public bool isClosed()
         {
-            //if()
+            return true;
         }
-        */
     }
 
     public int nb_of_struct_roads;
@@ -132,21 +132,24 @@ public class PlayerManager : NetworkBehaviour
                    break;
                 case 2 : 
                   // tmp.AddComponent<tile_type_2>();
-                   all_tiles.Add(TileType2);
-                   all_tiles.Add(TileType2);
+                  for(x=0; x<=1; x++)
+                   {
+                       all_tiles.Add(TileType2);
+                   }
                    break;
                 case 3 : 
                    //tmp.AddComponent<tile_type_3>();
-                   all_tiles.Add(TileType3);
-                   all_tiles.Add(TileType3);
-                   all_tiles.Add(TileType3);
-                   all_tiles.Add(TileType3);
+                   for(x=0; x<=3; x++)
+                   {
+                       all_tiles.Add(TileType3);
+                   }
                    break;
                 case 4 : 
                    //tmp.AddComponent<tile_type_4>();
-                   all_tiles.Add(TileType4);
-                   all_tiles.Add(TileType4);
-                   all_tiles.Add(TileType4);
+                   for(x=0; x<=2; x++)
+                   {
+                       all_tiles.Add(TileType4);
+                   }
                    break;
                 case 5 : 
                    //tmp.AddComponent<tile_type_5>();
@@ -158,85 +161,95 @@ public class PlayerManager : NetworkBehaviour
                    break;
                 case 7 : 
                   // tmp.AddComponent<tile_type_7>();
-                   all_tiles.Add(TileType7);
-                   all_tiles.Add(TileType7);
+                  for(x=0; x<=1; x++)
+                   {
+                       all_tiles.Add(TileType7);
+                   }
                    break;
                 case 8 : 
                   // tmp.AddComponent<tile_type_8>();
-                   all_tiles.Add(TileType8);
-                   all_tiles.Add(TileType8);
-                   all_tiles.Add(TileType8);
+                  for(x=0; x<=2; x++)
+                   {
+                       all_tiles.Add(TileType8);
+                   }
                    break;
                 case 9 : 
                   // tmp.AddComponent<tile_type_9>();
-                   all_tiles.Add(TileType9);
-                   all_tiles.Add(TileType9);
+                  for(x=0; x<=1; x++)
+                   {
+                       all_tiles.Add(TileType9);
+                   }
                    break;
                    /*
                 case 10 : 
                    //tmp.AddComponent<tile_type_10>();
-                   all_tiles.Add(TileType10);
-                   all_tiles.Add(TileType10);
+                   for(x=0; x<=1; x++)
+                   {
+                       all_tiles.Add(TileType10);
+                   }
                    break;
                    *:
                 case 11 : 
                    //tmp.AddComponent<tile_type_11>();
-                   all_tiles.Add(TileType11);
-                   all_tiles.Add(TileType11);
-                   all_tiles.Add(TileType11);
+                   for(x=0; x<=2; x++)
+                   {
+                       all_tiles.Add(TileType11);
+                   }
                    break;
                 case 12 : 
                    //tmp.AddComponent<tile_type_12>();
-                   all_tiles.Add(TileType12);
-                   all_tiles.Add(TileType12);
+                   for(x=0; x<=1; x++)
+                   {
+                       all_tiles.Add(TileType12);
+                   }
                    break;
                 case 13 : 
                   // tmp.AddComponent<tile_type_13>();
                    all_tiles.Add(TileType13); 
                    break;                       
                 case 14 :
-                    for(x=0;x<1;x++){
+                    for(x=0;x<=1;x++){
                         //tmp.AddComponent<tile_type_14>();
                         all_tiles.Add(TileType14);
                     }
                     break;
                     /*
                 case 15 :
-                    for(x=0;x<2;x++){
+                    for(x=0;x<=2;x++){
                         //tmp.AddComponent<tile_type_15>();
                         all_tiles.Add(TileType15);
                     }
                     break;
                     */
                 case 16 :
-                    for(x=0;x<4;x++){
+                    for(x=0;x<=4;x++){
                         //tmp.AddComponent<tile_type_16>();
                         all_tiles.Add(TileType16);
                     }
                     break;
                     /*
                 case 17 :
-                    for(x=0;x<2;x++){
+                    for(x=0;x<=2;x++){
                         //tmp.AddComponent<tile_type_17>();
                         all_tiles.Add(TileType17);
                     }
                     break;
                     */
                 case 18 :
-                    for(x=0;x<2;x++){
+                    for(x=0;x<=2;x++){
                         //tmp.AddComponent<tile_type_18>();
                         all_tiles.Add(TileType18);
                     } 
                     break;
                 case 19 :
-                    for(x=0;x<2;x++){
+                    for(x=0;x<=2;x++){
                         //tmp.AddComponent<tile_type_19>();
                         all_tiles.Add(TileType19);
                     } 
                     break;
                 //a revoir
                 case 20 :
-                    for(x=0;x<3;x++){
+                    for(x=0;x<=3;x++){
                         //tmp.AddComponent<tile_type_20>();
                         all_tiles.Add(TileType20);
                     } 
@@ -247,26 +260,25 @@ public class PlayerManager : NetworkBehaviour
                     all_tiles.Add(TileType21);
                     break;
                 case 22 :
-                    for(x=0;x<3;x++){
+                    for(x=0;x<=3;x++){
                        // tmp.AddComponent<tile_type_22>();
                         all_tiles.Add(TileType22);
                     }  
                     break;
                     */
                 case 23:
-                  for(x=0;x<7;x++){
+                  for(x=0;x<=7;x++){
                        // tmp.AddComponent<tile_type_23>();
                         all_tiles.Add(TileType23);
                     }  
                     break;
                 case 24 :
-                    for(x=0;x<8;x++){
+                    for(x=0;x<=8;x++){
                        // tmp.AddComponent<tile_type_24>();
                         all_tiles.Add(TileType24);
                     }
                     break;
-            }
-                
+            }  
         }
         return all_tiles;
     }
@@ -289,76 +301,6 @@ public class PlayerManager : NetworkBehaviour
         tabPos[4] = milieu;
         nb_of_struct_roads = 0;
     }
-/*
-    public void roadIsClosed(GameObject tile_laid) // (tuile posé)
-    {
-        // récupération de ses coordonnées sur la grid
-        int x = tile_laid.GetComponent<Constraints>().coordX;
-        int y = tile_laid.GetComponent<Constraints>().coordY;
-
-        //Debug.Log("je suis dans roadisclosed");
-        //Debug.Log(tile_laid);
-        //Debug.Log(tile_laid.GetComponent<Constraints>().haut);
-        //CurrentRoads road1 = new CurrentRoads("Road 1",size);
-        //Debug.Log(road1.Name);
-
-        //if struct.size == 1 alors la tile dans la liste est l'extrémité1 et extremite2
-        //if struct.size > 1 alors l'extrémité1 est le premier élément et l'éxtrémité2 est le dernier elt
-        
-        if(cond)
-            CurrentRoads road = new CurrentRoads(i); // variavle globale du nbr de structure pour pas qu'on ait plusieurs fois les mêmes noms
-            attributs a init etc...
-
-            puis on le rajoute à une liste de structures
-
-        
-
-        
-        if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin){
-            Debug.Log("je sors");
-            return;
-        }
-        
-
-        //récupérer les voisins du Go parmis les tuiles du plateau
-        GameObject[] voisins = new GameObject[4];
-        for(int i = 0; i < plateau.Count; i++)
-        {
-            Debug.Log("plat : " + plateau[i]);
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
-                voisins[0] = plateau[i]; // haut
-            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[1] = plateau[i]; // gauche
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
-                voisins[2] = plateau[i]; // bas
-            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[3] = plateau[i]; // droite
-        }
-        Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
-        
-        if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin || tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin || tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin || tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
-        {
-            if(voisins[0] != null)
-
-        }
-        
-
-
-
-
-        
-        si on a une valeur chemin, si le voisin est du côté du chemin alors on ajoute la tuile à la structure du voisin
-        sinon on crée une nouvelle structure
-
-        si tuile carrefour, on doit créer 3/4 structures
-
-        
-    
-        
-        //puis lancer l'algo quoi
-
-    }
-*/
 
 public void resetVisite()
 {
@@ -528,13 +470,6 @@ public void roadIsClosed_Struct(GameObject tile_laid)
             break;
         }
     }
-  
-    /*
-    if(count == 2)
-    {
-        for(int i = 0; i < list_of_struct_roads.Co)
-    }
-    */
     return;
 }
 
@@ -720,6 +655,7 @@ public bool townIsClosed(GameObject tile_laid)
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
                 voisins[3] = plateau[i]; // droite
     }
+
     tile_laid.GetComponent<Constraints>().visite = true;
     // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
@@ -770,7 +706,6 @@ public bool townIsClosed(GameObject tile_laid)
                 townIsClosed(voisins[3]);
                 }
         }
-    
     return true;
 }
 

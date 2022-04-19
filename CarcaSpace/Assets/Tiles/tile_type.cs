@@ -66,8 +66,9 @@ public abstract class tile_type : NetworkBehaviour
         this.GetComponent<Constraints>().gauche = gauche;
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
+        bool[] copie = this.GetComponent<Constraints>().posePossible;
+        this.GetComponent<Constraints>().posePossible = new bool[5]{copie[3], copie[0], copie[1], copie[2], copie[4]};
         //this.GetComponent<Constraints>().milieu = milieu;
-
     }
 
     protected void rotate_right()
@@ -82,16 +83,18 @@ public abstract class tile_type : NetworkBehaviour
         this.GetComponent<Constraints>().gauche = gauche;
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
+        bool[] copie = this.GetComponent<Constraints>().posePossible;
+        this.GetComponent<Constraints>().posePossible = new bool[5]{copie[1], copie[2], copie[3], copie[0], copie[4]};
         //this.GetComponent<Constraints>().milieu = milieu;
     }
 
-    public abstract int getNbrTuile();
+    //public abstract int getNbrTuile();
 
-    public abstract void decrementNbrTuile();
+    //public abstract void decrementNbrTuile();
 
-    public abstract bool getFinish();
+    //public abstract bool getFinish();
 
-    public abstract void changeFinish();
+    //public abstract void changeFinish();
     
 
 }

@@ -7,15 +7,21 @@ using UnityEngine.EventSystems;
 // Script qui met la minimap transparante lorsqu'on passe la souris dessus
 public class MiniMapScriptOver : MonoBehaviour,
                                  IPointerEnterHandler,
-                                 IPointerExitHandler {
+                                 IPointerExitHandler,
+                                  IPointerClickHandler {
   private Color white = new Color(1f, 1f, 1f, 1f);
   private Color trans = new Color(1f, 1f, 1f, 0.3f);
   public int speed;
   private bool anim1 = false;
   private bool anim2 = false;
 
+  public GameObject back;
+  public GameObject raw;
+
   // Start is called before the first frame update
-  void Start() {}
+  void Start() {
+
+  }
 
   // Update is called once per frame
   void Update() {
@@ -39,5 +45,12 @@ public class MiniMapScriptOver : MonoBehaviour,
   public void OnPointerExit(PointerEventData eventData) {
     anim1 = false;
     anim2 = true;
+  }
+
+  public void OnPointerClick(PointerEventData eventData) {
+    GameObject.Find("Main Camera").GetComponent<Camera>().enabled = false;
+    GameObject.Find("DuplicateCam").GetComponent<Camera>().enabled = true;
+    raw.SetActive(false);
+    back.SetActive(true);
   }
 }
