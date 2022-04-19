@@ -293,76 +293,6 @@ public class PlayerManager : NetworkBehaviour
         tabPos[4] = milieu;
         nb_of_struct_roads = 0;
     }
-/*
-    public void roadIsClosed(GameObject tile_laid) // (tuile posé)
-    {
-        // récupération de ses coordonnées sur la grid
-        int x = tile_laid.GetComponent<Constraints>().coordX;
-        int y = tile_laid.GetComponent<Constraints>().coordY;
-
-        //Debug.Log("je suis dans roadisclosed");
-        //Debug.Log(tile_laid);
-        //Debug.Log(tile_laid.GetComponent<Constraints>().haut);
-        //CurrentRoads road1 = new CurrentRoads("Road 1",size);
-        //Debug.Log(road1.Name);
-
-        //if struct.size == 1 alors la tile dans la liste est l'extrémité1 et extremite2
-        //if struct.size > 1 alors l'extrémité1 est le premier élément et l'éxtrémité2 est le dernier elt
-        
-        if(cond)
-            CurrentRoads road = new CurrentRoads(i); // variavle globale du nbr de structure pour pas qu'on ait plusieurs fois les mêmes noms
-            attributs a init etc...
-
-            puis on le rajoute à une liste de structures
-
-        
-
-        
-        if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin){
-            Debug.Log("je sors");
-            return;
-        }
-        
-
-        //récupérer les voisins du Go parmis les tuiles du plateau
-        GameObject[] voisins = new GameObject[4];
-        for(int i = 0; i < plateau.Count; i++)
-        {
-            Debug.Log("plat : " + plateau[i]);
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
-                voisins[0] = plateau[i]; // haut
-            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[1] = plateau[i]; // gauche
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
-                voisins[2] = plateau[i]; // bas
-            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[3] = plateau[i]; // droite
-        }
-        Debug.Log("V0 "+voisins[0]+" V1 "+voisins[1]+" V2 "+voisins[2]+" V3 "+voisins[3]);
-        
-        if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin || tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin || tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin || tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
-        {
-            if(voisins[0] != null)
-
-        }
-        
-
-
-
-
-        
-        si on a une valeur chemin, si le voisin est du côté du chemin alors on ajoute la tuile à la structure du voisin
-        sinon on crée une nouvelle structure
-
-        si tuile carrefour, on doit créer 3/4 structures
-
-        
-    
-        
-        //puis lancer l'algo quoi
-
-    }
-*/
 
 public void resetVisite()
 {
@@ -532,13 +462,6 @@ public void roadIsClosed_Struct(GameObject tile_laid)
             break;
         }
     }
-  
-    /*
-    if(count == 2)
-    {
-        for(int i = 0; i < list_of_struct_roads.Co)
-    }
-    */
     return;
 }
 
@@ -723,6 +646,7 @@ public bool townIsClosed(GameObject tile_laid)
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
                 voisins[3] = plateau[i]; // droite
     }
+
     tile_laid.GetComponent<Constraints>().visite = true;
     // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
