@@ -67,9 +67,10 @@ public class logIn : MonoBehaviour{
                 Debug.Log("Form uploaded !");
                 Debug.Log(restAPI.downloadHandler.text);
                 serverResponse data = JsonUtility.FromJson<serverResponse>(restAPI.downloadHandler.text);
+               
                 if(data.success == "true")
                 {
-                    SceneManager.LoadScene("connectedMenu", LoadSceneMode.Single);
+                    SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
                 }
                 else if(data.success == "false" && data.message == "Not existing user") {
                     serverResponseText.text = "Wrong credentials";

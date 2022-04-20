@@ -1,12 +1,15 @@
 require('dotenv').config()
 const express = require('express')
 const compression = require('compression')
+const argon2i = require('argon2-ffi').argon2i;
 const app = express()
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 const userSchema = require('./models/users')
 const fs = require("fs");
+const users = require('./models/users');
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -30,30 +33,57 @@ app.listen(process.env.PORT || 3000, () => console.log(`Server has started on po
 
 app.post('/signIn', async (req,res) => {
 
-    const user = new userSchema ({
-        name: req.body.name,
-        mail: req.body.mail,
-        pass: bcrypt.hashSync(req.body.pass, 10)
-    });
-
-    userSchema.exists({name: req.body.name, mail: req.body.mail})
-        .then(async () => {
-            const newUser = await user.save()
-            console.log(req.body)
-        })
-        .catch( (err) => {
+    crypto.randomBytes(32, function(err, salt){
+        if(err){
             console.log(err);
-            res.status(err.status || 500).send({
-                success: false,
-                error: {
-                    status: err.status || 500,
-                    message: "User exists"
-                }
-            })
+        }
+        argon2i.hash(req.body.pass, salt).then(async (hash) => {
+            const user = new userSchema ({
+                name: req.body.name,
+                mail: req.body.mail,
+                pass: hash,
+                salt: salt
+            });
+            userSchema.exists({name: req.body.name, mail: req.body.mail})
+                .then(async (doc) => {
+                    if(doc == null){
+                        const newUser = await user.save()
+                        console.log(req.body)
+                    }
+                })
+                .catch( (err) => {
+                    console.log(err);
+                    res.status(err.status || 500).send({
+                        success: false,
+                        error: {
+                            status: err.status || 500,
+                            message: "User exists"
+                        }
+                    })
+                })
         })
+
+    })
+
+    
+    
 });
 
 app.post('/logIn', async (req, res) => {
+    var userAccout = await users.findOne({name: req.body.name});
+    if(userAccout != null){
+        argon2i.verify(userAccout.pass, req.body.pass).then(sucessed => {
+            if(sucessed){
+                //await userAccout.save();
+                res.send({success: true});
+            }
+            else{
+                res.send({success: false,
+                message: "Not existing user"})
+            }
+        })
+    }
+    /*
     userSchema.exists({name: req.body.name})
     .then( (doc) => {
         if(doc != null){
@@ -61,7 +91,7 @@ app.post('/logIn', async (req, res) => {
             res.send({success: true});
         }
         else {
-            res.send({success: false,
+                res.send({success: false,
                 message: "Not existing user"
             })
         }
@@ -76,6 +106,7 @@ app.post('/logIn', async (req, res) => {
             }
         })
     })
+    */
 });
 
 app.use((err, req, res) => {
