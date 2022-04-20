@@ -37,7 +37,11 @@ public class MultiplayerMenu : MonoBehaviour
 
     [SerializeField]  Canvas CanvasMain ;
 
-    
+    [SerializeField] Text textPlayers;
+
+    [SerializeField] GameObject UIPlayerPrefab;
+
+    [SerializeField] GameObject UIPlayerManagerParent;
     
 
     
@@ -139,7 +143,8 @@ public class MultiplayerMenu : MonoBehaviour
     //pour reactiver les boutons si echec
     public void hostSucc(bool success){
         if(success){
-            SceneManager.LoadScene("Lobby");
+            //SceneManager.LoadScene("Lobby");
+            //SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer);
         }else{
             // joinMatchInput.interactable = true ; 
             // joinButton.interactable = true ; 
@@ -159,7 +164,7 @@ public class MultiplayerMenu : MonoBehaviour
     public void joinSucc(bool success){
         if(success){
             
-            //spawn les "Cartes des joeuurs ici " 
+        //SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer);
         }else{
             joinMatchInput.interactable = true ;
             joinButton.interactable = true ; 
@@ -167,5 +172,13 @@ public class MultiplayerMenu : MonoBehaviour
         }
     }
     
-    
+
+    // public void SetPlayer (GameObject player,int index) {
+    //     textPlayers.text = "Player " + player.playerIndex.ToString();
+    // }
+
+    public void SpawnUIPlayerPrefab (RoomPlayerManager Player) {
+       GameObject newUIPlayer = Instantiate(UIPlayerPrefab) ;
+        // SetPlayer(newUIPlayer,Player.playerIndex );
+    }
 }
