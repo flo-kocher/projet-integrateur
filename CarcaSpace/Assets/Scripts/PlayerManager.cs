@@ -336,6 +336,15 @@ public void roadIsClosed_Struct(GameObject tile_laid)
     }
     Debug.Log("La tuile "+ tile_laid + " a comme voisins : haut "+voisins[0]+" gauche "+voisins[1]+" bas "+voisins[2]+" droite "+voisins[3]);
 
+    //condition :
+    //1er if qui fait le cas de la boucle sur elle-même donc si le go.gauche et le go.droite appartienne à la même structure
+    //            du coup faire le calculer de point avec les meeples etc.. et détruit la structure
+
+    
+
+
+
+
     // il n'y a pas de connexion de chemin, on crée une nouvelle structure
     if((tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin || voisins[0] == null) && (tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin || voisins[1] == null) && (tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin || voisins[2] == null) && (tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin || voisins[3] == null))
     {
@@ -446,7 +455,7 @@ public void roadIsClosed_Struct(GameObject tile_laid)
 
         il faut qu'on mette 3 if()
 
-        1er if qui fait le cas de la boucle sur elle -même donc si le go.gauche et le go.droite appartienne à la même structure
+        1er if qui fait le cas de la boucle sur elle-même donc si le go.gauche et le go.droite appartienne à la même structure
                 du coup faire le calculer de point avec les meeples etc.. et détruit la structure
 
         2è if qui fait le cas de la fusion qui va fusionner les deux structures en une seule
@@ -454,10 +463,6 @@ public void roadIsClosed_Struct(GameObject tile_laid)
 
         3è if cas général où la tuile va juste se rajouter à une structure existante ou en créer une nouvelle
                 vérifier aussi si deux tuiles fermantes et calcule de points
-
-
-        
- 
 
 
 
