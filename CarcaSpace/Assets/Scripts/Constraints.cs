@@ -26,7 +26,7 @@ public class Constraints : MonoBehaviour
     public Meeple meeple;
     public bool visite;
     public bool carrefour;
-    public bool[] posePossible = new bool[] {haut, gauche, bas, droite, milieu};
+    public bool[] posePossible = {false, false, false, false, false};
     // Start is called before the first frame update
     void Start()
     {
