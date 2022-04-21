@@ -424,6 +424,10 @@ public class PlayerManager : NetworkBehaviour
             }
         }
 
+
+        //Debug.Log("Nom structs : "+nom_struct_haut+"  "+nom_struct_gauche+"  "+nom_struct_bas+"  "+nom_struct_droite);
+
+
         // cas avec 1 face Chemin
         if(nb_faces == 1)
         {
@@ -453,19 +457,22 @@ public class PlayerManager : NetworkBehaviour
             }
         }
 
+
         //cas avec 2 faces Chemin
         if(nb_faces == 2)
         {
-            if(nom_struct_gauche == nom_struct_haut)
+            //premier if et else fonctionnel !
+            if(nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_gauche);
                 road.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure
             }
-            else
+            if(nom_struct_gauche != nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
                 //fusion de gauche avec haut
+                Debug.Log("ELSE 1");
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
@@ -477,67 +484,114 @@ public class PlayerManager : NetworkBehaviour
                 nb_of_struct_roads--;
             }
             
-            
-            if(nom_struct_gauche == nom_struct_bas)
+            if(nom_struct_gauche == nom_struct_bas && nom_struct_haut == "" && nom_struct_droite == "")
             {
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_gauche);
                 road.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure                
             }
-            else
+            if(nom_struct_gauche != nom_struct_bas && nom_struct_droite == "" && nom_struct_haut == "")
             {
                 //fusion de gauche avec bas
+                Debug.Log("ELSE 2");
+                CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
+                CurrentRoads road_bas = getStructByName(nom_struct_bas);
+                for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                {
+                    road_bas.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                }
+                road_bas.CurrentTiles.Add(tile_laid);
+                list_of_struct_roads.Remove(road_gauche);
+                nb_of_struct_roads--;
             }
 
-
-            if(nom_struct_gauche == nom_struct_droite)
+            if(nom_struct_gauche == nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_gauche);
                 road.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure                
             }
-            else
+            if(nom_struct_gauche != nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
                 //fusion de gauche avec droite
+                Debug.Log("ELSE 3");
+                CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
+                CurrentRoads road_droite = getStructByName(nom_struct_droite);
+                for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                {
+                    road_droite.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                }
+                road_droite.CurrentTiles.Add(tile_laid);
+                list_of_struct_roads.Remove(road_gauche);
+                nb_of_struct_roads--;
             }
 
-            
-            if(nom_struct_droite == nom_struct_haut)
+            if(nom_struct_droite == nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
                 //ajout du Go a droite et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_droite);
                 road.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure                
             }
-            else
+            if(nom_struct_droite != nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
                 //fusion de droite avec haut
+                Debug.Log("ELSE 4");
+                CurrentRoads road_droite = getStructByName(nom_struct_droite);
+                CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                for(int i = 0; i < road_droite.CurrentTiles.Count; i++)
+                {
+                    road_haut.CurrentTiles.Add(road_droite.CurrentTiles[i]);
+                }
+                road_haut.CurrentTiles.Add(tile_laid);
+                list_of_struct_roads.Remove(road_droite);
+                nb_of_struct_roads--;                
             }
             
-            if(nom_struct_droite == nom_struct_bas)
+            if(nom_struct_droite == nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
                 //ajout du Go a droite et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_droite);
                 road.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure                
             }
-            else
+            if(nom_struct_droite != nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
                 //fusion de droite avec bas
+                Debug.Log("ELSE 5");
+                CurrentRoads road_droite = getStructByName(nom_struct_droite);
+                CurrentRoads road_bas = getStructByName(nom_struct_bas);
+                for(int i = 0; i < road_droite.CurrentTiles.Count; i++)
+                {
+                    road_bas.CurrentTiles.Add(road_droite.CurrentTiles[i]);
+                }
+                road_bas.CurrentTiles.Add(tile_laid);
+                list_of_struct_roads.Remove(road_droite);
+                nb_of_struct_roads--;                
             }
 
-            if(nom_struct_haut == nom_struct_bas)
+            if(nom_struct_haut == nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {
                 //ajout du Go en haut et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_haut);
                 road.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure                
             }
-            else
+            if(nom_struct_haut != nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {
                 //fusion de haut avec bas
+                Debug.Log("ELSE 6");
+                CurrentRoads road_bas = getStructByName(nom_struct_bas);
+                CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                for(int i = 0; i < road_bas.CurrentTiles.Count; i++)
+                {
+                    road_haut.CurrentTiles.Add(road_bas.CurrentTiles[i]);
+                }
+                road_haut.CurrentTiles.Add(tile_laid);
+                list_of_struct_roads.Remove(road_bas);
+                nb_of_struct_roads--;                
             }
         }
 
