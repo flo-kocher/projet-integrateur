@@ -229,7 +229,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType14);
                     }
                     break;
-                    /*
                 case 15 :
                     for(x=0;x<=2;x++)
                     {
@@ -237,7 +236,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType15);
                     }
                     break;
-                    */
                 case 16 :
                     for(x=0;x<=4;x++)
                     {
@@ -245,7 +243,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType16);
                     }
                     break;
-                    /*
                 case 17 :
                     for(x=0;x<=2;x++)
                     {
@@ -253,7 +250,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType17);
                     }
                     break;
-                    */
                 case 18 :
                     for(x=0;x<=2;x++)
                     {
@@ -268,7 +264,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType19);
                     } 
                     break;
-                //a revoir
                 case 20 :
                     for(x=0;x<=3;x++)
                     {
@@ -276,7 +271,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType20);
                     } 
                     break;
-                    /*
                 case 21 :
                     // tmp.AddComponent<tile_type_21>();
                     all_tiles.Add(TileType21);
@@ -288,7 +282,6 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType22);
                     }  
                     break;
-                    */
                 case 23:
                     for(x=0;x<=7;x++)
                     {
@@ -335,6 +328,16 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
+    public void createNewStruct(GameObject tile_laid, String intersection)
+    {
+        CurrentRoads road = new CurrentRoads("Road " + nb_of_struct_roads+""+intersection, tile_laid);
+        nb_of_struct_roads++;
+        // ajout de la stucture à la liste_des_struct
+        list_of_struct_roads.Add(road);
+        //Debug.Log("crea struct 1 " + list_of_struct_roads.Count);
+        //Debug.Log("struct-"+road.Name+"created");
+    }
+
     public void roadIsClosed_Struct(GameObject tile_laid)
     {
         if (tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
@@ -375,14 +378,23 @@ public class PlayerManager : NetworkBehaviour
         // il n'y a pas de connexion de chemin, on crée une nouvelle structure
         if(voisins[0] == null && voisins[1] == null && voisins[2] == null && voisins[3] == null)
         {
-            //créer une nouvelle structure
-            CurrentRoads road = new CurrentRoads("Road " + nb_of_struct_roads, tile_laid);
-            nb_of_struct_roads++;
-            // ajout de la stucture à la liste_des_struct
-            list_of_struct_roads.Add(road);
-            Debug.Log("crea struct 1 " + list_of_struct_roads.Count);
-            //Debug.Log("struct-"+road.Name+"created");
+            //cas particulier de la tuile 21 n'arrivera jamais, puisque liaison chemin sur tous les coins
 
+            //cas particulier tuile 17 et 22
+            if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+            {
+                Debug.Log("Aucun voisins et tuile 17 ou 22");
+                //créer 3 structures
+                createNewStruct(tile_laid,"_1");
+                createNewStruct(tile_laid,"_2");
+                createNewStruct(tile_laid,"_3");
+            }
+            else
+            {
+                Debug.Log("Aucun voisins");
+                //créer une nouvelle structure
+                createNewStruct(tile_laid,"");
+            }
         }
 
         String nom_struct_haut = "";
@@ -390,6 +402,10 @@ public class PlayerManager : NetworkBehaviour
         String nom_struct_bas = "";
         String nom_struct_droite = "";
         int nb_faces = 0;
+        bool face_haut = false;
+        bool face_gauche = false;
+        bool face_bas = false;
+        bool face_droite = false;
 
         // récupère le NOM des structures des voisins de tile_laid
         // et spécifie le nombre de faces qui relie tile_laid à ses voisins dans "nb_faces"
@@ -401,66 +417,110 @@ public class PlayerManager : NetworkBehaviour
                 {
                     //Debug.Log("haut déjà dans une liste");
                     nom_struct_haut = list_of_struct_roads[j].Name;
-                    nb_faces++;
+                    //nb_faces++;
+                    face_haut = true;
                 }
                 if (list_of_struct_roads[j].CurrentTiles[k] == voisins[1])
                 {
                     //Debug.Log("gauche déjà dans une liste");
                     nom_struct_gauche = list_of_struct_roads[j].Name;
-                    nb_faces++;
+                    //nb_faces++;
+                    face_gauche = true;
                 }
                 if (list_of_struct_roads[j].CurrentTiles[k] == voisins[2])
                 {
                     //Debug.Log("bas déjà dans une liste");
                     nom_struct_bas = list_of_struct_roads[j].Name;
-                    nb_faces++;
+                    //nb_faces++;
+                    face_bas = true;
                 }
                 if (list_of_struct_roads[j].CurrentTiles[k] == voisins[3])
                 {
                     //Debug.Log("droite déjà dans une liste");
                     nom_struct_droite = list_of_struct_roads[j].Name;
-                    nb_faces++;
+                    //nb_faces++;
+                    face_droite = true;
                 }
             }
         }
 
 
-        //Debug.Log("Nom structs : "+nom_struct_haut+"  "+nom_struct_gauche+"  "+nom_struct_bas+"  "+nom_struct_droite);
+        /*
+            A TESTER
 
+            quand on crée les 2 structures dans le cas 1 face pour une intersection
+            mettre en argument supplémentaire à createNewStruct de quel côté on fait la structure
+            genre si connection a gauche et début chemin en bas et a droite alors faire crea d'une structure avec comme string intersection = bas et = droite
+
+            et ensuite dans les boucles for au-dessus rajouter dans les if :
+                if voisins[0] est une tile_type numéro 17 ou 22 alors demander a ce que ma nom_struct_haut soit égal à nom_struct_bas du voisin
+
+                if voisins[1] est une tile 17/22 alors demander nom_struct_gauche = nom_struct_droite du voisin
+
+
+        */
+
+
+
+        Debug.Log("Nom structs : "+nom_struct_haut+"  "+nom_struct_gauche+"  "+nom_struct_bas+"  "+nom_struct_droite);
 
         // cas avec 1 face Chemin
-        if(nb_faces == 1)
+        if(face_haut || face_gauche || face_bas || face_droite)
         {
-            if(nom_struct_haut != null)
+            Debug.Log("1 voisins");
+            if(nom_struct_haut != "")
             {
                 //ajout du Go à la struct du haut
                 CurrentRoads cr = getStructByName(nom_struct_haut);
+                //Debug.Log(nom_struct_haut);
+                //on ajoute la tuile au chemin qui nous connecte
                 cr.CurrentTiles.Add(tile_laid);
             }
-            if(nom_struct_gauche != null)
+            if(nom_struct_gauche != "")
             {
                 //ajout du Go à la struct du gauche
                 CurrentRoads cr = getStructByName(nom_struct_gauche);
+                //Debug.Log(nom_struct_gauche);
                 cr.CurrentTiles.Add(tile_laid); 
             }
-            if(nom_struct_bas != null)
+            if(nom_struct_bas != "")
             {
                 //ajout du Go à la struct du bas
                 CurrentRoads cr = getStructByName(nom_struct_bas);
-                cr.CurrentTiles.Add(tile_laid); 
+                //Debug.Log(nom_struct_bas);
+                cr.CurrentTiles.Add(tile_laid);
             }
-            if(nom_struct_droite != null)
+            if(nom_struct_droite != "")
             {
                 //ajout du Go à la struct du droite
                 CurrentRoads cr = getStructByName(nom_struct_droite);
-                cr.CurrentTiles.Add(tile_laid); 
+                //Debug.Log(nom_struct_droite);
+                cr.CurrentTiles.Add(tile_laid);
             }
+
+
+            if (tile_laid.name.Contains("21"))
+            {
+                Debug.Log("1 voisin et tuile 21");
+                createNewStruct(tile_laid,"");
+                createNewStruct(tile_laid,"");
+                createNewStruct(tile_laid,"");
+            }
+            if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+            {
+                Debug.Log("1 voisin et tuile 17 ou 22");
+                createNewStruct(tile_laid,"_2");
+                createNewStruct(tile_laid,"_3");
+            }
+
+
         }
 
 
         //cas avec 2 faces Chemin
-        if(nb_faces == 2)
+        if(face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_gauche && face_droite)
         {
+            Debug.Log("2 voisins");
             //premier if et else fonctionnel !
             if(nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
@@ -596,13 +656,33 @@ public class PlayerManager : NetworkBehaviour
         }
 
         //cas avec 3 faces Chemin
-        /*
-        if(nb_faces == 3)
+        
+        if((face_haut && face_gauche && face_bas) || (face_gauche && face_bas && face_droite) || (face_bas || face_droite || face_haut) || (face_droite && face_haut && face_gauche))
         {
-            if(nom_struct_haut != nom_struct_gauche && nom_struct_haut != nom_struct_bas && nom_struct_haut != nom_struct_droite)
+            if(nom_struct_gauche == nom_struct_bas && nom_struct_bas == nom_struct_droite)
+            {
+                // intersection sauf en haut
+            }
+
+            if(nom_struct_bas == nom_struct_droite && nom_struct_droite == nom_struct_haut)
+            {
+                // intersection sauf a gauche
+            }
+
+            if(nom_struct_droite == nom_struct_haut && nom_struct_haut == nom_struct_gauche)
+            {
+                // intersection sauf en bas
+            }
+
+            if(nom_struct_haut == nom_struct_gauche && nom_struct_gauche == nom_struct_bas)
+            {
+                // intersection sauf a droite
+            }            
                 
         }
-        */
+        
+
+
         //cas avec 4 faces Chemin
         // on aura tjr au max 2 fusions mais jamais plus
 
