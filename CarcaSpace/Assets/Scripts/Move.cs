@@ -128,13 +128,13 @@ public class Move : NetworkBehaviour {
       float finish = Vector3.Angle(transform.position, target);
       if (finish <= 0.001f) {
         anim2 = false;
-        bool[] tabExample = new bool[]{ false, true, false, true, false };
+        //bool[] tabExample = new bool[]{ false, true, false, true, false };
 
         // on récupère l'Pidentifiant du network
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
-        PlayerManager.CmdSpawnStars(tabExample, x, y);
+        PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
 
 
 
@@ -147,14 +147,16 @@ public class Move : NetworkBehaviour {
         for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
           Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
         */
+
+        /*
         PlayerManager.resetVisite();
         Debug.Log("bool town closed " + PlayerManager.townIsClosed(go));
         PlayerManager.resetVisite();
-
+        */
         //cloture d'abbayes
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
           PlayerManager.abbeyes.Add(go);
-        Debug.Log("abbeye closed: " + PlayerManager.abbeyIsClose());
+        PlayerManager.abbeyIsClose();
 
 
       }

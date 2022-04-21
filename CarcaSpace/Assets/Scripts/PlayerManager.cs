@@ -48,10 +48,10 @@ public class PlayerManager : NetworkBehaviour
     private int compteur = 0;
 
     // emplacements des étoiles sur une tuile
-    public Vector2 nord = new Vector2(0.5f, 0.83f);
-    public Vector2 sud = new Vector2(0.5f, 0.17f);
-    public Vector2 est = new Vector2(0.83f, 0.5f);
-    public Vector2 ouest = new Vector2(0.17f, 0.5f);
+    public Vector2 haut = new Vector2(0.5f, 0.83f);
+    public Vector2 bas = new Vector2(0.5f, 0.17f);
+    public Vector2 droite = new Vector2(0.83f, 0.5f);
+    public Vector2 gauche = new Vector2(0.17f, 0.5f);
     public Vector2 milieu = new Vector2(0.5f, 0.5f);
     // tableau des emplacements
     public Vector2[] tabPos;
@@ -309,10 +309,10 @@ public class PlayerManager : NetworkBehaviour
         
         //instantie le tableau des positions des étoiles
         tabPos = new Vector2[5];
-        tabPos[0] = nord;
-        tabPos[1] = sud;
-        tabPos[2] = est;
-        tabPos[3] = ouest;
+        tabPos[0] = haut;
+        tabPos[1] = gauche;
+        tabPos[2] = bas;
+        tabPos[3] = droite;
         tabPos[4] = milieu;
         nb_of_struct_roads = 0;
     }
@@ -500,9 +500,6 @@ public class PlayerManager : NetworkBehaviour
 
 
     */
-    int count = 0;
-    int indice_list_1 = -1;
-
         // condition verte
         // parcours la liste des struct actuelle
         
@@ -638,14 +635,14 @@ public class PlayerManager : NetworkBehaviour
         // parcours de plateau
         for(int i = 0; i < abbeyes.Count; i++)
         {
-           abbeyLaid(abbeyes[i]);        
+            abbeyLaid(abbeyes[i]);        
         }
         // if (plateau[i].milie == abbaye)
             //  je lance abbeyLaid(plateau[i])
         // faire un tableau des abbayes
     }
 
-    public bool abbeyLaid(GameObject tile_laid)
+    public void abbeyLaid(GameObject tile_laid)
     {
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
@@ -667,7 +664,7 @@ public class PlayerManager : NetworkBehaviour
             if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y+1)
                 compteur++; // haut gauche
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y-1)
-                ompteur++; // bas droite
+                compteur++; // bas droite
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y-1)
                 compteur++; // bas gauche
         }
@@ -807,7 +804,7 @@ public class PlayerManager : NetworkBehaviour
         for (int i = 0; i < 5; i++)
         {
             // on vérifie les valeurs des positions et on crée les étoiles si les valeurs valent true
-            if (tab[i]) 
+            if (tab[i])
             {
                 GameObject star = Instantiate(Stars);
                 
