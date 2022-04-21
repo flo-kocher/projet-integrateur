@@ -12,8 +12,7 @@ public class Move : NetworkBehaviour {
   public float speed;            // vitesse de lévé et de pose de la tuile
   private bool anim1 = false;    // Leve de la tuile
   private bool anim2 = false;    // Pose de la tuile
-  private GameObject
-      disapear; // GameObject de la grille en dessous de la ou on veut poser
+  private GameObject disapear; // GameObject de la grille en dessous de la ou on veut poser
   private rotateZ r;
 
   private bool clickedOnStar = false;
@@ -131,15 +130,17 @@ public class Move : NetworkBehaviour {
         anim2 = false;
         bool[] tabExample = new bool[]{ false, true, false, true, false };
 
-        // on récupère l'identifiant du network
+        // on récupère l'Pidentifiant du network
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
         PlayerManager.CmdSpawnStars(tabExample, x, y);
-        //PlayerManager.roadIsClosed(go);
-        //Debug.Log("Chemin fermé ? " + PlayerManager.roadIsClosed(go));
-        //PlayerManager.resetVisite();
 
+
+
+        // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
+
+        //cloture de chemins
         /*
         PlayerManager.roadIsClosed_Struct(go);
         Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
@@ -147,9 +148,15 @@ public class Move : NetworkBehaviour {
         Debug.Log("nb d'elt dans la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
         */
 
+        //cloture de villes
         PlayerManager.resetVisite();
         Debug.Log("bool town closed " + PlayerManager.townIsClosed(go));
         PlayerManager.resetVisite();
+
+        //cloture d'abbayes
+        if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
+          PlayerManager.abbeyes.Add(go);
+        Debug.Log("abbeye closed: " + PlayerManager.abbeyIsClose());
 
 
       }
