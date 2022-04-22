@@ -275,8 +275,15 @@ public class PlayerManager : NetworkBehaviour
                     // tmp.AddComponent<tile_type_21>();
                     all_tiles.Add(TileType21);
                     break;
+                // case 22 :
+                //     for(x=0;x<=3;x++)
+                //     {
+                //         // tmp.AddComponent<tile_type_22>();
+                //         all_tiles.Add(TileType22);
+                //     }  
+                //     break;
                 case 22 :
-                    for(x=0;x<=3;x++)
+                    for(x=0;x<=5;x++)
                     {
                         // tmp.AddComponent<tile_type_22>();
                         all_tiles.Add(TileType22);
@@ -330,12 +337,13 @@ public class PlayerManager : NetworkBehaviour
 
     public void createNewStruct(GameObject tile_laid, String intersection)
     {
+        //tile_laid.name += intersection; on ne peut pas changer son nom sinon sa change son nom en "global" pour une raison ou pour une autre
         CurrentRoads road = new CurrentRoads("Road " + nb_of_struct_roads+""+intersection, tile_laid);
-        nb_of_struct_roads++;
+        //nb_of_struct_roads++;
         // ajout de la stucture à la liste_des_struct
         list_of_struct_roads.Add(road);
         //Debug.Log("crea struct 1 " + list_of_struct_roads.Count);
-        //Debug.Log("struct-"+road.Name+"created");
+        Debug.Log("creation nouvelle structure avec nom : "+road.Name+"created");
     }
 
     public void roadIsClosed_Struct(GameObject tile_laid)
@@ -385,9 +393,14 @@ public class PlayerManager : NetworkBehaviour
             {
                 Debug.Log("Aucun voisins et tuile 17 ou 22");
                 //créer 3 structures
-                createNewStruct(tile_laid,"_1");
-                createNewStruct(tile_laid,"_2");
-                createNewStruct(tile_laid,"_3");
+                if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
+                    createNewStruct(tile_laid,"_0");
+                if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
+                    createNewStruct(tile_laid,"_1");
+                if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
+                    createNewStruct(tile_laid,"_2");
+                if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
+                    createNewStruct(tile_laid,"_3");
             }
             else
             {
@@ -395,6 +408,7 @@ public class PlayerManager : NetworkBehaviour
                 //créer une nouvelle structure
                 createNewStruct(tile_laid,"");
             }
+            nb_of_struct_roads++;
         }
 
         String nom_struct_haut = "";
@@ -406,6 +420,7 @@ public class PlayerManager : NetworkBehaviour
         bool face_gauche = false;
         bool face_bas = false;
         bool face_droite = false;
+        int cmp_haut = 0, cmp_gauche = 0, cmp_bas = 0, cmp_droite = 0;
 
         // récupère le NOM des structures des voisins de tile_laid
         // et spécifie le nombre de faces qui relie tile_laid à ses voisins dans "nb_faces"
@@ -419,6 +434,12 @@ public class PlayerManager : NetworkBehaviour
                     nom_struct_haut = list_of_struct_roads[j].Name;
                     //nb_faces++;
                     face_haut = true;
+                    cmp_haut++;
+                    if(cmp_haut > 1)
+                    {
+                        nom_struct_haut = nom_struct_haut.Substring(0, nom_struct_haut.Length - 1);
+                        nom_struct_haut += "2";
+                    }
                 }
                 if (list_of_struct_roads[j].CurrentTiles[k] == voisins[1])
                 {
@@ -426,6 +447,12 @@ public class PlayerManager : NetworkBehaviour
                     nom_struct_gauche = list_of_struct_roads[j].Name;
                     //nb_faces++;
                     face_gauche = true;
+                    cmp_gauche++;
+                    if(cmp_gauche > 1)
+                    {
+                        nom_struct_gauche = nom_struct_gauche.Substring(0, nom_struct_gauche.Length - 1);
+                        nom_struct_gauche += "3";
+                    }
                 }
                 if (list_of_struct_roads[j].CurrentTiles[k] == voisins[2])
                 {
@@ -433,6 +460,12 @@ public class PlayerManager : NetworkBehaviour
                     nom_struct_bas = list_of_struct_roads[j].Name;
                     //nb_faces++;
                     face_bas = true;
+                    cmp_bas++;
+                    if(cmp_bas > 1)
+                    {
+                        nom_struct_bas = nom_struct_bas.Substring(0, nom_struct_bas.Length - 1);
+                        nom_struct_bas += "0";
+                    }                    
                 }
                 if (list_of_struct_roads[j].CurrentTiles[k] == voisins[3])
                 {
@@ -440,6 +473,12 @@ public class PlayerManager : NetworkBehaviour
                     nom_struct_droite = list_of_struct_roads[j].Name;
                     //nb_faces++;
                     face_droite = true;
+                    cmp_droite++;
+                    if(cmp_droite > 1)
+                    {
+                        nom_struct_droite = nom_struct_droite.Substring(0, nom_struct_droite.Length - 1);
+                        nom_struct_droite += "1";
+                    }                       
                 }
             }
         }
@@ -458,62 +497,106 @@ public class PlayerManager : NetworkBehaviour
                 if voisins[1] est une tile 17/22 alors demander nom_struct_gauche = nom_struct_droite du voisin
 
 
+
+            OU 
+
+            Plutot que de changer le nom de la struct 
+            peut être juste changer le nom de l'objet que j'ajoute à mes struct 
+            comme ça quand je veux faire ma recherche de ma liste qui contient mon voisin
+            bas si on a 3 noms différent pour le GO intersection
+            bas il saura quand on voudra rajouter à ma liste dans laquelle la mettre 
+
+
+            FAIRE UN DESSIN tranquillement pour voir comment gérer ça on réflechit à tout en même temps là...
+
+
         */
 
 
 
-        Debug.Log("Nom structs : "+nom_struct_haut+"  "+nom_struct_gauche+"  "+nom_struct_bas+"  "+nom_struct_droite);
+        Debug.Log("Nom structs : Nom_haut "+nom_struct_haut+"  Nom_gauche "+nom_struct_gauche+"  Nom_bas "+nom_struct_bas+"  Nom_droite "+nom_struct_droite);
 
         // cas avec 1 face Chemin
         if(face_haut || face_gauche || face_bas || face_droite)
         {
             Debug.Log("1 voisins");
-            if(nom_struct_haut != "")
+            if (nom_struct_haut != "")
             {
                 //ajout du Go à la struct du haut
                 CurrentRoads cr = getStructByName(nom_struct_haut);
+                //Debug.Log("Nom_struct_haut : "+cr.Name);
                 //Debug.Log(nom_struct_haut);
                 //on ajoute la tuile au chemin qui nous connecte
                 cr.CurrentTiles.Add(tile_laid);
+                if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
+                {
+                    //Debug.Log("1 voisin et tuile 17 ou 22");
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_1");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_2");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_3");
+                    nb_of_struct_roads++;
+                }
             }
             if(nom_struct_gauche != "")
             {
                 //ajout du Go à la struct du gauche
                 CurrentRoads cr = getStructByName(nom_struct_gauche);
+                //Debug.Log("Nom_struct_gauche : "+cr.Name);
                 //Debug.Log(nom_struct_gauche);
-                cr.CurrentTiles.Add(tile_laid); 
+                cr.CurrentTiles.Add(tile_laid);
+                if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
+                {
+                    //Debug.Log("1 voisin et tuile 17 ou 22");
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_0");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_2");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_3");
+                    nb_of_struct_roads++;
+                }
             }
             if(nom_struct_bas != "")
             {
                 //ajout du Go à la struct du bas
                 CurrentRoads cr = getStructByName(nom_struct_bas);
+                //Debug.Log("Nom_struct_bas : "+cr.Name);
                 //Debug.Log(nom_struct_bas);
                 cr.CurrentTiles.Add(tile_laid);
+                if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
+                {
+                    //Debug.Log("1 voisin et tuile 17 ou 22");
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_0");
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_1");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_3");
+                    nb_of_struct_roads++;
+                }                
             }
             if(nom_struct_droite != "")
             {
                 //ajout du Go à la struct du droite
                 CurrentRoads cr = getStructByName(nom_struct_droite);
+                //Debug.Log("Nom_struct_droite : "+cr.Name);
                 //Debug.Log(nom_struct_droite);
                 cr.CurrentTiles.Add(tile_laid);
+                if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
+                {
+                    //Debug.Log("1 voisin et tuile 17 ou 22");
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_0");
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_1");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
+                        createNewStruct(tile_laid,"_2");
+                    nb_of_struct_roads++;
+                }                
             }
-
-
-            if (tile_laid.name.Contains("21"))
-            {
-                Debug.Log("1 voisin et tuile 21");
-                createNewStruct(tile_laid,"");
-                createNewStruct(tile_laid,"");
-                createNewStruct(tile_laid,"");
-            }
-            if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
-            {
-                Debug.Log("1 voisin et tuile 17 ou 22");
-                createNewStruct(tile_laid,"_2");
-                createNewStruct(tile_laid,"_3");
-            }
-
-
         }
 
 
@@ -532,7 +615,7 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_gauche != nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
                 //fusion de gauche avec haut
-                Debug.Log("ELSE 1");
+                //Debug.Log("ELSE 1");
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
@@ -554,7 +637,7 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_gauche != nom_struct_bas && nom_struct_droite == "" && nom_struct_haut == "")
             {
                 //fusion de gauche avec bas
-                Debug.Log("ELSE 2");
+                //Debug.Log("ELSE 2");
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_bas = getStructByName(nom_struct_bas);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
@@ -576,7 +659,7 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_gauche != nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
                 //fusion de gauche avec droite
-                Debug.Log("ELSE 3");
+                //Debug.Log("ELSE 3");
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_droite = getStructByName(nom_struct_droite);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
@@ -598,7 +681,7 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_droite != nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
                 //fusion de droite avec haut
-                Debug.Log("ELSE 4");
+                //Debug.Log("ELSE 4");
                 CurrentRoads road_droite = getStructByName(nom_struct_droite);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
                 for(int i = 0; i < road_droite.CurrentTiles.Count; i++)
@@ -620,7 +703,7 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_droite != nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
                 //fusion de droite avec bas
-                Debug.Log("ELSE 5");
+                //Debug.Log("ELSE 5");
                 CurrentRoads road_droite = getStructByName(nom_struct_droite);
                 CurrentRoads road_bas = getStructByName(nom_struct_bas);
                 for(int i = 0; i < road_droite.CurrentTiles.Count; i++)
@@ -642,7 +725,7 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_haut != nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {
                 //fusion de haut avec bas
-                Debug.Log("ELSE 6");
+                //Debug.Log("ELSE 6");
                 CurrentRoads road_bas = getStructByName(nom_struct_bas);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
                 for(int i = 0; i < road_bas.CurrentTiles.Count; i++)
