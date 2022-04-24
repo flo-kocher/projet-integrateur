@@ -510,6 +510,170 @@ public class PlayerManager : NetworkBehaviour
         }
         */
 
+        if(face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
+        {
+            if(nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas)
+            {
+                CurrentRoads road = getStructByName(nom_struct_haut);
+                road.CurrentTiles.Add(tile_laid);
+                CurrentRoads road2 = getStructByName(nom_struct_gauche);
+                road2.CurrentTiles.Add(tile_laid);
+                CurrentRoads road3 = getStructByName(nom_struct_bas);
+                road3.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_haut == nom_struct_gauche)
+            {
+                //fusion entre haut et gauche
+                CurrentRoads road = getStructByName(nom_struct_gauche);
+                road.CurrentTiles.Add(tile_laid);
+                //concaténation en bas
+                CurrentRoads road2 = getStructByName(nom_struct_bas);
+                road2.CurrentTiles.Add(tile_laid);
+
+            }
+            if(nom_struct_gauche == nom_struct_bas)
+            {
+                //fusion entre gauche et bas
+                CurrentRoads road = getStructByName(nom_struct_gauche);
+                road.CurrentTiles.Add(tile_laid);                
+                //concaténation en haut
+                CurrentRoads road2 = getStructByName(nom_struct_haut);
+                road2.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_bas == nom_struct_haut)
+            {
+                //fusion entre bas et haut
+                CurrentRoads road = getStructByName(nom_struct_bas);
+                road.CurrentTiles.Add(tile_laid);  
+                //concaténation en gauche
+                CurrentRoads road2 = getStructByName(nom_struct_gauche);
+                road2.CurrentTiles.Add(tile_laid); 
+            }
+        }
+        
+        if(face_haut && face_gauche && face_droite && !face_bas) // tile 17 ou 22 forcément
+        {
+            if(nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_droite)
+            {
+                CurrentRoads road = getStructByName(nom_struct_haut);
+                road.CurrentTiles.Add(tile_laid);
+                CurrentRoads road2 = getStructByName(nom_struct_gauche);
+                road2.CurrentTiles.Add(tile_laid);
+                CurrentRoads road3 = getStructByName(nom_struct_bas);
+                road3.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_haut == nom_struct_gauche)
+            {
+                //fusion entre haut et gauche
+                CurrentRoads road = getStructByName(nom_struct_gauche);
+                road.CurrentTiles.Add(tile_laid);
+                //concaténation en bas
+                CurrentRoads road2 = getStructByName(nom_struct_droite);
+                road2.CurrentTiles.Add(tile_laid);
+
+            }
+            if(nom_struct_gauche == nom_struct_droite)
+            {
+                //fusion entre gauche et bas
+                CurrentRoads road = getStructByName(nom_struct_gauche);
+                road.CurrentTiles.Add(tile_laid);                
+                //concaténation en haut
+                CurrentRoads road2 = getStructByName(nom_struct_haut);
+                road2.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_droite == nom_struct_haut)
+            {
+                //fusion entre bas et haut
+                CurrentRoads road = getStructByName(nom_struct_droite);
+                road.CurrentTiles.Add(tile_laid);  
+                //concaténation en gauche
+                CurrentRoads road2 = getStructByName(nom_struct_gauche);
+                road2.CurrentTiles.Add(tile_laid); 
+            }
+        }
+
+        if(face_haut && face_droite && face_bas && !face_gauche) // tile 17 ou 22 forcément
+        {
+            if(nom_struct_haut != nom_struct_droite && nom_struct_droite != nom_struct_bas)
+            {
+                CurrentRoads road = getStructByName(nom_struct_haut);
+                road.CurrentTiles.Add(tile_laid);
+                CurrentRoads road2 = getStructByName(nom_struct_droite);
+                road2.CurrentTiles.Add(tile_laid);
+                CurrentRoads road3 = getStructByName(nom_struct_bas);
+                road3.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_haut == nom_struct_droite)
+            {
+                //fusion entre haut et gauche
+                CurrentRoads road = getStructByName(nom_struct_droite);
+                road.CurrentTiles.Add(tile_laid);
+                //concaténation en bas
+                CurrentRoads road2 = getStructByName(nom_struct_bas);
+                road2.CurrentTiles.Add(tile_laid);
+
+            }
+            if(nom_struct_bas == nom_struct_droite)
+            {
+                //fusion entre gauche et bas
+                CurrentRoads road = getStructByName(nom_struct_bas);
+                road.CurrentTiles.Add(tile_laid);                
+                //concaténation en haut
+                CurrentRoads road2 = getStructByName(nom_struct_haut);
+                road2.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_bas == nom_struct_haut)
+            {
+                //fusion entre bas et haut
+                CurrentRoads road = getStructByName(nom_struct_bas);
+                road.CurrentTiles.Add(tile_laid);  
+                //concaténation en gauche
+                CurrentRoads road2 = getStructByName(nom_struct_droite);
+                road2.CurrentTiles.Add(tile_laid); 
+            }
+        }
+
+        if(face_droite && face_gauche && face_bas && !face_haut) // tile 17 ou 22 forcément
+        {
+            if(nom_struct_gauche != nom_struct_droite && nom_struct_droite != nom_struct_bas)
+            {
+                CurrentRoads road = getStructByName(nom_struct_gauche);
+                road.CurrentTiles.Add(tile_laid);
+                CurrentRoads road2 = getStructByName(nom_struct_droite);
+                road2.CurrentTiles.Add(tile_laid);
+                CurrentRoads road3 = getStructByName(nom_struct_bas);
+                road3.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_bas == nom_struct_droite)
+            {
+                //fusion entre haut et gauche
+                CurrentRoads road = getStructByName(nom_struct_droite);
+                road.CurrentTiles.Add(tile_laid);
+                //concaténation en bas
+                CurrentRoads road2 = getStructByName(nom_struct_gauche);
+                road2.CurrentTiles.Add(tile_laid);
+
+            }
+            if(nom_struct_bas == nom_struct_gauche)
+            {
+                //fusion entre gauche et bas
+                CurrentRoads road = getStructByName(nom_struct_bas);
+                road.CurrentTiles.Add(tile_laid);                
+                //concaténation en haut
+                CurrentRoads road2 = getStructByName(nom_struct_droite);
+                road2.CurrentTiles.Add(tile_laid);
+            }
+            if(nom_struct_droite == nom_struct_gauche)
+            {
+                //fusion entre bas et haut
+                CurrentRoads road = getStructByName(nom_struct_droite);
+                road.CurrentTiles.Add(tile_laid);  
+                //concaténation en gauche
+                CurrentRoads road2 = getStructByName(nom_struct_bas);
+                road2.CurrentTiles.Add(tile_laid); 
+            }
+        }
+
 /*
         L'ALGO DE FUSION NE FONCTIONNE PAS, IL AJOUTE LA PIECE AUX DEUX STRUCTURES SANS EN SUPPRIMER UNE DES DEUX 
 
@@ -519,6 +683,13 @@ public class PlayerManager : NetworkBehaviour
         LORSQU'ON ESSAYE DE FAIRE UNE BOUCLE SUR SOIS-MÊME AVEC UNE INTERSECTION,
         LORSQU'ON REJOINT LES DEUX CHEMINS, LA PIECE QUI REJOINS AJOUTE LA TUILE DANS LES 2 STRUCTURES CHEMINS ET PAS DANS L'UNE DES DEUX EN FUSIONNANT LES DEUX STRUCTURES
 
+
+>>>>>>>>>>>>>>>>>>>>>>>
+        -------normalement j'ai fais tous les if bon au-dessus il faut juste vérifier -------
+>>>>>>>>>>>>>>>>>>>
+
+
+
 */
 
 
@@ -527,7 +698,7 @@ public class PlayerManager : NetworkBehaviour
 
 
         //cas avec 2 faces Chemin
-        if(face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_gauche && face_droite)
+        if(face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_haut && face_droite)
         {
             Debug.Log("2 voisins");
             //premier if et else fonctionnel !
@@ -548,6 +719,7 @@ public class PlayerManager : NetworkBehaviour
                 //fusion de gauche avec haut
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                Debug.Log("RG : " +road_gauche+" RH : "+road_haut);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
                 {
                     road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
@@ -573,6 +745,7 @@ public class PlayerManager : NetworkBehaviour
                 //fusion de gauche avec bas
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_bas = getStructByName(nom_struct_bas);
+                Debug.Log("RG : " +road_gauche+" RH : "+road_bas);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
                 {
                     road_bas.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
@@ -598,6 +771,7 @@ public class PlayerManager : NetworkBehaviour
                 //fusion de gauche avec droite
                 CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                 CurrentRoads road_droite = getStructByName(nom_struct_droite);
+                Debug.Log("RG : " +road_gauche+" RH : "+droite);
                 for(int i = 0; i < road_gauche.CurrentTiles.Count; i++)
                 {
                     road_droite.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
@@ -623,6 +797,7 @@ public class PlayerManager : NetworkBehaviour
                 //fusion de droite avec haut
                 CurrentRoads road_droite = getStructByName(nom_struct_droite);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                Debug.Log("RG : " +road_droite+" RH : "+road_haut);
                 for(int i = 0; i < road_droite.CurrentTiles.Count; i++)
                 {
                     road_haut.CurrentTiles.Add(road_droite.CurrentTiles[i]);
@@ -648,6 +823,7 @@ public class PlayerManager : NetworkBehaviour
                 //fusion de droite avec bas
                 CurrentRoads road_droite = getStructByName(nom_struct_droite);
                 CurrentRoads road_bas = getStructByName(nom_struct_bas);
+                Debug.Log("RG : " +droite+" RH : "+road_bas);
                 for(int i = 0; i < road_droite.CurrentTiles.Count; i++)
                 {
                     road_bas.CurrentTiles.Add(road_droite.CurrentTiles[i]);
@@ -674,6 +850,7 @@ public class PlayerManager : NetworkBehaviour
                 //fusion de haut avec bas
                 CurrentRoads road_bas = getStructByName(nom_struct_bas);
                 CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                Debug.Log("RG : " +road_bas+" RH : "+road_haut);
                 for(int i = 0; i < road_bas.CurrentTiles.Count; i++)
                 {
                     road_haut.CurrentTiles.Add(road_bas.CurrentTiles[i]);
