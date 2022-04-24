@@ -690,3 +690,6 @@ MonoBehaviour:
   meeple: 0
   visite: 0
   carrefour: 0
+  posePossible: 0000000000
+  estFermante: 0
+  debug: 
