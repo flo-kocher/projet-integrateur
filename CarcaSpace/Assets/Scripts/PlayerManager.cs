@@ -78,6 +78,8 @@ public class PlayerManager : NetworkBehaviour
         public int Size;
         public List<GameObject> CurrentTiles;
 
+        public bool tag;
+
         /*
             rajoute soit les coordonnées de l'extremité 1 et l'extremité 2 
             soit mettre peut être le Go direct de l'extremité 1 et le Go de la 2
@@ -91,12 +93,13 @@ public class PlayerManager : NetworkBehaviour
             this.Size = 1;
             this.CurrentTiles = new List<GameObject>();
             this.CurrentTiles.Add(tile);
+            this.tag = false;
         }
 
         // méthode qui check qui la liste des tuiles est fermé ou pas
-        public bool isClosed()
+        public void tagger(bool b)
         {
-            return true;
+            this.tag = b;
         }
     }
 
@@ -111,6 +114,16 @@ public class PlayerManager : NetworkBehaviour
                 return list_of_struct_roads[i];
         }
         return new CurrentRoads("Error",null);
+    }
+
+    int get_index_StructByName(String name)
+    {
+        for (int i = 0; i < list_of_struct_roads.Count; i++)
+        {
+            if(list_of_struct_roads[i].Name == name)
+                return i;
+        }
+        return -1;
     }
 
     // méthode se lançant au démarrage du client
@@ -243,13 +256,13 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType16);
                     }
                     break;
-                case 17 :
-                    for(x=0;x<=2;x++)
-                    {
-                        //tmp.AddComponent<tile_type_17>();
-                        all_tiles.Add(TileType17);
-                    }
-                    break;
+                // case 17 :
+                //     for(x=0;x<=2;x++)
+                //     {
+                //         //tmp.AddComponent<tile_type_17>();
+                //         all_tiles.Add(TileType17);
+                //     }
+                //     break;
                 case 18 :
                     for(x=0;x<=2;x++)
                     {
@@ -271,10 +284,10 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType20);
                     } 
                     break;
-                case 21 :
-                    // tmp.AddComponent<tile_type_21>();
-                    all_tiles.Add(TileType21);
-                    break;
+                // case 21 :
+                //     // tmp.AddComponent<tile_type_21>();
+                //     all_tiles.Add(TileType21);
+                //     break;
                 // case 22 :
                 //     for(x=0;x<=3;x++)
                 //     {
@@ -282,13 +295,13 @@ public class PlayerManager : NetworkBehaviour
                 //         all_tiles.Add(TileType22);
                 //     }  
                 //     break;
-                case 22 :
-                    for(x=0;x<=5;x++)
-                    {
-                        // tmp.AddComponent<tile_type_22>();
-                        all_tiles.Add(TileType22);
-                    }  
-                    break;
+                // case 22 :
+                //     for(x=0;x<=5;x++)
+                //     {
+                //         // tmp.AddComponent<tile_type_22>();
+                //         all_tiles.Add(TileType22);
+                //     }  
+                //     break;
                 case 23:
                     for(x=0;x<=7;x++)
                     {
@@ -516,14 +529,19 @@ public class PlayerManager : NetworkBehaviour
         //cas avec 2 faces Chemin
         if(face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_gauche && face_droite)
         {
-            //Debug.Log("2 voisins");
+            Debug.Log("2 voisins");
             //premier if et else fonctionnel !
             if(nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
+                
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_gauche);
-                road.CurrentTiles.Add(tile_laid);
+                //CurrentRoads road = getStructByName(nom_struct_gauche);
+                int id = get_index_StructByName(nom_struct_gauche);
+                CurrentRoads roads = list_of_struct_roads[id];
+                roads.tag = true;
+                roads.CurrentTiles.Add(tile_laid);
                 //calcul de points + destruction de la structure
+                Debug.Log("fermé gauche <-> haut" + roads.Name + "close? "+ roads.tag);
             }
             if(nom_struct_gauche != nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
@@ -542,9 +560,13 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_gauche == nom_struct_bas && nom_struct_haut == "" && nom_struct_droite == "")
             {
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_gauche);
-                road.CurrentTiles.Add(tile_laid);
-                //calcul de points + destruction de la structure                
+                // CurrentRoads road = getStructByName(nom_struct_gauche);
+                int id = get_index_StructByName(nom_struct_gauche);
+                CurrentRoads roads = list_of_struct_roads[id];
+                roads.tag = true;
+                roads.CurrentTiles.Add(tile_laid);
+                //calcul de points + destruction de la structure      
+                Debug.Log("fermé gauche <-> bas" + roads.Name + "close? "+ roads.tag);          
             }
             if(nom_struct_gauche != nom_struct_bas && nom_struct_droite == "" && nom_struct_haut == "")
             {
@@ -563,9 +585,13 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_gauche == nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_gauche);
-                road.CurrentTiles.Add(tile_laid);
-                //calcul de points + destruction de la structure                
+                // CurrentRoads road = getStructByName(nom_struct_gauche);
+                int id = get_index_StructByName(nom_struct_gauche);
+                CurrentRoads roads = list_of_struct_roads[id];
+                roads.tag = true;
+                roads.CurrentTiles.Add(tile_laid);
+                //calcul de points + destruction de la structure    
+                Debug.Log("fermé gauche <-> droite" + roads.Name + "close? "+ roads.tag);            
             }
             if(nom_struct_gauche != nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
@@ -584,9 +610,13 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_droite == nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
                 //ajout du Go a droite et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_droite);
-                road.CurrentTiles.Add(tile_laid);
-                //calcul de points + destruction de la structure                
+                // CurrentRoads road = getStructByName(nom_struct_droite);
+                int id = get_index_StructByName(nom_struct_droite);
+                CurrentRoads roads = list_of_struct_roads[id];
+                roads.tag = true;
+                roads.CurrentTiles.Add(tile_laid);
+                //calcul de points + destruction de la structure    
+                Debug.Log("fermé droite <-> haut" + roads.Name + "close? "+ roads.tag);            
             }
             if(nom_struct_droite != nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
@@ -605,9 +635,13 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_droite == nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
                 //ajout du Go a droite et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_droite);
-                road.CurrentTiles.Add(tile_laid);
-                //calcul de points + destruction de la structure                
+                // CurrentRoads road = getStructByName(nom_struct_droite);
+                int id = get_index_StructByName(nom_struct_droite);
+                CurrentRoads roads = list_of_struct_roads[id];
+                roads.tag = true;
+                roads.CurrentTiles.Add(tile_laid);
+                //calcul de points + destruction de la structure 
+                Debug.Log("fermé droite <-> bas" + roads.Name + "close? "+ roads.tag);               
             }
             if(nom_struct_droite != nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
@@ -626,9 +660,14 @@ public class PlayerManager : NetworkBehaviour
             if(nom_struct_haut == nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {
                 //ajout du Go en haut et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_haut);
-                road.CurrentTiles.Add(tile_laid);
-                //calcul de points + destruction de la structure                
+                // CurrentRoads road = getStructByName(nom_struct_haut);
+                int id = get_index_StructByName(nom_struct_droite);
+                CurrentRoads roads = list_of_struct_roads[id];
+                roads.tag = true;
+                roads.CurrentTiles.Add(tile_laid);
+                // road.CurrentTiles.Add(tile_laid);
+                //calcul de points + destruction de la structure    
+                Debug.Log("fermé haut <-> bas" + roads.Name + "close? "+ roads.tag);           
             }
             if(nom_struct_haut != nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {

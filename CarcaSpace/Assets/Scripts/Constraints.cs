@@ -27,6 +27,9 @@ public class Constraints : MonoBehaviour
     public bool visite;
     public bool carrefour;
     public bool[] posePossible = {false, false, false, false, false};
+    
+    public bool estCheminFermant = false; // g
+
     // Start is called before the first frame update
     void Start()
     {

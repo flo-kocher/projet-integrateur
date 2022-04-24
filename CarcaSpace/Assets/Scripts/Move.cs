@@ -145,7 +145,12 @@ public class Move : NetworkBehaviour {
         PlayerManager.roadIsClosed_Struct(go);
         //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
         for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
-          Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
+        {
+          Debug.Log("structure "+PlayerManager.list_of_struct_roads[k].Name+ " : "+
+          PlayerManager.list_of_struct_roads[k].CurrentTiles.Count+ " elems"+
+          " tag : "+PlayerManager.list_of_struct_roads[k].tag);
+        }
+          
         
 
         /*
