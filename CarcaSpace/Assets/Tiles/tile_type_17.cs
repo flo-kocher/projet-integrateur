@@ -24,7 +24,7 @@ public class tile_type_17 : tile_type
         this.GetComponent<Constraints>().milieu = milieu;
         this.GetComponent<Constraints>().posePossible = new bool[5] {true, true, true, true, false};
         this.GetComponent<Constraints>().carrefour = true;
-        this.GetComponent<Constraints>().estCheminFermant = true;
+        this.GetComponent<Constraints>().estFermante = true;
     }
 
     // Update is called once per frame
