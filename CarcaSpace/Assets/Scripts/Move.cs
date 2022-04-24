@@ -147,19 +147,14 @@ public class Move : NetworkBehaviour {
         //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
         for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
         {
-<<<<<<< HEAD
-          Debug.Log("structure "+PlayerManager.list_of_struct_roads[k].Name+ " : "+
-          PlayerManager.list_of_struct_roads[k].CurrentTiles.Count+ " elems"+
-          " tag : "+PlayerManager.list_of_struct_roads[k].tag);
-        }
-          
-=======
           Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
           //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
         }
         
         //Debug.Log("test estFermante " +go.GetComponent<Constraints>().estFermante);
->>>>>>> fe9e38edb31a6cddd8419f6dceccc86de56dfa6f
+        
+
+        //Debug.Log("structure "+PlayerManager.list_of_struct_roads[k].Name+ " : "+ PlayerManager.list_of_struct_roads[k].CurrentTiles.Count+ " elems"+" tag : "+PlayerManager.list_of_struct_roads[k].tag);
         
 
         /*

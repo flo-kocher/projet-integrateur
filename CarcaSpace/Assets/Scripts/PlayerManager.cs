@@ -710,7 +710,7 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_gauche);
 
                 //calcul de points + destruction de la structure
-                Debug.Log("fermé gauche <-> haut" + roads.Name + "close? "+ roads.tag);
+                //Debug.Log("fermé gauche <-> haut" + roads.Name + "close? "+ roads.tag); //////           TEST DU TAG
             }
             if (nom_struct_gauche != nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
