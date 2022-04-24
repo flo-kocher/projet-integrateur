@@ -10,6 +10,10 @@ public class RoomPlayerManager : NetworkBehaviour
 {
 
     public static RoomPlayerManager localPlayer;
+
+
+    // NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+    // localPlayer = networkIdentity.GetComponent<RoomPlayerManager>();
     [SyncVar] public string matchID;
     [SyncVar] public int playerIndex;
 
@@ -28,12 +32,12 @@ public class RoomPlayerManager : NetworkBehaviour
     }
 
     public override void OnStartClient () {
+        base.OnStartClient();
         if (isLocalPlayer) {
             localPlayer = this;
-        } else {
-            Debug.Log ($"Spawning other player UI Prefab");
-            // playerLobbyUI = UILobby.instance.SpawnPlayerUIPrefab (this);
         }
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        
     }
     public override void OnStopClient () {
         Debug.Log ($"Client Stopped");
@@ -93,8 +97,11 @@ public class RoomPlayerManager : NetworkBehaviour
             Debug.Log ($"<color=green>Game Joined successfully</color>");
             networkMatch.matchId = _matchID.ToGuid ();
             TargetJoinGame (true, _matchID, playerIndex);
-        }else
-        TargetJoinGame(true, _matchID, playerIndex)  ;
+        }else{
+            Debug.Log ($"<color=red>Game Joined failed</color>");
+            TargetJoinGame(false, _matchID, playerIndex)  ;
+        }
+        
     }
 
     [TargetRpc]

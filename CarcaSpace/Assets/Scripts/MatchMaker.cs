@@ -54,12 +54,14 @@ public class MatchMaker : NetworkBehaviour
 
 
     //Liste de parties 
-    public SyncList<Match> matches = new SyncList<Match> ();
+    public readonly SyncList<Match> matches = new SyncList<Match> ();
 
     //Liste match ids  
-    public SyncList<String> matchIDS = new SyncList<String>();
+    public readonly SyncList<String> matchIDS = new SyncList<String>();
 
     [SerializeField] int maxPlayers = 5 ; 
+
+    
 
     void Start(){
         instance = this ; 
@@ -107,16 +109,20 @@ public class MatchMaker : NetworkBehaviour
        if (matchIDS.Contains (_matchId)) {
             for (int i = 0; i < matches.Count; i++) {
                 if (matches[i].MatchId == _matchId) {
+                    Debug.Log("La partie existe ");
                     // on verifie s'il n'est pas deja dans la partie et si la partie est deja full 
                     if (!matches[i].inMatch && !matches[i].matchFull) {
+                        Debug.Log("il reste de la place dans la partie ");
                         // on l'ajoute a la liste des  joueurs
                         matches[i].players.Add (_player);
                         _player.currentMatch = matches[i];
                         playerIndex = matches[i].players.Count;
+                        Debug.Log($"player count is {matches[i].players.Count}");
 
                         //matches[i].players[0].PlayerCountUpdated (matches[i].players.Count);
                         // on met a jour matchfull 
                         if (matches[i].players.Count == maxPlayers) {
+                            Debug.Log("la partie est maintenant full ");
                             matches[i].matchFull = true;
                         }
                         break;
@@ -150,6 +156,7 @@ public class MatchMaker : NetworkBehaviour
         for (int i = 0; i < matches.Count; i++) {
             if (matches[i].MatchId == _matchID) {
                 int playerIndex = matches[i].players.IndexOf (player);
+                Debug.Log($"Player index is {playerIndex}");
                 if (matches[i].players.Count > playerIndex) matches[i].players.RemoveAt (playerIndex);
                 Debug.Log ($"Player disconnected from match {_matchID} | {matches[i].players.Count} players remaining");
 
