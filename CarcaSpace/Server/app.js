@@ -37,18 +37,23 @@ app.post('/signIn', async (req,res) => {
         if(err){
             console.log(err);
         }
-        argon2i.hash(req.body.pass, salt).then(async (hash) => {
+        argon2i.hash(req.body.pass, salt)
+        .then(async (hash) => {
             const user = new userSchema ({
                 name: req.body.name,
                 mail: req.body.mail,
                 pass: hash,
-                salt: salt
             });
             userSchema.exists({name: req.body.name, mail: req.body.mail})
                 .then(async (doc) => {
                     if(doc == null){
                         const newUser = await user.save()
                         console.log(req.body)
+                    }
+                    else{
+                        res.send({success: false,
+                            error: "Existing credentials"
+                          })
                     }
                 })
                 .catch( (err) => {
@@ -57,7 +62,7 @@ app.post('/signIn', async (req,res) => {
                         success: false,
                         error: {
                             status: err.status || 500,
-                            message: "User exists"
+                            message: "Network error"
                         }
                     })
                 })
@@ -72,15 +77,24 @@ app.post('/signIn', async (req,res) => {
 app.post('/logIn', async (req, res) => {
     var userAccout = await users.findOne({name: req.body.name});
     if(userAccout != null){
-        argon2i.verify(userAccout.pass, req.body.pass).then(sucessed => {
-            if(sucessed){
-                //await userAccout.save();
+        argon2i.verify(userAccout.pass, req.body.pass)
+        .then(succeed => {
+            if(succeed){
                 res.send({success: true});
             }
             else{
                 res.send({success: false,
                 message: "Not existing user"})
             }
+        })
+        .catch( (err) => {
+            res.send({
+                success: false,
+                error: {
+                    status: err.status || 500,
+                    message: err.message
+                }
+            })
         })
     }
     /*
