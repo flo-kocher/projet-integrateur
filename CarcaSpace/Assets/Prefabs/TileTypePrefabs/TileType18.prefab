@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 990281377908334586}
   - component: {fileID: 5385389059385011937}
   - component: {fileID: -8312260878116989361}
+  - component: {fileID: 3762733530288865016}
   m_Layer: 0
   m_Name: TileType18
   m_TagString: Untagged
@@ -205,6 +206,21 @@ MonoBehaviour:
   posePossible: 0000000000
   estFermante: 0
   debug: 
+--- !u!114 &3762733530288865016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990281377908334436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0edcbd9094d1384a8e28eeb6479f39b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedFlip: 5
+  speedPose: 6
+  tempsAttente: 0.5
 --- !u!1 &990281377908334456
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,7 +606,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d8fa5e09aa74caa47a82d6a064d288c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
