@@ -532,7 +532,19 @@ public class PlayerManager : NetworkBehaviour
 
         if(face_haut && face_gauche && face_bas && face_droite)
         {
-            //
+            //9 cas possibles
+            if(nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas && nom_struct_bas != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                CurrentRoads r2 = getStructByName(nom_struct_gauche);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_bas);
+                r3.CurrentTiles.Add(tile_laid);
+                CurrentRoads r4 = getStructByName(nom_struct_droite);
+                r4.CurrentTiles.Add(tile_laid);
+            }
+            
         }
 
         if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
