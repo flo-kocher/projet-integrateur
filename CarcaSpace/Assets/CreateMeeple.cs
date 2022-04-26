@@ -30,7 +30,7 @@ public class CreateMeeple : NetworkBehaviour
 
     public void meepleBack()
     {
-        if (PlayerManager.townIsClosed == true || PlayerManager.roadIsClosed == true)
+        if (PlayerManager.townIsClosed() == true || PlayerManager.roadIsClosed == true)
         {
 
         }
