@@ -530,9 +530,10 @@ public class PlayerManager : NetworkBehaviour
         }
         */
 
-        if(face_haut && face_gauche && face_bas && face_droite)
+        if(face_haut && face_gauche && face_bas && face_droite) // tile 21 forcément
         {
-            //9 cas possibles
+            //9 cas possibles :
+            // cas 1
             if(nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas && nom_struct_bas != nom_struct_droite)
             {
                 CurrentRoads r1 = getStructByName(nom_struct_haut);
@@ -544,10 +545,94 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads r4 = getStructByName(nom_struct_droite);
                 r4.CurrentTiles.Add(tile_laid);
             }
-            
+            // cas 2
+            if(nom_struct_haut == nom_struct_gauche && nom_struct_gauche != nom_struct_bas && nom_struct_bas != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_haut);
+                CurrentRoads r2 = getStructByName(nom_struct_bas);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_droite);
+                r3.CurrentTiles.Add(tile_laid);
+            }
+            // cas 3
+            if(nom_struct_haut == nom_struct_droite && nom_struct_droite != nom_struct_bas && nom_struct_bas != nom_struct_gauche)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_haut);
+                CurrentRoads r2 = getStructByName(nom_struct_bas);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_gauche);
+                r3.CurrentTiles.Add(tile_laid);
+            }
+            // cas 4
+            if(nom_struct_bas == nom_struct_gauche && nom_struct_gauche != nom_struct_haut && nom_struct_haut != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_bas);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_bas);
+                CurrentRoads r2 = getStructByName(nom_struct_haut);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_droite);
+                r3.CurrentTiles.Add(tile_laid);
+            }
+            // cas 5
+            if(nom_struct_bas == nom_struct_droite && nom_struct_droite != nom_struct_haut && nom_struct_haut != nom_struct_gauche)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_bas);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_bas);
+                CurrentRoads r2 = getStructByName(nom_struct_haut);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_gauche);
+                r3.CurrentTiles.Add(tile_laid);
+            }
+            // cas 6
+            if(nom_struct_haut == nom_struct_gauche && nom_struct_bas == nom_struct_droite && nom_struct_haut != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_haut);
+                CurrentRoads r2 = getStructByName(nom_struct_bas);
+                r2.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_bas);
+            }
+            // cas 7
+            if(nom_struct_haut == nom_struct_droite && nom_struct_bas == nom_struct_gauche && nom_struct_haut != nom_struct_gauche)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_haut);
+                CurrentRoads r2 = getStructByName(nom_struct_bas);
+                r2.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_bas);
+            }
+            // cas 8
+            if(nom_struct_haut == nom_struct_bas && nom_struct_bas != nom_struct_gauche && nom_struct_bas != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_haut);
+                CurrentRoads r2 = getStructByName(nom_struct_gauche);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_droite);
+                r3.CurrentTiles.Add(tile_laid);
+            }
+            // cas 9
+            if(nom_struct_gauche == nom_struct_droite && nom_struct_haut != nom_struct_bas && nom_struct_bas != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                CurrentRoads r2 = getStructByName(nom_struct_bas);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_droite);
+                r3.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_droite);
+            }
         }
-
-        if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
+        else if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
         {
             if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas)
             {
