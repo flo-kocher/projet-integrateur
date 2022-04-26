@@ -294,190 +294,270 @@ public class PlayerManager : NetworkBehaviour
         nb_of_struct_roads = 0;
     }
 
-public void resetVisite()
-{
-    for(int i = 0; i < plateau.Count; i++)
+    public void resetVisite()
     {
-        plateau[i].GetComponent<Constraints>().visite = false;
+        for(int i = 0; i < plateau.Count; i++)
+        {
+            plateau[i].GetComponent<Constraints>().visite = false;
+        }
     }
-}
 
-public void roadIsClosed_Struct(GameObject tile_laid)
-{
-    if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
+    public void roadIsClosed_Struct(GameObject tile_laid)
     {
-        Debug.Log("Pas de composante Chemin sur ma tuile");
+        if(tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
+        {
+            Debug.Log("Pas de composante Chemin sur ma tuile");
+            return;
+        }
+
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
+
+        GameObject[] voisins = new GameObject[4];
+        for(int i = 0; i < plateau.Count; i++)
+        {
+            Debug.Log("plat : " + plateau[i]);
+                if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                    voisins[0] = plateau[i]; // haut
+                if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                    voisins[1] = plateau[i]; // gauche
+                if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                    voisins[2] = plateau[i]; // bas
+                if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                    voisins[3] = plateau[i]; // droite
+        }
+        Debug.Log("La tuile "+ tile_laid + " a comme voisins : haut "+voisins[0]+" gauche "+voisins[1]+" bas "+voisins[2]+" droite "+voisins[3]);
+
+        // il n'y a pas de connexion de chemin, on crée une nouvelle structure
+        if((tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin || voisins[0] == null) && (tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin || voisins[1] == null) && (tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin || voisins[2] == null) && (tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin || voisins[3] == null))
+        {
+            //créer une nouvelle structure
+            CurrentRoads road = new CurrentRoads("Road "+nb_of_struct_roads,tile_laid);
+            // ajout de la stucture à la liste_des_struct
+            list_of_struct_roads.Add(road);
+            Debug.Log("crea struct 1 " + list_of_struct_roads.Count);
+            //Debug.Log("struct-"+road.Name+"created");
+        }
+
+
+        // condition noir
+        if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin && voisins[0] != null && voisins[0].GetComponent<Constraints>().bas == Type_land.Chemin)
+        {
+            Debug.Log("cas haut");
+            //rajouter tile_laid à la structure du voisin du haut
+            //CurrentRoads cp;
+            for(int i = 0; i < list_of_struct_roads.Count; i++)
+            {
+                CurrentRoads rd = list_of_struct_roads[i];
+                for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+                {
+                    if(rd.CurrentTiles[j] == voisins[0])
+                    {
+                        //cp = rd;
+                        rd.CurrentTiles.Add(tile_laid);
+                        break;
+                    }
+                }
+            }
+        } 
+        
+        
+        if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin && voisins[1] != null && voisins[1].GetComponent<Constraints>().droite == Type_land.Chemin)
+        {
+            Debug.Log("cas gauche");
+            // rajouter tile_laid à la structure du voisin de gauche.
+            for(int i = 0; i < list_of_struct_roads.Count; i++)
+            {
+                CurrentRoads rd = list_of_struct_roads[i];
+                for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+                {
+                    Debug.Log("parcours d'un elt dans ma liste de tiles");
+                    if(rd.CurrentTiles[j] == voisins[1])
+                    {
+                        //cp = rd;
+                        rd.CurrentTiles.Add(tile_laid);
+                        break;
+                    }
+                }
+            }
+        } 
+
+        if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin && voisins[2] != null && voisins[2].GetComponent<Constraints>().haut == Type_land.Chemin)
+        {
+            Debug.Log("cas bas");
+            //rajouter tile_laid à la structure du voisin du bas
+            for(int i = 0; i < list_of_struct_roads.Count; i++)
+            {
+                CurrentRoads rd = list_of_struct_roads[i];
+                for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+                {
+                    if(rd.CurrentTiles[j] == voisins[2])
+                    {
+                        //cp = rd;
+                        rd.CurrentTiles.Add(tile_laid);
+                        break;
+                    }        
+                }
+            }
+        } 
+
+        if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin && voisins[3] != null && voisins[3].GetComponent<Constraints>().droite == Type_land.Chemin)
+        {
+            Debug.Log("cas droite");
+            //rajouter tile_laid à la structure du voisin du droite
+            for(int i = 0; i < list_of_struct_roads.Count; i++)
+            {
+                CurrentRoads rd = list_of_struct_roads[i];
+                for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+                {
+                    if(rd.CurrentTiles[j] == voisins[3])
+                    {
+                        //cp = rd;
+                        rd.CurrentTiles.Add(tile_laid);
+                        break;
+                    }                
+                }
+            }
+        } 
+
+        // condition verte
+        // parcours la liste des struct actuelle
+        
+        int count = 0;
+        int indice_list_1 = -1;
+
+        // On parcours la liste_des_structs actu...
+        for( int i = 0; i< list_of_struct_roads.Count; i++)
+        {
+            // si notre tuile est commun a tous les structures
+            // alors on compte
+
+            /* on recupere un road */
+            CurrentRoads rd = list_of_struct_roads[i];
+            
+            /* pour chaque tuile appartenant a la liste de ce road...*/
+            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+            {
+                /* si on trouve notre tuile alors... count++ */
+                if(rd.CurrentTiles[j] == tile_laid)
+                {
+                    Debug.Log("dans count ++");
+                    // si notre tuile appartient a un road_X
+                    // on count++ puis on save l'indice du road_X
+                    count ++;
+                    if(count == 1)
+                        indice_list_1 = i;
+                }
+            }
+
+            Debug.Log("count : "+count);
+            if(count == 2)
+            {
+                for(int k = 0; k < list_of_struct_roads[indice_list_1].CurrentTiles.Count; k++)
+                {
+                    list_of_struct_roads[i].CurrentTiles.Add(list_of_struct_roads[indice_list_1].CurrentTiles[k]);
+                }
+                list_of_struct_roads[i].CurrentTiles.Remove(tile_laid);
+                list_of_struct_roads.RemoveAt(indice_list_1);
+                break;
+            }
+        }
         return;
     }
 
-    int x = tile_laid.GetComponent<Constraints>().coordX;
-    int y = tile_laid.GetComponent<Constraints>().coordY;
-
-    GameObject[] voisins = new GameObject[4];
-    for(int i = 0; i < plateau.Count; i++)
+    public bool townIsClosed(GameObject tile_laid)
     {
-        Debug.Log("plat : " + plateau[i]);
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
-                voisins[0] = plateau[i]; // haut
-            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[1] = plateau[i]; // gauche
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
-                voisins[2] = plateau[i]; // bas
-            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[3] = plateau[i]; // droite
-    }
-    Debug.Log("La tuile "+ tile_laid + " a comme voisins : haut "+voisins[0]+" gauche "+voisins[1]+" bas "+voisins[2]+" droite "+voisins[3]);
-
-    // il n'y a pas de connexion de chemin, on crée une nouvelle structure
-    if((tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin || voisins[0] == null) && (tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin || voisins[1] == null) && (tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin || voisins[2] == null) && (tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin || voisins[3] == null))
-    {
-        //créer une nouvelle structure
-        CurrentRoads road = new CurrentRoads("Road "+nb_of_struct_roads,tile_laid);
-        // ajout de la stucture à la liste_des_struct
-        list_of_struct_roads.Add(road);
-        Debug.Log("crea struct 1 " + list_of_struct_roads.Count);
-        //Debug.Log("struct-"+road.Name+"created");
-    }
-
-
-    // condition noir
-    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin && voisins[0] != null && voisins[0].GetComponent<Constraints>().bas == Type_land.Chemin)
-    {
-        Debug.Log("cas haut");
-        //rajouter tile_laid à la structure du voisin du haut
-        //CurrentRoads cp;
-        for(int i = 0; i < list_of_struct_roads.Count; i++)
-        {
-            CurrentRoads rd = list_of_struct_roads[i];
-            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
-            {
-                if(rd.CurrentTiles[j] == voisins[0])
-                {
-                    //cp = rd;
-                    rd.CurrentTiles.Add(tile_laid);
-                    break;
-                }
-            }
-        }
-    } 
-    
-    
-    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin && voisins[1] != null && voisins[1].GetComponent<Constraints>().droite == Type_land.Chemin)
-    {
-        Debug.Log("cas gauche");
-        // rajouter tile_laid à la structure du voisin de gauche.
-        for(int i = 0; i < list_of_struct_roads.Count; i++)
-        {
-            CurrentRoads rd = list_of_struct_roads[i];
-            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
-            {
-                Debug.Log("parcours d'un elt dans ma liste de tiles");
-                if(rd.CurrentTiles[j] == voisins[1])
-                {
-                    //cp = rd;
-                    rd.CurrentTiles.Add(tile_laid);
-                    break;
-                }
-            }
-        }
-    } 
-
-    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin && voisins[2] != null && voisins[2].GetComponent<Constraints>().haut == Type_land.Chemin)
-    {
-        Debug.Log("cas bas");
-        //rajouter tile_laid à la structure du voisin du bas
-        for(int i = 0; i < list_of_struct_roads.Count; i++)
-        {
-            CurrentRoads rd = list_of_struct_roads[i];
-            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
-            {
-                if(rd.CurrentTiles[j] == voisins[2])
-                {
-                    //cp = rd;
-                    rd.CurrentTiles.Add(tile_laid);
-                    break;
-                }        
-            }
-        }
-    } 
-
-    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin && voisins[3] != null && voisins[3].GetComponent<Constraints>().droite == Type_land.Chemin)
-    {
-        Debug.Log("cas droite");
-        //rajouter tile_laid à la structure du voisin du droite
-        for(int i = 0; i < list_of_struct_roads.Count; i++)
-        {
-            CurrentRoads rd = list_of_struct_roads[i];
-            for (int j = 0; j < rd.CurrentTiles.Count ; j++)
-            {
-                if(rd.CurrentTiles[j] == voisins[3])
-                {
-                    //cp = rd;
-                    rd.CurrentTiles.Add(tile_laid);
-                    break;
-                }                
-            }
-        }
-    } 
-
-    // condition verte
-    // parcours la liste des struct actuelle
-    
-    int count = 0;
-    int indice_list_1 = -1;
-
-    // On parcours la liste_des_structs actu...
-    for( int i = 0; i< list_of_struct_roads.Count; i++)
-    {
-        // si notre tuile est commun a tous les structures
-        // alors on compte
-
-        /* on recupere un road */
-        CurrentRoads rd = list_of_struct_roads[i];
+        if(tile_laid.GetComponent<Constraints>().haut != Type_land.Ville && tile_laid.GetComponent<Constraints>().bas != Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche != Type_land.Ville && tile_laid.GetComponent<Constraints>().droite != Type_land.Ville && tile_laid.GetComponent<Constraints>().haut != Type_land.Ville)
+            return false;
+        bool maboule = true;
         
-        /* pour chaque tuile appartenant a la liste de ce road...*/
-        for (int j = 0; j < rd.CurrentTiles.Count ; j++)
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
+
+        GameObject[] voisins = new GameObject[4];
+        for(int i = 0; i < plateau.Count; i++)
         {
-            /* si on trouve notre tuile alors... count++ */
-            if(rd.CurrentTiles[j] == tile_laid)
-            {
-                Debug.Log("dans count ++");
-                // si notre tuile appartient a un road_X
-                // on count++ puis on save l'indice du road_X
-                count ++;
-                if(count == 1)
-                    indice_list_1 = i;
-            }
+            Debug.Log("plat : " + plateau[i]);
+                if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                    voisins[0] = plateau[i]; // haut
+                if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                    voisins[1] = plateau[i]; // gauche
+                if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                    voisins[2] = plateau[i]; // bas
+                if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                    voisins[3] = plateau[i]; // droite
         }
 
-        Debug.Log("count : "+count);
-        if(count == 2)
+        tile_laid.GetComponent<Constraints>().visite = true;
+        // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
+        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
         {
-            for(int k = 0; k < list_of_struct_roads[indice_list_1].CurrentTiles.Count; k++)
-            {
-                list_of_struct_roads[i].CurrentTiles.Add(list_of_struct_roads[indice_list_1].CurrentTiles[k]);
-            }
-            list_of_struct_roads[i].CurrentTiles.Remove(tile_laid);
-            list_of_struct_roads.RemoveAt(indice_list_1);
-            break;
+            if (voisins[0] == null)
+                {
+                    return false;
+                }
+            Debug.Log("mon voisin du haut est non null");
+            if (!voisins[0].GetComponent<Constraints>().visite)
+                {
+                voisins[0].GetComponent<Constraints>().visite = true;
+                if(!townIsClosed(voisins[0]))
+                    return false;
+                }
         }
+        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+        {
+            if (voisins[1] == null)
+                {
+                    return false;
+                }
+            Debug.Log("mon voisin de gauche est non null");
+            if (!voisins[1].GetComponent<Constraints>().visite)
+                {
+                voisins[1].GetComponent<Constraints>().visite = true;
+                if(!townIsClosed(voisins[1]))
+                        return false;
+                }
+        }
+        if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+            {
+                if (voisins[2] == null)
+                    {
+                        return false;
+                    }
+                Debug.Log("mon voisin du bas est non null");
+                if (!voisins[2].GetComponent<Constraints>().visite)
+                    {
+                    voisins[2].GetComponent<Constraints>().visite = true;
+                    if(!townIsClosed(voisins[2]))
+                        return false;
+                    }
+            }
+        if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+            {
+                if (voisins[3] == null)
+                    {
+                    return false;
+                    }
+                Debug.Log("mon voisin de droite est non null");
+                if (!voisins[3].GetComponent<Constraints>().visite)
+                    {
+                    voisins[3].GetComponent<Constraints>().visite = true;
+                    if (!townIsClosed(voisins[3]))
+                        return false;
+                    }
+                    
+            }
+        return true;
     }
-    return;
-}
 
-public bool townIsClosed(GameObject tile_laid)
-{
-    if(tile_laid.GetComponent<Constraints>().haut != Type_land.Ville && tile_laid.GetComponent<Constraints>().bas != Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche != Type_land.Ville && tile_laid.GetComponent<Constraints>().droite != Type_land.Ville && tile_laid.GetComponent<Constraints>().haut != Type_land.Ville)
-        return false;
-    bool maboule = true;
-    
-    int x = tile_laid.GetComponent<Constraints>().coordX;
-    int y = tile_laid.GetComponent<Constraints>().coordY;
-
-    GameObject[] voisins = new GameObject[4];
-    for(int i = 0; i < plateau.Count; i++)
+    public void drawshit(GameObject tile_laid)
     {
-        Debug.Log("plat : " + plateau[i]);
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
+
+        GameObject[] voisins = new GameObject[4];
+        for(int i = 0; i < plateau.Count; i++)
+        {
             if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = plateau[i]; // haut
             if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
@@ -486,159 +566,79 @@ public bool townIsClosed(GameObject tile_laid)
                 voisins[2] = plateau[i]; // bas
             if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
                 voisins[3] = plateau[i]; // droite
-    }
-
-    tile_laid.GetComponent<Constraints>().visite = true;
-    // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
-    if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
-    {
-        if (voisins[0] == null)
+        }
+        if (tile_laid.name.Contains("10"))
+        {
+            Debug.Log ("cas spé 10");
+            //haut et gauche
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
             {
-                return false;
+                resetVisite();
+                if (voisins[0] != null)
+                    Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
+                resetVisite();
+                if (voisins[1] != null)
+                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
             }
-        Debug.Log("mon voisin du haut est non null");
-        if (!voisins[0].GetComponent<Constraints>().visite)
+            //gaucge et bas
+            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
             {
-            voisins[0].GetComponent<Constraints>().visite = true;
-            if(!townIsClosed(voisins[0]))
-                return false;
+                resetVisite();
+                if (voisins[1] != null)
+                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
+                resetVisite();
+                if (voisins[2] != null)
+                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
             }
-    }
-    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
-    {
-        if (voisins[1] == null)
+            //bas et droite
+            if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
             {
-                return false;
+                resetVisite();
+                if (voisins[2] != null)
+                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
+                resetVisite();
+                if (voisins[3] != null)
+                    Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));  
             }
-        Debug.Log("mon voisin de gauche est non null");
-        if (!voisins[1].GetComponent<Constraints>().visite)
+            //haut et droite
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
             {
-            voisins[1].GetComponent<Constraints>().visite = true;
-            if(!townIsClosed(voisins[1]))
-                    return false;
+                resetVisite();
+                if (voisins[0] != null)
+                    Debug.Log("La partie haut est fermé ?" + townIsClosed(voisins[0]));
+                resetVisite();
+                if (voisins[3] != null)
+                    Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3])); 
+            }
+        }
+        if (tile_laid.name.Contains("15"))
+        {
+            Debug.Log ("cas spé 15");
+            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[1] != null)
+                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1]));
+                resetVisite();
+                    if (voisins[3] != null)   
+                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));
+            }
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                    Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
+                resetVisite();
+                if (voisins[2] != null)
+                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2]));
+            }
+        }
+            if (!(tile_laid.name.Contains("10")) || !(tile_laid.name.Contains("15")))
+            {
+                Debug.Log ("pas de cas spé");
+                Debug.Log("La ville est fermé ?" + townIsClosed(tile_laid));
             }
     }
-    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
-        {
-            if (voisins[2] == null)
-                {
-                    return false;
-                }
-            Debug.Log("mon voisin du bas est non null");
-            if (!voisins[2].GetComponent<Constraints>().visite)
-                {
-                voisins[2].GetComponent<Constraints>().visite = true;
-                if(!townIsClosed(voisins[2]))
-                    return false;
-                }
-        }
-    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
-        {
-            if (voisins[3] == null)
-                {
-                   return false;
-                }
-            Debug.Log("mon voisin de droite est non null");
-            if (!voisins[3].GetComponent<Constraints>().visite)
-                {
-                voisins[3].GetComponent<Constraints>().visite = true;
-                if (!townIsClosed(voisins[3]))
-                    return false;
-                }
-                
-        }
-    return true;
-}
-
-public void drawshit(GameObject tile_laid)
-{
-    int x = tile_laid.GetComponent<Constraints>().coordX;
-    int y = tile_laid.GetComponent<Constraints>().coordY;
-
-    GameObject[] voisins = new GameObject[4];
-    for(int i = 0; i < plateau.Count; i++)
-    {
-        if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
-            voisins[0] = plateau[i]; // haut
-        if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
-            voisins[1] = plateau[i]; // gauche
-        if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
-            voisins[2] = plateau[i]; // bas
-        if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
-            voisins[3] = plateau[i]; // droite
-    }
-    if (tile_laid.name.Contains("10"))
-    {
-        Debug.Log ("cas spé 10");
-        //haut et gauche
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-                Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
-            resetVisite();
-            if (voisins[1] != null)
-                Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
-        }
-        //gaucge et bas
-        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[1] != null)
-                Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
-            resetVisite();
-            if (voisins[2] != null)
-                Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
-        }
-        //bas et droite
-        if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[2] != null)
-                Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
-            resetVisite();
-            if (voisins[3] != null)
-                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));  
-        }
-        //haut et droite
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-                Debug.Log("La partie haut est fermé ?" + townIsClosed(voisins[0]));
-            resetVisite();
-            if (voisins[3] != null)
-                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3])); 
-        }
-    }
-    if (tile_laid.name.Contains("15"))
-    {
-        Debug.Log ("cas spé 15");
-        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[1] != null)
-                Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1]));
-            resetVisite();
-                if (voisins[3] != null)   
-            Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));
-        }
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-                Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
-            resetVisite();
-            if (voisins[2] != null)
-                Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2]));
-        }
-    }
-        if (!(tile_laid.name.Contains("10")) || !(tile_laid.name.Contains("15")))
-        {
-            Debug.Log ("pas de cas spé");
-            Debug.Log("La ville est fermé ?" + townIsClosed(tile_laid));
-        }
-}
 
     // Demande du client au serveur du tirage d'une tuile de manière aléatoire
     [Command]
@@ -710,7 +710,7 @@ public void drawshit(GameObject tile_laid)
 
     // Demande de pose de Meeple au serveur
     [Command]
-    public void CmdSpawnMeeple(float x, float y){
+    public void CmdSpawnMeeple(float x, float y){ // renvoyer un meeple
         compteurMeeple++;
         // instantiation d'un Prefab Meeple
         GameObject meeple = GameObject.Instantiate(Meeples);
@@ -808,5 +808,3 @@ public void drawshit(GameObject tile_laid)
         }        
     }
 }
-
-
