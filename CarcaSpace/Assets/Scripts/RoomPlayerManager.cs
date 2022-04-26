@@ -16,6 +16,7 @@ public class RoomPlayerManager : NetworkBehaviour
     // localPlayer = networkIdentity.GetComponent<RoomPlayerManager>();
     [SyncVar] public string matchID;
     [SyncVar] public int playerIndex;
+    public string playerName;
 
     NetworkMatch networkMatch;
 
@@ -35,6 +36,7 @@ public class RoomPlayerManager : NetworkBehaviour
         base.OnStartClient();
         if (isLocalPlayer) {
             localPlayer = this;
+            playerName = "Marco";
         }
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         
