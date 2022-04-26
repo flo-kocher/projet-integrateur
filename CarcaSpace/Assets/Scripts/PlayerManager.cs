@@ -313,15 +313,19 @@ public class PlayerManager : NetworkBehaviour
                         all_tiles.Add(TileType20);
                     }
                     break;
-                case 21:
+                // case 21:
                     // tmp.AddComponent<tile_type_21>();
-                    all_tiles.Add(TileType21);
-                    break;
+                    // all_tiles.Add(TileType21);
+                    // all_tiles.Add(TileType21); //RAJOUTE
+                    // all_tiles.Add(TileType21); //RAJOUTE
+                    // all_tiles.Add(TileType21); //RAJOUTE
+                    // break;
                 case 22 :
-                    for(x=0;x<=3;x++)
+                    for(x=0;x<=6;x++) // DE BASE 3
                     {
                         // tmp.AddComponent<tile_type_22>();
                         all_tiles.Add(TileType22);
+                        
                     }  
                     break;
                 case 23:
@@ -531,6 +535,7 @@ public class PlayerManager : NetworkBehaviour
         */
 
         if(face_haut && face_gauche && face_bas && face_droite) // tile 21 forcément
+        // if(tile_laid.name.Contains("21"))
         {
             //9 cas possibles :
             // cas 1
@@ -632,27 +637,8 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_droite);
             }
         }
-
-        // Cas avec 3 faces
-
-        if(face_haut && face_gauche && face_bas && face_droite)
-        {
-            //9 cas possibles
-            if(nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas && nom_struct_bas != nom_struct_droite)
-            {
-                CurrentRoads r1 = getStructByName(nom_struct_haut);
-                r1.CurrentTiles.Add(tile_laid);
-                CurrentRoads r2 = getStructByName(nom_struct_gauche);
-                r2.CurrentTiles.Add(tile_laid);
-                CurrentRoads r3 = getStructByName(nom_struct_bas);
-                r3.CurrentTiles.Add(tile_laid);
-                CurrentRoads r4 = getStructByName(nom_struct_droite);
-                r4.CurrentTiles.Add(tile_laid);
-            }
-            
-        }
-
-         if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
+        //début 3 cas
+        else if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
         {
             if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas)
             {
@@ -853,11 +839,43 @@ public class PlayerManager : NetworkBehaviour
         //cas avec 2 faces Chemin
         else if (face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_haut && face_droite)
         {
+            /*
+                DANS LE CODE DES 2 FACES ICI, IL FAUT RAJOUTER DES IF COMME CA :
+
+                if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
+                {
+                    //Debug.Log("1 voisin et tuile 17 ou 22");
+                    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
+                        createNewStruct(tile_laid, "_1");
+                    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
+                        createNewStruct(tile_laid, "_2");
+                    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
+                        createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads++;
+                }
+
+                IL FAUT RAJOUTER SOIT UN GRAND IF QUI TRAITE LE CAS DES 17 21 22 OU SOIT RAJOUTER DANS 
+
+
+
+
+
+
+
+
+            */
+
+
+
             Debug.Log("2 voisins");
             //premier if et else fonctionnel !
             if (nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
-                
+                // IF CONTAINS 22 : FAIRE LE CAS SPECIALE
+
+
+
+                //ELSE FAIRE CE QUI A EN DESSOUS
                 //ajout du Go a gauche et fermeture sur lui même et calcul de point
                 CurrentRoads road = getStructByName(nom_struct_gauche);
                 road.CurrentTiles.Add(tile_laid);
