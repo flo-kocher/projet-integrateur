@@ -141,9 +141,10 @@ public class Move : NetworkBehaviour {
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
+        
+        //PlayerManager.roadIsClosed_Struct(go);
+        //PlayerManager.checkAllStruct();
         /*
-        PlayerManager.roadIsClosed_Struct(go);
-        PlayerManager.checkAllStruct();
         //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
         for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
         {
@@ -158,10 +159,9 @@ public class Move : NetworkBehaviour {
         
 
         
-        PlayerManager.resetVisite();
-        PlayerManager.drawshit(go);
-        PlayerManager.resetVisite();
-        
+        //PlayerManager.resetVisite();
+        //PlayerManager.drawshit(go);
+        //PlayerManager.resetVisite();
         //cloture d'abbayes
         /*
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)

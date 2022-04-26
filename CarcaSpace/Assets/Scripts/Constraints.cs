@@ -8,11 +8,6 @@ public enum Type_land
   Rien, Ville, Plaine, Chemin, Abbaye, Continue
 }
 
-public enum Meeple
-{
-    Rien, Haut, Bas, Gauche, Droite, Milieu
-}
-
 public class Constraints : MonoBehaviour
 {
     public Type_land haut;
@@ -23,7 +18,8 @@ public class Constraints : MonoBehaviour
     public bool blason;
     public int coordX;
     public int coordY;
-    public Meeple meeple;
+    public int meeple;  // 0 haut, 1 gauche, 2 bas, 3 droite
+    public int joueur;  // A faire
     public bool visite;
     public bool carrefour;
     public bool[] posePossible = {false, false, false, false, false};
@@ -32,6 +28,9 @@ public class Constraints : MonoBehaviour
     void Start()
     {
         visite = false;
+        //meeple = -1;
+        this.meeple = 0;
+        this.joueur = 1;
         //estFermante = false;
 
     }
