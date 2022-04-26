@@ -855,16 +855,45 @@ public class PlayerManager : NetworkBehaviour
         {
             Debug.Log("2 voisins");
             //premier if et else fonctionnel !
+
+            //ajout du Go a gauche et fermeture sur lui même et calcul de point
+            CurrentRoads road = getStructByName(nom_struct_gauche);
+            road.CurrentTiles.Add(tile_laid);
+
+            // on mets a jour le chemin comme etant clos
+            setIsClosedByName(nom_struct_gauche);
+
+            // on doit créer les structures pour chaque type de tuile
             if (nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
-                
-                //ajout du Go a gauche et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_gauche);
-                road.CurrentTiles.Add(tile_laid);
+                // Si tuile 21
+                if (tile_laid.Name.Contains("21"))
+                {
+                    // créer deux structures 
+                    createNewStruct(tile_laid, "_2");
+                    createNewStruct(tile_laid, "_3");
 
-                // on mets a jour le chemin comme etant clos
-                setIsClosedByName(nom_struct_gauche);
+                    // il faut recupérer le nom des structures ?
+                    // les structures à partir de leur nom => getStructByName ?
+                    // ajouter la tile_laid aux deux structures. ?
+                }
+                // Sinon c'est la tuile 17 ou 22
+                else 
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                    {
+                        createNewStruct(tile_laid, "_2");
+                        // il faut recupérer le nom de la structure ?
+                        // récuperer la structure de ce nom => getStructByName ?
+                        // ajouter la tile_laid dans la structure. ?
 
+                    }                     
+                    else // Sinon droite
+                    {
+                        createNewStruct(tile_laid, "_3");
+                    }
+                }
                 //calcul de points + destruction de la structure
                 //Debug.Log("fermé gauche <-> haut" + roads.Name + "close? "+ roads.tag); //////           TEST DU TAG
             }
