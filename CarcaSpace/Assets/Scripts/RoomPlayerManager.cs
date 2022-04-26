@@ -93,7 +93,7 @@ public class RoomPlayerManager : NetworkBehaviour
     [Command]
     void CmdJoinGame (string _matchID) {
         matchID = _matchID;
-        if (MatchMaker.instance.JoinGame (_matchID,localPlayer,out playerIndex)) {
+        if (MatchMaker.instance.JoinGame (_matchID,this,out playerIndex)) {
             Debug.Log ($"<color=green>Game Joined successfully</color>");
             networkMatch.matchId = _matchID.ToGuid ();
             TargetJoinGame (true, _matchID, playerIndex);
