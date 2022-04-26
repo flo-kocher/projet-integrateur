@@ -202,6 +202,9 @@ MonoBehaviour:
   meeple: 0
   visite: 0
   carrefour: 0
+  posePossible: 0000000000
+  estFermante: 0
+  debug: 
 --- !u!1 &9220351794439043824
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,9 +345,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
+  - {fileID: 2100000, guid: 0800be78e5fb14155bfa707e9fa1bad3, type: 2}
   - {fileID: 2100000, guid: 20a66815e1143a64b89df1c75c6ab86f, type: 2}
-  - {fileID: 2100000, guid: 20a66815e1143a64b89df1c75c6ab86f, type: 2}
-  - {fileID: 2100000, guid: 20a66815e1143a64b89df1c75c6ab86f, type: 2}
+  - {fileID: 2100000, guid: 7b8a57fbf67f949cfaf93bf908da3b0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
