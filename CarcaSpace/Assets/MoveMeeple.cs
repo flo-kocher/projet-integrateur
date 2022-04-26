@@ -7,13 +7,13 @@ using UnityEngine;
 public static class MoveMeeple : object
 {
     // Coorodnnées à transform selon ou l'on veut
-    static Vector2 nord = new Vector2(0.5f, 0.83f);
-    static Vector2 sud = new Vector2(0.5f, 0.17f);
-    static Vector2 est = new Vector2(0.83f, 0.5f);
-    static Vector2 ouest = new Vector2(0.17f, 0.5f);
+    static Vector2 haut = new Vector2(0.5f, 0.83f);
+    static Vector2 bas = new Vector2(0.5f, 0.17f);
+    static Vector2 droite = new Vector2(0.83f, 0.5f);
+    static Vector2 gauche = new Vector2(0.17f, 0.5f);
     static Vector2 milieu = new Vector2(0.5f, 0.5f);
     // Tableau défini pour les booleens et les Vector2
-    static Vector2[] tabPos = { nord, sud, est, ouest, milieu };
+    static Vector2[] tabPos = { haut, gauche, bas, droite, milieu };
 
 
 
