@@ -545,6 +545,7 @@ public bool townIsClosed(GameObject tile_laid)
                 if (!townIsClosed(voisins[3]))
                     return false;
                 }
+                
         }
     return true;
 }
