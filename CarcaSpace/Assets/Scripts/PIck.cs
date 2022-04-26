@@ -24,6 +24,7 @@ public class PIck : NetworkBehaviour
 
     void getIdAndCards()
     {
+        this.gameObject.SetActive(false);
         // cherche l'identifiant du network
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
