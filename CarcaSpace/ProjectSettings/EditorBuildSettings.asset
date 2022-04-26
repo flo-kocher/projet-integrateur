@@ -20,12 +20,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 398ac905703a46b4bac2fe46c4774ed6
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CreatingGame.unity
     guid: 65a6369f22c6c3448abe7aa9bfec3019
-  - enabled: 1
-    path: Assets/Scenes/JoiningMenu.unity
-    guid: c7a00275b8cd4794da4682af79554e2e
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/ProfileMenu.unity
     guid: bc55a0b31b0a05144b392376b0e57531

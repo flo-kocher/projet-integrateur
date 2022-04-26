@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3633,7 +3633,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_AnchorMin.x
@@ -3641,15 +3641,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 316.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 567.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3681,11 +3681,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 474.75
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -283.6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3551166901479228677, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3702,6 +3702,10 @@ PrefabInstance:
     - target: {fileID: 3551166901479228678, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
       propertyPath: m_Name
       value: UIPlayerCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551166901479228678, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78df0476dba2942ae994bde4a0d230cc, type: 3}

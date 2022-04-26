@@ -144,7 +144,7 @@ public class MultiplayerMenu : MonoBehaviour
     public void hostSucc(bool success){
         if(success){
             //SceneManager.LoadScene("Lobby");
-            //SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer);
+            SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer,true);
         }else{
             // joinMatchInput.interactable = true ; 
             // joinButton.interactable = true ; 
@@ -164,7 +164,7 @@ public class MultiplayerMenu : MonoBehaviour
     public void joinSucc(bool success){
         if(success){
             
-        //SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer);
+            SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer,false);
         }else{
             joinMatchInput.interactable = true ;
             joinButton.interactable = true ; 
@@ -177,8 +177,14 @@ public class MultiplayerMenu : MonoBehaviour
     //     textPlayers.text = "Player " + player.playerIndex.ToString();
     // }
 
-    public void SpawnUIPlayerPrefab (RoomPlayerManager Player) {
-       GameObject newUIPlayer = Instantiate(UIPlayerPrefab) ;
+    public void SpawnUIPlayerPrefab (RoomPlayerManager Player,bool isHost) {
+       if(isHost == true){
+            GameObject newUIPlayer = Instantiate(UIPlayerPrefab) ;
+       }else{
+           
+       }
+       
+       
         // SetPlayer(newUIPlayer,Player.playerIndex );
     }
 }
