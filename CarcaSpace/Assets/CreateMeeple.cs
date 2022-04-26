@@ -22,8 +22,17 @@ public class CreateMeeple : NetworkBehaviour
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
 		// les paramètres sont les emplacements de l'étoile sur laquelle on clique
-        PlayerManager.CmdSpawnMeeple(transform.position.x, transform.position.y);
-
+        PlayerManager.CmdSpawnMeeple(transform.position.x, transform.position.y); // liste de meeple pour savoir lequel supprimer
+        MoveMeeple m;
+        m.rmStars();
         //Debug.Log(transform.position.x);
+    }
+
+    public void meepleBack()
+    {
+        if (PlayerManager.townIsClosed == true || PlayerManager.roadIsClosed == true)
+        {
+
+        }
     }
 }
