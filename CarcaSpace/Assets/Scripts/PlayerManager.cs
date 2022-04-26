@@ -632,7 +632,27 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_droite);
             }
         }
-        else if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
+
+        // Cas avec 3 faces
+
+        if(face_haut && face_gauche && face_bas && face_droite)
+        {
+            //9 cas possibles
+            if(nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas && nom_struct_bas != nom_struct_droite)
+            {
+                CurrentRoads r1 = getStructByName(nom_struct_haut);
+                r1.CurrentTiles.Add(tile_laid);
+                CurrentRoads r2 = getStructByName(nom_struct_gauche);
+                r2.CurrentTiles.Add(tile_laid);
+                CurrentRoads r3 = getStructByName(nom_struct_bas);
+                r3.CurrentTiles.Add(tile_laid);
+                CurrentRoads r4 = getStructByName(nom_struct_droite);
+                r4.CurrentTiles.Add(tile_laid);
+            }
+            
+        }
+
+         if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
         {
             if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas)
             {
@@ -652,6 +672,9 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road2 = getStructByName(nom_struct_bas);
                 road2.CurrentTiles.Add(tile_laid);
 
+                // chemin fermé à gauche mais pas focement en bas(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_gauche);
+
             }
             if (nom_struct_gauche == nom_struct_bas)
             {
@@ -661,6 +684,10 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_haut);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé à gauche mais pas focement en haut(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_gauche);
+
             }
             if (nom_struct_bas == nom_struct_haut)
             {
@@ -670,6 +697,10 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_gauche);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé à gauche mais pas focement en haut(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_bas);
+
             }
         }
         else if (face_haut && face_gauche && face_droite && !face_bas) // tile 17 ou 22 forcément
@@ -692,6 +723,9 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road2 = getStructByName(nom_struct_droite);
                 road2.CurrentTiles.Add(tile_laid);
 
+                // chemin fermé à gauche mais pas focement à droite(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_haut);
+
             }
             if (nom_struct_gauche == nom_struct_droite)
             {
@@ -701,6 +735,9 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_haut);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé à gauche mais pas focement à haut(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_gauche);
             }
             if (nom_struct_droite == nom_struct_haut)
             {
@@ -710,6 +747,9 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_gauche);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé à droite mais pas focement à gauche(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_droite);
             }
         }
         else if (face_haut && face_droite && face_bas && !face_gauche) // tile 17 ou 22 forcément
@@ -732,6 +772,8 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road2 = getStructByName(nom_struct_bas);
                 road2.CurrentTiles.Add(tile_laid);
 
+                // chemin fermé à gauche mais pas focement en bas(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_droite);
             }
             if (nom_struct_bas == nom_struct_droite)
             {
@@ -741,6 +783,9 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_haut);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé en bas et en droite mais pas focement en haut(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_droite);
             }
             if (nom_struct_bas == nom_struct_haut)
             {
@@ -750,6 +795,9 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_droite);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé de haut en bas mais pas focement à droite(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_bas);
             }
         }
         else if (face_droite && face_gauche && face_bas && !face_haut) // tile 17 ou 22 forcément
@@ -772,6 +820,9 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road2 = getStructByName(nom_struct_gauche);
                 road2.CurrentTiles.Add(tile_laid);
 
+                // chemin fermé de droite en bas mais pas focement à gauche(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_bas);
+
             }
             if (nom_struct_bas == nom_struct_gauche)
             {
@@ -781,6 +832,9 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_droite);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé de bas à gauche mais pas focement à droite(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_bas);
             }
             if (nom_struct_droite == nom_struct_gauche)
             {
@@ -790,8 +844,12 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_bas);
                 road2.CurrentTiles.Add(tile_laid);
+
+                // chemin fermé de gauche à droite mais pas focement en bas(ça dépend s'il une tuiles fermante)
+                setIsClosedByName(nom_struct_droite);
             }
         }
+
         //cas avec 2 faces Chemin
         else if (face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_haut && face_droite)
         {
