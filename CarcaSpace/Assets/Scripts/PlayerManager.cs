@@ -959,71 +959,95 @@ public class PlayerManager : NetworkBehaviour
         if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
             voisins[3] = plateau[i]; // droite
     }
-    if (tile_laid.name.Contains("10"))
+
+    public void drawshit(GameObject tile_laid)
     {
-        Debug.Log ("cas spé 10");
-        //haut et gauche
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
+
+        GameObject[] voisins = new GameObject[4];
+        for(int i = 0; i < plateau.Count; i++)
         {
-            resetVisite();
-            if (voisins[0] != null)
-                Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
-            resetVisite();
-            if (voisins[1] != null)
-                Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                voisins[0] = plateau[i]; // haut
+            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[1] = plateau[i]; // gauche
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                voisins[2] = plateau[i]; // bas
+            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[3] = plateau[i]; // droite
         }
-        //gaucge et bas
-        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
+        if (tile_laid.name.Contains("10"))
         {
-            resetVisite();
-            if (voisins[1] != null)
-                Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
-            resetVisite();
-            if (voisins[2] != null)
-                Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
+            Debug.Log ("cas spé 10");
+            //haut et gauche
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                    Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
+                resetVisite();
+                if (voisins[1] != null)
+                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
+            }
+            //gaucge et bas
+            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[1] != null)
+                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
+                resetVisite();
+                if (voisins[2] != null)
+                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
+            }
+            //bas et droite
+            if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[2] != null)
+                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
+                resetVisite();
+                if (voisins[3] != null)
+                    Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));  
+            }
+            //haut et droite
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                    Debug.Log("La partie haut est fermé ?" + townIsClosed(voisins[0]));
+                resetVisite();
+                if (voisins[3] != null)
+                    Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3])); 
+            }
         }
-        //bas et droite
-        if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+        if (tile_laid.name.Contains("15"))
         {
-            resetVisite();
-            if (voisins[2] != null)
-                Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
-            resetVisite();
-            if (voisins[3] != null)
-                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));  
+            Debug.Log ("cas spé 15");
+            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[1] != null)
+                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1]));
+                resetVisite();
+                    if (voisins[3] != null)   
+                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));
+            }
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                    Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
+                resetVisite();
+                if (voisins[2] != null)
+                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2]));
+            }
         }
-        //haut et droite
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-                Debug.Log("La partie haut est fermé ?" + townIsClosed(voisins[0]));
-            resetVisite();
-            if (voisins[3] != null)
-                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3])); 
-        }
-    }
-    if (tile_laid.name.Contains("15"))
-    {
-        Debug.Log ("cas spé 15");
-        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[1] != null)
-                Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1]));
-            resetVisite();
-                if (voisins[3] != null)   
-            Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));
-        }
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-                Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
-            resetVisite();
-            if (voisins[2] != null)
-                Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2]));
-        }
+            if (!(tile_laid.name.Contains("10")) || !(tile_laid.name.Contains("15")))
+            {
+                Debug.Log ("pas de cas spé");
+                Debug.Log("La ville est fermé ?" + townIsClosed(tile_laid));
+            }
     }
         if (tile_laid.name.Contains("10") == false && tile_laid.name.Contains("15") == false)
         {
