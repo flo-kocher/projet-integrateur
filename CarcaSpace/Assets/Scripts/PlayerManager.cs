@@ -1060,7 +1060,7 @@ public bool townIsClosed(GameObject tile_laid)
 
     tile_laid.GetComponent<Constraints>().visite = true;
     // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
-    if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+    if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && (!tile_laid.name.Contains("10") && !tile_laid.name.Contains("15")))
     {
         if (voisins[0] == null)
             {
@@ -1074,7 +1074,7 @@ public bool townIsClosed(GameObject tile_laid)
                 return false;
             }
     }
-    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && (!tile_laid.name.Contains("10") && !tile_laid.name.Contains("15")))
     {
         if (voisins[1] == null)
             {
@@ -1088,7 +1088,7 @@ public bool townIsClosed(GameObject tile_laid)
                     return false;
             }
     }
-    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && (!tile_laid.name.Contains("10") && !tile_laid.name.Contains("15")))
         {
             if (voisins[2] == null)
                 {
@@ -1102,7 +1102,7 @@ public bool townIsClosed(GameObject tile_laid)
                     return false;
                 }
         }
-    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
+    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Ville && (!tile_laid.name.Contains("10") && !tile_laid.name.Contains("15")))
         {
             if (voisins[3] == null)
                 {

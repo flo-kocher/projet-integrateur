@@ -159,7 +159,7 @@ public class Move : NetworkBehaviour {
 
         
         PlayerManager.resetVisite();
-PlayerManager.drawshit(go);
+        PlayerManager.drawshit(go);
         PlayerManager.resetVisite();
         
         //cloture d'abbayes
