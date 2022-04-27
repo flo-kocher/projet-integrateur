@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
@@ -10,7 +11,17 @@ public class PlayerManager : NetworkBehaviour
     // compteur de Meeple synchronisé entre tous les clients
     [SyncVar]
     public int compteurMeeple = 0;
+
+    [SerializeField] GameObject playerLobbyUI;
+
+    //[SerializeField] NetworkManager NetworkManager;
+
+    //Joueur Local 
+    public static PlayerManager localPlayer ;
     // listes tous les Prefabs qui sont instanciés dans le jeu
+
+
+    /********************************TUILES*****************************************/
     public GameObject grid;
     public GameObject temp;
     public GameObject TileType0;
@@ -38,6 +49,14 @@ public class PlayerManager : NetworkBehaviour
     public GameObject TileType22;
     public GameObject TileType23;
     public GameObject TileType24;
+
+
+  /********************************\TUILES*****************************************/
+
+
+
+
+
     // UI
     public GameObject ui;
     // étoiles qui correspondent aux emplacements où poser les Meeples
@@ -207,7 +226,16 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
+
+
     // méthode se lançant au démarrage du client
+
+    void Start(){
+        // if(isLocalPlayer){
+            // localPlayer = this ;
+        // }
+        
+    }
     public override void OnStartClient()
     {
         base.OnStartClient();
@@ -215,6 +243,10 @@ public class PlayerManager : NetworkBehaviour
         grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
         ui = GameObject.Find("UI");
+
+        if (isLocalPlayer) {
+            localPlayer = this;
+        }
 
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
         // NetworkIdentity networkIdentity = NetworkClient.connection.identity;
@@ -403,6 +435,7 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
         instatiateTiles();
+        
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
 
@@ -1228,6 +1261,7 @@ public class PlayerManager : NetworkBehaviour
         // lancer la fonction sur tous les GO qui sont des abbayes (milieu = abbaye) -> tout le plateau pour tous les tours
         // const int voisins[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
     }
+
 
     // Demande du client au serveur du tirage d'une tuile de manière aléatoire
     [Command]
