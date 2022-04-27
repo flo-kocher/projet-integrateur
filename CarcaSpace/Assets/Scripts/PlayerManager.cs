@@ -126,9 +126,42 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
-    public int comptage_points(List<GameObject> lst)
+    
+    public int comptage_points(List<GameObject> lst)    // Les carrefour n'existe pas encore pour nous Et il y a au plus 4 joueurs
     {
-        // Comptage de point 
+        // à faire dynamiquement
+        int[] joueur = new int[] { 0, 0, 0, 0};
+        int max_joueur = 0;
+        for(int i=0; i<lst.Count; i++)
+        {
+            if(lst[i].GetComponent<Constraints>().meeple  !=- 1)
+            {
+                if(lst[i].GetComponent<Constraints>().meeple == 0 && lst[i].GetComponent<Constraints>().haut == Type_land.Chemin);
+                {
+                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
+                }
+                if(lst[i].GetComponent<Constraints>().meeple == 1 && lst[i].GetComponent<Constraints>().gauche == Type_land.Chemin);
+                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
+                if(lst[i].GetComponent<Constraints>().meeple == 2 && lst[i].GetComponent<Constraints>().bas == Type_land.Chemin);
+                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
+                if(lst[i].GetComponent<Constraints>().meeple == 3 && lst[i].GetComponent<Constraints>().droite == Type_land.Chemin);
+                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
+            }
+        }
+        
+        // joueur avec le plus de pions sur un chemin
+        for(int i=0; i<4; i++)
+        {
+            if(joueur[i] > max_joueur)
+                max_joueur = joueur[i];
+        }
+        // Plusieurs joueurs peuvent avoir le nb max
+        for(int i=0; i<4; i++)
+        {
+            if(joueur[i] == max_joueur)
+                Debug.Log("le score du chemin est : " + lst.Count);              
+        }
+        
         return 0;
     }
 
@@ -530,7 +563,7 @@ public class PlayerManager : NetworkBehaviour
         }
         */
 
-/*
+    /*
         faire les appels à setIsClosedByName() dans le if en dessous (cad les 3 faces)
 
         faire les 4 faces et ajouter les appels à setIsClosedByName()
@@ -538,7 +571,7 @@ public class PlayerManager : NetworkBehaviour
 
 
 
-*/
+    */
 
 
 
@@ -941,26 +974,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-
-    public void drawshit(GameObject tile_laid)
-    {
-        int x = tile_laid.GetComponent<Constraints>().coordX;
-        int y = tile_laid.GetComponent<Constraints>().coordY;
-
-        GameObject[] voisins = new GameObject[4];
-        for(int i = 0; i < plateau.Count; i++)
-        {
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
-                voisins[0] = plateau[i]; // haut
-            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[1] = plateau[i]; // gauche
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
-                voisins[2] = plateau[i]; // bas
-            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[3] = plateau[i]; // droite
-        }
-    }
-
     public void drawshit(GameObject tile_laid)
     {
         int x = tile_laid.GetComponent<Constraints>().coordX;
@@ -1048,12 +1061,6 @@ public class PlayerManager : NetworkBehaviour
         }
 
         if (!(tile_laid.name.Contains("10")) || !(tile_laid.name.Contains("15")))
-        {
-            Debug.Log ("pas de cas spé");
-            Debug.Log("La ville est fermé ?" + townIsClosed(tile_laid));
-        }
-
-        if (tile_laid.name.Contains("10") == false && tile_laid.name.Contains("15") == false)
         {
             Debug.Log ("pas de cas spé");
             Debug.Log("La ville est fermé ?" + townIsClosed(tile_laid));
