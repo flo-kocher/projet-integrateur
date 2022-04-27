@@ -284,6 +284,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: CanvasMain
       objectReference: {fileID: 0}
+    - target: {fileID: 7143131050320607775, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1289652716}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: JoinDedicated
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: AutoHostClient, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706913, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706926, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7143131051232706926, guid: 63098f8411502054f922b01d447430bb, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63098f8411502054f922b01d447430bb, type: 3}
 --- !u!1 &482299389
@@ -296,8 +336,8 @@ GameObject:
   m_Component:
   - component: {fileID: 482299392}
   - component: {fileID: 482299391}
-  - component: {fileID: 482299390}
   - component: {fileID: 482299393}
+  - component: {fileID: 482299390}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -314,26 +354,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 482299389}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Port: 7777
-  DualMode: 1
+  port: 7777
   NoDelay: 1
-  Interval: 10
-  Timeout: 10000
-  FastResend: 2
-  CongestionWindow: 0
-  SendWindowSize: 4096
-  ReceiveWindowSize: 4096
-  MaxRetransmit: 40
-  NonAlloc: 1
-  MaximizeSendReceiveBuffersToOSLimit: 1
-  ReliableMaxMessageSize: 298449
-  UnreliableMaxMessageSize: 1199
-  debugLog: 0
-  statisticsGUI: 0
-  statisticsLog: 0
+  SendTimeout: 5000
+  ReceiveTimeout: 30000
+  serverMaxMessageSize: 16384
+  serverMaxReceivesPerTick: 10000
+  serverSendQueueLimitPerConnection: 10000
+  serverReceiveQueueLimitPerConnection: 10000
+  clientMaxMessageSize: 16384
+  clientMaxReceivesPerTick: 1000
+  clientSendQueueLimit: 10000
+  clientReceiveQueueLimit: 10000
 --- !u!114 &482299391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -354,7 +389,7 @@ MonoBehaviour:
   onlineScene: Assets/Scenes/Lobby.unity
   transport: {fileID: 482299390}
   networkAddress: localhost
-  maxConnections: 100
+  maxConnections: 5
   authenticator: {fileID: 0}
   playerPrefab: {fileID: 5936959061422109294, guid: ad80e810685981c40a4975a56e677ced, type: 3}
   autoCreatePlayer: 1
@@ -362,7 +397,7 @@ MonoBehaviour:
   spawnPrefabs: []
   showRoomGUI: 1
   minPlayers: 1
-  roomPlayerPrefab: {fileID: 5752367790728327173, guid: b0838735b16c0af4abfb36c2e6be4d2b, type: 3}
+  roomPlayerPrefab: {fileID: -8479713857925308913, guid: b0838735b16c0af4abfb36c2e6be4d2b, type: 3}
   RoomScene: Assets/Scenes/Lobby.unity
   GameplayScene: Assets/Scenes/game interface.unity
   _allPlayersReady: 1
@@ -563,7 +598,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1289652716}
         m_TargetAssemblyTypeName: AutoHostClient, Assembly-CSharp
-        m_MethodName: JoinLocal
+        m_MethodName: JoinDedicated
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

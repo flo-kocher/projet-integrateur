@@ -49,35 +49,39 @@ public class NetworkRoomManagerExt : NetworkRoomManager
 
 
     public override void OnRoomServerConnect(NetworkConnectionToClient conn) {
-        base.OnRoomServerConnect(conn);
+        base.OnRoomServerConnect(conn);    
     }
-    // public override void OnRoomServerConnect(NetworkConnection conn)
-    // {
-    //     base.OnRoomServerConnect();
-    //     if (numPlayers >= maxConnections)
-    //     {
-    //         conn.Disconnect();
-    //         return;
-    //     }
+  
+    public override GameObject OnRoomServerCreateRoomPlayer(NetworkConnectionToClient conn)
+    {
+        return base.OnRoomServerCreateRoomPlayer(conn);
+    }
 
-    //     if (SceneManager.GetActiveScene().name != menuScene)
-    //     {
-    //         conn.Disconnect();
-    //         return;
-    //     }
-    // }
+        public override GameObject OnRoomServerCreateGamePlayer(NetworkConnectionToClient conn, GameObject roomPlayer)
+    {
+        return base.OnRoomServerCreateGamePlayer(conn, roomPlayer);
+    }
 
 
+    // / <summary>
+    // / This is called on the server when all the players in the room are ready.
+    // / <para>The default implementation of this function uses ServerChangeScene() to switch to the game player scene. By implementing this callback you can customize what happens when all the players in the room are ready, such as adding a countdown or a confirmation for a group leader.</para>
+    // / </summary>
     public override void OnRoomServerPlayersReady()
     {
         // calling the base method calls ServerChangeScene as soon as all players are in Ready state.
-    #if UNITY_SERVER
+
         base.OnRoomServerPlayersReady();
-    #else
+
         showStartButton = true;
-    #endif
+
     }
 
+    public override void OnRoomClientConnect(NetworkConnection conn) {
+        base.OnRoomClientConnect(conn) ; 
+        Debug.Log($"player number is {RoomPlayers.Count} ");
+
+    }
     
     public override void OnGUI()
     {
