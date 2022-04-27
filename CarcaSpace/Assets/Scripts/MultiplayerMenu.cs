@@ -134,17 +134,17 @@ public class MultiplayerMenu : MonoBehaviour
         hostButton.interactable = false ;  
         //convertir le nb de joueur en int 
         // int playerNb =  System.Convert.ToInt32(playerNumberInput.text);
-        // Debug.Log($"Nb de joeur choisit {playerNb}");
-        Debug.Log($"Player is  {RoomPlayerManager.localPlayer}");
+        // // Debug.Log($"Nb de joeur choisit {playerNb}");
+        // Debug.Log($"Player is  {RoomPlayerManager.localPlayer}");
         EnterLobby();
-        RoomPlayerManager.localPlayer.HostGame();
+        // RoomPlayerManager.localPlayer.HostGame();
     }
 
     //pour reactiver les boutons si echec
     public void hostSucc(bool success){
         if(success){
-            //SceneManager.LoadScene("Lobby");
-            SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer,true);
+            // //SceneManager.LoadScene("Lobby");
+            // SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer,true);
         }else{
             // joinMatchInput.interactable = true ; 
             // joinButton.interactable = true ; 
@@ -157,14 +157,14 @@ public class MultiplayerMenu : MonoBehaviour
         joinButton.interactable = false ; 
         //hostButton.interactable = false ;  
         EnterLobby();
-        RoomPlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
+        // RoomPlayerManager.localPlayer.JoinGame (joinMatchInput.text.ToUpper());
     }
 
     //pour reactiver les boutons si echec
     public void joinSucc(bool success){
         if(success){
             
-            SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer,false);
+            // SpawnUIPlayerPrefab(RoomPlayerManager.localPlayer,false);
         }else{
             joinMatchInput.interactable = true ;
             joinButton.interactable = true ; 
@@ -177,14 +177,14 @@ public class MultiplayerMenu : MonoBehaviour
     //     textPlayers.text = "Player " + player.playerIndex.ToString();
     // }
 
-    public void SpawnUIPlayerPrefab (RoomPlayerManager Player,bool isHost) {
-       if(isHost == true){
-            GameObject newUIPlayer = Instantiate(UIPlayerPrefab) ;
-       }else{
+    // public void SpawnUIPlayerPrefab (RoomPlayerManager Player,bool isHost) {
+    //    if(isHost == true){
+    //         GameObject newUIPlayer = Instantiate(UIPlayerPrefab) ;
+    //    }else{
            
-       }
+    //    }
        
        
-        // SetPlayer(newUIPlayer,Player.playerIndex );
-    }
+    //     // SetPlayer(newUIPlayer,Player.playerIndex );
+    // }
 }

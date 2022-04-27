@@ -108,7 +108,6 @@ MonoBehaviour:
     matchFull: 0
     players: []
   playerLobbyUI: {fileID: 0}
-  NetworkManager: {fileID: 2374644200210314848, guid: 894e92e8ed5eea648b966295d2426bcc, type: 3}
   grid: {fileID: 0}
   temp: {fileID: 8127399405721289948, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
   TileType0: {fileID: 904876740412345685, guid: 807a86916ff80ab45a84ce2d1809b5ee, type: 3}

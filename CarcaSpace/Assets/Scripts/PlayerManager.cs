@@ -12,18 +12,6 @@ public class PlayerManager : NetworkBehaviour
     [SyncVar]
     public int compteurMeeple = 0;
 
-    NetworkMatch netMatchChecker;
-
-    Guid netIDGuid;
-
-    //en sync var car elle va etre display chez tous les clients 
-    [SyncVar]
-    public string matchID ; 
-
-    [SyncVar] public int playerIndex;
-
-    [SyncVar] public Match currentMatch;
-
     [SerializeField] GameObject playerLobbyUI;
 
     //[SerializeField] NetworkManager NetworkManager;
@@ -96,9 +84,6 @@ public class PlayerManager : NetworkBehaviour
     public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
 
 
-    void Awake () {
-        netMatchChecker = GetComponent<NetworkMatch> ();
-    }
 
     // méthode se lançant au démarrage du client
 
@@ -292,9 +277,6 @@ public class PlayerManager : NetworkBehaviour
         tabPos[2] = est;
         tabPos[3] = ouest;
         tabPos[4] = milieu;
-
-        netIDGuid = netId.ToString ().ToGuid ();
-        netMatchChecker.matchId = netIDGuid;
     }
 
 
