@@ -866,7 +866,7 @@ public class PlayerManager : NetworkBehaviour
             */
 
 
-
+/*
             Debug.Log("2 voisins");
             //premier if et else fonctionnel !
 
@@ -876,6 +876,7 @@ public class PlayerManager : NetworkBehaviour
 
             // on mets a jour le chemin comme etant clos
             setIsClosedByName(nom_struct_gauche);
+            */
 
             // on doit créer les structures pour chaque type de tuile
             if (nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
@@ -888,7 +889,7 @@ public class PlayerManager : NetworkBehaviour
                 road.CurrentTiles.Add(tile_laid);
                 */
                 // Si tuile 21
-                if (tile_laid.Name.Contains("21"))
+                if (tile_laid.name.Contains("21"))
                 {
                     // créer deux structures 
                     createNewStruct(tile_laid, "_2");
