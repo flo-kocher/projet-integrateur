@@ -62,13 +62,33 @@ public class PlayerManager : NetworkBehaviour
     public List<GameObject> all_tiles = new List<GameObject>();
 
     // liste des clients connectes
-    public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
+    // public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
 
     //
     public List<GameObject> plateau = new List<GameObject>();
 
     // liste des abbayes posées
     public List<GameObject> abbeyes = new List<GameObject>();
+
+    // structure d'un joueur
+    public struct Player
+    {
+        // Déclaration
+        public NetworkIdentity id;
+        public int points;
+        public int meeple_libre;
+
+        // Constructor
+        public Player(NetworkIdentity id)
+        {
+            this.id = id;
+            points = 0;
+            meeple_libre = 7;
+        }
+    }
+
+    public List<Player> list_of_struct_player = new List<Player>();
+
 
     //structure de chemins
     public struct CurrentRoads
@@ -101,7 +121,6 @@ public class PlayerManager : NetworkBehaviour
 
     public int nb_of_struct_roads;
     public List<CurrentRoads> list_of_struct_roads = new List<CurrentRoads>();
-
     public CurrentRoads getStructByName(String name)
     {
         for (int i = 0; i < list_of_struct_roads.Count; i++)
@@ -198,8 +217,10 @@ public class PlayerManager : NetworkBehaviour
         ui = GameObject.Find("UI");
 
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
-        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-        playerList.Add(networkIdentity);
+        // NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        Player player = new Player(NetworkClient.connection.identity);
+        //playerList.Add(networkIdentity);
+        list_of_struct_player.Add(player);
         //Debug.Log("Player list",playerList.Count);
     }
 
