@@ -126,42 +126,14 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
-
-    public int comptage_points(List<GameObject> lst)    // Les carrefour n'existe pas encore pour nous Et il y a au plus 4 joueurs
+    public int comptage_points(List<GameObject> lst)
     {
-        int[] joueur = new int[] { 0, 0, 0, 0};
-        int max_joueur = 0;
-        for(int i=0; i<lst.Count; i++)
-        {
-            if(lst[i].GetComponent<Constraints>().meeple  !=- 1)
-            {
-                if(lst[i].GetComponent<Constraints>().meeple == 0 && lst[i].GetComponent<Constraints>().haut == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().joueur]++;
-                if(lst[i].GetComponent<Constraints>().meeple == 1 && lst[i].GetComponent<Constraints>().gauche == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().joueur]++;
-                if(lst[i].GetComponent<Constraints>().meeple == 2 && lst[i].GetComponent<Constraints>().bas == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().joueur]++;
-                if(lst[i].GetComponent<Constraints>().meeple == 3 && lst[i].GetComponent<Constraints>().droite == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().joueur]++;
-            }
-        }
-        for(int i=0; i<4; i++)
-        {
-            if(joueur[i] > max_joueur)
-                max_joueur = joueur[i];
-        }
-        for(int i=0; i<4; i++)
-        {
-            if(joueur[i] == max_joueur)
-                Debug.Log("le score du chemin est : " + lst.Count);                
-        }
-        
+        // Comptage de point 
         return 0;
     }
 
     public void checkAllStruct()
     {
-        Debug.Log("check Struct");  
         for(int i = 0; i < list_of_struct_roads.Count; i++)
         {
             int cmp_est_fermante = 0;
@@ -172,9 +144,8 @@ public class PlayerManager : NetworkBehaviour
             }
             if(cmp_est_fermante == 2 || list_of_struct_roads[i].isClosed)
             {
-                Debug.Log("Chemin fermé");  
                 //calcul de points
-                comptage_points(list_of_struct_roads[i].CurrentTiles);
+                //comptage_points(list_of_struct_roads[i].CurrentTiles);
 
                 //donner points aux Joueurs qui ont des Meeples sur le chemin
                 //suppression de liste
