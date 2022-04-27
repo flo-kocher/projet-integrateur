@@ -70,12 +70,7 @@ namespace Mirror.SimpleWeb
                         while (conn.sendQueue.TryDequeue(out ArrayBuffer msg))
                         {
                             // check if connected before sending message
-                            if (!client.Connected)
-                            {
-                                Log.Info($"SendLoop {conn} not connected");
-                                msg.Release();
-                                return;
-                            }
+                            if (!client.Connected) { Log.Info($"SendLoop {conn} not connected"); return; }
 
                             int maxLength = msg.count + Constants.HeaderSize + Constants.MaskSize;
 
@@ -100,12 +95,7 @@ namespace Mirror.SimpleWeb
                         while (conn.sendQueue.TryDequeue(out ArrayBuffer msg))
                         {
                             // check if connected before sending message
-                            if (!client.Connected)
-                            {
-                                Log.Info($"SendLoop {conn} not connected");
-                                msg.Release();
-                                return;
-                            }
+                            if (!client.Connected) { Log.Info($"SendLoop {conn} not connected"); return; }
 
                             int length = SendMessage(writeBuffer, 0, msg, setMask, maskHelper);
                             stream.Write(writeBuffer, 0, length);
@@ -156,7 +146,7 @@ namespace Mirror.SimpleWeb
             return offset;
         }
 
-        public static int WriteHeader(byte[] buffer, int startOffset, int msgLength, bool setMask)
+        static int WriteHeader(byte[] buffer, int startOffset, int msgLength, bool setMask)
         {
             int sendLength = 0;
             const byte finished = 128;
@@ -179,18 +169,7 @@ namespace Mirror.SimpleWeb
             }
             else
             {
-                buffer[startOffset + 1] = 127;
-                // must be 64 bytes, but we only have 32 bit length, so first 4 bits are 0
-                buffer[startOffset + 2] = 0;
-                buffer[startOffset + 3] = 0;
-                buffer[startOffset + 4] = 0;
-                buffer[startOffset + 5] = 0;
-                buffer[startOffset + 6] = (byte)(msgLength >> 24);
-                buffer[startOffset + 7] = (byte)(msgLength >> 16);
-                buffer[startOffset + 8] = (byte)(msgLength >> 8);
-                buffer[startOffset + 9] = (byte)msgLength;
-
-                sendLength += 9;
+                throw new InvalidDataException($"Trying to send a message larger than {ushort.MaxValue} bytes");
             }
 
             if (setMask)
@@ -201,28 +180,28 @@ namespace Mirror.SimpleWeb
             return sendLength + startOffset;
         }
 
-    }
-    sealed class MaskHelper : IDisposable
-    {
-        readonly byte[] maskBuffer;
-        readonly RNGCryptoServiceProvider random;
-
-        public MaskHelper()
+        sealed class MaskHelper : IDisposable
         {
-            maskBuffer = new byte[4];
-            random = new RNGCryptoServiceProvider();
-        }
-        public void Dispose()
-        {
-            random.Dispose();
-        }
+            readonly byte[] maskBuffer;
+            readonly RNGCryptoServiceProvider random;
 
-        public int WriteMask(byte[] buffer, int offset)
-        {
-            random.GetBytes(maskBuffer);
-            Buffer.BlockCopy(maskBuffer, 0, buffer, offset, 4);
+            public MaskHelper()
+            {
+                maskBuffer = new byte[4];
+                random = new RNGCryptoServiceProvider();
+            }
+            public void Dispose()
+            {
+                random.Dispose();
+            }
 
-            return offset + 4;
+            public int WriteMask(byte[] buffer, int offset)
+            {
+                random.GetBytes(maskBuffer);
+                Buffer.BlockCopy(maskBuffer, 0, buffer, offset, 4);
+
+                return offset + 4;
+            }
         }
     }
 }

@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Mirror
@@ -7,41 +6,35 @@ namespace Mirror
     // message packing all in one place, instead of constructing headers in all
     // kinds of different places
     //
-    //   MsgType     (2 bytes)
+    //   MsgType     (1-n bytes)
     //   Content     (ContentSize bytes)
+    //
+    // -> we use varint for headers because most messages will result in 1 byte
+    //    type/size headers then instead of always
+    //    using 2 bytes for shorts.
+    // -> this reduces bandwidth by 10% if average message size is 20 bytes
+    //    (probably even shorter)
     public static class MessagePacking
     {
         // message header size
-        public const int HeaderSize = sizeof(ushort);
+        internal const int HeaderSize = sizeof(ushort);
 
-        // max message content size (without header) calculation for convenience
-        // -> Transport.GetMaxPacketSize is the raw maximum
-        // -> Every message gets serialized into <<id, content>>
-        // -> Every serialized message get put into a batch with a header
-        public static int MaxContentSize
+        public static int GetId<T>() where T : struct, NetworkMessage
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            get => Transport.activeTransport.GetMaxPacketSize()
-                   - HeaderSize
-                   - Batcher.HeaderSize;
+            // paul: 16 bits is enough to avoid collisions
+            //  - keeps the message size small because it gets varinted
+            //  - in case of collisions,  Mirror will display an error
+            return typeof(T).FullName.GetStableHashCode() & 0xFFFF;
         }
-
-        // paul: 16 bits is enough to avoid collisions
-        //  - keeps the message size small
-        //  - in case of collisions,  Mirror will display an error
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static ushort GetId<T>() where T : struct, NetworkMessage =>
-            (ushort)(typeof(T).FullName.GetStableHashCode() & 0xFFFF);
 
         // pack message before sending
         // -> NetworkWriter passed as arg so that we can use .ToArraySegment
         //    and do an allocation free send before recycling it.
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void Pack<T>(T message, NetworkWriter writer)
             where T : struct, NetworkMessage
         {
-            ushort msgType = GetId<T>();
-            writer.WriteUShort(msgType);
+            int msgType = GetId<T>();
+            writer.WriteUInt16((ushort)msgType);
 
             // serialize message into writer
             writer.Write(message);
@@ -51,13 +44,12 @@ namespace Mirror
         // -> pass NetworkReader so it's less strange if we create it in here
         //    and pass it upwards.
         // -> NetworkReader will point at content afterwards!
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool Unpack(NetworkReader messageReader, out ushort msgType)
+        public static bool Unpack(NetworkReader messageReader, out int msgType)
         {
-            // read message type
+            // read message type (varint)
             try
             {
-                msgType = messageReader.ReadUShort();
+                msgType = messageReader.ReadUInt16();
                 return true;
             }
             catch (System.IO.EndOfStreamException)
@@ -67,10 +59,11 @@ namespace Mirror
             }
         }
 
-        // version for handlers with channelId
-        // inline! only exists for 20-30 messages and they call it all the time.
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static NetworkMessageDelegate WrapHandler<T, C>(Action<C, T, int> handler, bool requireAuthentication)
+        [Obsolete("MessagePacker.UnpackMessage was renamed to Unpack for consistency with Pack.")]
+        public static bool UnpackMessage(NetworkReader messageReader, out int msgType) =>
+            Unpack(messageReader, out msgType);
+
+        internal static NetworkMessageDelegate WrapHandler<T, C>(Action<C, T> handler, bool requireAuthentication)
             where T : struct, NetworkMessage
             where C : NetworkConnection
             => (conn, reader, channelId) =>
@@ -88,8 +81,6 @@ namespace Mirror
             // let's catch them all and then disconnect that connection to avoid
             // further attacks.
             T message = default;
-            // record start position for NetworkDiagnostics because reader might contain multiple messages if using batching
-            int startPos = reader.Position;
             try
             {
                 if (requireAuthentication && !conn.isAuthenticated)
@@ -114,35 +105,21 @@ namespace Mirror
             }
             finally
             {
-                int endPos = reader.Position;
                 // TODO: Figure out the correct channel
-                NetworkDiagnostics.OnReceive(message, channelId, endPos - startPos);
+                NetworkDiagnostics.OnReceive(message, channelId, reader.Length);
             }
 
             // user handler exception should not stop the whole server
             try
             {
                 // user implemented handler
-                handler((C)conn, message, channelId);
+                handler((C)conn, message);
             }
             catch (Exception e)
             {
-                Debug.LogError($"Disconnecting connId={conn.connectionId} to prevent exploits from an Exception in MessageHandler: {e.GetType().Name} {e.Message}\n{e.StackTrace}");
+                Debug.LogError($"Exception in MessageHandler: {e.GetType().Name} {e.Message}\n{e.StackTrace}");
                 conn.Disconnect();
             }
         };
-
-        // version for handlers without channelId
-        // TODO obsolete this some day to always use the channelId version.
-        //      all handlers in this version are wrapped with 1 extra action.
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal static NetworkMessageDelegate WrapHandler<T, C>(Action<C, T> handler, bool requireAuthentication)
-            where T : struct, NetworkMessage
-            where C : NetworkConnection
-        {
-            // wrap action as channelId version, call original
-            void Wrapped(C conn, T msg, int _) => handler(conn, msg);
-            return WrapHandler((Action<C, T, int>) Wrapped, requireAuthentication);
-        }
     }
 }

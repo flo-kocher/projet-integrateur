@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Mirror
 {
-    public class SyncSet<T> : SyncObject, ISet<T>
+    public class SyncSet<T> : ISet<T>, SyncObject
     {
         public delegate void SyncSetChanged(Operation op, T item);
 
@@ -27,13 +27,7 @@ namespace Mirror
             internal T item;
         }
 
-        // list of changes.
-        // -> insert/delete/clear is only ONE change
-        // -> changing the same slot 10x caues 10 changes.
-        // -> note that this grows until next sync(!)
-        // TODO Dictionary<key, change> to avoid ever growing changes / redundant changes!
         readonly List<Change> changes = new List<Change>();
-
         // how many changes we need to ignore
         // this is needed because when we initialize the list,
         // we might later receive changes that have already been applied
@@ -45,7 +39,7 @@ namespace Mirror
             this.objects = objects;
         }
 
-        public override void Reset()
+        public void Reset()
         {
             IsReadOnly = false;
             changes.Clear();
@@ -53,9 +47,11 @@ namespace Mirror
             objects.Clear();
         }
 
+        public bool IsDirty => changes.Count > 0;
+
         // throw away all the changes
         // this should be called after a successful sync
-        public override void ClearChanges() => changes.Clear();
+        public void Flush() => changes.Clear();
 
         void AddOperation(Operation op, T item)
         {
@@ -70,21 +66,17 @@ namespace Mirror
                 item = item
             };
 
-            if (IsRecording())
-            {
-                changes.Add(change);
-                OnDirty?.Invoke();
-            }
+            changes.Add(change);
 
             Callback?.Invoke(op, item);
         }
 
         void AddOperation(Operation op) => AddOperation(op, default);
 
-        public override void OnSerializeAll(NetworkWriter writer)
+        public void OnSerializeAll(NetworkWriter writer)
         {
             // if init,  write the full list content
-            writer.WriteUInt((uint)objects.Count);
+            writer.WriteUInt32((uint)objects.Count);
 
             foreach (T obj in objects)
             {
@@ -95,13 +87,13 @@ namespace Mirror
             // thus the client will need to skip all the pending changes
             // or they would be applied again.
             // So we write how many changes are pending
-            writer.WriteUInt((uint)changes.Count);
+            writer.WriteUInt32((uint)changes.Count);
         }
 
-        public override void OnSerializeDelta(NetworkWriter writer)
+        public void OnSerializeDelta(NetworkWriter writer)
         {
             // write all the queued up changes
-            writer.WriteUInt((uint)changes.Count);
+            writer.WriteUInt32((uint)changes.Count);
 
             for (int i = 0; i < changes.Count; i++)
             {
@@ -124,13 +116,13 @@ namespace Mirror
             }
         }
 
-        public override void OnDeserializeAll(NetworkReader reader)
+        public void OnDeserializeAll(NetworkReader reader)
         {
             // This list can now only be modified by synchronization
             IsReadOnly = true;
 
             // if init,  write the full list content
-            int count = (int)reader.ReadUInt();
+            int count = (int)reader.ReadUInt32();
 
             objects.Clear();
             changes.Clear();
@@ -144,15 +136,15 @@ namespace Mirror
             // We will need to skip all these changes
             // the next time the list is synchronized
             // because they have already been applied
-            changesAhead = (int)reader.ReadUInt();
+            changesAhead = (int)reader.ReadUInt32();
         }
 
-        public override void OnDeserializeDelta(NetworkReader reader)
+        public void OnDeserializeDelta(NetworkReader reader)
         {
             // This list can now only be modified by synchronization
             IsReadOnly = true;
 
-            int changesCount = (int)reader.ReadUInt();
+            int changesCount = (int)reader.ReadUInt32();
 
             for (int i = 0; i < changesCount; i++)
             {

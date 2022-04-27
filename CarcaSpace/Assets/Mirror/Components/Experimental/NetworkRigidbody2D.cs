@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace Mirror.Experimental
 {
-    [AddComponentMenu("Network/ Experimental/Network Rigidbody 2D")]
+    [AddComponentMenu("Network/Experimental/NetworkRigidbody2D")]
     public class NetworkRigidbody2D : NetworkBehaviour
     {
         [Header("Settings")]
         [SerializeField] internal Rigidbody2D target = null;
 
         [Tooltip("Set to true if moves come from owner client, set to false if moves always come from server")]
-        public  bool clientAuthority = false;
+        [SerializeField] bool clientAuthority = false;
 
         [Header("Velocity")]
 

@@ -7,7 +7,7 @@ namespace Mirror.Authenticators
     /// An authenticator that disconnects connections if they don't
     /// authenticate within a specified time limit.
     /// </summary>
-    [AddComponentMenu("Network/ Authenticators/Timeout Authenticator")]
+    [AddComponentMenu("Network/Authenticators/TimeoutAuthenticator")]
     public class TimeoutAuthenticator : NetworkAuthenticator
     {
         public NetworkAuthenticator authenticator;
@@ -18,7 +18,7 @@ namespace Mirror.Authenticators
         public void Awake()
         {
             authenticator.OnServerAuthenticated.AddListener(connection => OnServerAuthenticated.Invoke(connection));
-            authenticator.OnClientAuthenticated.AddListener(OnClientAuthenticated.Invoke);
+            authenticator.OnClientAuthenticated.AddListener(connection => OnClientAuthenticated.Invoke(connection));
         }
 
         public override void OnStartServer()
@@ -41,28 +41,30 @@ namespace Mirror.Authenticators
             authenticator.OnStopClient();
         }
 
-        public override void OnServerAuthenticate(NetworkConnectionToClient conn)
+        public override void OnServerAuthenticate(NetworkConnection conn)
         {
             authenticator.OnServerAuthenticate(conn);
             if (timeout > 0)
                 StartCoroutine(BeginAuthentication(conn));
         }
 
-        public override void OnClientAuthenticate()
+        public override void OnClientAuthenticate(NetworkConnection conn)
         {
-            authenticator.OnClientAuthenticate();
+            authenticator.OnClientAuthenticate(conn);
             if (timeout > 0)
-                StartCoroutine(BeginAuthentication(NetworkClient.connection));
+                StartCoroutine(BeginAuthentication(conn));
         }
 
         IEnumerator BeginAuthentication(NetworkConnection conn)
         {
-            //Debug.Log($"Authentication countdown started {conn} {timeout}");
+            // Debug.Log($"Authentication countdown started {conn} {timeout}");
+
             yield return new WaitForSecondsRealtime(timeout);
 
             if (!conn.isAuthenticated)
             {
-                Debug.LogError($"Authentication Timeout - Disconnecting {conn}");
+                // Debug.Log($"Authentication Timeout {conn}");
+
                 conn.Disconnect();
             }
         }

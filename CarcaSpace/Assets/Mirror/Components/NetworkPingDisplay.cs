@@ -7,8 +7,8 @@ namespace Mirror
     /// Component that will display the clients ping in milliseconds
     /// </summary>
     [DisallowMultipleComponent]
-    [AddComponentMenu("Network/Network Ping Display")]
-    [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-ping-display")]
+    [AddComponentMenu("Network/NetworkPingDisplay")]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkPingDisplay.html")]
     public class NetworkPingDisplay : MonoBehaviour
     {
         public Color color = Color.white;

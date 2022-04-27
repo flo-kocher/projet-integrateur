@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6381367307239962684}
   - component: {fileID: 1035530409580232921}
   - component: {fileID: 7518173672430414833}
-  - component: {fileID: -8827351424505130613}
   m_Layer: 0
   m_Name: PlayerManager
   m_TagString: Untagged
@@ -49,7 +48,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: ad80e810685981c40a4975a56e677ced
+  m_AssetId: 
   hasSpawned: 0
 --- !u!114 &1035530409580232921
 MonoBehaviour:
@@ -66,25 +65,12 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 1
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
-  syncScale: 1
-  interpolatePosition: 1
-  interpolateRotation: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 0
   interpolateScale: 1
-  bufferTimeMultiplier: 1
-  bufferSizeLimit: 64
-  catchupThreshold: 4
-  catchupMultiplier: 0.1
-  onlySyncOnChange: 1
-  bufferResetMultiplier: 5
-  positionSensitivity: 0.01
-  rotationSensitivity: 0.01
-  scaleSensitivity: 0.01
-  showGizmos: 0
-  showOverlay: 0
-  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  syncScale: 1
 --- !u!114 &7518173672430414833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,14 +86,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   compteurMeeple: 0
-  matchID: 
-  playerIndex: 0
-  currentMatch:
-    MatchId: 
-    inMatch: 0
-    matchFull: 0
-    players: []
-  playerLobbyUI: {fileID: 0}
   grid: {fileID: 0}
   temp: {fileID: 8127399405721289948, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
   TileType0: {fileID: 904876740412345685, guid: 807a86916ff80ab45a84ce2d1809b5ee, type: 3}
@@ -146,17 +124,3 @@ MonoBehaviour:
   tabPos: []
   all_tiles: []
   playerList: []
---- !u!114 &-8827351424505130613
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5936959061422109294}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d17e718851449a6879986e45c458fb7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1

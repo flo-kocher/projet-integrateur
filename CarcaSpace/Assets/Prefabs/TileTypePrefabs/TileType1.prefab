@@ -623,7 +623,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: bafb660a05eb8ab419a7eac85704e3a5
+  m_AssetId: 
   hasSpawned: 0
 --- !u!114 &4793412428863025478
 MonoBehaviour:
@@ -640,9 +640,11 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   clientAuthority: 1
-  sendInterval: 0.05
-  syncPosition: 1
-  syncRotation: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 0
+  interpolateScale: 1
   syncScale: 1
 --- !u!114 &-8168235520166218449
 MonoBehaviour:

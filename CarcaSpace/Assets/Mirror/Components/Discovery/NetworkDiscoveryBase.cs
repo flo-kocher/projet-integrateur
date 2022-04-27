@@ -16,7 +16,7 @@ namespace Mirror.Discovery
     /// <see cref="NetworkDiscovery">NetworkDiscovery</see> for a sample implementation
     /// </summary>
     [DisallowMultipleComponent]
-    [HelpURL("https://mirror-networking.gitbook.io/docs/components/network-discovery")]
+    [HelpURL("https://mirror-networking.com/docs/Articles/Components/NetworkDiscovery.html")]
     public abstract class NetworkDiscoveryBase<Request, Response> : MonoBehaviour
         where Request : NetworkMessage
         where Response : NetworkMessage
@@ -30,11 +30,11 @@ namespace Mirror.Discovery
         [SerializeField]
         [Tooltip("The UDP port the server will listen for multi-cast messages")]
         protected int serverBroadcastListenPort = 47777;
-
+        
         [SerializeField]
         [Tooltip("If true, broadcasts a discovery request every ActiveDiscoveryInterval seconds")]
         public bool enableActiveDiscovery = true;
-
+        
         [SerializeField]
         [Tooltip("Time in seconds between multi-cast messages")]
         [Range(1, 60)]
@@ -75,25 +75,11 @@ namespace Mirror.Discovery
         // Ensure the ports are cleared no matter when Game/Unity UI exits
         void OnApplicationQuit()
         {
-            //Debug.Log("NetworkDiscoveryBase OnApplicationQuit");
-            Shutdown();
-        }
-
-        void OnDisable()
-        {
-            //Debug.Log("NetworkDiscoveryBase OnDisable");
-            Shutdown();
-        }
-
-        void OnDestroy()
-        {
-            //Debug.Log("NetworkDiscoveryBase OnDestroy");
             Shutdown();
         }
 
         void Shutdown()
         {
-            EndpMulticastLock();
             if (serverUdpClient != null)
             {
                 try
@@ -150,7 +136,6 @@ namespace Mirror.Discovery
 
         public async Task ServerListenAsync()
         {
-            BeginMulticastLock();
             while (true)
             {
                 try
@@ -177,7 +162,7 @@ namespace Mirror.Discovery
 
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(udpReceiveResult.Buffer))
             {
-                long handshake = networkReader.ReadLong();
+                long handshake = networkReader.ReadInt64();
                 if (handshake != secretHandshake)
                 {
                     // message is not for us
@@ -210,7 +195,7 @@ namespace Mirror.Discovery
             {
                 try
                 {
-                    writer.WriteLong(secretHandshake);
+                    writer.WriteInt64(secretHandshake);
 
                     writer.Write(info);
 
@@ -238,42 +223,7 @@ namespace Mirror.Discovery
         /// <returns>The message to be sent back to the client or null</returns>
         protected abstract Response ProcessRequest(Request request, IPEndPoint endpoint);
 
-        // Android Multicast fix: https://github.com/vis2k/Mirror/pull/2887
-#if UNITY_ANDROID
-        AndroidJavaObject multicastLock;
-        bool hasMulticastLock;
-#endif
-        void BeginMulticastLock()
-		{
-#if UNITY_ANDROID
-            if (hasMulticastLock) return;
-                
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                using (AndroidJavaObject activity = new AndroidJavaClass("com.unity3d.player.UnityPlayer").GetStatic<AndroidJavaObject>("currentActivity"))
-                {
-                    using (var wifiManager = activity.Call<AndroidJavaObject>("getSystemService", "wifi"))
-                    {
-                        multicastLock = wifiManager.Call<AndroidJavaObject>("createMulticastLock", "lock");
-                        multicastLock.Call("acquire");
-                        hasMulticastLock = true;
-                    }
-                }
-			}
-#endif
-        }
-
-        void EndpMulticastLock()
-        {
-#if UNITY_ANDROID
-            if (!hasMulticastLock) return;
-            
-            multicastLock?.Call("release");
-            hasMulticastLock = false;
-#endif
-        }
-
-#endregion
+        #endregion
 
         #region Client
 
@@ -299,7 +249,6 @@ namespace Mirror.Discovery
             catch (Exception)
             {
                 // Free the port if we took it
-                //Debug.LogError("NetworkDiscoveryBase StartDiscovery Exception");
                 Shutdown();
                 throw;
             }
@@ -314,7 +263,6 @@ namespace Mirror.Discovery
         /// </summary>
         public void StopDiscovery()
         {
-            //Debug.Log("NetworkDiscoveryBase StopDiscovery");
             Shutdown();
         }
 
@@ -324,18 +272,7 @@ namespace Mirror.Discovery
         /// <returns>ClientListenAsync Task</returns>
         public async Task ClientListenAsync()
         {
-            // while clientUpdClient to fix: 
-            // https://github.com/vis2k/Mirror/pull/2908
-            //
-            // If, you cancel discovery the clientUdpClient is set to null.
-            // However, nothing cancels ClientListenAsync. If we change the if(true)
-            // to check if the client is null. You can properly cancel the discovery, 
-            // and kill the listen thread.
-            //
-            // Prior to this fix, if you cancel the discovery search. It crashes the 
-            // thread, and is super noisy in the output. As well as causes issues on 
-            // the quest.
-            while (clientUdpClient != null)
+            while (true)
             {
                 try
                 {
@@ -361,17 +298,11 @@ namespace Mirror.Discovery
             if (clientUdpClient == null)
                 return;
 
-            if (NetworkClient.isConnected)
-            {
-                StopDiscovery();
-                return;
-            }
-
             IPEndPoint endPoint = new IPEndPoint(IPAddress.Broadcast, serverBroadcastListenPort);
 
             using (PooledNetworkWriter writer = NetworkWriterPool.GetWriter())
             {
-                writer.WriteLong(secretHandshake);
+                writer.WriteInt64(secretHandshake);
 
                 try
                 {
@@ -408,7 +339,7 @@ namespace Mirror.Discovery
 
             using (PooledNetworkReader networkReader = NetworkReaderPool.GetReader(udpReceiveResult.Buffer))
             {
-                if (networkReader.ReadLong() != secretHandshake)
+                if (networkReader.ReadInt64() != secretHandshake)
                     return;
 
                 Response response = networkReader.Read<Response>();

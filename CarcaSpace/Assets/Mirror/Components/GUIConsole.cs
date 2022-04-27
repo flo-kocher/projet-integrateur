@@ -60,17 +60,14 @@ namespace Mirror
         void OnLog(string message, string stackTrace, LogType type)
         {
             // is this important?
-            // => always show exceptions & errors
-            // => usually a good idea to show warnings too, otherwise it's too
-            //    easy to miss OnDeserialize warnings etc. in builds
-            bool isImportant = type == LogType.Error || type == LogType.Exception || type == LogType.Warning;
+            bool isImportant = type == LogType.Error || type == LogType.Exception;
 
             // use stack trace only if important
             // (otherwise users would have to find and search the log file.
             //  seeing it in the console directly is way easier to deal with.)
             // => only add \n if stack trace is available (only in debug builds)
             if (isImportant && !string.IsNullOrWhiteSpace(stackTrace))
-                message += $"\n{stackTrace}";
+                message += "\n" + stackTrace;
 
             // add to queue
             log.Enqueue(new LogEntry(message, type));

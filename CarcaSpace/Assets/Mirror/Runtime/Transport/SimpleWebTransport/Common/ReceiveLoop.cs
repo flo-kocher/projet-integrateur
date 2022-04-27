@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
 using System.Text;
@@ -38,14 +37,6 @@ namespace Mirror.SimpleWeb
             }
         }
 
-        struct Header
-        {
-            public int payloadLength;
-            public int offset;
-            public int opcode;
-            public bool finished;
-        }
-
         public static void Loop(Config config)
         {
             (Connection conn, int maxMessageSize, bool expectMask, ConcurrentQueue<Message> queue, BufferPool _) = config;
@@ -78,6 +69,7 @@ namespace Mirror.SimpleWeb
             catch (ObjectDisposedException e) { Log.InfoException(e); }
             catch (ReadHelperException e)
             {
+                // log as info only
                 Log.InfoException(e);
             }
             catch (SocketException e)
@@ -115,114 +107,48 @@ namespace Mirror.SimpleWeb
             (Connection conn, int maxMessageSize, bool expectMask, ConcurrentQueue<Message> queue, BufferPool bufferPool) = config;
             Stream stream = conn.stream;
 
-            Header header = ReadHeader(config, buffer);
-
-            int msgOffset = header.offset;
-            header.offset = ReadHelper.Read(stream, buffer, header.offset, header.payloadLength);
-
-            if (header.finished)
-            {
-                switch (header.opcode)
-                {
-                    case 2:
-                        HandleArrayMessage(config, buffer, msgOffset, header.payloadLength);
-                        break;
-                    case 8:
-                        HandleCloseMessage(config, buffer, msgOffset, header.payloadLength);
-                        break;
-                }
-            }
-            else
-            {
-                // todo cache this to avoid allocations
-                Queue<ArrayBuffer> fragments = new Queue<ArrayBuffer>();
-                fragments.Enqueue(CopyMessageToBuffer(bufferPool, expectMask, buffer, msgOffset, header.payloadLength));
-                int totalSize = header.payloadLength;
-
-                while (!header.finished)
-                {
-                    header = ReadHeader(config, buffer, opCodeContinuation: true);
-
-                    msgOffset = header.offset;
-                    header.offset = ReadHelper.Read(stream, buffer, header.offset, header.payloadLength);
-                    fragments.Enqueue(CopyMessageToBuffer(bufferPool, expectMask, buffer, msgOffset, header.payloadLength));
-
-                    totalSize += header.payloadLength;
-                    MessageProcessor.ThrowIfMsgLengthTooLong(totalSize, maxMessageSize);
-                }
-
-
-                ArrayBuffer msg = bufferPool.Take(totalSize);
-                msg.count = 0;
-                while (fragments.Count > 0)
-                {
-                    ArrayBuffer part = fragments.Dequeue();
-
-                    part.CopyTo(msg.array, msg.count);
-                    msg.count += part.count;
-
-                    part.Release();
-                }
-
-                // dump after mask off
-                Log.DumpBuffer($"Message", msg);
-
-                queue.Enqueue(new Message(conn.connId, msg));
-            }
-        }
-
-        static Header ReadHeader(Config config, byte[] buffer, bool opCodeContinuation = false)
-        {
-            (Connection conn, int maxMessageSize, bool expectMask, ConcurrentQueue<Message> queue, BufferPool bufferPool) = config;
-            Stream stream = conn.stream;
-            Header header = new Header();
-
+            int offset = 0;
             // read 2
-            header.offset = ReadHelper.Read(stream, buffer, header.offset, Constants.HeaderMinSize);
+            offset = ReadHelper.Read(stream, buffer, offset, Constants.HeaderMinSize);
             // log after first blocking call
             Log.Verbose($"Message From {conn}");
 
             if (MessageProcessor.NeedToReadShortLength(buffer))
             {
-                header.offset = ReadHelper.Read(stream, buffer, header.offset, Constants.ShortLength);
-            }
-            if (MessageProcessor.NeedToReadLongLength(buffer))
-            {
-                header.offset = ReadHelper.Read(stream, buffer, header.offset, Constants.LongLength);
+                offset = ReadHelper.Read(stream, buffer, offset, Constants.ShortLength);
             }
 
-            Log.DumpBuffer($"Raw Header", buffer, 0, header.offset);
-
-            MessageProcessor.ValidateHeader(buffer, maxMessageSize, expectMask, opCodeContinuation);
+            MessageProcessor.ValidateHeader(buffer, maxMessageSize, expectMask);
 
             if (expectMask)
             {
-                header.offset = ReadHelper.Read(stream, buffer, header.offset, Constants.MaskSize);
+                offset = ReadHelper.Read(stream, buffer, offset, Constants.MaskSize);
             }
 
-            header.opcode = MessageProcessor.GetOpcode(buffer);
-            header.payloadLength = MessageProcessor.GetPayloadLength(buffer);
-            header.finished = MessageProcessor.Finished(buffer);
+            int opcode = MessageProcessor.GetOpcode(buffer);
+            int payloadLength = MessageProcessor.GetPayloadLength(buffer);
 
-            Log.Verbose($"Header ln:{header.payloadLength} op:{header.opcode} mask:{expectMask}");
+            Log.Verbose($"Header ln:{payloadLength} op:{opcode} mask:{expectMask}");
+            Log.DumpBuffer($"Raw Header", buffer, 0, offset);
 
-            return header;
+            int msgOffset = offset;
+            offset = ReadHelper.Read(stream, buffer, offset, payloadLength);
+
+            switch (opcode)
+            {
+                case 2:
+                    HandleArrayMessage(config, buffer, msgOffset, payloadLength);
+                    break;
+                case 8:
+                    HandleCloseMessage(config, buffer, msgOffset, payloadLength);
+                    break;
+            }
         }
 
         static void HandleArrayMessage(Config config, byte[] buffer, int msgOffset, int payloadLength)
         {
             (Connection conn, int _, bool expectMask, ConcurrentQueue<Message> queue, BufferPool bufferPool) = config;
 
-            ArrayBuffer arrayBuffer = CopyMessageToBuffer(bufferPool, expectMask, buffer, msgOffset, payloadLength);
-
-            // dump after mask off
-            Log.DumpBuffer($"Message", arrayBuffer);
-
-            queue.Enqueue(new Message(conn.connId, arrayBuffer));
-        }
-
-        static ArrayBuffer CopyMessageToBuffer(BufferPool bufferPool, bool expectMask, byte[] buffer, int msgOffset, int payloadLength)
-        {
             ArrayBuffer arrayBuffer = bufferPool.Take(payloadLength);
 
             if (expectMask)
@@ -236,7 +162,10 @@ namespace Mirror.SimpleWeb
                 arrayBuffer.CopyFrom(buffer, msgOffset, payloadLength);
             }
 
-            return arrayBuffer;
+            // dump after mask off
+            Log.DumpBuffer($"Message", arrayBuffer);
+
+            queue.Enqueue(new Message(conn.connId, arrayBuffer));
         }
 
         static void HandleCloseMessage(Config config, byte[] buffer, int msgOffset, int payloadLength)

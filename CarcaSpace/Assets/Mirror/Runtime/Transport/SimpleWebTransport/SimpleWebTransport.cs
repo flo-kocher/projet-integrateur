@@ -78,6 +78,12 @@ namespace Mirror.SimpleWeb
 
         void OnValidate()
         {
+            if (maxMessageSize > ushort.MaxValue)
+            {
+                Debug.LogWarning($"max supported value for maxMessageSize is {ushort.MaxValue}");
+                maxMessageSize = ushort.MaxValue;
+            }
+
             Log.level = _logLevels;
         }
 
@@ -160,7 +166,7 @@ namespace Mirror.SimpleWeb
             client?.Disconnect();
         }
 
-        public override void ClientSend(ArraySegment<byte> segment, int channelId)
+        public override void ClientSend(int channelId, ArraySegment<byte> segment)
         {
             if (!ClientConnected())
             {
@@ -203,7 +209,7 @@ namespace Mirror.SimpleWeb
                 Debug.LogError("SimpleWebServer Already Started");
             }
 
-            SslConfig config = SslConfigLoader.Load(sslEnabled, sslCertJson, sslProtocols);
+            SslConfig config = SslConfigLoader.Load(this);
             server = new SimpleWebServer(serverMaxMessagesPerTick, TcpConfig, maxMessageSize, handshakeMaxSize, config);
 
             server.onConnect += OnServerConnected.Invoke;
@@ -228,17 +234,18 @@ namespace Mirror.SimpleWeb
             server = null;
         }
 
-        public override void ServerDisconnect(int connectionId)
+        public override bool ServerDisconnect(int connectionId)
         {
             if (!ServerActive())
             {
                 Debug.LogError("SimpleWebServer Not Active");
+                return false;
             }
 
-            server.KickClient(connectionId);
+            return server.KickClient(connectionId);
         }
 
-        public override void ServerSend(int connectionId, ArraySegment<byte> segment, int channelId)
+        public override void ServerSend(int connectionId, int channelId, ArraySegment<byte> segment)
         {
             if (!ServerActive())
             {
@@ -259,6 +266,7 @@ namespace Mirror.SimpleWeb
             }
 
             server.SendOne(connectionId, segment);
+            return;
         }
 
         public override string ServerGetClientAddress(int connectionId)

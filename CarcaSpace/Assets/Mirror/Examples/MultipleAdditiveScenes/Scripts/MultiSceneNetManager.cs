@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-/*
-	Documentation: https://mirror-networking.gitbook.io/docs/components/network-manager
-	API Reference: https://mirror-networking.com/docs/api/Mirror.NetworkManager.html
-*/
-
 namespace Mirror.Examples.MultipleAdditiveScenes
 {
     [AddComponentMenu("")]
@@ -39,14 +34,14 @@ namespace Mirror.Examples.MultipleAdditiveScenes
         /// <para>The default implementation for this function creates a new player object from the playerPrefab.</para>
         /// </summary>
         /// <param name="conn">Connection from client.</param>
-        public override void OnServerAddPlayer(NetworkConnectionToClient conn)
+        public override void OnServerAddPlayer(NetworkConnection conn)
         {
             StartCoroutine(OnServerAddPlayerDelayed(conn));
         }
 
         // This delay is mostly for the host player that loads too fast for the
         // server to have subscenes async loaded from OnStartServer ahead of it.
-        IEnumerator OnServerAddPlayerDelayed(NetworkConnectionToClient conn)
+        IEnumerator OnServerAddPlayerDelayed(NetworkConnection conn)
         {
             // wait for server to async load all subscenes for game instances
             while (!subscenesLoaded)
@@ -65,13 +60,13 @@ namespace Mirror.Examples.MultipleAdditiveScenes
             playerScore.scoreIndex = clientIndex / subScenes.Count;
             playerScore.matchIndex = clientIndex % subScenes.Count;
 
+            clientIndex++;
+
             // Do this only on server, not on clients
             // This is what allows the NetworkSceneChecker on player and scene objects
             // to isolate matches per scene instance on server.
             if (subScenes.Count > 0)
                 SceneManager.MoveGameObjectToScene(conn.identity.gameObject, subScenes[clientIndex % subScenes.Count]);
-
-            clientIndex++;
         }
 
         #endregion
