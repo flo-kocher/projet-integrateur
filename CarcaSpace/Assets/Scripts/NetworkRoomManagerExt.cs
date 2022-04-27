@@ -49,7 +49,7 @@ public class NetworkRoomManagerExt : NetworkRoomManager
 
 
     public override void OnRoomServerConnect(NetworkConnectionToClient conn) {
-        base.OnRoomServerConnect();
+        base.OnRoomServerConnect(conn);
     }
     // public override void OnRoomServerConnect(NetworkConnection conn)
     // {
