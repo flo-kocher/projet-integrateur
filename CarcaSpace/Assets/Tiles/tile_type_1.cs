@@ -22,7 +22,8 @@ public class tile_type_1 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
-        this.GetComponent<Constraints>().posePossible = new bool[5] {true, true, true, true, true};
+        this.GetComponent<Constraints>().blason = blason;
+        this.GetComponent<Constraints>().posePossible = new bool[5] {false, false, false, false, true};
 
     }
 

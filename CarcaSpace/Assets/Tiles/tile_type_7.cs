@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class tile_type_7 : tile_type
 {
-    public static bool finish = false;
+    // public static bool finish = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,8 @@ public class tile_type_7 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
-        this.GetComponent<Constraints>().posePossible = new bool[5] {true, true, true, true, true};
+        this.GetComponent<Constraints>().blason = blason;
+        this.GetComponent<Constraints>().posePossible = new bool[5] {false, false, true, false, true};
         this.GetComponent<Constraints>().carrefour = true;
         this.GetComponent<Constraints>().estFermante = true;
     }
