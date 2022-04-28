@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class tile_type_15 : tile_type
 {
-    public static bool finish = false;
-    public static int nbrTuile = 3;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -15,7 +12,7 @@ public class tile_type_15 : tile_type
         gauche = Type_land.Ville;
         bas = Type_land.Plaine;
         droite = Type_land.Ville;
-        milieu = Type_land.Rien;
+        milieu = Type_land.Plaine;
         blason = false;
         
         this.GetComponent<Constraints>().haut = haut;
@@ -23,6 +20,8 @@ public class tile_type_15 : tile_type
         this.GetComponent<Constraints>().bas = bas;
         this.GetComponent<Constraints>().droite = droite;
         this.GetComponent<Constraints>().milieu = milieu;
+        this.GetComponent<Constraints>().blason = blason;
+        this.GetComponent<Constraints>().posePossible = new bool[5] {false, true, false, true, false};
     }
 
     // Update is called once per frame
@@ -43,19 +42,11 @@ public class tile_type_15 : tile_type
         }
     }
 
-    public override int getNbrTuile(){
-        return nbrTuile;
-    }
+    // public override bool getFinish(){
+    //     return finish;
+    // }
 
-    public override void decrementNbrTuile(){
-        nbrTuile--;
-    }
-
-    public override bool getFinish(){
-        return finish;
-    }
-
-    public override void changeFinish(){
-        finish = true;
-    }
+    // public override void changeFinish(){
+    //     finish = true;
+    // }
 }
