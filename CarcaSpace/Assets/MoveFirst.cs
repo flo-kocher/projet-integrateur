@@ -55,7 +55,9 @@ public class MoveFirst : MonoBehaviour
               Quaternion.Slerp(transform.rotation, targett, speedPose * Time.deltaTime);
           float finish = Vector3.Angle(transform.position, target);
           if (finish <= 0.25f) {
+            this.GetComponent<Constraints>().enabled = true;
             this.GetComponent<Move>().enabled = true;
+            this.GetComponent<rotateZ>().enabled = true;
             end = false;
             this.enabled = false;
           }
