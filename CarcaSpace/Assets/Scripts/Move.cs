@@ -8,7 +8,7 @@ public class Move : NetworkBehaviour {
 
   public PlayerManager PlayerManager;
   private GameObject go;         // GameObject sur lequel on clique
-  private bool dragging = false; // Booléen qui controle le suivi de la souris
+  private bool dragging = true; // Booléen qui controle le suivi de la souris
   public float speed;            // vitesse de lévé et de pose de la tuile
   private bool anim1 = false;    // Leve de la tuile
   private bool anim2 = false;    // Pose de la tuile
