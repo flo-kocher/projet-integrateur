@@ -881,182 +881,349 @@ public class PlayerManager : NetworkBehaviour
             // on doit créer les structures pour chaque type de tuile
             if (nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
-                /*
-                // IF CONTAINS 22 : FAIRE LE CAS SPECIALE
-                //ELSE FAIRE CE QUI A EN DESSOUS
-                //ajout du Go a gauche et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_gauche);
-                road.CurrentTiles.Add(tile_laid);
-                */
                 // Si tuile 21
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures 
+                    // créer deux structures
                     createNewStruct(tile_laid, "_2");
                     createNewStruct(tile_laid, "_3");
-
-                    // il faut recupérer le nom des structures ?
-                    // les structures à partir de leur nom => getStructByName ?
-                    // ajouter la tile_laid aux deux structures. ?
+                    nb_of_struct_roads+=2;
                 }
-                // Sinon c'est la tuile 17 ou 22
-                else 
+                // si c'est la tuile 17 ou 22
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
                     // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
-                    {
                         createNewStruct(tile_laid, "_2");
-                        // il faut recupérer le nom de la structure ?
-                        // récuperer la structure de ce nom => getStructByName ?
-                        // ajouter la tile_laid dans la structure. ?
-
-                    }                     
-                    else // Sinon droite
-                    {
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_3");
-                    }
+                    nb_of_struct_roads++;
                 }
-                //calcul de points + destruction de la structure
-                //Debug.Log("fermé gauche <-> haut" + roads.Name + "close? "+ roads.tag); //////           TEST DU TAG
+                // sinon simple virage
+                CurrentRoads road = getStructByName(nom_struct_gauche);
+                road.CurrentTiles.Add(tile_laid);
+                setIsClosedByName(nom_struct_gauche);
             }
             if (nom_struct_gauche != nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
-                //fusion de gauche avec haut
-                CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
-                CurrentRoads road_haut = getStructByName(nom_struct_haut);
-                Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
-                for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                // Si tuile 21
+                if (tile_laid.name.Contains("21"))
                 {
-                    road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    // créer deux structures
+                    createNewStruct(tile_laid, "_2");
+                    createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads+=2;
+                    CurrentRoads r1 = getStructByName(nom_struct_gauche);
+                    r1.CurrentTiles.Add(tile_laid);
+                    CurrentRoads r2 = getStructByName(nom_struct_haut);
+                    r2.CurrentTiles.Add(tile_laid);
                 }
-                road_haut.CurrentTiles.Add(tile_laid);
-                list_of_struct_roads.Remove(road_gauche);
-                nb_of_struct_roads--;
+                // si c'est la tuile 17 ou 22
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_2");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads++;
+                }
+                //fusion de gauche avec haut
+                else
+                {
+                    CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
+                    CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                    Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
+                    for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                    {
+                        road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    }
+                    road_haut.CurrentTiles.Add(tile_laid);
+                    list_of_struct_roads.Remove(road_gauche);
+                    nb_of_struct_roads--;
+                }
             }
 
             if (nom_struct_gauche == nom_struct_bas && nom_struct_haut == "" && nom_struct_droite == "")
             {
-                //ajout du Go a gauche et fermeture sur lui même et calcul de point
+                if (tile_laid.name.Contains("21"))
+                {
+                    createNewStruct(tile_laid, "_0");
+                    createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads+=2;
+                }
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_3");
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_0");
+                    nb_of_struct_roads++;
+                }
                 CurrentRoads road = getStructByName(nom_struct_gauche);
                 road.CurrentTiles.Add(tile_laid);
-
-                // on mets a jour le chemin comme etant clos
-                setIsClosedByName(nom_struct_gauche);
-                //calcul de points + destruction de la structure                
+                setIsClosedByName(nom_struct_gauche);             
             }
+
             if (nom_struct_gauche != nom_struct_bas && nom_struct_droite == "" && nom_struct_haut == "")
             {
-                //fusion de gauche avec bas
-                CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
-                CurrentRoads road_bas = getStructByName(nom_struct_bas);
-                Debug.Log("RG : " + road_gauche + " RH : " + road_bas);
-                for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                // Si tuile 21
+                if (tile_laid.name.Contains("21"))
                 {
-                    road_bas.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    // créer deux structures
+                    createNewStruct(tile_laid, "_0");
+                    createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads+=2;
+                    CurrentRoads r1 = getStructByName(nom_struct_gauche);
+                    r1.CurrentTiles.Add(tile_laid);
+                    CurrentRoads r2 = getStructByName(nom_struct_haut);
+                    r2.CurrentTiles.Add(tile_laid);
                 }
-                road_bas.CurrentTiles.Add(tile_laid);
-                list_of_struct_roads.Remove(road_gauche);
-                nb_of_struct_roads--;
+                // si c'est la tuile 17 ou 22
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_0");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads++;
+                }
+                //fusion de gauche avec haut
+                else
+                {
+                    CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
+                    CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                    Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
+                    for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                    {
+                        road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    }
+                    road_haut.CurrentTiles.Add(tile_laid);
+                    list_of_struct_roads.Remove(road_gauche);
+                    nb_of_struct_roads--;
+                }
             }
 
             if (nom_struct_gauche == nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
-                //ajout du Go a gauche et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_gauche);
+                if (tile_laid.name.Contains("21"))
+                {
+                    createNewStruct(tile_laid, "_0");
+                    createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads+=2;
+                }
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_0");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads++;
+                }
+                CurrentRoads road = getStructByName(nom_struct_droite);
                 road.CurrentTiles.Add(tile_laid);
-
-                // on mets a jour le chemin comme etant clos
-                setIsClosedByName(nom_struct_gauche);
-                //calcul de points + destruction de la structure                
+                setIsClosedByName(nom_struct_droite);
             }
             if (nom_struct_gauche != nom_struct_droite && nom_struct_bas == "" && nom_struct_haut == "")
             {
-                //fusion de gauche avec droite
-                CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
-                CurrentRoads road_droite = getStructByName(nom_struct_droite);
-                Debug.Log("RG : " + road_gauche + " RH : " + droite);
-                for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                if (tile_laid.name.Contains("21"))
                 {
-                    road_droite.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    // créer deux structures
+                    createNewStruct(tile_laid, "_0");
+                    createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads+=2;
+                    CurrentRoads r1 = getStructByName(nom_struct_gauche);
+                    r1.CurrentTiles.Add(tile_laid);
+                    CurrentRoads r2 = getStructByName(nom_struct_droite);
+                    r2.CurrentTiles.Add(tile_laid);
                 }
-                road_droite.CurrentTiles.Add(tile_laid);
-                list_of_struct_roads.Remove(road_gauche);
-                nb_of_struct_roads--;
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_0");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads++;
+                }
+                else
+                {
+                    CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
+                    CurrentRoads road_haut = getStructByName(nom_struct_droite);
+                    for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                    {
+                        road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    }
+                    road_haut.CurrentTiles.Add(tile_laid);
+                    list_of_struct_roads.Remove(road_gauche);
+                    nb_of_struct_roads--;
+                }
             }
-
             if (nom_struct_droite == nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
-                //ajout du Go a droite et fermeture sur lui même et calcul de point
+                if (tile_laid.name.Contains("21"))
+                {
+                    createNewStruct(tile_laid, "_1");
+                    createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads+=2;
+                }
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_1");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads++;
+                }
                 CurrentRoads road = getStructByName(nom_struct_droite);
                 road.CurrentTiles.Add(tile_laid);
-
-                // on mets a jour le chemin comme etant clos
-                setIsClosedByName(nom_struct_gauche);
-                //calcul de points + destruction de la structure                
+                setIsClosedByName(nom_struct_droite);              
             }
             if (nom_struct_droite != nom_struct_haut && nom_struct_bas == "" && nom_struct_gauche == "")
             {
-                //fusion de droite avec haut
-                CurrentRoads road_droite = getStructByName(nom_struct_droite);
-                CurrentRoads road_haut = getStructByName(nom_struct_haut);
-                Debug.Log("RG : " + road_droite + " RH : " + road_haut);
-                for (int i = 0; i < road_droite.CurrentTiles.Count; i++)
+                if (tile_laid.name.Contains("21"))
                 {
-                    road_haut.CurrentTiles.Add(road_droite.CurrentTiles[i]);
+                    // créer deux structures
+                    createNewStruct(tile_laid, "_1");
+                    createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads+=2;
+                    CurrentRoads r1 = getStructByName(nom_struct_bas);
+                    r1.CurrentTiles.Add(tile_laid);
+                    CurrentRoads r2 = getStructByName(nom_struct_haut);
+                    r2.CurrentTiles.Add(tile_laid);
                 }
-                road_haut.CurrentTiles.Add(tile_laid);
-                list_of_struct_roads.Remove(road_droite);
-                nb_of_struct_roads--;
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_1");
+                    if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_2");
+                    nb_of_struct_roads++;
+                }
+                else
+                {
+                    CurrentRoads road_gauche = getStructByName(nom_struct_haut);
+                    CurrentRoads road_haut = getStructByName(nom_struct_droite);
+                    for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                    {
+                        road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    }
+                    road_haut.CurrentTiles.Add(tile_laid);
+                    list_of_struct_roads.Remove(road_gauche);
+                    nb_of_struct_roads--;
+                }
             }
-
             if (nom_struct_droite == nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
-                //ajout du Go a droite et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_droite);
+                if (tile_laid.name.Contains("21"))
+                {
+                    createNewStruct(tile_laid, "_0");
+                    createNewStruct(tile_laid, "_1");
+                    nb_of_struct_roads+=2;
+                }
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_0");
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_1");
+                    nb_of_struct_roads++;
+                }
+                CurrentRoads road = getStructByName(nom_struct_bas);
                 road.CurrentTiles.Add(tile_laid);
-
-                // on mets a jour le chemin comme etant clos
-                setIsClosedByName(nom_struct_gauche);
-                //calcul de points + destruction de la structure                
+                setIsClosedByName(nom_struct_bas);              
             }
             if (nom_struct_droite != nom_struct_bas && nom_struct_haut == "" && nom_struct_gauche == "")
             {
-                //fusion de droite avec bas
-                CurrentRoads road_droite = getStructByName(nom_struct_droite);
-                CurrentRoads road_bas = getStructByName(nom_struct_bas);
-                Debug.Log("RG : " + droite + " RH : " + road_bas);
-                for (int i = 0; i < road_droite.CurrentTiles.Count; i++)
+                if (tile_laid.name.Contains("21"))
                 {
-                    road_bas.CurrentTiles.Add(road_droite.CurrentTiles[i]);
+                    // créer deux structures
+                    createNewStruct(tile_laid, "_0");
+                    createNewStruct(tile_laid, "_1");
+                    nb_of_struct_roads+=2;
+                    CurrentRoads r1 = getStructByName(nom_struct_bas);
+                    r1.CurrentTiles.Add(tile_laid);
+                    CurrentRoads r2 = getStructByName(nom_struct_droite);
+                    r2.CurrentTiles.Add(tile_laid);
                 }
-                road_bas.CurrentTiles.Add(tile_laid);
-                list_of_struct_roads.Remove(road_droite);
-                nb_of_struct_roads--;
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_0");
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_1");
+                    nb_of_struct_roads++;
+                }
+                else
+                {
+                    CurrentRoads road_gauche = getStructByName(nom_struct_bas);
+                    CurrentRoads road_haut = getStructByName(nom_struct_droite);
+                    for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                    {
+                        road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    }
+                    road_haut.CurrentTiles.Add(tile_laid);
+                    list_of_struct_roads.Remove(road_gauche);
+                    nb_of_struct_roads--;
+                }
             }
-
             if (nom_struct_haut == nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {
-                //ajout du Go en haut et fermeture sur lui même et calcul de point
-                CurrentRoads road = getStructByName(nom_struct_haut);
+                if (tile_laid.name.Contains("21"))
+                {
+                    createNewStruct(tile_laid, "_1");
+                    createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads+=2;
+                }
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_1");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads++;
+                }
+                CurrentRoads road = getStructByName(nom_struct_bas);
                 road.CurrentTiles.Add(tile_laid);
-
-                // on mets a jour le chemin comme etant clos
-                setIsClosedByName(nom_struct_gauche);
-                //calcul de points + destruction de la structure                
+                setIsClosedByName(nom_struct_bas);              
             }
             if (nom_struct_haut != nom_struct_bas && nom_struct_gauche == "" && nom_struct_droite == "")
             {
-                //fusion de haut avec bas
-                CurrentRoads road_bas = getStructByName(nom_struct_bas);
-                CurrentRoads road_haut = getStructByName(nom_struct_haut);
-                Debug.Log("RG : " + road_bas + " RH : " + road_haut);
-                for (int i = 0; i < road_bas.CurrentTiles.Count; i++)
+                if (tile_laid.name.Contains("21"))
                 {
-                    road_haut.CurrentTiles.Add(road_bas.CurrentTiles[i]);
+                    // créer deux structures
+                    createNewStruct(tile_laid, "_1");
+                    createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads+=2;
+                    CurrentRoads r1 = getStructByName(nom_struct_bas);
+                    r1.CurrentTiles.Add(tile_laid);
+                    CurrentRoads r2 = getStructByName(nom_struct_haut);
+                    r2.CurrentTiles.Add(tile_laid);
                 }
-                road_haut.CurrentTiles.Add(tile_laid);
-                list_of_struct_roads.Remove(road_bas);
-                nb_of_struct_roads--;
+                else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
+                {
+                    // créer une structure 
+                    if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_1");
+                    if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
+                        createNewStruct(tile_laid, "_3");
+                    nb_of_struct_roads++;
+                }
+                else
+                {
+                    CurrentRoads road_gauche = getStructByName(nom_struct_bas);
+                    CurrentRoads road_haut = getStructByName(nom_struct_haut);
+                    for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
+                    {
+                        road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
+                    }
+                    road_haut.CurrentTiles.Add(tile_laid);
+                    list_of_struct_roads.Remove(road_gauche);
+                    nb_of_struct_roads--;
+                }
             }
         }
         // cas avec 1 face Chemin déjà connecté à notre tile_laid
