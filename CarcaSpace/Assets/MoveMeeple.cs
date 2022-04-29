@@ -54,7 +54,7 @@ public static class MoveMeeple : object
             MonoBehaviour.Destroy(parent.transform.GetChild(i).gameObject);
     }
     // Suppression du dernier meeple créer
-    public static void rmMeeple()
+    public static void rmLastMeeple()
     {
         GameObject parent = GameObject.Find("Meeples");
         if (parent.transform.childCount > 1)
@@ -62,4 +62,11 @@ public static class MoveMeeple : object
                 parent.transform.GetChild(parent.transform.childCount - 1)
                     .gameObject);
     }
+
+    // Suppression d'un meeple spécial
+    public static void rmMeeple(GameObject meeple)
+    {
+        MonoBehaviour.Destroy(meeple);
+    }
+
 }
