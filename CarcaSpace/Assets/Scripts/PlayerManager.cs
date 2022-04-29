@@ -45,7 +45,6 @@ public class PlayerManager : NetworkBehaviour
     // Meeples
     public GameObject Meeples;
 
-    [SyncVar]
     private int compteur = 0;
 
     // emplacements des étoiles sur une tuile
@@ -65,7 +64,7 @@ public class PlayerManager : NetworkBehaviour
     // liste des clients connectes
     public List<NetworkIdentity> playerList = new List<NetworkIdentity>();
 
-    [SyncVar]
+    //
     public List<GameObject> plateau = new List<GameObject>();
 
     // liste des abbayes posées
@@ -100,9 +99,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    [SyncVar]
     public int nb_of_struct_roads;
-    [SyncVar]
     public List<CurrentRoads> list_of_struct_roads = new List<CurrentRoads>();
 
     public CurrentRoads getStructByName(String name)
@@ -154,16 +151,6 @@ public class PlayerManager : NetworkBehaviour
                 //suppression de liste
                 list_of_struct_roads.RemoveAt(i);
             }
-        }
-    }
-
-    [Command]
-    public void showStructs()
-    {
-        Debug.Log("liste des structs "+list_of_struct_roads.Count);
-        for(int k = 0; k < list_of_struct_roads.Count; k++)
-        {
-          Debug.Log("nb d'elt dans  la structure "+k+ " : "+list_of_struct_roads[k].CurrentTiles.Count);
         }
     }
 
@@ -387,22 +374,6 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    // FONCTIONNE
-
-    // [Command]
-    // public void road(GameObject tile)
-    // {
-    //     Debug.Log("je suis dans road");
-    //     createNewStruct(tile,"");
-        
-    //     Debug.Log("nb elt liste structs : "+ list_of_struct_roads.Count);
-
-
-    //     // quand on a lancé les algos, on veut pouvoir envoyer les infos des scores qui sont stockés dans notre liste de player à chaque client
-    //     // RpcShowScore();
-    // }
-
-
     public void createNewStruct(GameObject tile_laid, String intersection)
     {
         //tile_laid.name += intersection; on ne peut pas changer son nom sinon sa change son nom en "global" pour une raison ou pour une autre
@@ -411,7 +382,6 @@ public class PlayerManager : NetworkBehaviour
         list_of_struct_roads.Add(road);
     }
 
-    [Command]
     public void roadIsClosed_Struct(GameObject tile_laid)
     {
         if (tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
@@ -427,25 +397,20 @@ public class PlayerManager : NetworkBehaviour
         GameObject[] voisins = new GameObject[4];
         for (int i = 0; i < plateau.Count; i++)
         {
-            Debug.Log("pla : " + plateau[i].GetComponent<Constraints>().coordX);
             if (plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y + 1 && plateau[i].GetComponent<Constraints>().bas == Type_land.Chemin)
             {
-                Debug.Log("0");
                 voisins[0] = plateau[i]; // haut
             }
             if (plateau[i].GetComponent<Constraints>().coordX == x - 1 && plateau[i].GetComponent<Constraints>().coordY == y && plateau[i].GetComponent<Constraints>().droite == Type_land.Chemin)
             {
-                Debug.Log("1");
                 voisins[1] = plateau[i]; // gauche
             }
             if (plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y - 1 && plateau[i].GetComponent<Constraints>().haut == Type_land.Chemin)
             {
-                Debug.Log("2");
                 voisins[2] = plateau[i]; // bas
             }
             if (plateau[i].GetComponent<Constraints>().coordX == x + 1 && plateau[i].GetComponent<Constraints>().coordY == y && plateau[i].GetComponent<Constraints>().gauche == Type_land.Chemin)
             {
-                Debug.Log("3");
                 voisins[3] = plateau[i]; // droite
             }
         }
@@ -1576,6 +1541,7 @@ public bool townIsClosed(GameObject tile_laid)
         int randInt = 0;
         // génération aléaoire de la seed
         System.Random rnd = new System.Random();
+
         if (compteur == 0)
         {
             GameObject tuilos = Instantiate(all_tiles[0]);
@@ -1605,7 +1571,7 @@ public bool townIsClosed(GameObject tile_laid)
     [ClientRpc]
     void RpcShowTiles(GameObject go, string action)
     {
-        Debug.Log("appel moi");
+
         if (action == "Dealt")
         {
             if (hasAuthority)

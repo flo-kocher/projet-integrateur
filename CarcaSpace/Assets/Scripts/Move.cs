@@ -141,21 +141,15 @@ public class Move : NetworkBehaviour {
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
-        // PlayerManager.road(go);
-
         
         PlayerManager.roadIsClosed_Struct(go);
-        PlayerManager.showStructs();
-        // PlayerManager.checkAllStruct();
-        
-        
-        
+        PlayerManager.checkAllStruct();
         //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
-        // for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
-        // {
-        //   Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
-        //   //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
-        // }
+        for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
+        {
+          Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
+          //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
+        }
         
         //Debug.Log("test estFermante " +go.GetComponent<Constraints>().estFermante);
         
