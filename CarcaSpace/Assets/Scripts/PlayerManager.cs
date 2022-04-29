@@ -47,6 +47,10 @@ public class PlayerManager : NetworkBehaviour
 
     private int compteur = 0;
 
+    // POur savoir si un client a deja demande le serv de spawn la grille ;
+    [SyncVar]
+    public bool IsSpawnGrid ; 
+
     // emplacements des étoiles sur une tuile
     public Vector2 haut = new Vector2(0.5f, 0.83f);
     public Vector2 bas = new Vector2(0.5f, 0.17f);
@@ -159,8 +163,14 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+        // CmdSpawnGrid(5);
 
-        grid = GameObject.Find("Grid");
+        // if(IsSpawnGrid == false){
+        //     CmdSpawnGrid(10);
+        //     IsSpawnGrid = true ; 
+        // }
+        
+        //grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
         ui = GameObject.Find("UI");
 
@@ -353,6 +363,8 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
         instatiateTiles();
+        CmdSpawnGrid(5);
+        
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
 
@@ -1703,4 +1715,68 @@ public bool townIsClosed(GameObject tile_laid)
 
         }
     }
+
+    [ClientRpc]
+    void RpcShowGrid(GameObject go, string action, int x, int y)
+    {
+        Debug.Log("ALOOO");
+        if (action == "Dealt")
+        {
+            if (hasAuthority)
+            {
+                //go.name = "connard";
+                
+                go.SetActive(true);
+                go.name = x + "/" + y;
+                
+                //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
+            }
+            else
+            {
+                //go.name = "le con";
+                
+                go.SetActive(true);
+                go.name = x + "/" + y;
+                
+                //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
+            }
+        }
+        else if (action == "Played")
+        {
+
+        }
+        Debug.Log("CHANGE TON NOM : " + go.name);
+    }
+
+    [Command]
+    public void CmdSpawnGrid(int nbTuiles)
+    {
+
+            //         GameObject tuilos = Instantiate(all_tiles[0]);
+            // all_tiles.RemoveAt(0);
+            // Debug.Log("Objet à faire spawn : " + tuilos);
+            // NetworkServer.Spawn(tuilos, connectionToClient);
+            // RpcShowTiles(tuilos, "Dealt");
+
+        for (int x = 0; x < nbTuiles; x++)
+        {
+            for (int y = 0; y < nbTuiles; y++)
+            {
+                GameObject clone = Instantiate(grid);
+                clone.transform.SetParent(GameObject.Find("Grid").transform);
+                clone.name = x + "/" + y;
+                Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
+                clone.transform.position = v;
+                clone.SetActive(true);
+                Debug.Log("spawn 1");
+                NetworkServer.Spawn(clone, connectionToClient);
+                RpcShowGrid(clone,"Dealt",x,y);
+            }
+        }
+        // Alignement de la caméra pour se trouver au milieu de la grille
+        Vector3 vec = new Vector3((float)Decimal.Divide(nbTuiles, 2),
+                                  (float)Decimal.Divide(nbTuiles, -4), -5);
+        Camera.main.transform.position = vec;
+    }
+
 }
