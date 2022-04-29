@@ -594,6 +594,7 @@ MonoBehaviour:
   syncInterval: 0.1
   PlayerManager: {fileID: 0}
   speed: 5
+  ButtonApply: {fileID: 0}
 --- !u!114 &904876740412345411
 MonoBehaviour:
   m_ObjectHideFlags: 0
