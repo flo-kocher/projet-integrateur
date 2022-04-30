@@ -1757,6 +1757,7 @@ public bool townIsClosed(GameObject tile_laid)
             // Debug.Log("Objet à faire spawn : " + tuilos);
             // NetworkServer.Spawn(tuilos, connectionToClient);
             // RpcShowTiles(tuilos, "Dealt");
+            /*
 
         for (int x = 0; x < nbTuiles; x++)
         {
@@ -1776,7 +1777,8 @@ public bool townIsClosed(GameObject tile_laid)
         // Alignement de la caméra pour se trouver au milieu de la grille
         Vector3 vec = new Vector3((float)Decimal.Divide(nbTuiles, 2),
                                   (float)Decimal.Divide(nbTuiles, -4), -5);
-        Camera.main.transform.position = vec;
+        Camera.main.transform.position = vec;*/
     }
+    
 
 }
