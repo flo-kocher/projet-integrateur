@@ -1725,9 +1725,12 @@ public bool townIsClosed(GameObject tile_laid)
             if (hasAuthority)
             {
                 //go.name = "connard";
-                
-                go.SetActive(true);
+                go.transform.SetParent(GameObject.Find("Grid").transform);
                 go.name = x + "/" + y;
+                Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
+                go.transform.position = v;
+                go.SetActive(true);
+                //go.name = x + "/" + y;
                 
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
             }
@@ -1735,8 +1738,11 @@ public bool townIsClosed(GameObject tile_laid)
             {
                 //go.name = "le con";
                 
-                go.SetActive(true);
+                go.transform.SetParent(GameObject.Find("Grid").transform);
                 go.name = x + "/" + y;
+                Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
+                go.transform.position = v;
+                go.SetActive(true);
                 
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
             }
@@ -1757,18 +1763,18 @@ public bool townIsClosed(GameObject tile_laid)
             // Debug.Log("Objet à faire spawn : " + tuilos);
             // NetworkServer.Spawn(tuilos, connectionToClient);
             // RpcShowTiles(tuilos, "Dealt");
-            /*
+            
 
         for (int x = 0; x < nbTuiles; x++)
         {
             for (int y = 0; y < nbTuiles; y++)
             {
                 GameObject clone = Instantiate(grid);
-                clone.transform.SetParent(GameObject.Find("Grid").transform);
-                clone.name = x + "/" + y;
-                Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
-                clone.transform.position = v;
-                clone.SetActive(true);
+                //clone.transform.SetParent(GameObject.Find("Grid").transform);
+                //clone.name = x + "/" + y;
+                //Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
+                //clone.transform.position = v;
+               
                 Debug.Log("spawn 1");
                 NetworkServer.Spawn(clone, connectionToClient);
                 RpcShowGrid(clone,"Dealt",x,y);
@@ -1777,8 +1783,27 @@ public bool townIsClosed(GameObject tile_laid)
         // Alignement de la caméra pour se trouver au milieu de la grille
         Vector3 vec = new Vector3((float)Decimal.Divide(nbTuiles, 2),
                                   (float)Decimal.Divide(nbTuiles, -4), -5);
-        Camera.main.transform.position = vec;*/
+        Camera.main.transform.position = vec;
     }
     
 
+    [Command]
+    public void CmdDealMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m){
+        RpcShowMove(disapear, h, b, g, d, m);
+    }
+
+
+    [ClientRpc]
+    void RpcShowMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m){
+        disapear.GetComponent<Constraints>().haut =
+            h;
+        disapear.GetComponent<Constraints>().bas =
+            b;
+        disapear.GetComponent<Constraints>().gauche =
+            g;
+        disapear.GetComponent<Constraints>().droite =
+            d;
+        disapear.GetComponent<Constraints>().milieu =
+            m;
+    }
 }

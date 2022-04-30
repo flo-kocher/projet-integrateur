@@ -48,25 +48,26 @@ public class Move : NetworkBehaviour {
                     i.bas,
                     i.droite,
                     i.gauche)) {
-              disapear = GameObject.Find((int)x + "/" + (int)y);
 
               anim2 = true;
+              Type_land haut = i.haut;
+              Type_land bas = i.bas;
+              Type_land gauche = i.gauche;
+              Type_land droite = i.droite;
+              Type_land milieu = i.milieu;
               // Il faut un bouton de validation
               this.GetComponent<rotateZ>().enabled = false;
               this.GetComponent<tile_type>().enabled = false;
-              // Type_land tg = tiles[z].haut;
-              tile_type_1 dd = new tile_type_1();
-              disapear.GetComponent<Constraints>().haut =
-                  i.haut;
-              disapear.GetComponent<Constraints>().bas =
-                  i.bas;
-              disapear.GetComponent<Constraints>().gauche =
-                  i.gauche;
-              disapear.GetComponent<Constraints>().droite =
-                  i.droite;
-              disapear.GetComponent<Constraints>().milieu =
-                  i.milieu;
+              disapear = GameObject.Find((int)x + "/" + (int)y);
               this.GetComponent<Constraints>().enabled = false;
+
+              NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+              PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+              // client envoie une requête au serveur pour générer une tuile
+              PlayerManager.CmdDealMove(disapear, haut, bas, gauche, droite, milieu);
+
+              // Type_land tg = tiles[z].haut;
+       
               // lancer est_complet
             } else {
               if (this.GetComponent<AccessDenied>().testRefuse()) {

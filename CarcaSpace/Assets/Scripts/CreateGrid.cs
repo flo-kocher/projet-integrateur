@@ -42,7 +42,7 @@ public class CreateGrid : NetworkBehaviour {
     // PlayerManager = networkIdentity.GetComponent<PlayerManager>();
     // PlayerManager.CmdSpawnGrid(10);
 
-
+    /*
     var list = Resources.FindObjectsOfTypeAll<GameObject>();
     foreach(GameObject i in list)
     {
@@ -63,6 +63,12 @@ public class CreateGrid : NetworkBehaviour {
     }
     Vector3 vec = new Vector3((float)Decimal.Divide(nbTuiles, 2),(float)Decimal.Divide(nbTuiles, -4),-5);
     Camera.main.transform.position = vec;
+  */
+
+    NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+    PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+    // client envoie une requête au serveur pour générer une tuile
+    PlayerManager.CmdSpawnGrid(nbTuiles);
 
   }
 
