@@ -64,7 +64,7 @@ public class Move : NetworkBehaviour {
               NetworkIdentity networkIdentity = NetworkClient.connection.identity;
               PlayerManager = networkIdentity.GetComponent<PlayerManager>();
               // client envoie une requête au serveur pour générer une tuile
-              PlayerManager.CmdDealMove(disapear, haut, bas, gauche, droite, milieu);
+              PlayerManager.CmdDealMove(disapear, haut, bas, gauche, droite, milieu, (int)x, (int)y);
 
               // Type_land tg = tiles[z].haut;
        

@@ -1787,13 +1787,13 @@ public bool townIsClosed(GameObject tile_laid)
     
 
     [Command]
-    public void CmdDealMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m){
-        RpcShowMove(disapear, h, b, g, d, m);
+    public void CmdDealMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m, int x, int y){
+        RpcShowMove(disapear, h, b, g, d, m, x, y);
     }
 
 
     [ClientRpc]
-    void RpcShowMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m){
+    void RpcShowMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m, int x, int y){
         disapear.GetComponent<Constraints>().haut =
             h;
         disapear.GetComponent<Constraints>().bas =
@@ -1804,5 +1804,7 @@ public bool townIsClosed(GameObject tile_laid)
             d;
         disapear.GetComponent<Constraints>().milieu =
             m;
+        disapear.GetComponent<Constraints>().coordX = x;
+        disapear.GetComponent<Constraints>().coordY = y;
     }
 }
