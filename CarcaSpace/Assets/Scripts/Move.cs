@@ -67,6 +67,7 @@ public class Move : NetworkBehaviour {
               PlayerManager = networkIdentity.GetComponent<PlayerManager>();
               // client envoie une requête au serveur pour générer une tuile
               PlayerManager.CmdDealMove(disapear, haut, bas, gauche, droite, milieu, (int)x, (int)y);
+              // Move.plateau.Add(go);
 
               // Type_land tg = tiles[z].haut;
        
@@ -144,7 +145,8 @@ public class Move : NetworkBehaviour {
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
-        
+        // Debug.Log(disapear.name);
+        // disapear.name = go.name;  
         PlayerManager.roadIsClosed_Struct(disapear);
         PlayerManager.checkAllStruct();
         PlayerManager.seeStruct();

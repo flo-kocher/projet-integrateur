@@ -408,6 +408,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void roadIsClosed_Struct(GameObject tile_laid)
     {
+        Debug.Log(" Nom tile : " + tile_laid.name);
         if (tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
         {
             Debug.Log("Pas de composante Chemin sur ma tuile");
@@ -1746,7 +1747,6 @@ public bool townIsClosed(GameObject tile_laid)
                 Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
                 go.transform.position = v;
                 go.SetActive(true);
-                //go.name = x + "/" + y;
                 
                 //go.transform.SetParent(GameObject.Find("Tiles").transform, false);
             }
@@ -1815,6 +1815,6 @@ public bool townIsClosed(GameObject tile_laid)
             m;
         disapear.GetComponent<Constraints>().coordX = x;
         disapear.GetComponent<Constraints>().coordY = y;
-        Move.plateau.Add(disapear);
+        Move.plateau.Add(disapear); /////////////////////// ça ajoute la grid et pas la tile !
     }
 }
