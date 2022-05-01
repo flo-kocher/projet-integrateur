@@ -17,7 +17,9 @@ public class Move : NetworkBehaviour {
 
   private bool clickedOnStar = false;
 
-
+  public static List<GameObject> plateau = new List<GameObject>();
+  public static int nb_of_struct_roads;
+  public static List<PlayerManager.CurrentRoads> list_of_struct_roads = new List<PlayerManager.CurrentRoads>();
 
   // Start is called before the first frame update
   void Start() {  }
@@ -135,7 +137,7 @@ public class Move : NetworkBehaviour {
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
-        PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
+        PlayerManager.CmdSpawnStars(disapear.GetComponent<Constraints>().posePossible, x, y);
 
 
 
@@ -143,14 +145,15 @@ public class Move : NetworkBehaviour {
 
         //cloture de chemins
         
-        PlayerManager.roadIsClosed_Struct(go);
+        PlayerManager.roadIsClosed_Struct(disapear);
         PlayerManager.checkAllStruct();
-        //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
-        for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
-        {
-          Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
-          //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
-        }
+        PlayerManager.seeStruct();
+        // Debug.Log("liste des structs "+list_of_struct_roads.Count);
+        // for(int k = 0; k < list_of_struct_roads.Count; k++)
+        // {
+        //   Debug.Log("nb d'elt dans  la structure "+k+ " : "+list_of_struct_roads[k].CurrentTiles.Count);
+        //   //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
+        // }
         
         //Debug.Log("test estFermante " +go.GetComponent<Constraints>().estFermante);
         
