@@ -8,6 +8,7 @@ public class PIck : NetworkBehaviour
     // client 
     public PlayerManager PlayerManager;
   
+    public static int compteur = 0;
 
     // Start is called before the first frame update
     void Start()

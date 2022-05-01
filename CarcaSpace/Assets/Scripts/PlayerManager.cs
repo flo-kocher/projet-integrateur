@@ -45,7 +45,6 @@ public class PlayerManager : NetworkBehaviour
     // Meeples
     public GameObject Meeples;
 
-    private int compteur = 0;
 
     // POur savoir si un client a deja demande le serv de spawn la grille ;
     [SyncVar]
@@ -1554,8 +1553,9 @@ public bool townIsClosed(GameObject tile_laid)
         // génération aléaoire de la seed
         System.Random rnd = new System.Random();
 
-        if (compteur == 0)
+        if (PIck.compteur == 0)
         {
+            PIck.compteur++;
             GameObject tuilos = Instantiate(all_tiles[0]);
             all_tiles.RemoveAt(0);
             Debug.Log("Objet à faire spawn : " + tuilos);
@@ -1576,7 +1576,6 @@ public bool townIsClosed(GameObject tile_laid)
             // on affiche la tuile chez tous les clients
             RpcShowTiles(tuilos, "Dealt");
         }
-        compteur++;
     }
 
     // Affiche les tuiles chez tous les clients
