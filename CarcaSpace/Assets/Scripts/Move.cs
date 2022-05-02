@@ -17,7 +17,9 @@ public class Move : NetworkBehaviour {
 
   private bool clickedOnStar = false;
 
-
+  public static List<GameObject> plateau = new List<GameObject>();
+  public static int nb_of_struct_roads;
+  public static List<PlayerManager.CurrentRoads> list_of_struct_roads = new List<PlayerManager.CurrentRoads>();
 
   // Start is called before the first frame update
   void Start() {  }
@@ -48,25 +50,27 @@ public class Move : NetworkBehaviour {
                     i.bas,
                     i.droite,
                     i.gauche)) {
-              disapear = GameObject.Find((int)x + "/" + (int)y);
 
               anim2 = true;
+              Type_land haut = i.haut;
+              Type_land bas = i.bas;
+              Type_land gauche = i.gauche;
+              Type_land droite = i.droite;
+              Type_land milieu = i.milieu;
               // Il faut un bouton de validation
               this.GetComponent<rotateZ>().enabled = false;
               this.GetComponent<tile_type>().enabled = false;
-              // Type_land tg = tiles[z].haut;
-              tile_type_1 dd = new tile_type_1();
-              disapear.GetComponent<Constraints>().haut =
-                  i.haut;
-              disapear.GetComponent<Constraints>().bas =
-                  i.bas;
-              disapear.GetComponent<Constraints>().gauche =
-                  i.gauche;
-              disapear.GetComponent<Constraints>().droite =
-                  i.droite;
-              disapear.GetComponent<Constraints>().milieu =
-                  i.milieu;
+              disapear = GameObject.Find((int)x + "/" + (int)y);
               this.GetComponent<Constraints>().enabled = false;
+
+              NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+              PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+              // client envoie une requête au serveur pour générer une tuile
+              PlayerManager.CmdDealMove(disapear, haut, bas, gauche, droite, milieu, (int)x, (int)y);
+              // Move.plateau.Add(go);
+
+              // Type_land tg = tiles[z].haut;
+       
               // lancer est_complet
             } else {
               if (this.GetComponent<AccessDenied>().testRefuse()) {
@@ -134,26 +138,22 @@ public class Move : NetworkBehaviour {
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
-        PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
+        PlayerManager.CmdSpawnStars(disapear.GetComponent<Constraints>().posePossible, x, y);
 
 
 
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
-        // PlayerManager.road(go);
-
-        
-        PlayerManager.roadIsClosed_Struct(go);
-        PlayerManager.showStructs();
-        // PlayerManager.checkAllStruct();
-        
-        
-        
-        //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
-        // for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
+        // Debug.Log(disapear.name);
+        // disapear.name = go.name;  
+        PlayerManager.roadIsClosed_Struct(disapear);
+        PlayerManager.checkAllStruct();
+        PlayerManager.seeStruct();
+        // Debug.Log("liste des structs "+list_of_struct_roads.Count);
+        // for(int k = 0; k < list_of_struct_roads.Count; k++)
         // {
-        //   Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
+        //   Debug.Log("nb d'elt dans  la structure "+k+ " : "+list_of_struct_roads[k].CurrentTiles.Count);
         //   //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
         // }
         
