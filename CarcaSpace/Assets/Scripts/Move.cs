@@ -63,6 +63,7 @@ public class Move : NetworkBehaviour {
               this.GetComponent<rotateZ>().enabled = false;
               this.GetComponent<tile_type>().enabled = false;
               // Type_land tg = tiles[z].haut;
+              tile_type_1 dd = new tile_type_1();
               disapear.GetComponent<Constraints>().haut =
                   i.haut;
               disapear.GetComponent<Constraints>().bas =

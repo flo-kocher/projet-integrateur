@@ -18,7 +18,6 @@ public class Apply : MonoBehaviour {
     this.gameObject.SetActive(false);
     var list = Resources.FindObjectsOfTypeAll<GameObject>();
     foreach (GameObject i in list) {
-      Debug.Log($"I is {i}");
       if (i.name.Contains("Clone")) {
         if (i.GetComponent<rotateZ>().enabled != true)
         {
