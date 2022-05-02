@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class tile_type_0 : tile_type
 {
@@ -34,6 +35,7 @@ public class tile_type_0 : tile_type
             if(!(r.leve || r.couche || r.tourne))
             {
                 rotate_left();
+                // rotate();
             }
             
         }

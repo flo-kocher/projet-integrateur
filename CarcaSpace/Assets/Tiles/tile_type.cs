@@ -19,6 +19,7 @@ public abstract class tile_type : NetworkBehaviour
     public static int nbrTuile = 72; // sans rivière : 72, avec rivière : 84
     public static bool finish = false;
     public static bool blason;
+    public PlayerManager PlayerManager;
 
 
 
@@ -69,11 +70,15 @@ public abstract class tile_type : NetworkBehaviour
         this.GetComponent<Constraints>().droite = droite;
         bool[] copie = this.GetComponent<Constraints>().posePossible;
         this.GetComponent<Constraints>().posePossible = new bool[5]{copie[3], copie[0], copie[1], copie[2], copie[4]};
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        PlayerManager.CmdRotate(gameObject,haut,bas,gauche,droite);
         //this.GetComponent<Constraints>().milieu = milieu;
     }
 
     protected void rotate_right()
     {
+        // Debug.Log("type : "+test());
         Type_land cp = haut;
         haut = gauche;
         gauche = bas;
@@ -86,6 +91,9 @@ public abstract class tile_type : NetworkBehaviour
         this.GetComponent<Constraints>().droite = droite;
         bool[] copie = this.GetComponent<Constraints>().posePossible;
         this.GetComponent<Constraints>().posePossible = new bool[5]{copie[1], copie[2], copie[3], copie[0], copie[4]};
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        PlayerManager.CmdRotate(gameObject,haut,bas,gauche,droite);
         //this.GetComponent<Constraints>().milieu = milieu;
     }
 

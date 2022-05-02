@@ -135,6 +135,7 @@ public class PlayerManager : NetworkBehaviour
         return 0;
     }
 
+    [Command]
     public void checkAllStruct()
     {
         for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
@@ -362,7 +363,7 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
         instatiateTiles();
-        CmdSpawnGrid(5);
+        CmdSpawnGrid(20);
         
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
@@ -420,27 +421,32 @@ public class PlayerManager : NetworkBehaviour
 
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
-        // Debug.Log(" Nom tile : " + tile_laid.name);
-        // Debug.Log("Coord : "+x+"   "+y);
+        Debug.Log(" Nom tile : " + tile_laid.name);
+        Debug.Log("Coord : "+x+"   "+y);
 
         // on ne met dans voisins[] que les voisins qui ont une connection Chemin avec notre Go, puisque ce ne sont que eux qui nous interesse
         GameObject[] voisins = new GameObject[4];
         for (int i = 0; i < Move.plateau.Count; i++)
         {
+            Debug.Log("COORD ELT PLATEAU : " + Move.plateau[i].GetComponent<Constraints>().coordX + "   " + Move.plateau[i].GetComponent<Constraints>().coordY);
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1 && Move.plateau[i].GetComponent<Constraints>().bas == Type_land.Chemin)
             {
+                Debug.Log("haut");
                 voisins[0] = Move.plateau[i]; // haut
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y && Move.plateau[i].GetComponent<Constraints>().droite == Type_land.Chemin)
             {
+                Debug.Log("gauche");
                 voisins[1] = Move.plateau[i]; // gauche
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1 && Move.plateau[i].GetComponent<Constraints>().haut == Type_land.Chemin)
             {
+                Debug.Log("bas");
                 voisins[2] = Move.plateau[i]; // bas
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y && Move.plateau[i].GetComponent<Constraints>().gauche == Type_land.Chemin)
             {
+                Debug.Log("droite");
                 voisins[3] = Move.plateau[i]; // droite
             }
         }
@@ -449,7 +455,7 @@ public class PlayerManager : NetworkBehaviour
         // {
         //     Debug.Log(" Tuile : " + i + " a comme coord : " + Move.plateau[i].GetComponent<Constraints>().coordX + " " + Move.plateau[i].GetComponent<Constraints>().coordY);
         // }
-        // Debug.Log("La tuile " + tile_laid + " a comme voisins : haut " + voisins[0] + " gauche " + voisins[1] + " bas " + voisins[2] + " droite " + voisins[3]);
+        Debug.Log("La tuile " + tile_laid + " a comme voisins : haut " + voisins[0] + " gauche " + voisins[1] + " bas " + voisins[2] + " droite " + voisins[3]);
 
         // il n'y a pas de connexion de chemin, on crée une nouvelle structure
         if (voisins[0] == null && voisins[1] == null && voisins[2] == null && voisins[3] == null)
@@ -1846,12 +1852,41 @@ public bool townIsClosed(GameObject tile_laid)
             m;
         go.GetComponent<Constraints>().coordX = x;
         go.GetComponent<Constraints>().coordY = y;
+        // dynamic i = test(go);
+        // i.haut = h;
+        // i.gauche = g;
+        // i.bas = b;
+        // i.droite = d;
+        Move.plateau.Add(go);
+    }
+
+    // [Command]
+    // public void Cmd(GameObject go)
+    // {
+    //     Debug.Log(go);
+    //     // i.haut = Type_land.Chemin;
+    // }
+
+    // [Command]
+    // public void CmdD(dynamic i)
+    // {
+    //     Debug.Log(i);
+    // }
+
+    [Command]
+    public void CmdRotate(GameObject go, Type_land h, Type_land b, Type_land g, Type_land d)
+    {
+        RpcRotate(go,h,b,g,d);
+    }
+
+    [ClientRpc]
+    void RpcRotate(GameObject go, Type_land h, Type_land b, Type_land g, Type_land d)
+    {
         dynamic i = test(go);
         i.haut = h;
         i.gauche = g;
         i.bas = b;
         i.droite = d;
-        Move.plateau.Add(go);
     }
 
     dynamic test(GameObject go) {
