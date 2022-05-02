@@ -676,7 +676,7 @@ public class PlayerManager : NetworkBehaviour
         //début 3 cas
         else if (face_haut && face_gauche && face_bas && !face_droite) // tile 17 ou 22 forcément
         {
-            if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas)
+            if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_bas && nom_struct_bas != nom_struct_haut)
             {
                 CurrentRoads road = getStructByName(nom_struct_haut);
                 road.CurrentTiles.Add(tile_laid);
@@ -684,8 +684,8 @@ public class PlayerManager : NetworkBehaviour
                 road2.CurrentTiles.Add(tile_laid);
                 CurrentRoads road3 = getStructByName(nom_struct_bas);
                 road3.CurrentTiles.Add(tile_laid);
-            }
-            if (nom_struct_haut == nom_struct_gauche)
+            } 
+            if (nom_struct_haut == nom_struct_gauche && nom_struct_gauche != nom_struct_bas )
             {
                 //fusion entre haut et gauche
                 CurrentRoads road = getStructByName(nom_struct_gauche);
@@ -698,7 +698,7 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_gauche);
 
             }
-            if (nom_struct_gauche == nom_struct_bas)
+            if (nom_struct_gauche == nom_struct_bas && nom_struct_gauche != nom_struct_haut)
             {
                 //fusion entre gauche et bas
                 CurrentRoads road = getStructByName(nom_struct_gauche);
@@ -711,7 +711,7 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_gauche);
 
             }
-            if (nom_struct_bas == nom_struct_haut)
+            if (nom_struct_bas == nom_struct_haut && nom_struct_haut != nom_struct_gauche)
             {
                 //fusion entre bas et haut
                 CurrentRoads road = getStructByName(nom_struct_bas);
@@ -727,7 +727,7 @@ public class PlayerManager : NetworkBehaviour
         }
         else if (face_haut && face_gauche && face_droite && !face_bas) // tile 17 ou 22 forcément
         {
-            if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_droite)
+            if (nom_struct_haut != nom_struct_gauche && nom_struct_gauche != nom_struct_droite && nom_struct_droite!=nom_struct_haut)
             {
                 CurrentRoads road = getStructByName(nom_struct_haut);
                 road.CurrentTiles.Add(tile_laid);
@@ -736,7 +736,7 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road3 = getStructByName(nom_struct_droite);
                 road3.CurrentTiles.Add(tile_laid);
             }
-            if (nom_struct_haut == nom_struct_gauche)
+            if (nom_struct_haut == nom_struct_gauche && nom_struct_gauche != nom_struct_droite)
             {
                 //fusion entre haut et gauche
                 CurrentRoads road = getStructByName(nom_struct_gauche);
@@ -749,7 +749,7 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_haut);
 
             }
-            if (nom_struct_gauche == nom_struct_droite)
+            if (nom_struct_gauche == nom_struct_droite && nom_struct_droite != nom_struct_haut)
             {
                 //fusion entre gauche et bas
                 CurrentRoads road = getStructByName(nom_struct_gauche);
@@ -761,7 +761,7 @@ public class PlayerManager : NetworkBehaviour
                 // chemin fermé à gauche mais pas focement à haut(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_gauche);
             }
-            if (nom_struct_droite == nom_struct_haut)
+            if (nom_struct_droite == nom_struct_haut && nom_struct_haut!=nom_struct_gauche)
             {
                 //fusion entre bas et haut
                 CurrentRoads road = getStructByName(nom_struct_droite);
@@ -776,7 +776,7 @@ public class PlayerManager : NetworkBehaviour
         }
         else if (face_haut && face_droite && face_bas && !face_gauche) // tile 17 ou 22 forcément
         {
-            if (nom_struct_haut != nom_struct_droite && nom_struct_droite != nom_struct_bas)
+            if (nom_struct_haut != nom_struct_droite && nom_struct_droite != nom_struct_bas && nom_struct_bas!=nom_struct_haut)
             {
                 CurrentRoads road = getStructByName(nom_struct_haut);
                 road.CurrentTiles.Add(tile_laid);
@@ -785,7 +785,7 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road3 = getStructByName(nom_struct_bas);
                 road3.CurrentTiles.Add(tile_laid);
             }
-            if (nom_struct_haut == nom_struct_droite)
+            if (nom_struct_haut == nom_struct_droite && nom_struct_droite != nom_struct_bas)
             {
                 //fusion entre haut et gauche
                 CurrentRoads road = getStructByName(nom_struct_droite);
@@ -797,7 +797,7 @@ public class PlayerManager : NetworkBehaviour
                 // chemin fermé à gauche mais pas focement en bas(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_droite);
             }
-            if (nom_struct_bas == nom_struct_droite)
+            if (nom_struct_bas == nom_struct_droite && nom_struct_droite != nom_struct_haut)
             {
                 //fusion entre gauche et bas
                 CurrentRoads road = getStructByName(nom_struct_bas);
@@ -809,7 +809,7 @@ public class PlayerManager : NetworkBehaviour
                 // chemin fermé en bas et en droite mais pas focement en haut(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_droite);
             }
-            if (nom_struct_bas == nom_struct_haut)
+            if (nom_struct_bas == nom_struct_haut && nom_struct_bas!=nom_struct_droite)
             {
                 //fusion entre bas et haut
                 CurrentRoads road = getStructByName(nom_struct_bas);
@@ -824,7 +824,7 @@ public class PlayerManager : NetworkBehaviour
         }
         else if (face_droite && face_gauche && face_bas && !face_haut) // tile 17 ou 22 forcément
         {
-            if (nom_struct_gauche != nom_struct_droite && nom_struct_droite != nom_struct_bas)
+            if (nom_struct_gauche != nom_struct_droite && nom_struct_droite != nom_struct_bas && nom_struct_bas!= nom_struct_droite)
             {
                 CurrentRoads road = getStructByName(nom_struct_gauche);
                 road.CurrentTiles.Add(tile_laid);
@@ -833,7 +833,7 @@ public class PlayerManager : NetworkBehaviour
                 CurrentRoads road3 = getStructByName(nom_struct_bas);
                 road3.CurrentTiles.Add(tile_laid);
             }
-            if (nom_struct_bas == nom_struct_droite)
+            if (nom_struct_bas == nom_struct_droite && nom_struct_droite != nom_struct_gauche)
             {
                 //fusion entre haut et gauche
                 CurrentRoads road = getStructByName(nom_struct_droite);
@@ -846,7 +846,7 @@ public class PlayerManager : NetworkBehaviour
                 setIsClosedByName(nom_struct_bas);
 
             }
-            if (nom_struct_bas == nom_struct_gauche)
+            if (nom_struct_bas == nom_struct_gauche && nom_struct_gauche!= nom_struct_droite)
             {
                 //fusion entre gauche et bas
                 CurrentRoads road = getStructByName(nom_struct_bas);
@@ -858,7 +858,7 @@ public class PlayerManager : NetworkBehaviour
                 // chemin fermé de bas à gauche mais pas focement à droite(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_bas);
             }
-            if (nom_struct_droite == nom_struct_gauche)
+            if (nom_struct_droite == nom_struct_gauche && nom_struct_gauche!=nom_struct_bas)
             {
                 //fusion entre bas et haut
                 CurrentRoads road = getStructByName(nom_struct_droite);
