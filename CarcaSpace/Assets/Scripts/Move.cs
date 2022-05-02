@@ -180,6 +180,20 @@ public class Move : NetworkBehaviour {
           PlayerManager.abbeyes.Add(go);
         PlayerManager.abbeyIsClose();
         */
+        /* comptage des points
+            comptage des abbays complet
+              if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
+                PlayerManager.abbeyes.Add(go);
+              PlayerManager.abbeyIsClose();
+            comptage points villes completes
+              PlayerManager.resetVisite();
+              PlayerManager.drawshit(go);
+              PlayerManager.resetVisite();
+            comptage points chemin complets
+              PlayerManager.checkAllStruct();
+
+        */
+
 
       }
     }
