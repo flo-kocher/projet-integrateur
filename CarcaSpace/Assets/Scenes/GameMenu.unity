@@ -348,7 +348,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 344079717}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e02e9ac82afd8db419f0699d9e4d3566, type: 3}
+  m_Script: {fileID: 11500000, guid: 48d94562a68f32140af503df4a56067d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &344079721
@@ -923,8 +923,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
-  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1497,7 +1497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 88ee3336c0765420c9dc032fb1e664f4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99484cc0f7b7ef64c84a772f3e06b36a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1527,8 +1527,8 @@ GameObject:
   - component: {fileID: 1263137549}
   - component: {fileID: 1263137548}
   - component: {fileID: 1263137547}
-  - component: {fileID: 1263137551}
   - component: {fileID: 1263137552}
+  - component: {fileID: 1263137551}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1642,7 +1642,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1263137546}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e02e9ac82afd8db419f0699d9e4d3566, type: 3}
+  m_Script: {fileID: 11500000, guid: 48d94562a68f32140af503df4a56067d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1630314179

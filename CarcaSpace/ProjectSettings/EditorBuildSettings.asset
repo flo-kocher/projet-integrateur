@@ -8,4 +8,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/game interface.unity
     guid: 0c21fb0cc18664970a8bcc6417e5c56d
+  - enabled: 1
+    path: Assets/Scenes/CreateOrJoin.unity
+    guid: 7a2fd33b94cda1448a5e391950598d4d
+  - enabled: 1
+    path: Assets/Scenes/GameMenu.unity
+    guid: 6755171ef73c41849aca54334dea4de2
+  - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 398ac905703a46b4bac2fe46c4774ed6
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 68123e134dc03c2469e62de9218f8307
+  - enabled: 1
+    path: Assets/Scenes/ProfileMenu.unity
+    guid: bc55a0b31b0a05144b392376b0e57531
+  - enabled: 1
+    path: Assets/Scenes/signInMenu.unity
+    guid: f12f41b4989613d4983fb2142fc3e5c0
   m_configObjects: {}
