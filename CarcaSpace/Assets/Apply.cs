@@ -18,7 +18,8 @@ public class Apply : MonoBehaviour {
     this.gameObject.SetActive(false);
     var list = Resources.FindObjectsOfTypeAll<GameObject>();
     foreach (GameObject i in list) {
-      if (i.name.Contains("Clone")) {
+      Debug.Log($"I is {i}");
+      if (i.name.Contains("TileType")) {
         if (i.GetComponent<rotateZ>().enabled != true)
         {
           i.GetComponent<AccessDenied>().enabled = false;
