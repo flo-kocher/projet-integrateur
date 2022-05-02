@@ -88,6 +88,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
     public List<Player> list_of_struct_player = new List<Player>();
+    public Player player; 
 
 
     //structure de chemins
@@ -995,98 +996,155 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    public void drawshit(GameObject tile_laid)
+public void drawshit(GameObject tile_laid)
+{
+    int x = tile_laid.GetComponent<Constraints>().coordX;
+    int y = tile_laid.GetComponent<Constraints>().coordY;
+
+    GameObject[] voisins = new GameObject[4];
+    for(int i = 0; i < plateau.Count; i++)
     {
-        int x = tile_laid.GetComponent<Constraints>().coordX;
-        int y = tile_laid.GetComponent<Constraints>().coordY;
-
-        GameObject[] voisins = new GameObject[4];
-        for(int i = 0; i < plateau.Count; i++)
+        if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+            voisins[0] = plateau[i]; // haut
+        if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+            voisins[1] = plateau[i]; // gauche
+        if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+            voisins[2] = plateau[i]; // bas
+        if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+            voisins[3] = plateau[i]; // droite
+    }
+    if (tile_laid.name.Contains("10"))
+    {
+        Debug.Log ("cas spé 10");
+        //haut et gauche
+        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
         {
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
-                voisins[0] = plateau[i]; // haut
-            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[1] = plateau[i]; // gauche
-            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
-                voisins[2] = plateau[i]; // bas
-            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
-                voisins[3] = plateau[i]; // droite
+            resetVisite();
+            if (voisins[0] != null)
+            {
+                bool rep = townIsClosed(voisins[0]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[0]));
+            }
+            resetVisite();
+            if (voisins[1] != null){
+                bool rep = townIsClosed(voisins[1]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[1]));  
+            }     
         }
-
-        if (tile_laid.name.Contains("10"))
+        //gaucge et bas
+        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
         {
-            Debug.Log ("cas spé 10");
-            //haut et gauche
-            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
-            {
-                resetVisite();
-                if (voisins[0] != null)
-                    Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
-                resetVisite();
-                if (voisins[1] != null)
-                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
-            }
-            //gaucge et bas
-            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
-            {
-                resetVisite();
-                if (voisins[1] != null)
-                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1])); 
-                resetVisite();
-                if (voisins[2] != null)
-                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
-            }
-            //bas et droite
-            if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
-            {
-                resetVisite();
-                if (voisins[2] != null)
-                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2])); 
-                resetVisite();
-                if (voisins[3] != null)
-                    Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));  
-            }
-            //haut et droite
-            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
-            {
-                resetVisite();
-                if (voisins[0] != null)
-                    Debug.Log("La partie haut est fermé ?" + townIsClosed(voisins[0]));
-                resetVisite();
-                if (voisins[3] != null)
-                    Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3])); 
-            }
+            resetVisite();
+            if (voisins[1] != null){
+                bool rep = townIsClosed(voisins[1]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[1])); 
+            }           
+            resetVisite();
+            if (voisins[2] != null){
+                bool rep = townIsClosed(voisins[2]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[2]));   
+            }     
         }
-
-        if (tile_laid.name.Contains("15"))
+        //bas et droite
+        if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
         {
-            Debug.Log ("cas spé 15");
-            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+            resetVisite();
+            if (voisins[2] != null){
+                bool rep = townIsClosed(voisins[2]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[2]));    
+            }        
+            resetVisite();
+            if (voisins[3] != null)
             {
-                resetVisite();
-                if (voisins[1] != null)
-                    Debug.Log("La partie gauche est fermé ?" + townIsClosed(voisins[1]));
-                resetVisite();
-                    if (voisins[3] != null)   
-                Debug.Log("La partie droite est fermé ?" + townIsClosed(voisins[3]));
-            }
-            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
-            {
-                resetVisite();
-                if (voisins[0] != null)
-                    Debug.Log("La partie haute est fermé ?" + townIsClosed(voisins[0]));
-                resetVisite();
-                if (voisins[2] != null)
-                    Debug.Log("La partie bas est fermé ?" + townIsClosed(voisins[2]));
+                bool rep = townIsClosed(voisins[3]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[3]));
             }
         }
-
-        if (!(tile_laid.name.Contains("10")) || !(tile_laid.name.Contains("15")))
+        //haut et droite
+        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
         {
-            Debug.Log ("pas de cas spé");
-            Debug.Log("La ville est fermé ?" + townIsClosed(tile_laid));
+            resetVisite();
+            if (voisins[0] != null)
+            {
+                bool rep = townIsClosed(voisins[0]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[0]));
+            }
+            resetVisite();
+            if (voisins[3] != null)
+            {
+                bool rep = townIsClosed(voisins[3]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[3]));
+            }
         }
     }
+    if (tile_laid.name.Contains("15"))
+    {
+        Debug.Log ("cas spé 15");
+        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+        {
+            resetVisite();
+            if (voisins[1] != null)
+            {
+                bool rep = townIsClosed(voisins[1]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[1]));
+            }
+            resetVisite();
+            if (voisins[3] != null)   
+            {
+                bool rep = townIsClosed(voisins[3]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[3]));
+            }
+        }
+        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
+        {
+            resetVisite();
+            if (voisins[0] != null)
+            {
+                bool rep = townIsClosed(voisins[0]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[0]));
+            }
+            resetVisite();
+            if (voisins[2] != null)
+            {
+                bool rep = townIsClosed(voisins[2]);
+                Debug.Log("La partie haute est fermé ?" + rep);
+                if(rep == true )
+                    player.points += (1+ score(voisins[2]));
+            }
+        }
+    }
+        if (!(tile_laid.name.Contains("10")) && !(tile_laid.name.Contains("15")))
+        {
+            bool rep = townIsClosed(tile_laid);
+            Debug.Log ("pas de cas spé");
+            Debug.Log("La ville est fermé ?" + rep);
+            if(rep == true )
+                player.points +=  score(tile_laid);
+            
+        }
+}
 
 
     //faire algo pour vérifier que la tuile pioché n'est pas une tuille spé 
@@ -1187,14 +1245,18 @@ public class PlayerManager : NetworkBehaviour
         // parcours de plateau
         for (int i = 0; i < abbeyes.Count; i++)
         {
-            abbeyLaid(abbeyes[i]);
+            if (abbeyLaid(abbeyes[i])){
+                player.points += 9;
+                abbeyes.RemoveAt(i);
+            }
+            
         }
         // if (plateau[i].milie == abbaye)
         //  je lance abbeyLaid(plateau[i])
         // faire un tableau des abbayes
     }
 
-    public void abbeyLaid(GameObject tile_laid)
+    public bool abbeyLaid(GameObject tile_laid)
     {
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
@@ -1224,7 +1286,9 @@ public class PlayerManager : NetworkBehaviour
         {
             // calcul de points
             Debug.Log("abbaye: " + tile_laid + " est complet");
+            return true;
         }
+        return false;
         // lancer la fonction sur tous les GO qui sont des abbayes (milieu = abbaye) -> tout le plateau pour tous les tours
         // const int voisins[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
     }
@@ -1396,5 +1460,90 @@ public class PlayerManager : NetworkBehaviour
         {
 
         }
+    }
+
+
+    public int score(GameObject tile_laid)
+    {
+
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
+        int p = 0;
+        GameObject[] voisins = new GameObject[4];
+        GameObject tmpTile_laid= tile_laid;
+        for(int i = 0; i < plateau.Count; i++)
+        {
+            Debug.Log("plat : " + plateau[i]);
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y+1)
+                voisins[0] = plateau[i]; // haut
+            if(plateau[i].GetComponent<Constraints>().coordX == x-1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[1] = plateau[i]; // gauche
+            if(plateau[i].GetComponent<Constraints>().coordX == x && plateau[i].GetComponent<Constraints>().coordY == y-1)
+                voisins[2] = plateau[i]; // bas
+            if(plateau[i].GetComponent<Constraints>().coordX == x+1 && plateau[i].GetComponent<Constraints>().coordY == y)
+                voisins[3] = plateau[i]; // droite
+        }
+
+        tmpTile_laid.GetComponent<Constraints>().visite = true;
+        if (tmpTile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
+        {
+
+            if(voisins[0] != null &&  !(voisins[0].GetComponent<Constraints>().visite) && (voisins[0].name.Contains("10") || voisins[0].name.Contains("15")))
+            {
+                p++;
+            }
+            else if (voisins[0] != null && !(voisins[0].GetComponent<Constraints>().visite))
+            {
+                Debug.Log("haut +");
+                voisins[0].GetComponent<Constraints>().visite = true;
+                p += score(voisins[0]);
+            }    
+        }
+        if (tmpTile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
+        {
+            if(voisins[1] != null &&  !(voisins[1].GetComponent<Constraints>().visite) && (voisins[1].name.Contains("10") || voisins[1].name.Contains("15")))
+            {
+                p++;
+            }
+            else if (voisins[1] != null && !(voisins[1].GetComponent<Constraints>().visite))
+            {
+                Debug.Log("gauche +");
+                voisins[1].GetComponent<Constraints>().visite = true;
+                 p += score(voisins[1]);
+            }    
+        }
+        if (tmpTile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
+        {
+            if(voisins[2] != null &&  !(voisins[2].GetComponent<Constraints>().visite) && (voisins[2].name.Contains("10") || voisins[2].name.Contains("15")))
+            {
+                p++;
+            }
+
+            else if (voisins[2] != null && !(voisins[2].GetComponent<Constraints>().visite))
+            {
+                Debug.Log("bas +");
+                voisins[2].GetComponent<Constraints>().visite = true;
+
+                p += score(voisins[2]);
+            }    
+        }
+        if (tmpTile_laid.GetComponent<Constraints>().droite == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
+        {
+            if(voisins[3] != null &&  !(voisins[3].GetComponent<Constraints>().visite) && (voisins[3].name.Contains("10") || voisins[3].name.Contains("15")))
+            {
+                p++;
+            }
+            else if (voisins[3] != null && !(voisins[3].GetComponent<Constraints>().visite))
+            {
+                Debug.Log("droite +");
+                voisins[3].GetComponent<Constraints>().visite = true;
+
+                p += score(voisins[3]);
+            }    
+        }
+
+        return p+ 1;
+ 
+ 
     }
 }
