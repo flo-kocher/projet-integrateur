@@ -8,7 +8,7 @@ public class Move : NetworkBehaviour {
 
   public PlayerManager PlayerManager;
   private GameObject go;         // GameObject sur lequel on clique
-  private bool dragging = false; // Booléen qui controle le suivi de la souris
+  private bool dragging = true; // Booléen qui controle le suivi de la souris
   public float speed;            // vitesse de lévé et de pose de la tuile
   private bool anim1 = false;    // Leve de la tuile
   private bool anim2 = false;    // Pose de la tuile
@@ -17,10 +17,18 @@ public class Move : NetworkBehaviour {
 
   private bool clickedOnStar = false;
 
+  public GameObject ButtonApply;
 
 
   // Start is called before the first frame update
-  void Start() {  }
+  void Start() { 
+    var list = Resources.FindObjectsOfTypeAll<GameObject>();
+    foreach (GameObject i in list) {
+      if (i.name.Contains("Apply")) {
+        ButtonApply = i;
+      }
+    }
+  }
 
   // Update is called once per frame
   void Update() {
@@ -110,6 +118,7 @@ public class Move : NetworkBehaviour {
           Vector3.Slerp(transform.position, target, speed * Time.deltaTime);
       float finish = Vector3.Angle(transform.position, target);
       if (finish <= 0.001f) {
+        ButtonApply.SetActive(false);
         this.GetComponent<Constraints>().enabled = true;
         this.GetComponent<rotateZ>().enabled = true;
         anim1 = false;
@@ -127,6 +136,7 @@ public class Move : NetworkBehaviour {
           Vector3.Slerp(transform.position, target, speed * Time.deltaTime);
       float finish = Vector3.Angle(transform.position, target);
       if (finish <= 0.001f) {
+        ButtonApply.SetActive(true);
         anim2 = false;
         //bool[] tabExample = new bool[]{ false, true, false, true, false };
 

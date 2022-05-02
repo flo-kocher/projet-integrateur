@@ -61,11 +61,17 @@ public class Constraints : MonoBehaviour
         */
     }
 
+    public void init_coord()
+    {
+        this.coordX = (int) transform.position.x;
+        this.coordY = (int) transform.position.y; 
+
+    }
+
     public bool verif(Type_land h, Type_land b, Type_land d, Type_land g)
     {
         bool vide = true;
-        this.coordX = (int) transform.position.x;
-        this.coordY = (int) transform.position.y; 
+        init_coord();
         GameObject[] voisins = new GameObject[4];
         GameObject poser;
         poser = GameObject.Find((this.coordX) + "/" + (this.coordY));
