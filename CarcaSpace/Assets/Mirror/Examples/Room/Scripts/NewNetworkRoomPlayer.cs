@@ -14,16 +14,6 @@ using Mirror;
 /// </summary>
 public class NewNetworkRoomPlayer : NetworkRoomPlayer
 {
-    
-    
-    
-    [SyncVar] 
-    public int playerNumber = 0 ;
-
-    public int playerIndex;
-
-   
-
     #region Start & Stop Callbacks
 
     /// <summary>
@@ -31,72 +21,44 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// <para>This could be triggered by NetworkServer.Listen() for objects in the scene, or by NetworkServer.Spawn() for objects that are dynamically created.</para>
     /// <para>This will be called for objects on a "host" as well as for object on a dedicated server.</para>
     /// </summary>
-    //public override void OnStartServer() { }
+    public override void OnStartServer() { }
 
     /// <summary>
     /// Invoked on the server when the object is unspawned
     /// <para>Useful for saving object data in persistent storage</para>
     /// </summary>
-    //public override void OnStopServer() { }
+    public override void OnStopServer() { }
 
     /// <summary>
     /// Called on every NetworkBehaviour when it is activated on a client.
     /// <para>Objects on the host have this function called, as there is a local client on the host. The values of SyncVars on object are guaranteed to be initialized correctly with the latest state from the server when this function is called on the client.</para>
     /// </summary>
-    public override void OnStartClient() {
-        base.OnStartClient();
-     }
+    public override void OnStartClient() { }
 
     /// <summary>
     /// This is invoked on clients when the server has caused this object to be destroyed.
     /// <para>This can be used as a hook to invoke effects or do client specific cleanup.</para>
     /// </summary>
-    public override void OnStopClient() { 
-        base.OnStopClient() ;
-        playerNumber -- ;
-    }
+    public override void OnStopClient() { }
 
     /// <summary>
     /// Called when the local player object has been set up.
     /// <para>This happens after OnStartClient(), as it is triggered by an ownership message from the server. This is an appropriate place to activate components or functionality that should only be active for the local player, such as cameras and input.</para>
     /// </summary>
-   // public override void OnStartLocalPlayer() { }
+    public override void OnStartLocalPlayer() { }
 
     /// <summary>
     /// This is invoked on behaviours that have authority, based on context and <see cref="NetworkIdentity.hasAuthority">NetworkIdentity.hasAuthority</see>.
     /// <para>This is called after <see cref="OnStartServer">OnStartServer</see> and before <see cref="OnStartClient">OnStartClient.</see></para>
     /// <para>When <see cref="NetworkIdentity.AssignClientAuthority"/> is called on the server, this will be called on the client that owns the object. When an object is spawned with <see cref="NetworkServer.Spawn">NetworkServer.Spawn</see> with a NetworkConnection parameter included, this will be called on the client that owns the object.</para>
     /// </summary>
-    public override void OnStartAuthority() {
-        base.OnStartAuthority();
-        CmdSpawnCard(index);
-    }
-
-    [Command]
-    public void CmdSpawnCard(int index){
-        // GameObject playerCard = GameObject.Instantiate(PlayerCard);
-        // NetworkServer.Spawn(playerCard,connectionToClient);
-        // RpcShowCard(playerCard,index);
-    }
-
-    [ClientRpc]
-    public void RpcShowCard(GameObject Card,int index){
-        if (hasAuthority)
-            {
-                Card.SetActive(true);
-            }
-            else
-            {
-                Card.SetActive(true); 
-            }
-
-    }
+    public override void OnStartAuthority() { }
 
     /// <summary>
     /// This is invoked on behaviours when authority is removed.
     /// <para>When NetworkIdentity.RemoveClientAuthority is called on the server, this will be called on the client that owns the object.</para>
     /// </summary>
-    //public override void OnStopAuthority() { }
+    public override void OnStopAuthority() { }
 
     #endregion
 
@@ -122,7 +84,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     /// <param name="oldIndex">The old index value</param>
     /// <param name="newIndex">The new index value</param>
-   // public override void IndexChanged(int oldIndex, int newIndex) { }
+    public override void IndexChanged(int oldIndex, int newIndex) { }
 
     /// <summary>
     /// This is a hook that is invoked on clients when a RoomPlayer switches between ready or not ready.
@@ -130,7 +92,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     /// <param name="oldReadyState">The old readyState value</param>
     /// <param name="newReadyState">The new readyState value</param>
-   // public override void ReadyStateChanged(bool oldReadyState, bool newReadyState) { }
+    public override void ReadyStateChanged(bool oldReadyState, bool newReadyState) { }
 
     #endregion
 
