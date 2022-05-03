@@ -22,7 +22,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
 
     public int playerIndex;
 
-   
+    public spawnPlayerCard spawnPlayerCard ; 
 
     #region Start & Stop Callbacks
 
@@ -45,6 +45,8 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartClient() {
         base.OnStartClient();
+        Debug.Log("Start Client !!!!!!!!!!!!!!!!!!!!!!!!!!");
+        spawnPlayerCard.CmdSpawnCard(index);
      }
 
     /// <summary>
@@ -69,28 +71,10 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartAuthority() {
         base.OnStartAuthority();
-        CmdSpawnCard(index);
+        
     }
 
-    [Command]
-    public void CmdSpawnCard(int index){
-        // GameObject playerCard = GameObject.Instantiate(PlayerCard);
-        // NetworkServer.Spawn(playerCard,connectionToClient);
-        // RpcShowCard(playerCard,index);
-    }
-
-    [ClientRpc]
-    public void RpcShowCard(GameObject Card,int index){
-        if (hasAuthority)
-            {
-                Card.SetActive(true);
-            }
-            else
-            {
-                Card.SetActive(true); 
-            }
-
-    }
+    
 
     /// <summary>
     /// This is invoked on behaviours when authority is removed.
