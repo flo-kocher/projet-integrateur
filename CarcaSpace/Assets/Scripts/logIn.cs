@@ -16,7 +16,6 @@ public class Credentials
 }
 
 [Serializable]
-
 public class serverResponse {
     public string success;
     public string message;
@@ -29,9 +28,7 @@ public class logIn : MonoBehaviour{
     Text serverResponseText; 
 
 
-
-    string getRouteURI = "localhost:8080/logIn";
-    string success = "{\"success\": true}";
+    string getRouteURI = "http://185.155.93.105:11007/logIn";
     void Start(){
         inputUsername = GameObject.Find("Username").GetComponent<TMP_InputField>();
         inputPassword = GameObject.Find("Password").GetComponent<TMP_InputField>();
@@ -59,17 +56,18 @@ public class logIn : MonoBehaviour{
             restAPI.downloadHandler = new DownloadHandlerBuffer();
 
             yield return restAPI.SendWebRequest();
-            if(restAPI.result == UnityWebRequest.Result.ProtocolError){
+            if(restAPI.result != UnityWebRequest.Result.Success){
                 Debug.Log(restAPI.error);
                 Debug.Log(jsonData);
                 Debug.Log(restAPI.downloadHandler.error);
             }else{
-                Debug.Log("Form uploaded !");
+                Debug.Log("request uploaded !");
                 Debug.Log(restAPI.downloadHandler.text);
                 serverResponse data = JsonUtility.FromJson<serverResponse>(restAPI.downloadHandler.text);
                
                 if(data.success == "true")
                 {
+                    playerName = credentials.name;
                     SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
                 }
                 else if(data.success == "false" && data.message == "Not existing user") {
@@ -82,8 +80,6 @@ public class logIn : MonoBehaviour{
                     Debug.Log("Erreur inconnue");
                 }
             }
-        }
-
-      
+        }      
     }
 }
