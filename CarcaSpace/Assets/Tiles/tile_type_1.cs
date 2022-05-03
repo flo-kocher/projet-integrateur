@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class tile_type_1 : tile_type
 {
+    // public static bool finish = false;
+
     // Start is called before the first frame update
     void Start()
     {

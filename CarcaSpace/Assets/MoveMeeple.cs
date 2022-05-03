@@ -63,24 +63,9 @@ public static class MoveMeeple : object
                     .gameObject);
     }
 
-    //Suppression d'un meeple spécial
-    // public static void rmMeeple(GameObject meeple)
-    // {
-    //     MonoBehaviour.Destroy(meeple);
-    // }
-
-    public static void rmMeeple()
+    public static void rmMeeple(GameObject meeple)
     {
-        GameObject parent = GameObject.Find("Meeples");
-        if (parent.transform.childCount > 1)
-            MonoBehaviour.Destroy(
-                parent.transform.GetChild(parent.transform.childCount - 1)
-                    .gameObject);
+        MonoBehaviour.Destroy(meeple);
     }
-
-    // public static void rmMeeple(GameObject meeple)
-    // {
-    //     MonoBehaviour.Destroy(meeple);
-    // }
 
 }

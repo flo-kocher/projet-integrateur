@@ -86,7 +86,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   compteurMeeple: 0
-  grid: {fileID: 6332455504185704856, guid: bf03cc52dc18adc41946e4127d1f1301, type: 3}
+  grid: {fileID: 0}
   temp: {fileID: 8127399405721289948, guid: e7e3c92c36bf8424fb680fda778e6d11, type: 3}
   TileType0: {fileID: 904876740412345685, guid: 807a86916ff80ab45a84ce2d1809b5ee, type: 3}
   TileType1: {fileID: 4793412428863025624, guid: bafb660a05eb8ab419a7eac85704e3a5, type: 3}
@@ -116,14 +116,11 @@ MonoBehaviour:
   ui: {fileID: 612191210239054146, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
   Stars: {fileID: 6954049619821841049, guid: bdb108f5a9bd5e1438bf9e9a0f40cd0d, type: 3}
   Meeples: {fileID: 2901618024628144452, guid: 78b4c1a494b52a242b2d7a4d72eb6487, type: 3}
-  haut: {x: 0.5, y: 0.83}
-  bas: {x: 0.5, y: 0.17}
-  droite: {x: 0.83, y: 0.5}
-  gauche: {x: 0.17, y: 0.5}
+  nord: {x: 0.5, y: 0.83}
+  sud: {x: 0.5, y: 0.17}
+  est: {x: 0.83, y: 0.5}
+  ouest: {x: 0.17, y: 0.5}
   milieu: {x: 0.5, y: 0.5}
   tabPos: []
   all_tiles: []
   playerList: []
-  plateau: []
-  abbeyes: []
-  nb_of_struct_roads: 0
