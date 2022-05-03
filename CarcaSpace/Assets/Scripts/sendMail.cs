@@ -9,14 +9,17 @@ using System;
 public class sendMail : MonoBehaviour
 {
     string getRouteURI = "localhost:8080/Reset_pass";
-    Button submit;
+    public Button submit;
     TMP_InputField inputMail;
 
     // Start is called before the first frame update
     void Start()
     {
         inputMail = GameObject.Find("email").GetComponent<TMP_InputField>();
-        GameObject.Find("Submit").GetComponent<Button>().onClick.AddListener(PostData);
+        //GameObject.Find("Submit").GetComponent<Button>().onClick.AddListener(PostData);
+        submit = GameObject.Find("Submit").GetComponent<Button>();
+        submit.onClick.AddListener(PostData);
+        //submit.onClick.AddListener(PostData);
     }
 
     void PostData() => StartCoroutine(UploadTo());
@@ -24,7 +27,7 @@ public class sendMail : MonoBehaviour
     public IEnumerator UploadTo(){
         Credentials credentials = new Credentials();
         credentials.mail = inputMail.text;
-
+        Debug.Log(credentials.mail);
         string jsonData = JsonUtility.ToJson(credentials, true);
         using(UnityWebRequest restAPI = UnityWebRequest.Put(getRouteURI, jsonData))
         {
