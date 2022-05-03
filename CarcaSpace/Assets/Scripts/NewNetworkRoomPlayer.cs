@@ -46,7 +46,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     public override void OnStartClient() {
         base.OnStartClient();
         Debug.Log("Start Client !!!!!!!!!!!!!!!!!!!!!!!!!!");
-        spawnPlayerCard.CmdSpawnCard(index);
+        
      }
 
     /// <summary>
@@ -71,6 +71,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartAuthority() {
         base.OnStartAuthority();
+        spawnPlayerCard.CmdSpawnCard(index);
         
     }
 
