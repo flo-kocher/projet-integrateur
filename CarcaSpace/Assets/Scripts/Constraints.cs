@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 
 public enum Type_land
@@ -8,7 +9,12 @@ public enum Type_land
   Rien, Ville, Plaine, Chemin, Abbaye, Continue
 }
 
-public class Constraints : MonoBehaviour
+public enum Meeple
+{
+    Rien, Haut, Bas, Gauche, Droite, Milieu
+}
+
+public class Constraints : NetworkBehaviour
 {
     public Type_land haut;
     public Type_land gauche;
@@ -70,8 +76,11 @@ public class Constraints : MonoBehaviour
 
     public bool verif(Type_land h, Type_land b, Type_land d, Type_land g)
     {
-        bool vide = true;
-        init_coord();
+        // bool vide = true;
+        // init_coord();
+        
+        this.coordX = (int) transform.position.x;
+        this.coordY = (int) transform.position.y; 
         GameObject[] voisins = new GameObject[4];
         GameObject poser;
         poser = GameObject.Find((this.coordX) + "/" + (this.coordY));
