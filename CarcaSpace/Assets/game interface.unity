@@ -702,7 +702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  nbTuiles: 20
+  nbTuiles: 10
   PlayerManager: {fileID: 0}
 --- !u!114 &1532519133
 MonoBehaviour:

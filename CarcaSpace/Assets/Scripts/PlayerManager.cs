@@ -549,33 +549,6 @@ public class PlayerManager : NetworkBehaviour
         // Debug.Log("Noms face : face_haut "+face_haut+"  face_garche "+face_gauche+"  face_bas "+face_bas+"  face_droite "+face_droite);
         // Debug.Log("Nom structs : Nom_haut "+nom_struct_haut+"  Nom_gauche "+nom_struct_gauche+"  Nom_bas "+nom_struct_bas+"  Nom_droite "+nom_struct_droite);
 
-        /*
-        //cas avec 3 faces Chemin
-        if((face_haut && face_gauche && face_bas) || (face_gauche && face_bas && face_droite) || (face_bas || face_droite || face_haut) || (face_droite && face_haut && face_gauche))
-        {
-            if(nom_struct_gauche == nom_struct_bas && nom_struct_bas == nom_struct_droite)
-            {
-                // intersection sauf en haut
-            }
-
-            if(nom_struct_bas == nom_struct_droite && nom_struct_droite == nom_struct_haut)
-            {
-                // intersection sauf a gauche
-            }
-
-            if(nom_struct_droite == nom_struct_haut && nom_struct_haut == nom_struct_gauche)
-            {
-                // intersection sauf en bas
-            }
-
-            if(nom_struct_haut == nom_struct_gauche && nom_struct_gauche == nom_struct_bas)
-            {
-                // intersection sauf a droite
-            }            
-                
-        }
-        */
-
         if(face_haut && face_gauche && face_bas && face_droite) // tile 21 forcément
         // if(tile_laid.name.Contains("21"))
         {
@@ -699,10 +672,8 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en bas
                 CurrentRoads road2 = getStructByName(nom_struct_bas);
                 road2.CurrentTiles.Add(tile_laid);
-
                 // chemin fermé à gauche mais pas focement en bas(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_gauche);
-
             }
             if (nom_struct_gauche == nom_struct_bas && nom_struct_gauche != nom_struct_haut)
             {
@@ -712,10 +683,7 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_haut);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé à gauche mais pas focement en haut(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_gauche);
-
             }
             if (nom_struct_bas == nom_struct_haut && nom_struct_haut != nom_struct_gauche)
             {
@@ -725,10 +693,7 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_gauche);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé à gauche mais pas focement en haut(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_bas);
-
             }
         }
         else if (face_haut && face_gauche && face_droite && !face_bas) // tile 17 ou 22 forcément
@@ -750,10 +715,7 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en bas
                 CurrentRoads road2 = getStructByName(nom_struct_droite);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé à gauche mais pas focement à droite(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_haut);
-
             }
             if (nom_struct_gauche == nom_struct_droite && nom_struct_droite != nom_struct_haut)
             {
@@ -763,8 +725,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_haut);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé à gauche mais pas focement à haut(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_gauche);
             }
             if (nom_struct_droite == nom_struct_haut && nom_struct_haut!=nom_struct_gauche)
@@ -775,8 +735,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_gauche);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé à droite mais pas focement à gauche(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_droite);
             }
         }
@@ -799,8 +757,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en bas
                 CurrentRoads road2 = getStructByName(nom_struct_bas);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé à gauche mais pas focement en bas(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_droite);
             }
             if (nom_struct_bas == nom_struct_droite && nom_struct_droite != nom_struct_haut)
@@ -811,8 +767,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_haut);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé en bas et en droite mais pas focement en haut(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_droite);
             }
             if (nom_struct_bas == nom_struct_haut && nom_struct_bas!=nom_struct_droite)
@@ -823,8 +777,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_droite);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé de haut en bas mais pas focement à droite(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_bas);
             }
         }
@@ -847,8 +799,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en bas
                 CurrentRoads road2 = getStructByName(nom_struct_gauche);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé de droite en bas mais pas focement à gauche(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_bas);
 
             }
@@ -860,8 +810,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en haut
                 CurrentRoads road2 = getStructByName(nom_struct_droite);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé de bas à gauche mais pas focement à droite(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_bas);
             }
             if (nom_struct_droite == nom_struct_gauche && nom_struct_gauche!=nom_struct_bas)
@@ -872,8 +820,6 @@ public class PlayerManager : NetworkBehaviour
                 //concaténation en gauche
                 CurrentRoads road2 = getStructByName(nom_struct_bas);
                 road2.CurrentTiles.Add(tile_laid);
-
-                // chemin fermé de gauche à droite mais pas focement en bas(ça dépend s'il une tuiles fermante)
                 setIsClosedByName(nom_struct_droite);
             }
         }
@@ -881,46 +827,6 @@ public class PlayerManager : NetworkBehaviour
         //cas avec 2 faces Chemin
         else if (face_haut && face_gauche || face_haut && face_bas || face_gauche && face_droite || face_bas && face_gauche || face_bas && face_droite || face_haut && face_droite)
         {
-            /*
-                DANS LE CODE DES 2 FACES ICI, IL FAUT RAJOUTER DES IF COMME CA :
-
-                if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
-                {
-                    //Debug.Log("1 voisin et tuile 17 ou 22");
-                    if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
-                        createNewStruct(tile_laid, "_1");
-                    if (tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
-                        createNewStruct(tile_laid, "_2");
-                    if (tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin)
-                        createNewStruct(tile_laid, "_3");
-                    Move.nb_of_struct_roads++;
-                }
-
-                IL FAUT RAJOUTER SOIT UN GRAND IF QUI TRAITE LE CAS DES 17 21 22 OU SOIT RAJOUTER DANS 
-
-
-
-
-
-
-
-
-            */
-
-
-/*
-            Debug.Log("2 voisins");
-            //premier if et else fonctionnel !
-
-            //ajout du Go a gauche et fermeture sur lui même et calcul de point
-            CurrentRoads road = getStructByName(nom_struct_gauche);
-            road.CurrentTiles.Add(tile_laid);
-
-            // on mets a jour le chemin comme etant clos
-            setIsClosedByName(nom_struct_gauche);
-            */
-
-            // on doit créer les structures pour chaque type de tuile
             if (nom_struct_gauche == nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
                 // Si tuile 21
@@ -948,10 +854,8 @@ public class PlayerManager : NetworkBehaviour
             }
             if (nom_struct_gauche != nom_struct_haut && nom_struct_bas == "" && nom_struct_droite == "")
             {
-                // Si tuile 21
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures
                     createNewStruct(tile_laid, "_2");
                     createNewStruct(tile_laid, "_3");
                     Move.nb_of_struct_roads+=2;
@@ -960,17 +864,14 @@ public class PlayerManager : NetworkBehaviour
                     CurrentRoads r2 = getStructByName(nom_struct_haut);
                     r2.CurrentTiles.Add(tile_laid);
                 }
-                // si c'est la tuile 17 ou 22
                 else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
-                    // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_2");
                     if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_3");
                     Move.nb_of_struct_roads++;
                 }
-                //fusion de gauche avec haut
                 else
                 {
                     CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
@@ -1009,10 +910,8 @@ public class PlayerManager : NetworkBehaviour
 
             if (nom_struct_gauche != nom_struct_bas && nom_struct_droite == "" && nom_struct_haut == "")
             {
-                // Si tuile 21
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures
                     createNewStruct(tile_laid, "_0");
                     createNewStruct(tile_laid, "_3");
                     Move.nb_of_struct_roads+=2;
@@ -1021,17 +920,14 @@ public class PlayerManager : NetworkBehaviour
                     CurrentRoads r2 = getStructByName(nom_struct_haut);
                     r2.CurrentTiles.Add(tile_laid);
                 }
-                // si c'est la tuile 17 ou 22
                 else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
-                    // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_0");
                     if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_3");
                     Move.nb_of_struct_roads++;
                 }
-                //fusion de gauche avec haut
                 else
                 {
                     CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
@@ -1071,7 +967,6 @@ public class PlayerManager : NetworkBehaviour
             {
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures
                     createNewStruct(tile_laid, "_0");
                     createNewStruct(tile_laid, "_2");
                     Move.nb_of_struct_roads+=2;
@@ -1082,7 +977,6 @@ public class PlayerManager : NetworkBehaviour
                 }
                 else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
-                    // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_0");
                     if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
@@ -1126,7 +1020,6 @@ public class PlayerManager : NetworkBehaviour
             {
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures
                     createNewStruct(tile_laid, "_1");
                     createNewStruct(tile_laid, "_2");
                     Move.nb_of_struct_roads+=2;
@@ -1137,7 +1030,6 @@ public class PlayerManager : NetworkBehaviour
                 }
                 else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
-                    // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_1");
                     if(tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin) 
@@ -1181,7 +1073,6 @@ public class PlayerManager : NetworkBehaviour
             {
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures
                     createNewStruct(tile_laid, "_0");
                     createNewStruct(tile_laid, "_1");
                     Move.nb_of_struct_roads+=2;
@@ -1192,7 +1083,6 @@ public class PlayerManager : NetworkBehaviour
                 }
                 else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
-                    // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_0");
                     if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
@@ -1236,7 +1126,6 @@ public class PlayerManager : NetworkBehaviour
             {
                 if (tile_laid.name.Contains("21"))
                 {
-                    // créer deux structures
                     createNewStruct(tile_laid, "_1");
                     createNewStruct(tile_laid, "_3");
                     Move.nb_of_struct_roads+=2;
@@ -1247,7 +1136,6 @@ public class PlayerManager : NetworkBehaviour
                 }
                 else if(tile_laid.name.Contains("17") || tile_laid.name.Contains("22"))
                 {
-                    // créer une structure 
                     if(tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin) 
                         createNewStruct(tile_laid, "_1");
                     if(tile_laid.GetComponent<Constraints>().droite == Type_land.Chemin) 
@@ -1292,12 +1180,10 @@ public class PlayerManager : NetworkBehaviour
             }
             if (nom_struct_gauche != "")
             {
-                //ajout du Go à la struct du gauche
                 CurrentRoads cr = getStructByName(nom_struct_gauche);
                 cr.CurrentTiles.Add(tile_laid);
                 if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
                 {
-                    //Debug.Log("1 voisin et tuile 17 ou 22");
                     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
                         createNewStruct(tile_laid, "_0");
                     if (tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
@@ -1309,12 +1195,10 @@ public class PlayerManager : NetworkBehaviour
             }
             if (nom_struct_bas != "")
             {
-                //ajout du Go à la struct du bas
                 CurrentRoads cr = getStructByName(nom_struct_bas);
                 cr.CurrentTiles.Add(tile_laid);
                 if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
                 {
-                    //Debug.Log("1 voisin et tuile 17 ou 22");
                     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
                         createNewStruct(tile_laid, "_0");
                     if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
@@ -1326,12 +1210,10 @@ public class PlayerManager : NetworkBehaviour
             }
             if (nom_struct_droite != "")
             {
-                //ajout du Go à la struct du droite
                 CurrentRoads cr = getStructByName(nom_struct_droite);
                 cr.CurrentTiles.Add(tile_laid);
                 if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
                 {
-                    //Debug.Log("1 voisin et tuile 17 ou 22");
                     if (tile_laid.GetComponent<Constraints>().haut == Type_land.Chemin)
                         createNewStruct(tile_laid, "_0");
                     if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
@@ -1530,7 +1412,6 @@ public bool townIsClosed(GameObject tile_laid)
         // -> on la rajoute à une liste d'abbaye
         //et ensuite on lance à chaque tour, abbeyIsClose sur seulement cette liste
 
-
         // parcours de Move.plateau
         for (int i = 0; i < abbeyes.Count; i++)
         {
@@ -1668,10 +1549,6 @@ public bool townIsClosed(GameObject tile_laid)
     [ClientRpc]
     void RpcShowMeeples(GameObject go, string action)
     {
-        //Debug.Log("je suis dans rpc");
-        //Debug.Log("GameObject : "+ go);
-        //Debug.Log("Action : "+ action);
-
         if (action == "Dealt")
         {
             if (hasAuthority)
@@ -1852,26 +1729,8 @@ public bool townIsClosed(GameObject tile_laid)
             m;
         go.GetComponent<Constraints>().coordX = x;
         go.GetComponent<Constraints>().coordY = y;
-        // dynamic i = test(go);
-        // i.haut = h;
-        // i.gauche = g;
-        // i.bas = b;
-        // i.droite = d;
         Move.plateau.Add(go);
     }
-
-    // [Command]
-    // public void Cmd(GameObject go)
-    // {
-    //     Debug.Log(go);
-    //     // i.haut = Type_land.Chemin;
-    // }
-
-    // [Command]
-    // public void CmdD(dynamic i)
-    // {
-    //     Debug.Log(i);
-    // }
 
     [Command]
     public void CmdRotate(GameObject go, Type_land h, Type_land b, Type_land g, Type_land d)
