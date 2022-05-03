@@ -8,7 +8,7 @@ public class Move : NetworkBehaviour {
 
   public PlayerManager PlayerManager;
   private GameObject go;         // GameObject sur lequel on clique
-  private bool dragging = true; // Booléen qui controle le suivi de la souris
+  private bool dragging = false; // Booléen qui controle le suivi de la souris //////////////////////////////////////////////
   public float speed;            // vitesse de lévé et de pose de la tuile
   private bool anim1 = false;    // Leve de la tuile
   private bool anim2 = false;    // Pose de la tuile
@@ -18,7 +18,9 @@ public class Move : NetworkBehaviour {
   private bool clickedOnStar = false;
 
   public GameObject ButtonApply;
-
+  public static List<GameObject> plateau = new List<GameObject>();
+  public static int nb_of_struct_roads;
+  public static List<PlayerManager.CurrentRoads> list_of_struct_roads = new List<PlayerManager.CurrentRoads>();
 
   // Start is called before the first frame update
   void Start() { 
@@ -47,7 +49,7 @@ public class Move : NetworkBehaviour {
         if (go == this.gameObject) {
           dragging = !dragging;
           if (clickedOnStar) {
-            MoveMeeple.rmLastMeeple(); ///////////////// à faire en version Network
+            MoveMeeple.rmMeeple(); ///////////////// à faire en version Network
             clickedOnStar = false;
           }
           if (!dragging) {
@@ -59,22 +61,36 @@ public class Move : NetworkBehaviour {
               disapear = GameObject.Find((int)x + "/" + (int)y);
 
               anim2 = true;
+              Type_land haut = i.haut;
+              Type_land bas = i.bas;
+              Type_land gauche = i.gauche;
+              Type_land droite = i.droite;
+              Type_land milieu = i.milieu;
               // Il faut un bouton de validation
               this.GetComponent<rotateZ>().enabled = false;
               this.GetComponent<tile_type>().enabled = false;
-              // Type_land tg = tiles[z].haut;
-              tile_type_1 dd = new tile_type_1();
-              disapear.GetComponent<Constraints>().haut =
-                  i.haut;
-              disapear.GetComponent<Constraints>().bas =
-                  i.bas;
-              disapear.GetComponent<Constraints>().gauche =
-                  i.gauche;
-              disapear.GetComponent<Constraints>().droite =
-                  i.droite;
-              disapear.GetComponent<Constraints>().milieu =
-                  i.milieu;
+              disapear = GameObject.Find((int)x + "/" + (int)y);
               this.GetComponent<Constraints>().enabled = false;
+
+              NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+              PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+
+              PlayerManager.CmdDealMove(disapear, haut, bas, gauche, droite, milieu, (int)x, (int)y);
+              PlayerManager.CmdDealCoord(go, haut, bas, gauche, droite, milieu, (int)x, (int)y);
+              // client envoie une requête au serveur pour générer une tuile
+              // // Type_land tg = tiles[z].haut;
+              // tile_type_1 dd = new tile_type_1();
+              // disapear.GetComponent<Constraints>().haut =
+              //     i.haut;
+              // disapear.GetComponent<Constraints>().bas =
+              //     i.bas;
+              // disapear.GetComponent<Constraints>().gauche =
+              //     i.gauche;
+              // disapear.GetComponent<Constraints>().droite =
+              //     i.droite;
+              // disapear.GetComponent<Constraints>().milieu =
+              //     i.milieu;
+              // this.GetComponent<Constraints>().enabled = false;
               // lancer est_complet
             } else {
               if (this.GetComponent<AccessDenied>().testRefuse()) {
@@ -144,14 +160,21 @@ public class Move : NetworkBehaviour {
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
         // faire spawn les étoiles sur le serveur et les clients
-        PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
+        
+        // PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
+        PlayerManager.CmdSpawnStars(disapear.GetComponent<Constraints>().posePossible, x, y);
 
-
+        go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;
+        go.GetComponent<Constraints>().coordY = disapear.GetComponent<Constraints>().coordY;
+        
+        PlayerManager.roadIsClosed_Struct(go);
+        PlayerManager.checkAllStruct();
+        PlayerManager.seeStruct();
 
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
-        PlayerManager.townIsClosed(go);
+        // PlayerManager.townIsClosed(go);
       
         //PlayerManager.roadIsClosed_Struct(go);
         //PlayerManager.checkAllStruct();
@@ -170,9 +193,9 @@ public class Move : NetworkBehaviour {
         
 
     
-        PlayerManager.resetVisite();
-        PlayerManager.drawshit(go);
-        PlayerManager.resetVisite();
+        // PlayerManager.resetVisite();
+        // PlayerManager.drawshit(go);
+        // PlayerManager.resetVisite();
 
         //cloture d'abbayes
         /*

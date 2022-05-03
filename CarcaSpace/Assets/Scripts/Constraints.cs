@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 
 public enum Type_land
@@ -8,7 +9,12 @@ public enum Type_land
   Rien, Ville, Plaine, Chemin, Abbaye, Continue
 }
 
-public class Constraints : MonoBehaviour
+public enum Meeple
+{
+    Rien, Haut, Bas, Gauche, Droite, Milieu
+}
+
+public class Constraints : NetworkBehaviour
 {
     public Type_land haut;
     public Type_land gauche;

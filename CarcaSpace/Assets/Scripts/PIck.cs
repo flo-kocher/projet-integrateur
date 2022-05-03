@@ -7,6 +7,7 @@ public class PIck : NetworkBehaviour
 {
     // client 
     public PlayerManager PlayerManager;
+    public static int compteur = 0;
   
 
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class PIck : NetworkBehaviour
 
     void getIdAndCards()
     {
-        this.gameObject.SetActive(false);
+        // this.gameObject.SetActive(false);
         // cherche l'identifiant du network
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         PlayerManager = networkIdentity.GetComponent<PlayerManager>();
