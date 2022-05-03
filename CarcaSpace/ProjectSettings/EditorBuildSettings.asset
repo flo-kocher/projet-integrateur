@@ -26,4 +26,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/signInMenu.unity
     guid: f12f41b4989613d4983fb2142fc3e5c0
+  - enabled: 1
+    path: Assets/Scenes/ForgotPassword.unity
+    guid: 12b471d6e253b9f4daad8e6d0bb7d7b6
   m_configObjects: {}
