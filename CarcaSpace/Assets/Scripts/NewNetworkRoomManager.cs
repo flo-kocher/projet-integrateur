@@ -60,9 +60,13 @@ public class NewNetworkRoomManager : NetworkRoomManager
     {
         // calling the base method calls ServerChangeScene as soon as all players are in Ready state.
 
-        base.OnRoomServerPlayersReady();
+        //base.OnRoomServerPlayersReady();
 
-        showStartButton = true;
+        #if UNITY_SERVER
+            base.OnRoomServerPlayersReady();
+#else
+            showStartButton = true;
+#endif
 
     }
 
