@@ -7,7 +7,7 @@
 ## Branches
 
 Nous avons plusieurs branches:<br/>
-- La branche **main** est administrative. Elle contient tout les documents que nous avons rédigés. De plus, vous pouvez y trouver les *commits* des branches non *merge*.
+- La branche **main** est administrative. Elle contient tout les documents que nous avons rédigés. De plus, vous pouvez y trouver l'historique des *commits* des branches non *merge*.
 - La branche **develop** est la branche principale contenant tout notre projet.
 
 ## Savoir utiliser Git
