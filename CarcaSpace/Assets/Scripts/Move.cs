@@ -21,6 +21,7 @@ public class Move : NetworkBehaviour {
   public static List<GameObject> plateau = new List<GameObject>();
   public static int nb_of_struct_roads;
   public static List<PlayerManager.CurrentRoads> list_of_struct_roads = new List<PlayerManager.CurrentRoads>();
+  public static List<GameObject> abbeyes = new List<GameObject>();
 
   // Start is called before the first frame update
   void Start() { 
@@ -171,9 +172,9 @@ public class Move : NetworkBehaviour {
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
-        // PlayerManager.roadIsClosed_Struct(go);
-        // PlayerManager.checkAllStruct();
-        // PlayerManager.seeStruct();
+        PlayerManager.roadIsClosed_Struct(go);
+        PlayerManager.checkAllStruct();
+        PlayerManager.seeStruct();
 
         //cloture de villes
         PlayerManager.resetVisite();
@@ -181,11 +182,11 @@ public class Move : NetworkBehaviour {
         PlayerManager.resetVisite();
 
         //cloture d'abbayes
-        /*
+        
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
-          PlayerManager.abbeyes.Add(go);
+          abbeyes.Add(go);
         PlayerManager.abbeyIsClose();
-        */
+        
 
         /* comptage des points
             comptage des abbays complet

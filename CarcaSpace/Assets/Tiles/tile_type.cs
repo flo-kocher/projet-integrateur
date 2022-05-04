@@ -43,14 +43,16 @@ public abstract class tile_type : NetworkBehaviour
     {
         if(Input.GetKeyDown("left") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne) && this.GetComponent<Constraints>().laid){
+            // Debug.Log(this.GetComponent<Constraints>().laid);
+            if(!this.GetComponent<Constraints>().laid && !(r.leve || r.couche || r.tourne)){
                 rotate_left();
             }
             
         }
         if(Input.GetKeyDown("right") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne) && this.GetComponent<Constraints>().laid){
+            // Debug.Log(this.GetComponent<Constraints>().laid);
+            if(!this.GetComponent<Constraints>().laid && !(r.leve || r.couche || r.tourne)){
                 rotate_right();
             }
         }

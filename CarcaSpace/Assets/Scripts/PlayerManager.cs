@@ -70,7 +70,7 @@ public class PlayerManager : NetworkBehaviour
     // public List<GameObject> Move.plateau = new List<GameObject>();
 
     // liste des abbayes posées
-    public List<GameObject> abbeyes = new List<GameObject>();
+    // public List<GameObject> abbeyes = new List<GameObject>();
 
     // structure d'un joueur
     public struct Player
@@ -448,7 +448,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void seeStruct()
     {
-        Debug.Log("liste des structs "+Move.list_of_struct_roads.Count);
+        // Debug.Log("liste des structs "+Move.list_of_struct_roads.Count);
         for(int k = 0; k < Move.list_of_struct_roads.Count; k++)
         {
           Debug.Log("nb d'elt dans  la structure "+k+ " : "+Move.list_of_struct_roads[k].CurrentTiles.Count);
@@ -1534,6 +1534,7 @@ public class PlayerManager : NetworkBehaviour
         go.GetComponent<Constraints>().visite = true;
     }
 
+    [Command]
     public void abbeyIsClose()
     {
         //ajouter dès qu'on pick une tuile ou dès qu'on la pose
@@ -1543,11 +1544,12 @@ public class PlayerManager : NetworkBehaviour
 
 
         // parcours de Move.plateau
-        for (int i = 0; i < abbeyes.Count; i++)
+        for (int i = 0; i < Move.abbeyes.Count; i++)
         {
-            if (abbeyLaid(abbeyes[i])){
+            if (abbeyLaid(Move.abbeyes[i])){
                 player.points += 9;
-                abbeyes.RemoveAt(i);
+                Move.abbeyes.RemoveAt(i);
+                Debug.Log("Une abbaye est complète !!!!");
             }
             
         }

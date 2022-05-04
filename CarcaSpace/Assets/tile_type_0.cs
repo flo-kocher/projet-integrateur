@@ -31,7 +31,7 @@ public class tile_type_0 : tile_type
     {
         if(Input.GetKeyDown("left") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne))
+            if(!this.GetComponent<Constraints>().laid && !(r.leve || r.couche || r.tourne))
             {
                 rotate_left();
             }
@@ -39,7 +39,7 @@ public class tile_type_0 : tile_type
         }
         if(Input.GetKeyDown("right") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne))
+            if(!this.GetComponent<Constraints>().laid && !(r.leve || r.couche || r.tourne))
             {
                 rotate_right();
             }
