@@ -6,9 +6,9 @@
 
 ## Branches
 
-Nous avons plusieurs branches. 
-La branche **main** est administrative. Elle contient tout les documents que nous avons rédigés.
-La branche **develop** est la branche principale contenant tout notre projet.
+Nous avons plusieurs branches:<br/>
+- La branche **main** est administrative. Elle contient tout les documents que nous avons rédigés.
+- La branche **develop** est la branche principale contenant tout notre projet.
 
 ## Savoir utiliser Git
 
