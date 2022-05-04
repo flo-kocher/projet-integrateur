@@ -407,7 +407,7 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
         instatiateTiles();
-        // CmdSpawnGrid(10);
+        CmdSpawnGrid(10);
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
 
@@ -1946,6 +1946,23 @@ public void drawshit(GameObject tile_laid)
         i.gauche = g;
         i.bas = b;
         i.droite = d;
+
+        go.GetComponent<Constraints>().haut = h;
+        go.GetComponent<Constraints>().bas = b;
+        go.GetComponent<Constraints>().gauche = g;
+        go.GetComponent<Constraints>().droite = d;
+    }
+
+    [Command]
+    public void CmdSetLaid(GameObject go)
+    {
+        RpcSetLaid(go);
+    }
+
+    [ClientRpc]
+    void RpcSetLaid(GameObject go)
+    {
+        go.GetComponent<Constraints>().laid = true;
     }
 
     dynamic test(GameObject go) {

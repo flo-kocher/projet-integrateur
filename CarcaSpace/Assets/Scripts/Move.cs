@@ -162,6 +162,7 @@ public class Move : NetworkBehaviour {
         // faire spawn les étoiles sur le serveur et les clients
         
         // PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
+        PlayerManager.CmdSetLaid(go);
         PlayerManager.CmdSpawnStars(disapear.GetComponent<Constraints>().posePossible, x, y);
 
         go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;

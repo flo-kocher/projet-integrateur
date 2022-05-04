@@ -30,6 +30,7 @@ public class Constraints : NetworkBehaviour
     public bool carrefour;
     public bool[] posePossible = {false, false, false, false, false};
     public bool estFermante = false;
+    public bool laid = false;
     // Start is called before the first frame update
     void Start()
     {
