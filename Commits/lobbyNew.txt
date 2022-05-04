@@ -1,0 +1,1366 @@
+commit b90a11b8c946356a13a42e987b16c3c64cc1288c
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun May 1 14:09:29 2022 +0200
+
+    basculement du chat de lobby a game interface
+
+commit 0865f04b7dc141588e90773d4ec86206b60b440c
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun May 1 13:32:02 2022 +0200
+
+    Chat interface new
+
+commit 3ce0ae0a769def2039519614251e9c94f18da5cf
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 29 17:39:34 2022 +0200
+
+    Change text on sign up button
+
+commit ee14025813de85e4f54244eefb62e300baa21e3d
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 29 17:00:22 2022 +0200
+
+    Correction scene log in
+
+commit 246ef8df7807e644a68411cc1254dc396a2d7514
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 28 18:28:38 2022 +0200
+
+     Correction warnings'
+
+commit d187ea148aa80eb3cf791713782c6b9e3e4841da
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 28 16:30:13 2022 +0200
+
+    Suppression des script pick.cs et barre qui snt maintenant dans GameInterfaceUi.cs
+
+commit 8a337ce33ccd3da3915ce597143671870333a6ec
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 28 16:23:56 2022 +0200
+
+    Correction lancement game interface deouis le main menu
+
+commit d540da5b30bb471bb1907cea52a86f5d2f9849a8
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 27 20:21:26 2022 +0200
+
+    Bouton join serv fonctionnel
+
+commit a630578a79b53ee47463f6f2677a4cdf054430c5
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 27 19:52:57 2022 +0200
+
+    suppression scripts
+
+commit 15ac0e212c9fd6bafacdf56a7766ba103768afa6
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 27 19:49:19 2022 +0200
+
+    Lobby fonctionnel
+
+commit 196f0b880d521fb207c528d38858efdf7088858e
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 27 18:41:44 2022 +0200
+
+    changement scene
+
+commit 3a6a96e6028edc347d2a7b665e739c22f9ef9960
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 27 18:37:03 2022 +0200
+
+    lobby pete
+
+commit 800febad465054c27820a20d0aca003421eda54a
+Author: Omar El Chamaa <omarchamaalak@gmail.com>
+Date:   Tue Apr 26 15:25:31 2022 +0200
+
+    'Quelques modif sur les lobby
+
+commit 5a9e8c919b56a84576d3a34ee2ef518b50b9e597
+Author: KACHOUH Marc <marc.kachouh@etu.unistra.fr>
+Date:   Tue Apr 26 15:15:35 2022 +0200
+
+    Ajout Scripts Chats
+
+commit 7ef6d8127f14963c56c3cdd485aa7b10114dffab
+Author: Omar El Chamaa <omarchamaalak@gmail.com>
+Date:   Tue Apr 26 11:19:43 2022 +0200
+
+    correction join game
+
+commit ccf95a229ca21af73350bbb266718b0e62084c52
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 24 20:36:16 2022 +0200
+
+     ajout de print divers + petite correc
+
+commit c29c5203f6671ffdf26070fc17a5869f685f0a7f
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Sun Apr 24 11:59:51 2022 +0200
+
+    authentification complete
+
+commit 2ef99a22a3f83aa21c4bcc23164652d652ed0bc8
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 23 09:03:49 2022 +0200
+
+    suppression clones
+
+commit f77f73e397f233fe8a56daf034f69cc8cf88a916
+Merge: f68e6537 7179c9c5
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Wed Apr 20 17:40:21 2022 +0200
+
+    Merge branch 'lobby' of git.unistra.fr:nathan.henry/projet-integrateur into lobby
+
+commit f68e65371c0994472d241f3eb4cd9ef4b94ff975
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Wed Apr 20 17:39:50 2022 +0200
+
+    utilisation de password hash
+
+commit 7179c9c5fdd437b192737532799a08e9f294d4b5
+Author: KACHOUH Marc <marc.kachouh@etu.unistra.fr>
+Date:   Tue Apr 19 16:01:38 2022 +0200
+
+    Correction Bugs Lobby + Ajout des Prefabs de Joueurs
+
+commit 52f65227112d01eb7d9971674ba615f32e3b7315
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Apr 18 20:03:48 2022 +0200
+
+    correction sur la scene Canvas Lobby
+
+commit 0b7590cb5bf31f3fc51a7d63cc2ab9247ba38720
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 14:01:48 2022 +0200
+
+    fix
+
+commit aee0d9c572c5353f87c1dd166f429d63bd8d35f7
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 13:40:46 2022 +0200
+
+    fix button
+
+commit 8b56889da0c7df75bf91116a0246bbd8b1bee04e
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 13:33:06 2022 +0200
+
+    deleted files
+
+commit 5ce937bab310a2df3b93fc05a6ce04e24d2d0eb2
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 13:31:13 2022 +0200
+
+    merge
+
+commit 8fc3d0a2752b0368080670aa2f1dc676f5779e14
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 13:13:08 2022 +0200
+
+    merge conflict
+
+commit 5efe9dfca36ea067f211f26d34e62c2210e93e42
+Merge: 049d08a3 c8cbea9c
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 12:59:21 2022 +0200
+
+    Merge branch 'lobby' of git.unistra.fr:nathan.henry/projet-integrateur into lobby
+
+commit 049d08a3fb1697c43fbd03502649d107af763ade
+Merge: 29e6d5bc 36e86746
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 12:59:06 2022 +0200
+
+    merge scene
+
+commit c8cbea9c0fec0e07d012344c5ec4fdce79f33809
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Apr 18 12:52:04 2022 +0200
+
+     Push pour anthony
+
+commit 29e6d5bc8c0bb935a3e10feb10399d3ab5d50c5c
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Apr 18 12:51:33 2022 +0200
+
+    merge
+
+commit 36e8674644a70149be7811c41f27d99c2196a0fd
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Apr 18 11:50:53 2022 +0200
+
+     Corrections erreurs
+
+commit 6ec530580958a2127a09dac96bd1ed3b8253f2ce
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 17 22:33:40 2022 +0200
+
+    Petites corrections, les scripts Creating GAme, Joining et Lobbyscript sont inutiles
+
+commit 31a2b4148a98ec0db466b7c9b2b0cea9db07913c
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 17 22:19:19 2022 +0200
+
+    Changements majeure architechture scenes, fusion dans la scene lobby qui se lancera des le sign in
+
+commit d1d87dc1fc0ae73a4700e0e136322c14d1b64f1a
+Merge: be6ea861 51e6c057
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Sun Apr 17 14:53:02 2022 +0200
+
+    Merge branch 'lobby' of git.unistra.fr:nathan.henry/projet-integrateur into lobby
+
+commit be6ea861310e79436567120eca519a6a319d7726
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Sun Apr 17 14:52:46 2022 +0200
+
+    fix scenes avec fonction flechage nb players
+
+commit 51e6c05770e83562505c98aa407b7fa514373782
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 17 11:41:19 2022 +0200
+
+    fix bug connection client
+
+commit 0bd7255f5bfa861413c14d6053d4dcd96f4bbafe
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 22:24:30 2022 +0200
+
+     petite modif scipt multiplayer.cs
+
+commit e1301411646ff47b60fe165dbb2f96d200528fd0
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 22:15:03 2022 +0200
+
+    Qulques modifs sur les scenes
+
+commit c1020f998eeca1510306c3eda1810ff637b745b9
+Author: KACHOUH Marc <marc.kachouh@etu.unistra.fr>
+Date:   Sat Apr 16 20:34:17 2022 +0200
+
+    Ajout Disconnect + Correction Bug
+
+commit d3dcdedac044ae00db9ee5402a92ab4d94df6f06
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 19:36:35 2022 +0200
+
+    oubli saave scene'
+
+commit dfcf35782791482f37a6be7c3db0b5c7805bc480
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 19:29:56 2022 +0200
+
+    Petites changements sur les scenes, push pour marc
+
+commit b8c407e8f0bc6fb57768440640ac0496f2ba8cab
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 19:08:50 2022 +0200
+
+     petite correction , suppression net manager de multi player script
+
+commit 43275e486fa1b34a12ba6b80007275bda074d7d7
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 19:04:04 2022 +0200
+
+     Changements + ajouts script autoconnect
+
+commit cd70c7f00fd582744b3e7e7afa8ea479e23caa5e
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Apr 16 10:09:12 2022 +0200
+
+    Correction scene Creating Game
+
+commit 710ed24a7eba01e6790b252d313d323e19c2b9e1
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 15 21:57:08 2022 +0200
+
+    Suppression Clone
+
+commit 1106f4899f0901271de5d6430ae578319704b2c1
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 15 21:55:54 2022 +0200
+
+    Correction Warning
+
+commit d32c5eebf1abcdd5a2eeb669b0de47afe6810e5b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 15 21:53:37 2022 +0200
+
+    Correction start Client
+
+commit d9a125001fbe8c89fc0711a636e52f558891bbc9
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 15 21:49:49 2022 +0200
+
+    lancement du client sans hud
+
+commit 8a349010860ec07f9b743a056cb863c365782a57
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 15 17:01:00 2022 +0200
+
+    Fix erreurs compilation
+
+commit 899c38340795d944703fb1636bc9945cdc945310
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 14 19:40:28 2022 +0200
+
+    Ajout fonction join host begin game
+
+commit 3df59dc13cbdb4a2920a4315585ef43e0993033b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 14 14:24:07 2022 +0200
+
+     Petites modifs et ajouts
+
+commit 40c0fcd11b0e878c533270973926a25f58bfa90a
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 14 12:28:06 2022 +0200
+
+    Scene Creating semi-Fonctionelle
+
+commit fdcfb50b7667d489767637e7af5504558afa0111
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 14 12:03:12 2022 +0200
+
+    Correction scenes
+
+commit 876fbb2c6cdf1e92a5070dc599dcfb3b3785a9ff
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 14 10:16:02 2022 +0200
+
+     corrections scenes
+
+commit 8b78f64d50b38e76ff0e6e9f4a2884c1207c4d1b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 13 20:47:23 2022 +0200
+
+     qlqs petits ajouts au scenes
+
+commit 58c70299a638a1509868af18a5613a06c7275a52
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Apr 13 20:38:47 2022 +0200
+
+    fix bug scene lobby
+
+commit 4a0b07bcd7397019d37df81f25f202fb2426724e
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Tue Apr 12 17:44:00 2022 +0200
+
+    Avancements
+
+commit c726853fe5e92633b69ca82fe939badae1b0543f
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Tue Apr 12 14:59:06 2022 +0200
+
+     Corrections Bugs
+
+commit bd5f916aacb0cdea908f8edf5353a57e5bbd52f5
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 10 13:07:36 2022 +0200
+
+    Qlqs avacement
+
+commit 4b1899594548dc9db0138162175df640191f7a75
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 10 12:26:38 2022 +0200
+
+    Ajout Match Interest Management a network Manager
+
+commit 62bf74a453c800c449661d71f735f9c93e15c54d
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 10 12:23:37 2022 +0200
+
+    ajout netwrok match component au joeur et tuiles
+
+commit cd2622a4e747e990a0753b6e58cdd19a4f490a27
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 10 12:16:35 2022 +0200
+
+    correction erreur list PlayerManager
+
+commit 8253b31bd9da931a9e78229ddbbeda1680583fcc
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 10 11:32:19 2022 +0200
+
+    Quelques avancements
+
+commit 9a35af32fe4d01439fc2ccdc22f84629b00dd36b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 8 15:54:44 2022 +0200
+
+    Travail avec Marc sur Les Lobbys
+
+commit f7b6ba5c2c3ebdce0dcdc282575ec9fc4a04d7b9
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Apr 8 11:53:18 2022 +0200
+
+    Ajout Network room manager RoomManager
+
+commit 9557cb8f75ac499012fae1661f0d73509f4c9ea5
+Author: KACHOUH Marc <marc.kachouh@etu.unistra.fr>
+Date:   Fri Apr 8 11:49:03 2022 +0200
+
+    Modifications des scenes
+
+commit a9536c06e99bb3421141604256af0da58eb7ac08
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 7 17:02:29 2022 +0200
+
+    Avancement dans les scenes Creating et joining
+
+commit 0a18db5e6ed637a17c7352e426c923bd4b19bfa4
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 7 14:56:40 2022 +0200
+
+    Scene Create or join fini
+
+commit d414613ba008d073c6859ba841c78cf127dff60b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 7 14:35:55 2022 +0200
+
+    reorganisation fichiers
+
+commit 1c746cc67cbb436f04a1f0d136b2372fc28ee236
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 7 14:32:50 2022 +0200
+
+     Fix package Mirror
+
+commit 4bce69ac14bde5abe8cb90c91569c2f0c96bd12a
+Merge: 78dbebe5 d2e1ac89
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Apr 7 14:10:08 2022 +0200
+
+    Merge
+
+commit 78dbebe57e95ef77b7e4edf983b652c5f76f9da2
+Author: KACHOUH Marc <marc.kachouh@etu.unistra.fr>
+Date:   Wed Apr 6 19:27:24 2022 +0200
+
+    lobby'
+
+commit 4533b9a465e36e17ee6c04ca3f87e158bc5a3690
+Author: Omar El Chamaa <omarchamaalak@gmail.com>
+Date:   Tue Apr 5 16:28:12 2022 +0200
+
+    Lobby
+
+commit d2e1ac8919885df78d5119687856f6286a953b48
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Apr 5 15:18:36 2022 +0200
+
+    Reverting to commit where it worked
+
+commit 478736279a4351d89a3990c6eb4d9bd3b81c6e29
+Merge: ffce7210 f8117fa8
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Apr 5 14:11:04 2022 +0200
+
+    merge tour par tour sur alpha merge
+
+commit 9e1945fc4c18c855f31543c2524f94a52b4f6309
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Tue Apr 5 13:00:04 2022 +0200
+
+    fix scenes + resolution
+
+commit ffce72105b3d5450fff427c48e15d1adb5d802a4
+Merge: 91167480 d4bb9eda
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Apr 5 00:35:46 2022 +0200
+
+    merge conflicts createmeeple et move
+
+commit 91167480f2d810725801b421dd302f5d966251c2
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Apr 5 00:32:43 2022 +0200
+
+    synchronisation des meeples et des étoiles en mode network !
+
+commit f8117fa8f9d07c99f1669a907f92eccc3bb18f01
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Mon Apr 4 01:03:51 2022 +0200
+
+    terminer tour par tour (reste timer)
+
+commit d4bb9eda1c472681df4e48a639fe87b02815fddd
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Apr 3 20:39:26 2022 +0200
+
+    Ajout Net Behaviour move
+
+commit 3401336897dd70cdb41d9215291343d054df4add
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Sun Apr 3 18:27:30 2022 +0200
+
+    première version de tour par tour
+
+commit fb546954ba6fe340adf835bd535beb952ab08f81
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Sun Apr 3 18:27:01 2022 +0200
+
+    première version de tour par tour
+
+commit 5e98b46ec540e06ec3b210a9b66f52948b414b36
+Author: HABAS ACHRAF <achraf.habas@etu.unistra.fr>
+Date:   Sun Apr 3 16:58:30 2022 +0200
+
+    Bouton fixed
+
+commit a3d606ac5045ec0b3e39c36f62a203578fa624f3
+Author: HABAS ACHRAF <achraf.habas@etu.unistra.fr>
+Date:   Sun Apr 3 16:47:12 2022 +0200
+
+    Ajout script bouton et id pr chaque joueur
+
+commit 72a20166bb563a1d091d874d91a33bc3b074f5d8
+Author: HABAS ACHRAF <achraf.habas@etu.unistra.fr>
+Date:   Sat Apr 2 16:45:36 2022 +0200
+
+    Commit initial branche tour
+
+commit d00f660213ed6a717925beed98ea52d5674c0f46
+Author: florentin <pglpglink@gmail.com>
+Date:   Sat Apr 2 13:00:42 2022 +0200
+
+    Affichage des Meeples fonctionnels et clignotage des étoiles fonctionnels
+
+commit 411b7656e5b7f34ff869ece27d2a6e43ed2257f3
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Mar 30 19:34:10 2022 +0200
+
+    debut implementation Spawn meeple multi
+
+commit d8ea2d74d04e582df7a7e584c9a5015b1b9d8d24
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Wed Mar 30 11:54:48 2022 +0200
+
+    Ajout net id meeple + net behaviour A Finir
+
+commit 5878c5d7a78b48b6f16f79c6a25e593ff9b209f4
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Wed Mar 30 02:43:50 2022 +0200
+
+    régler le problème de poser une tuile sur une autre
+
+commit 971f144ad13d52f4e7e4978c832a876830bd22c6
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Wed Mar 30 01:15:20 2022 +0200
+
+    Constraints résolue, prêt à être merge sur develop
+
+commit e343ad1c11b02ed446aad89a185f73dff8cd9f80
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Tue Mar 29 23:14:35 2022 +0200
+
+    Fix problème tile_type + constraints a regler tout de même
+
+commit 56f78d91b9ae88ef14e53a6990e1eb8645dd73ae
+Author: Omar El Chamaa <omarchamaalak@gmail.com>
+Date:   Tue Mar 29 16:34:42 2022 +0200
+
+    Le gros merge
+
+commit 30d5c44e362d96ce9824b87b4fb15d8b4fc678f4
+Merge: 9c2c1948 45775473
+Author: Omar El Chamaa <omarchamaalak@gmail.com>
+Date:   Tue Mar 29 15:18:32 2022 +0200
+
+    merge resolu'
+
+commit 85517c37f8c4a2b57c96fdcc3ecc3defd0ca1559
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Tue Mar 29 07:41:16 2022 +0200
+
+    Ajout réponse unity depuis serveur web, mdp hash+salt coté serveur, + mise en place réponse type à décoder
+
+commit 457754736f24cc232397e7274155bd4a045c37e4
+Author: florentin <pglpglink@gmail.com>
+Date:   Mon Mar 28 16:18:24 2022 +0200
+
+    essai merge avec prefabs
+
+commit 5d8c50498e2394c5bd07f499321b7bfd21a2a63a
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Mar 28 18:14:50 2022 +0200
+
+    Reverting to the state of the project at b05189e5a651011e9725c16a978b95bc4378d1d4
+
+commit 3e8f97b84bf0b05b30a36a98e9e2ab353c9a93cc
+Merge: a1ec3ea6 63e396a2
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Mar 28 18:04:46 2022 +0200
+
+    Merge branch 'develop' of https://git.unistra.fr/nathan.henry/projet-integrateur into develop
+
+commit a1ec3ea608f2999e73dbe8566643257a4e310c5d
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Mar 28 18:02:32 2022 +0200
+
+    Revert "Recomment de Move.cs"
+    
+    This reverts commit b05189e5a651011e9725c16a978b95bc4378d1d4.
+    
+    revert recomment move
+
+commit 63e396a2556d886fa151b922b0b5de230e29bf8f
+Merge: 674ca257 b05189e5
+Author: florentin <pglpglink@gmail.com>
+Date:   Mon Mar 28 15:58:46 2022 +0200
+
+    probleme de merge
+
+commit 674ca257454dee7ddc8cc22ee56b4fdf83200945
+Author: florentin <pglpglink@gmail.com>
+Date:   Mon Mar 28 15:55:17 2022 +0200
+
+    test merge d'un prefab
+
+commit b05189e5a651011e9725c16a978b95bc4378d1d4
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Sun Mar 27 22:51:00 2022 +0200
+
+    Recomment de Move.cs
+
+commit 5a159e3ec3dc4363bd646322c448e1238ac85aee
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Sun Mar 27 22:45:57 2022 +0200
+
+    Remise en place de la création des meeples dans Move.cs
+
+commit 01db406619ad1f0c4b9282d83919a207167e045c
+Merge: 48ad3bec e8f53600
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Sun Mar 27 22:29:47 2022 +0200
+
+    fix conflict
+
+commit 48ad3becc527035ffe6b170bc91a9b552c522ffd
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Sun Mar 27 22:26:18 2022 +0200
+
+    Fix Move.cs
+
+commit e8f5360062ac19079e5c9f06bab253bb159fdbce
+Merge: 55f49925 560f641f
+Author: Guillem <guillem.legland@etu.unistra.fr>
+Date:   Sun Mar 27 22:19:57 2022 +0200
+
+    ajout de abbaye.cs modification mineur de Constraints
+
+commit 55f499259cd713aff621ce5e26873b0468191a1b
+Author: Guillem <guillem.legland@etu.unistra.fr>
+Date:   Sun Mar 27 22:07:23 2022 +0200
+
+    ajout de abbaye.cs modification mineur de Conctraint et move
+
+commit 560f641f6df5b92f9421caec0b0c5c801bb2821a
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Sun Mar 27 19:42:52 2022 +0200
+
+    Format + Commentaires de tous les scripts de front
+
+commit 9c2c1948cdd7739dbcdddb59c12447b0083c4ea4
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sun Mar 27 14:14:00 2022 +0200
+
+    ajout Liste de joueur Player manager
+
+commit 17b0c3e749611e384f47f9260d2c31e235003959
+Author: florentin <pglpglink@gmail.com>
+Date:   Sat Mar 26 20:24:15 2022 +0100
+
+    CA MARCHE les types de tuile se font bien à l'instanciation
+
+commit e9668e590ab5d1c27c994b22e5bd65505c75d449
+Author: florentin <pglpglink@gmail.com>
+Date:   Sat Mar 26 20:07:56 2022 +0100
+
+    Client toujours qui se déconnecte
+
+commit 8c26fa738f14ae108d67329e79392a1ee7952e7e
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Sat Mar 26 19:06:58 2022 +0100
+
+    Implémentation terminée front : MEEPLES
+
+commit 553b0d17dcfbd8e52b44795a1aa2b09f31b6c506
+Author: florentin <pglpglink@gmail.com>
+Date:   Sat Mar 26 18:28:13 2022 +0100
+
+    Correction erreurs de compilation
+
+commit 79f15df1d7ee962f3cd1de4e69ce6775177fb3d9
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Mar 26 19:13:09 2022 +0100
+
+    CCreation prefab tyle type
+
+commit f0521154cba86a75f0e2a378061ee6fc155f47c9
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Mar 26 18:52:55 2022 +0100
+
+    Instantiation tuiles Correcte
+
+commit 9c49a4effc6c2501fefb5b7ce883cf1631c31dfe
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Mar 26 18:26:31 2022 +0100
+
+    ajout netId Temp
+
+commit e9cd324a79eb6712cbbd53ae3e9e176aa80d7360
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Mar 26 18:05:58 2022 +0100
+
+    Supp network identity clock
+
+commit 158095e9716aec161151653cb6e67c5096992450
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Sat Mar 26 15:27:36 2022 +0100
+
+    Problème de raycast résolu
+
+commit d864225bd71dfb96889f75f565ee3944409622bc
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Sat Mar 26 00:54:49 2022 +0100
+
+    ajout d'un tag
+
+commit 2ace030a9fa873ddd055d7bb05f6819da6c824de
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Sat Mar 26 00:54:07 2022 +0100
+
+    Rayast problem *angry*
+
+commit e0d38bb815e5e93b0320ab278f88cd4a5825489b
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Fri Mar 25 22:19:58 2022 +0100
+
+    Fix bug étoile s'affichant pas
+
+commit 4ef534f6a6e6757ad9c4a1a9e3fbc9ee51543fcb
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Fri Mar 25 20:50:19 2022 +0100
+
+    Test étoile s'affichant pas en haut a gauche
+
+commit 2f541cfec477c660c6e5a8a3f8c510d41254049a
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Fri Mar 25 20:18:44 2022 +0100
+
+    régler quelques erreurs
+
+commit ee5a34460ef448bba70c4f4609a72edede2a98ee
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Mar 25 17:14:30 2022 +0100
+
+    Qlqs petites corrections
+
+commit dba03d8b41ac4b80717301f586a7b0564fe560b6
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 19:31:54 2022 +0100
+
+    Petit changement
+
+commit ba1c3938411b08ac59e781a9c729b210005dc2d2
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 19:24:30 2022 +0100
+
+    supp script inutile
+
+commit f61f49ff55b04641c4d793095d0b7e0a50bdffcd
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 19:00:30 2022 +0100
+
+    ajout net transfrom temp
+
+commit 386f98461fbf95874cc267a36dbd58776e39894e
+Merge: 7db5bbbc cb8e6c34
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 18:55:08 2022 +0100
+
+    Qelques corrections
+
+commit 7db5bbbcdcf9c0d1a22eae23449c0745a1f43898
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 18:54:06 2022 +0100
+
+    Qelques corrections
+
+commit cb8e6c34db179e275bc74cd989d2ce5b30bbc1e9
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Thu Mar 24 18:52:17 2022 +0100
+
+    régler minimapscript error
+
+commit f4e42abbdd2c0e4cf5285c608ce72e5b22cca33b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 18:12:46 2022 +0100
+
+    ajout meta tile manager
+
+commit 01d959a204fcbb0057113f5b7e7386f2d83711c9
+Author: EL-CHAMAA OMAR <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 16:16:42 2022 +0000
+
+    Update PlayerManager.cs
+
+commit 9b219465a1fb7d1bac7bee2ae9864d4342dc90f2
+Author: EL-CHAMAA OMAR <chamaael@etu.unistra.fr>
+Date:   Thu Mar 24 16:14:35 2022 +0000
+
+    Add new file TileManager
+
+commit c3832836909f7b193154e34ae3ac0fba4e43c15d
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 23 20:22:41 2022 +0100
+
+    Clignotement de l'étoile réussi
+
+commit 77d6036791e32fb6220c13e52d397f4a4cae9056
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 23 19:33:28 2022 +0100
+
+    fix rotatez when accessdenied
+
+commit 8a0dd183ca318f6b7e79dac326e5c7f0288cfd77
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 23 19:12:50 2022 +0100
+
+    Clone de stars avec alignement réussi
+
+commit 9aa6391f86cf15467c9a9c6fb625b8c7e23d1140
+Merge: d935720d 0f69c233
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 22 15:33:18 2022 +0100
+
+    Conflict résolu
+
+commit 0f69c233f3c6ed4f98984e1a0aba1a31d8b91c4c
+Author: KACHOUH Marc <marc.kachouh@etu.unistra.fr>
+Date:   Tue Mar 22 14:52:13 2022 +0100
+
+    Deplacement de la barre de progression
+
+commit d935720de0420cdd7d915c133fc57c96d6b2abc8
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 22 14:01:01 2022 +0100
+
+    Scène Unity
+
+commit 2c41ac99be457b56787b52b745273510e360108a
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 22 13:47:46 2022 +0100
+
+    alignement réussi
+
+commit 28882a65969b2003d1a27a3f72189f70342243e7
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Tue Mar 22 12:53:50 2022 +0100
+
+    debut fonctionnalité check id email pass, + ajout scene insription unity, reponse serveur web unity pas encore fait, début envoi trames sous forme JWT
+
+commit 2c402d20057b188ae62a9889d5b4bacee4ce3081
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Mar 21 23:04:42 2022 +0100
+
+    creation serveur web restAPI nodejs avec mongoDB et début authentification login + motdepasse
+
+commit bbb4511c1fad4380c1b2898bf6846e8003526a8d
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Mon Mar 21 14:35:55 2022 +0100
+
+    init web server + rest api node js mongodb
+
+commit e5494f3accc9fab33ec046cc97c3303d832c58ee
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 16 09:32:08 2022 +0100
+
+    Meeple temporaire : sphere, alignement de ce meeple %33
+
+commit 3eea3fe3ec151218cb1d41d5bdcab6c4b744033f
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Tue Mar 15 23:05:44 2022 +0100
+
+    Fix bug spam access denied
+
+commit d620303eab7b2fb7a4e39a407a65203a510c9c64
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Tue Mar 15 16:13:28 2022 +0100
+
+    régler le prob de poser une tuile sur une autre
+
+commit be9ac9b1c457db7af978f4b5a104d999b753f08b
+Merge: 2359723c 7fa20ae2
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 15 15:14:43 2022 +0100
+
+    Merge branch 'develop' of https://git.unistra.fr/nathan.henry/projet-integrateur into develop
+
+commit 2359723c0d3f5d384c872f832f05e7269b6cd4e9
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 15 15:14:17 2022 +0100
+
+    Ajout de la barre de timer avec couleur qui change progressivement
+
+commit 4d1b6fcf550dfe875a13d0ff35257549e2e484a4
+Author: Omar El Chamaa <omarchamaalak@gmail.com>
+Date:   Tue Mar 15 14:44:33 2022 +0100
+
+    Reorganisation Fichiers
+
+commit 7fa20ae249f53574be65fd583dd54ee177c4472f
+Author: Guillem <guillem.legland@etu.unistra.fr>
+Date:   Tue Mar 15 14:03:43 2022 +0100
+
+    ajout contrainte tuile adjacente
+
+commit 1868e53bcd00ce78dfccccd5b4e6716173a8477e
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Mon Mar 14 19:33:47 2022 +0100
+
+    Avancement Mineur su Player Manager Script
+
+commit fcc9317d7c7043663562f1640c10cb9f1f8446e5
+Author: komlan godwin amegah <komlan-godwin.amegah@etu.unistra.fr>
+Date:   Sun Mar 13 14:36:40 2022 +0100
+
+    Correction d'un bugs lié à l'algo d'Anas (Génération aléatoire)
+    
+    - modification de la class tile_type
+    - légère modif de dans la boucle pour prendre en compte la
+      décrémentation du nbr de tuile restant propre à chaque tuile.
+
+commit cb886bc38af5947ca4062816305686935ab11480
+Author: florentin <pglpglink@gmail.com>
+Date:   Sun Mar 13 14:06:12 2022 +0100
+
+    Network Behaviour sur PlayerManager
+
+commit ce12d69788fc889eb10cefca32c283c732a9038c
+Author: florentin <pglpglink@gmail.com>
+Date:   Sun Mar 13 14:04:30 2022 +0100
+
+    ajout des prefabs dans le dossier Prefabs/
+
+commit ec598999375eabb3a51ba2c9ddd173086fbfe26a
+Author: florentin <pglpglink@gmail.com>
+Date:   Sun Mar 13 11:04:12 2022 +0100
+
+    Ajout de Prefabs nécessaires pour le network + NetworkManager + Scripts/PlayerManager
+
+commit 79763737848d020337ab5b498916cdade1ac7015
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Sat Mar 12 14:24:23 2022 +0100
+
+    ajout code fonctionnel pour changer de scene
+
+commit f65d7d102cc03e3c492fc6aee5d4e0a740cdc87a
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Sat Mar 12 11:48:10 2022 +0100
+
+    ajout nouvelle police, normalisation des menus
+
+commit 918aaf99f265d032918c7fcf9e1f702b3762e38a
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Mar 12 11:45:55 2022 +0100
+
+    Corrections indentations + ajout tuiles networked
+
+commit 1d28aa9e1279fa4955b06a7fdd9d2059aa5f3e09
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Sat Mar 12 11:23:07 2022 +0100
+
+    Modif networkBehaviour countdown
+
+commit 23789cd53c8dc2e43ccd19f9f6b2daf92c479ce4
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Sat Mar 12 11:09:17 2022 +0100
+
+    réarrangement de input et box arrondies, ajout menu profile
+
+commit 4d2ba754b712370fbe094304b42c063c7e7b0a20
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Sat Mar 12 04:03:51 2022 +0100
+
+    copie des attributs dans les tuiles et fixer les bugs (rotation left and right, bug sur les bordures,...)
+
+commit 838701b4fc36f108c34092db2272fb0526f8076b
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Mar 11 20:23:51 2022 +0100
+
+    Grille qui saffiche au lancement du serveur oubli save encore
+
+commit b7ea7e12310aa8b5fd6e34ac302100dec8436dd2
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Mar 11 20:22:41 2022 +0100
+
+    Grille qui saffiche au lancement du serveur
+
+commit b603a57766f8cce5080bb730796bc2054a163de8
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Mar 11 18:56:19 2022 +0100
+
+    debut implementation Network manager (oubli save)
+
+commit 9a4301ff68a4f40fda73623abf61c64fd0f18f77
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Mar 11 18:54:46 2022 +0100
+
+    debut implementation Network manager
+
+commit f393f808f5ac63b7a02b831210a8b63dae3166e9
+Author: Rana Abou saab <chamaael@etu.unistra.fr>
+Date:   Fri Mar 11 17:52:48 2022 +0100
+
+    ajout network manager
+
+commit 33fad53968b790f162a42d7ad1288753b019c72d
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Fri Mar 11 17:48:46 2022 +0100
+
+    creation & merge de branche GameMenus
+
+commit fc83104ec20cca07526109e7abe9bd81c1ce6776
+Author: Anthony <alpergunes@hotmail.fr>
+Date:   Tue Mar 8 15:57:19 2022 +0100
+
+    Ajouts menus, login front only, session local/mult
+
+commit 6f6a5ce4b4ccaf59f10a76d9f5f0f9144ea11013
+Author: HABAS ACHRAF <achraf.habas@etu.unistra.fr>
+Date:   Fri Mar 11 02:47:36 2022 +0100
+
+    Ajout et configuration despackages mirror et ParrelSync
+
+commit 31ec230da1e9fc08f23bafd83f97df8e84a923cd
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 9 09:16:48 2022 +0100
+
+    rajout de la scène unity
+
+commit bfda07ad7628d78acd21d4eac1e1bad98c7b6477
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 9 09:16:04 2022 +0100
+
+    Changement du string de test dans la notif
+
+commit 32952640aaaf4b065d6a0e87749389c1eb1f187a
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Wed Mar 9 09:13:36 2022 +0100
+
+    Système de notification créer, utiliser la fonction pushNotif(string) pour afficher une notif en bas de l'écran
+
+commit 9731c097f6a5a1ddc2b03915cc09f0a42af46b12
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 16:32:29 2022 +0100
+
+    Pick mouseOn
+
+commit d0a47a9737c38295f991ebfe5281bd85e878b616
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 15:30:34 2022 +0100
+
+    clean dossier .vscode
+
+commit f37ca62222081fb876893852814dc0dd8827c148
+Merge: 24350b68 6f1ca6a8
+Author: martin.froehly <martin.froehly@etu.unistra.fr>
+Date:   Tue Mar 8 13:30:39 2022 +0100
+
+    Merge branch 'timeout' into develop
+
+commit 6f1ca6a80924612c984cd8bc428e498aae3f9517
+Author: martin.froehly <martin.froehly@etu.unistra.fr>
+Date:   Tue Mar 8 13:18:44 2022 +0100
+
+    terminé
+
+commit 24350b68022d2336d9fe4a41e5943d4c168d4e36
+Author: martin.froehly <martin.froehly@etu.unistra.fr>
+Date:   Tue Mar 8 13:16:57 2022 +0100
+
+    Modifs valeurs AcessDenied
+
+commit 44d02886427aa24929c2e5ed3f01581e829d497a
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 14:13:02 2022 +0100
+
+    refresh scene unity
+
+commit 22db00d5416263bf8018afa52d3f9533f7a6d38c
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 14:07:05 2022 +0100
+
+    Implémentation terminée de l'animation quand on ne peut pas poserla tuile
+
+commit c4dde2ced99e3766431b0f6ec7526c6f3e7e836b
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 09:34:25 2022 +0100
+
+    Timer réussi, reste a faire la rotation z pour dire non
+
+commit 8f9b81a382c119498817bd69cfa83e0b05a339cc
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 09:05:47 2022 +0100
+
+    Supression de la coroutine qui n'est pas efficace dans un update
+
+commit 66210305dff3b4d45fbf527f01d7d2156c752ad5
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 08:42:18 2022 +0100
+
+    Changement de pick, pour que le script reste sur la pièce en mouvement
+
+commit 9be6d65a1b7e7b659e52672d07a4621a08482d82
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Mar 8 08:31:45 2022 +0100
+
+    Semi-fonctionnel, reste a résoudre le fiat de non spam
+
+commit c408c67196d3680efe87e3236d995ecc1d2d2e5f
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Tue Mar 8 01:16:49 2022 +0100
+
+    Real Clean
+
+commit 6711b8b640627e7a004677a290de8d0a4344f3e6
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Tue Mar 8 01:15:24 2022 +0100
+
+    Clean meta + asynchrone semi fonctionnel
+
+commit 14797bdf18a5a19b7b348d1bd414a76053e92050
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Mon Mar 7 14:15:43 2022 +0100
+
+    ajout des fichiers manquants
+
+commit f5453097764e0c7f04078de51c6b7aa44964aa11
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Mon Mar 7 14:15:14 2022 +0100
+
+    Changement de materiel réussi
+
+commit a7669688f716d7a965794a6e6e164d0bcff5a2e8
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Mon Mar 7 11:53:35 2022 +0100
+
+    Array to List
+
+commit 935fe68da01c7957b79e8a83923cf6b400b33a23
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Mon Mar 7 11:34:18 2022 +0100
+
+    Récupération des matériaux réussie
+
+commit 2871ae4db0adca1cecbd4ff09e4229adcb95a2ca
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Mon Mar 7 09:01:53 2022 +0100
+
+    Changement de cube et du matériel
+
+commit 15cb96088bc7df1afbd9b7afddfb6a28edb741cf
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Sat Mar 5 00:20:47 2022 +0100
+
+    Ajout de la notion d'abstaction pour régler un probleme lié au variable statique
+
+commit 014c8691ce0db3029c32dd491c1262e204600193
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Fri Mar 4 23:34:47 2022 +0100
+
+    supprimer tuile, utilisation de l'heritage et d'autre fonction pour minimiser le code pick.cs
+
+commit 1f5c7837cc2b6af73e23ccc73078f2859650987a
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Fri Mar 4 18:25:09 2022 +0100
+
+    Correction d'une erreur au niveau de switch
+
+commit 23b2995eb5cec6c26068a45e8e3ca0f022e99418
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Fri Mar 4 16:11:42 2022 +0100
+
+    modifier le type de nbrtuile en static et sa méthode d'appel en pick.cs
+
+commit 31e337784f381af39f38eacfded414b400f737c3
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Fri Mar 4 09:29:20 2022 +0100
+
+    petite modification dans la fonction random et default switch pour que le programme quitte quand il y a plus de tuile
+
+commit 124967d94f30a41037907edd14517386759aace4
+Author: haoud <anas.9haoud@gmail.com>
+Date:   Thu Mar 3 02:12:57 2022 +0100
+
+    generation aleatoire de tuile + decrementer un compteur pour les tuiles placées + ajout addComponant pour ajout aleatoire des tuiles
+
+commit 66e518bd40a0a1ff3cc0146317ae1049c02ae5df
+Author: martin.froehly <martin.froehly@etu.unistra.fr>
+Date:   Tue Mar 1 15:00:52 2022 +0100
+
+    Modification de la scène, ajout du texte
+
+commit f921bd8eb0c0a1b7020529ee8fc596495b29ff5b
+Author: martin.froehly <martin.froehly@etu.unistra.fr>
+Date:   Tue Mar 1 14:49:55 2022 +0100
+
+    Création du fichier CountdownScript.cs
+
+commit bada26d3d3f428dcf6f21f305fb57e905497edd2
+Author: Guillem <guillem.legland@etu.unistra.fr>
+Date:   Tue Mar 1 14:17:13 2022 +0100
+
+    ajout de l'enum + types de terrain
+
+commit 8c4d710686255aa026a9eb9e23fa795b7778ebad
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Tue Mar 1 01:49:00 2022 +0100
+
+    Déplacement progressif de la caméra en fonction de l'extrémité de la souris sur un bord de l'écran (idée de Nathan)
+
+commit e6dfcc1872cb6cfd6af22baed4dab8f5d9458939
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Mon Feb 28 23:48:05 2022 +0100
+
+    Transparance de la mini map lorqu'on passe le curesur dessus
+
+commit 264a4fdc4199e3a69056a202e26e0f24412cd378
+Author: Matthieu LEFEVRE <matthieu.lefevre@icloud.com>
+Date:   Mon Feb 28 22:47:07 2022 +0100
+
+    Suprression de UniGLTF qui fait des warnings dans le compilateur
+
+commit 5ebe7b768b59fb3e4a9d97e82160564f7759902b
+Author: florentin <pglpglink@gmail.com>
+Date:   Mon Feb 28 21:05:23 2022 +0100
+
+    regroupement des tuiles en plateau dans une liste fonctionnel (mrc Matthieu)
+
+commit ecdfd633c7a9044c62806f6a0126630019a74c6d
+Author: florentin <pglpglink@gmail.com>
+Date:   Mon Feb 28 20:42:07 2022 +0100
+
+    debut creation liste de tuiles formant le plateau
+
+commit bb428573c74065d4f4c3be1fdbf7280aed4392b5
+Author: florentin <pglpglink@gmail.com>
+Date:   Mon Feb 28 19:00:05 2022 +0100
+
+    ajout Board.cs
+
+commit 09337eb97ec26378318ba1c16a7e5ecbde79b387
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Fri Feb 25 09:46:15 2022 +0100
+
+    Implémentation du script Constraints.cs de Florentin terminée
+
+commit 19f122b408f7ba7d9ddbd481a8198d1b6c5d0199
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Fri Feb 25 09:25:37 2022 +0100
+
+    Inclusion du script Constraints.cs par Florentin et modification de Move.cs pour que les rotations ne s'effectuent pas quand la pièce est posée
+
+commit d07bbe097807e2bd3ac92c99dcb03be07b64d22a
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Fri Feb 25 08:56:14 2022 +0100
+
+    Déplacement des fichier tile_type_* dans le dossier WebPlayerTemplates pour que Unity compile
+
+commit 29dc96ab1b5f4a462587b09a6aa1fd570e20bd22
+Merge: d4e3b522 cece4918
+Author: Deborah Ganzitti <deborah.ganzitti@protonmaio.com>
+Date:   Tue Feb 22 17:25:08 2022 +0100
+
+    Gros problème de branche
+
+commit d4e3b522a11d9200dfa27e9e13f510079f67f73e
+Author: Deborah Ganzitti <deborah.ganzitti@protonmaio.com>
+Date:   Tue Feb 22 17:25:00 2022 +0100
+
+    Problème de branche...
+
+commit 6a70d117576fcd806539803d9cb6ea1294ffa3d6
+Author: Deborah Ganzitti <deborah.ganzitti@protonmaio.com>
+Date:   Tue Feb 22 17:01:02 2022 +0100
+
+    Ajout des types de tuile, uniquement la partie Start, à compléter si besoin
+
+commit cece491849a4525b612a206ceac11b01a8ede988
+Author: komlan godwin amegah <komlan-godwin.amegah@etu.unistra.fr>
+Date:   Tue Feb 22 15:25:55 2022 +0100
+
+    répertoire Spécification inutile sur la branche develop
+    - suppression du répertoire
+
+commit a6bc7dc933e1be267b2611f9dfff03cc6708e86a
+Author: komlan godwin amegah <komlan-godwin.amegah@etu.unistra.fr>
+Date:   Tue Feb 22 15:07:50 2022 +0100
+
+    Documentation
+    - fichier documentation .txt
+
+commit f223e6c9866ac31e597b37688f6e61786be80736
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Feb 22 14:52:21 2022 +0100
+
+    correction et ajout tuile1 et tuile_v1
+
+commit b92fcf7693980cdb453a7822509465cd0b4ccdaa
+Merge: 9de14a12 85f85371
+Author: Deborah Ganzitti <deborah.ganzitti@protonmaio.com>
+Date:   Tue Feb 22 14:16:00 2022 +0100
+
+    Merge branch 'main' of git.unistra.fr:nathan.henry/projet-integrateur into main
+
+commit 9de14a12eba30b975b498aa1aa9b66c31e4848a5
+Author: Deborah Ganzitti <deborah.ganzitti@protonmaio.com>
+Date:   Tue Feb 22 13:57:00 2022 +0100
+
+    v0.1 : mise à jour lors de la rotation de la tuile
+
+commit 85f85371b688fbd323d15ea67dbf17e708ff1272
+Merge: d05b0957 260df8dc
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Feb 22 13:45:24 2022 +0100
+
+    Merge branch 'main' of git.unistra.fr:nathan.henry/projet-integrateur
+
+commit d05b09576469c84e1d14019fe271790d1e88299e
+Author: florentin <pglpglink@gmail.com>
+Date:   Tue Feb 22 13:44:57 2022 +0100
+
+    tile sides and rotations
+
+commit 260df8dc03cc52f90152821f4c10c66975a1f439
+Author: Nathan Henry <unbelamour@gmail.com>
+Date:   Tue Feb 22 11:42:43 2022 +0100
+
+    Document de spécification
+
+commit 59c7e190e60945bc384ef0ce575bb115bb29b6a7
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Tue Feb 22 09:21:22 2022 +0100
+
+    Re-clean du projet
+
+commit 04abbae1422756eaf38bda2fc4ce23a909ee8429
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Sat Feb 19 16:54:15 2022 +0100
+
+    Clean du git avec .gitignore pour éviter d'ajouter des fichiers (nottament des gros pour les fichiers caches) inutile aux branches gits
+
+commit c042d05a6eac96273b07da422a6126d357d17a54
+Author: Matthieu LEFEVRE <matth.lfvr@gmail.com>
+Date:   Thu Feb 17 15:19:17 2022 +0100
+
+    Dépot du projet Unity sur Git (LEFEVRE Matthieu)
+
+commit baf41d821459b914f580eb22904cd51c95d66b40
+Author: HENRY NATHAN <nathan.henry@etu.unistra.fr>
+Date:   Tue Jan 18 14:57:36 2022 +0000
+
+    Initial commit
