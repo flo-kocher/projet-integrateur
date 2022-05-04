@@ -67,7 +67,6 @@ public class logIn : MonoBehaviour{
                
                 if(data.success == "true")
                 {
-                    playerName = credentials.name;
                     SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
                 }
                 else if(data.success == "false" && data.message == "Not existing user") {
