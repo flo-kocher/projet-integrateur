@@ -1,3 +1,7 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI;
+using System;
 using UnityEngine;
 using Mirror;
 
@@ -21,8 +25,9 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     public int playerNumber = 0 ;
 
     public int playerIndex;
+    public GameObject PlayerCard ; 
 
-    public spawnPlayerCard spawnPlayerCard ; 
+   // public spawnPlayerCard spawnPlayerCard ; 
 
     #region Start & Stop Callbacks
 
@@ -71,11 +76,34 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartAuthority() {
         base.OnStartAuthority();
-        spawnPlayerCard.CmdSpawnCard(index);
+        
+        CmdSpawnCard(index);
         
     }
 
-    
+    [Command(requiresAuthority = false)]
+    public void CmdSpawnCard(int index){
+        Debug.Log("spawning player card ");
+        GameObject newCard = Instantiate(PlayerCard);
+        newCard.transform.SetParent(GameObject.Find("Players").transform);
+        newCard.transform.GetChild(0).GetComponent<Text>().text = "Player" + index;
+        
+        newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
+        NetworkServer.Spawn(newCard,connectionToClient);
+        RpcShowCard(newCard);
+    }
+
+    [ClientRpc]
+    public void RpcShowCard(GameObject Card){
+        Card.SetActive(true);
+    }
+
+    public void changeColor(GameObject newCard){
+        Debug.Log("On click ready button ");
+        newCard.transform.GetChild(1).GetComponent<Image>().color =  new Color32(255,255,225,100); 
+        //this.SendReadyToBeginMessage();
+        //GetComponent<NetworkLobbyPlayer> ().SendReadyToBeginMessage ();
+    }
 
     /// <summary>
     /// This is invoked on behaviours when authority is removed.
@@ -115,7 +143,10 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     /// <param name="oldReadyState">The old readyState value</param>
     /// <param name="newReadyState">The new readyState value</param>
-   // public override void ReadyStateChanged(bool oldReadyState, bool newReadyState) { }
+    public override void ReadyStateChanged(bool oldReadyState, bool newReadyState) {
+        base.ReadyStateChanged( oldReadyState,  newReadyState) ;
+
+     }
 
     #endregion
 
