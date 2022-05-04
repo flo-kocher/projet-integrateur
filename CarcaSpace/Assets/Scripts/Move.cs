@@ -168,35 +168,17 @@ public class Move : NetworkBehaviour {
         go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;
         go.GetComponent<Constraints>().coordY = disapear.GetComponent<Constraints>().coordY;
         
-        PlayerManager.roadIsClosed_Struct(go);
-        PlayerManager.checkAllStruct();
-        PlayerManager.seeStruct();
-
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
-        // PlayerManager.townIsClosed(go);
-      
-        //PlayerManager.roadIsClosed_Struct(go);
-        //PlayerManager.checkAllStruct();
-        //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
-        /*
-        for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
-        {
-          Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
-          //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
-        }
-        */
-        //Debug.Log("test estFermante " +go.GetComponent<Constraints>().estFermante);
-        
+        // PlayerManager.roadIsClosed_Struct(go);
+        // PlayerManager.checkAllStruct();
+        // PlayerManager.seeStruct();
 
-        //Debug.Log("structure "+PlayerManager.list_of_struct_roads[k].Name+ " : "+ PlayerManager.list_of_struct_roads[k].CurrentTiles.Count+ " elems"+" tag : "+PlayerManager.list_of_struct_roads[k].tag);
-        
-
-    
-        // PlayerManager.resetVisite();
-        // PlayerManager.drawshit(go);
-        // PlayerManager.resetVisite();
+        //cloture de villes
+        PlayerManager.resetVisite();
+        PlayerManager.drawshit(go);
+        PlayerManager.resetVisite();
 
         //cloture d'abbayes
         /*
@@ -204,6 +186,7 @@ public class Move : NetworkBehaviour {
           PlayerManager.abbeyes.Add(go);
         PlayerManager.abbeyIsClose();
         */
+
         /* comptage des points
             comptage des abbays complet
               if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
