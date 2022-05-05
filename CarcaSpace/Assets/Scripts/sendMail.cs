@@ -10,7 +10,7 @@ public class sendMail : MonoBehaviour
 {
     string getRouteURI = "localhost:8080/Reset_pass";
     public Button submit;
-    TMP_InputField inputMail;
+    public TMP_InputField inputMail;
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +41,7 @@ public class sendMail : MonoBehaviour
                 Debug.Log(jsonData);
             }else{
                 Debug.Log("code sent !");
+                Debug.Log(restAPI.downloadHandler.text);
             }
         }
 

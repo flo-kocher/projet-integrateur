@@ -118,8 +118,6 @@ app.post('/Reset_pass', (request,response,next)=>{
         }
         else
         {
-            console.log("i m here");
-            
             
             // emetteur
             var smtpTransport = nodemailer.createTransport({
@@ -132,7 +130,7 @@ app.post('/Reset_pass', (request,response,next)=>{
 
             // code de vérification
             var code_verification = +Math.floor(Math.random()*10000);
-    
+            response.json(code_verification);
 
             //envoie au destinantaire
             var mailOptions = {
