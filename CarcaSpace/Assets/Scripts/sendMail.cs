@@ -5,12 +5,15 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class sendMail : MonoBehaviour
 {
     string getRouteURI = "localhost:8080/Reset_pass";
     public Button submit;
     public TMP_InputField inputMail;
+
+    public static string code_verif;
 
     // Start is called before the first frame update
     void Start()
@@ -42,6 +45,8 @@ public class sendMail : MonoBehaviour
             }else{
                 Debug.Log("code sent !");
                 Debug.Log(restAPI.downloadHandler.text);
+                code_verif = restAPI.downloadHandler.text;
+                SceneManager.LoadScene("codeVerification", LoadSceneMode.Single);
             }
         }
 
