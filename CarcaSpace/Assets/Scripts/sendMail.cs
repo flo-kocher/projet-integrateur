@@ -27,7 +27,6 @@ public class sendMail : MonoBehaviour
     public IEnumerator UploadTo(){
         Credentials credentials = new Credentials();
         credentials.mail = inputMail.text;
-        Debug.Log(credentials.mail);
         string jsonData = JsonUtility.ToJson(credentials, true);
         using(UnityWebRequest restAPI = UnityWebRequest.Put(getRouteURI, jsonData))
         {

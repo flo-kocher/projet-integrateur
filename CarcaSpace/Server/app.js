@@ -7,6 +7,7 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 const userSchema = require('./models/users')
+const nodemailer = require('nodemailer')
 
 const users = require('./models/users');
 
@@ -96,6 +97,64 @@ app.post('/logIn', async (req, res) => {
         })
     }
 });
+
+
+//RESET PASSWORD
+app.post('/Reset_pass', (request,response,next)=>{
+    var post_data = request.body;
+    
+    var mail = post_data.mail;
+    console.log(mail);
+    
+    var insertJson = {
+        'mail': mail
+    };
+    
+    //CHECK EXISTS EMAIL
+    userSchema.find({'mail':mail}).count(function(err,number){
+        if(number == 0){
+            console.log("email n'existe pas");
+            response.json("email n'existe pas");
+        }
+        else
+        {
+            console.log("i m here");
+            
+            
+            // emetteur
+            var smtpTransport = nodemailer.createTransport({
+                service: 'gmail', 
+                auth: {
+                    user: 'anas.9haoud@gmail.com',
+                    pass: 'rkvnulksxwzlumwg'
+                }
+            });
+
+            // code de vérification
+            var code_verification = +Math.floor(Math.random()*10000);
+    
+
+            //envoie au destinantaire
+            var mailOptions = {
+                from: 'anas.9haoud@gmail.com',
+                to: mail,
+                subject: 'Tourist App Password Reset',
+                text: 'Votre code de vérification: '+code_verification
+            };
+            
+            smtpTransport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            }); 
+        }
+    })
+     
+ });
+
+
 
 app.use((err, req, res) => {
     console.log(req);
