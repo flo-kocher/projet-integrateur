@@ -14,6 +14,7 @@ public class sendMail : MonoBehaviour
     public TMP_InputField inputMail;
 
     public static string code_verif;
+     public static string mail_databsase;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class sendMail : MonoBehaviour
     void PostData() => StartCoroutine(UploadTo());
 
     public IEnumerator UploadTo(){
+        mail_databsase = inputMail.text;
         Credentials credentials = new Credentials();
         credentials.mail = inputMail.text;
         string jsonData = JsonUtility.ToJson(credentials, true);

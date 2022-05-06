@@ -154,6 +154,30 @@ app.post('/Reset_pass', (request,response,next)=>{
 
 
 
+//UpdateUserPassword
+app.post('/UpdateUserPassword', (req,response,next)=>{
+ crypto.randomBytes(32, function(err, salt){
+    if(err){
+        console.log(err);
+    }
+    argon2i.hash(req.body.pass, salt)
+        .then(async (hash) => {
+            
+            var mail = req.body.mail;
+
+            console.log(mail);
+            console.log(req.body.pass);
+            userSchema.updateOne({'mail':mail},{$set:{'pass': hash}},function(error,res){
+                    response.json('update succed');
+                    console.log('update succed');
+                })
+        });
+
+  });
+
+});
+
+
 app.use((err, req, res) => {
     console.log(req);
     console.log(err);
