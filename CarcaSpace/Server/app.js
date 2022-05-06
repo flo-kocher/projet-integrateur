@@ -136,7 +136,7 @@ app.post('/Reset_pass', (request,response,next)=>{
             var mailOptions = {
                 from: 'anas.9haoud@gmail.com',
                 to: mail,
-                subject: 'Tourist App Password Reset',
+                subject: 'confirmation code',
                 text: 'Votre code de vérification: '+code_verification
             };
             

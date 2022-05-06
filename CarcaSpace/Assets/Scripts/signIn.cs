@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 public class signIn : MonoBehaviour{
     TMP_InputField inputUsername;
@@ -41,6 +42,7 @@ public class signIn : MonoBehaviour{
                 Debug.Log(jsonData);
             }else{
                 Debug.Log("Form uploaded !");
+                SceneManager.LoadScene("GameMenu", LoadSceneMode.Single);
             }
         }
     }
