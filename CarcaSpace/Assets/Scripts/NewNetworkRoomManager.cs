@@ -49,7 +49,10 @@ public class NewNetworkRoomManager : NetworkRoomManager
         Debug.Log ($"Client Stopped on Server");
     }
 
-
+    public virtual void OnRoomClientEnter() {
+        base.OnRoomClientEnter();
+        
+    }
     
 
     // / <summary>

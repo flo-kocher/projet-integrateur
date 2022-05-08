@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -432,9 +432,12 @@ MonoBehaviour:
   - {fileID: 2901618024628144452, guid: 78b4c1a494b52a242b2d7a4d72eb6487, type: 3}
   - {fileID: 612191210239054146, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
   - {fileID: 6954049619821841049, guid: bdb108f5a9bd5e1438bf9e9a0f40cd0d, type: 3}
+  - {fileID: 8672275069601027085, guid: 7307b8a3a05643145bfd40d40c2a9402, type: 3}
+  - {fileID: 699202955256947848, guid: b0838735b16c0af4abfb36c2e6be4d2b, type: 3}
+  - {fileID: 2567905563972320350, guid: bf03cc52dc18adc41946e4127d1f1301, type: 3}
   showRoomGUI: 1
   minPlayers: 1
-  roomPlayerPrefab: {fileID: -8479713857925308913, guid: b0838735b16c0af4abfb36c2e6be4d2b, type: 3}
+  roomPlayerPrefab: {fileID: -7462508292533481765, guid: b0838735b16c0af4abfb36c2e6be4d2b, type: 3}
   RoomScene: Assets/Scenes/Lobby.unity
   GameplayScene: Assets/game interface.unity
   _allPlayersReady: 1
