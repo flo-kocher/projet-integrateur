@@ -1,0 +1,128 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5936959061422109294
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2820402528865084469}
+  - component: {fileID: 6381367307239962684}
+  - component: {fileID: 1035530409580232921}
+  - component: {fileID: 7518173672430414833}
+  m_Layer: 0
+  m_Name: PlayerManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2820402528865084469
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936959061422109294}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6381367307239962684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936959061422109294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 0
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
+--- !u!114 &1035530409580232921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936959061422109294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f74aedd71d9a4f55b3ce499326d45fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  clientAuthority: 1
+  localPositionSensitivity: 0.01
+  localRotationSensitivity: 0.01
+  localScaleSensitivity: 0.01
+  compressRotation: 0
+  interpolateScale: 1
+  syncScale: 1
+--- !u!114 &7518173672430414833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5936959061422109294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5846cce6e2de84d4da26109eb731c415, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  compteurMeeple: 0
+  grid: {fileID: 2567905563972320350, guid: bf03cc52dc18adc41946e4127d1f1301, type: 3}
+  temp: {fileID: 0}
+  TileType0: {fileID: 904876740412345685, guid: 807a86916ff80ab45a84ce2d1809b5ee, type: 3}
+  TileType1: {fileID: 4793412428863025624, guid: bafb660a05eb8ab419a7eac85704e3a5, type: 3}
+  TileType2: {fileID: 4848435182477518786, guid: 4ed6246e846d8734a9eaa77a36a31c8d, type: 3}
+  TileType3: {fileID: 5971067704088160383, guid: 481b451308727b14c9f661ca3a63d540, type: 3}
+  TileType4: {fileID: 4663705799756500155, guid: 5e088db857baeb74c9142892a6518a00, type: 3}
+  TileType5: {fileID: 3299212461803038531, guid: c3fc2463cf4f01142a8970c2891fec59, type: 3}
+  TileType6: {fileID: 713654421736426070, guid: c7ccac9b7067b3b47abdc9c81792e132, type: 3}
+  TileType7: {fileID: 6772691831277187318, guid: c51553fd8a848c04ba0a58ed3a904f24, type: 3}
+  TileType8: {fileID: 3739325707066193385, guid: 47c160101a6959f459675438a57e80be, type: 3}
+  TileType9: {fileID: 2364564724065940940, guid: c5c31f142c8796d46b562ced89f28b4e, type: 3}
+  TileType10: {fileID: 8740398681027108856, guid: cff44ef5916190445a9ccf72d950efaa, type: 3}
+  TileType11: {fileID: 3895190873975916446, guid: fa2042e1ee08c0d4a85c54a7d884475f, type: 3}
+  TileType12: {fileID: 8751910320539019956, guid: dd403c080224fd14b90722a4a79465e4, type: 3}
+  TileType13: {fileID: 2433542713715891563, guid: 4139ffdb40d49664496ca445eef753db, type: 3}
+  TileType14: {fileID: 1727611229060994346, guid: ca56dfee0eb5cc24bbd770b4a045d620, type: 3}
+  TileType15: {fileID: 6664823139822118706, guid: 07a731dc09beab248b4a16debb96780e, type: 3}
+  TileType16: {fileID: 7629997727265353935, guid: e428d870c9665794ea8421891df5dab6, type: 3}
+  TileType17: {fileID: 1896199557465541930, guid: 2a07bae56a3f7594686e11efd0afa29a, type: 3}
+  TileType18: {fileID: 990281377908334436, guid: 3a5cea4662e45af42948218ad0cbb4f1, type: 3}
+  TileType19: {fileID: 4605703528599043146, guid: 3241d1d7b09d65c45b297b0c7cb80351, type: 3}
+  TileType20: {fileID: 504632564570245853, guid: c65bdd9a1068dc34ea5c706955c2fabf, type: 3}
+  TileType21: {fileID: 2581306833353711326, guid: b845b7df7a0806d43a78e45aadc7f0e1, type: 3}
+  TileType22: {fileID: 6846982068935289571, guid: 6cf576170f4dff54bac490b1723a071b, type: 3}
+  TileType23: {fileID: 9220351794439043822, guid: 3e27a1c20475f1d4b971973e24db8f9b, type: 3}
+  TileType24: {fileID: 3513544747952051030, guid: e6bc89dde42bfaf4bac4f6a2cf317e60, type: 3}
+  ui: {fileID: 612191210239054146, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
+  Stars: {fileID: 6954049619821841049, guid: bdb108f5a9bd5e1438bf9e9a0f40cd0d, type: 3}
+  Meeples: {fileID: 2901618024628144452, guid: 78b4c1a494b52a242b2d7a4d72eb6487, type: 3}
+  IsSpawnGrid: 0
+  haut: {x: 0.5, y: 0.83}
+  bas: {x: 0.5, y: 0.17}
+  droite: {x: 0.83, y: 0.5}
+  gauche: {x: 0.17, y: 0.5}
+  milieu: {x: 0.5, y: 0.5}
+  tabPos: []
+  all_tiles: []
+  playerList: []
+  abbeyes: []
