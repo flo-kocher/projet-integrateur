@@ -452,11 +452,6 @@ public class PlayerManager : NetworkBehaviour
         for(int k = 0; k < Move.list_of_struct_roads.Count; k++)
         {
           Debug.Log("nb d'elt dans  la structure "+k+ " : "+Move.list_of_struct_roads[k].CurrentTiles.Count);
-        //   for(int i = 0; i < Move.list_of_struct_roads[k].CurrentTiles.Count;i++)
-        //   {
-            //   Debug.Log("Nom elt : "+Move.list_of_struct_roads[k].CurrentTiles[i]+ " dans la liste");
-        //   }
-          //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
         }
     }
 
@@ -1304,6 +1299,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[0] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[0]);
                     Debug.Log("La partie haute est fermé ?" + rep);
                     if (rep == true)
@@ -1312,6 +1308,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[1] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[1]);
                     Debug.Log("La partie gauche est fermé ?" + rep);
                     if (rep == true)
@@ -1324,6 +1321,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[1] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[1]);
                     Debug.Log("La partie gauche est fermé ?" + rep);
                     if (rep == true)
@@ -1332,6 +1330,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[2] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[2]);
                     Debug.Log("La partie basse est fermé ?" + rep);
                     if (rep == true)
@@ -1344,6 +1343,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[2] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[2]);
                     Debug.Log("La partie basse est fermé ?" + rep);
                     if (rep == true)
@@ -1352,6 +1352,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[3] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[3]);
                     Debug.Log("La partie droite est fermé ?" + rep);
                     if (rep == true)
@@ -1364,6 +1365,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[0] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[0]);
                     Debug.Log("La partie haute est fermé ?" + rep);
                     if (rep == true)
@@ -1372,6 +1374,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[3] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[3]);
                     Debug.Log("La partie droite est fermé ?" + rep);
                     if (rep == true)
@@ -1387,6 +1390,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[1] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[1]);
                     Debug.Log("La partie haute est fermé ?" + rep);
                     if (rep == true)
@@ -1395,6 +1399,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[3] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[3]);
                     Debug.Log("La partie droite est fermé ?" + rep);
                     if (rep == true)
@@ -1406,6 +1411,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[0] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[0]);
                     Debug.Log("La partie haute est fermé ?" + rep);
                     if (rep == true)
@@ -1414,6 +1420,7 @@ public class PlayerManager : NetworkBehaviour
                 resetVisite();
                 if (voisins[2] != null)
                 {
+                    tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[2]);
                     Debug.Log("La partie basse est fermé ?" + rep);
                     if (rep == true)
