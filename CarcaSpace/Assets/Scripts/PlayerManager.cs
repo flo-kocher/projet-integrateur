@@ -201,7 +201,7 @@ public class PlayerManager : NetworkBehaviour
             if(cmp_est_fermante == 2 || Move.list_of_struct_roads[i].isClosed)
             {
                 //calcul de points
-                //comptage_points(Move.list_of_struct_roads[i].CurrentTiles);
+                comptage_points(Move.list_of_struct_roads[i].CurrentTiles);
 
                 //donner points aux Joueurs qui ont des Meeples sur le chemin
                 //suppression de liste
@@ -471,32 +471,32 @@ public class PlayerManager : NetworkBehaviour
 
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
-        Debug.Log(" Nom tile : " + tile_laid.name);
-        Debug.Log("Coord : "+x+"   "+y);
+        // Debug.Log(" Nom tile : " + tile_laid.name);
+        // Debug.Log("Coord : "+x+"   "+y);
 
         // on ne met dans voisins[] que les voisins qui ont une connection Chemin avec notre Go, puisque ce ne sont que eux qui nous interesse
         GameObject[] voisins = new GameObject[4];
         for (int i = 0; i < Move.plateau.Count; i++)
         {
-            Debug.Log("COORD ELT PLATEAU : " + Move.plateau[i].GetComponent<Constraints>().coordX + "   " + Move.plateau[i].GetComponent<Constraints>().coordY);
+            // Debug.Log("COORD ELT PLATEAU : " + Move.plateau[i].GetComponent<Constraints>().coordX + "   " + Move.plateau[i].GetComponent<Constraints>().coordY);
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1 && Move.plateau[i].GetComponent<Constraints>().bas == Type_land.Chemin)
             {
-                Debug.Log("haut");
+                // Debug.Log("haut");
                 voisins[0] = Move.plateau[i]; // haut
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y && Move.plateau[i].GetComponent<Constraints>().droite == Type_land.Chemin)
             {
-                Debug.Log("gauche");
+                // Debug.Log("gauche");
                 voisins[1] = Move.plateau[i]; // gauche
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1 && Move.plateau[i].GetComponent<Constraints>().haut == Type_land.Chemin)
             {
-                Debug.Log("bas");
+                // Debug.Log("bas");
                 voisins[2] = Move.plateau[i]; // bas
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y && Move.plateau[i].GetComponent<Constraints>().gauche == Type_land.Chemin)
             {
-                Debug.Log("droite");
+                // Debug.Log("droite");
                 voisins[3] = Move.plateau[i]; // droite
             }
         }
@@ -505,7 +505,7 @@ public class PlayerManager : NetworkBehaviour
         // {
         //     Debug.Log(" Tuile : " + i + " a comme coord : " + Move.plateau[i].GetComponent<Constraints>().coordX + " " + Move.plateau[i].GetComponent<Constraints>().coordY);
         // }
-        Debug.Log("La tuile " + tile_laid + " a comme voisins : haut " + voisins[0] + " gauche " + voisins[1] + " bas " + voisins[2] + " droite " + voisins[3]);
+        // Debug.Log("La tuile " + tile_laid + " a comme voisins : haut " + voisins[0] + " gauche " + voisins[1] + " bas " + voisins[2] + " droite " + voisins[3]);
 
         // il n'y a pas de connexion de chemin, on crée une nouvelle structure
         if (voisins[0] == null && voisins[1] == null && voisins[2] == null && voisins[3] == null)
@@ -528,7 +528,7 @@ public class PlayerManager : NetworkBehaviour
             }
             else
             {
-                Debug.Log("Aucun voisins");
+                // Debug.Log("Aucun voisins");
                 //créer une nouvelle structure
                 createNewStruct(tile_laid, "");
             }
@@ -1667,6 +1667,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawnMeeple(float x, float y)
     {
+        // Debug.Log("creation meeple ");
         compteurMeeple++;
         // instantiation d'un Prefab Meeple
         GameObject meeple = GameObject.Instantiate(Meeples);
@@ -1678,8 +1679,15 @@ public class PlayerManager : NetworkBehaviour
         meeple.transform.position = new Vector3(x + 0.6f, y - 0.04f, 0.25f);
 
         //meeple.transform.SetParent(GameObject.Find("Meeples").transform);
+        MoveMeeple.rmStars(); ////////////////////////////////////////////////////////////////// à implémenter
 
-        //MoveMeeple.rmStars(); ////////////////////////////////////////////////////////////////// à implémenter
+        var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject i in allobjects)
+            // if (-0.05f<i.transform.position.z && i.transform.position.z<0.05f && i.transform.position.x == x + 0.6f && i.transform.position.y == y - 0.04f)
+            // if(meeple.transform.position.x-0.7f < i.transform.position.x && i.transform.position.x < meeple.transform.position.x+0.7f && meeple.transform.position.y-0.7f < i.transform.position.y && i.transform.position.y < meeple.transform.position.y+0.7f && -0.05f < i.transform.position.z && i.transform.position.z < 0.05f)
+            if((meeple.transform.position.x-(meeple.transform.position.x-0.35f))/2 < i.transform.position.x && i.transform.position.x < (meeple.transform.position.x+(meeple.transform.position.x+0.35f))/2 && (meeple.transform.position.y-(meeple.transform.position.x-(meeple.transform.position.x-0.35f))/2 < i.transform.position.y && i.transform.position.y < (meeple.transform.position.y+(meeple.transform.position.x+0.35f))/2 && -0.05f < i.transform.position.z && i.transform.position.z < 0.05f))
+
+                Debug.Log(i.name);
 
         RpcShowMeeples(meeple, "Dealt");
     }
@@ -1689,7 +1697,7 @@ public class PlayerManager : NetworkBehaviour
     void RpcShowMeeples(GameObject go, string action)
     {
         //Debug.Log("je suis dans rpc");
-        //Debug.Log("GameObject : "+ go);
+        // Debug.Log("GameObject : "+ go);
         //Debug.Log("Action : "+ action);
 
         if (action == "Dealt")
@@ -1765,6 +1773,15 @@ public class PlayerManager : NetworkBehaviour
 
         }
     }
+
+    // [Command]
+    // public void rmStars()
+    // {
+    //     var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+    //     foreach (GameObject i in allobjects)
+    //         if (i.name == "Star")
+    //             NetworkServer.Destroy(i);
+    // }
 
 
     public int score(GameObject tile_laid)
@@ -1892,7 +1909,6 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawnGrid(int nbTuiles)
     {
-        Debug.Log("afficher grid");
         for (int x = 0; x < nbTuiles; x++)
         {
             for (int y = 0; y < nbTuiles; y++)

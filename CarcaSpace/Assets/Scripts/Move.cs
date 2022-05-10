@@ -106,6 +106,7 @@ public class Move : NetworkBehaviour {
             anim1 = true;
           }
         } else if (go.name.Contains("Star")) {
+          // Debug.Log(go.name);
           go.GetComponent<CreateMeeple>().function();
           clickedOnStar = true;
         }
@@ -120,7 +121,7 @@ public class Move : NetworkBehaviour {
           new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
     if (anim1) {
-      MoveMeeple.rmStars(); ///////////////// Faire en version Network
+      // MoveMeeple.rmStars(); ///////////////// Faire en version Network
 
       if (disapear != null) {
         // disapear.SetActive(true);
@@ -164,7 +165,7 @@ public class Move : NetworkBehaviour {
         
         // PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
         PlayerManager.CmdSetLaid(go);
-        PlayerManager.CmdSpawnStars(disapear.GetComponent<Constraints>().posePossible, x, y);
+        PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
 
         go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;
         go.GetComponent<Constraints>().coordY = disapear.GetComponent<Constraints>().coordY;
@@ -177,9 +178,9 @@ public class Move : NetworkBehaviour {
         PlayerManager.seeStruct();
 
         //cloture de villes
-        PlayerManager.resetVisite();
-        PlayerManager.drawshit(go);
-        PlayerManager.resetVisite();
+        // PlayerManager.resetVisite();
+        // PlayerManager.drawshit(go);
+        // PlayerManager.resetVisite();
 
         //cloture d'abbayes
         
