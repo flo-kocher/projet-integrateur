@@ -29,8 +29,8 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     public int playerIndex;
     public GameObject PlayerCard ; 
 
-    [SyncVar]
-    public List<GameObject> cardList = new List<GameObject>();
+    //[SyncVar]
+    public SyncList<GameObject> cardList = new SyncList<GameObject>();
 
     #region Start & Stop Callbacks
 
@@ -58,10 +58,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     public override void OnStartClient() {
         base.OnStartClient();
         Debug.Log("Start Client !!!!!!!!!!!!!!!!!!!!!!!!!!");
-        
-        
-        
-     }
+    }
 
     /// <summary>
     /// This is invoked on clients when the server has caused this object to be destroyed.
@@ -78,8 +75,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartLocalPlayer() {
         base.OnStartLocalPlayer();
-            CmdSpawnCard(index);
-        }
+    }
 
     /// <summary>
     /// This is invoked on behaviours that have authority, based on context and <see cref="NetworkIdentity.hasAuthority">NetworkIdentity.hasAuthority</see>.
@@ -88,33 +84,42 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartAuthority() {
         base.OnStartAuthority();  
+        CmdSpawnCard(index);
     }
 
     [Command]
-    public void CmdSpawnCard(int index){
+    public void CmdSpawnCard(int _index){
         Debug.Log("spawning player card ");
+        Debug.Log($"Index in command {_index}");
         GameObject newCard = Instantiate(PlayerCard);
         newCard.transform.SetParent(GameObject.Find("Players").transform);
-        newCard.transform.GetChild(0).GetComponent<Text>().text = "Player" + (index+1);
+        newCard.transform.GetChild(0).GetComponent<Text>().text = "Player" + (_index);
         
         newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
         NetworkServer.Spawn(newCard,connectionToClient);
         cardList.Add(newCard);
-        TargetShowPreviousCard(connectionToClient,cardList );
+        RpcShowPreviousCard( );
     }
 
 
-    [TargetRpc]
-    public void TargetShowPreviousCard(NetworkConnection target,List<GameObject> cardList ){
-        int i =  0;
-        if(this.index == cardList.Count){
-            i = cardList.Count - 1 ;
+    [ClientRpc]
+    public void RpcShowPreviousCard(){
+        // int i = 0 ;
+        // Debug.Log($"Card count is {cardList.Count}");
+        // if(index != cardList.Count  ){
+        //     i = cardList.Count - (index) ;
+        //     Debug.Log($"I is  {index}");
+        // }
+           
+        // for ( ; i<cardList.Count;i++){
+        //     Debug.Log($"Card count is {cardList.Count}");
+        //     cardList[i].SetActive(true);
+        // }
+        for (int i = 0 ; i< cardList.Count ; i++){
+            cardList[i].SetActive(false) ; 
+            cardList[i].SetActive(true) ; 
         }
-        for ( ; i<cardList.Count;i++){
-            Debug.Log($"Card count is {cardList.Count}");
-            cardList[i].SetActive(true);
-        }
-        
+        Debug.Log($"Card count is {cardList.Count}");  
     }
 
     public void changeColor(GameObject newCard){
