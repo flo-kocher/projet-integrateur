@@ -13,8 +13,8 @@ public class signIn : MonoBehaviour{
     TMP_InputField inputMail;
     Button submit;
     
-    string getRouteURI = "http://185.155.93.105:11007/signIn";
-    //string getRouteURI = "localhost:8080/signIn";
+    //string getRouteURI = "http://185.155.93.105:11007/signIn";
+    string getRouteURI = "localhost:8080/signIn";
     void Start(){
         inputUsername = GameObject.Find("Username").GetComponent<TMP_InputField>();
         inputPassword = GameObject.Find("Password").GetComponent<TMP_InputField>();

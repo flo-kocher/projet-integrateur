@@ -47,8 +47,8 @@ public class logIn : MonoBehaviour{
     string PlayerName ;
 
 
-    string getRouteURI = "http://185.155.93.105:11007/logIn";
-    //string getRouteURI = "localhost:8080/logIn";
+    //string getRouteURI = "http://185.155.93.105:11007/logIn";
+    string getRouteURI = "localhost:8080/logIn";
     void Start(){
         playerStat = new playerStats();
         inputUsername = GameObject.Find("Username").GetComponent<TMP_InputField>();
