@@ -148,6 +148,7 @@ public class Move : NetworkBehaviour {
       }
     }
     if (anim2) {
+      PlayerManager.pose = true;
       if (disapear != null) {
         Material mat = disapear.GetComponent<Renderer>().material;
         Color c_target = mat.color;
