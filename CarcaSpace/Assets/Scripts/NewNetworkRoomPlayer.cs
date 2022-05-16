@@ -20,13 +20,16 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
 {
     
     //NetworkLobbyPlayer N ;
-
     
+    // on met a true quand la carte de ce joueur est spawn 
+    bool hasSpawned = false;
     
     [SyncVar] 
     public int playerNumber = 0 ;
 
     public int playerIndex;
+
+    string playerName ; 
     public GameObject PlayerCard ; 
 
     //[SyncVar]
@@ -57,6 +60,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartClient() {
         base.OnStartClient();
+        
         Debug.Log("Start Client !!!!!!!!!!!!!!!!!!!!!!!!!!");
     }
 
@@ -84,26 +88,71 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartAuthority() {
         base.OnStartAuthority();  
-        CmdSpawnCard(index);
+        playerName =  PlayerPrefs.GetString("playerName");
+        Debug.Log($"Player Name is  {playerName}");
+        CmdSpawnCard(playerName , index);
     }
 
     [Command]
-    public void CmdSpawnCard(int _index){
+    public void CmdSpawnCard(string name , int _index){
+        // Debug.Log("spawning player card ");
+        // GameObject newCard = GameObject.Find("PlayerCard1") ;
+        // newCard.transform.SetParent(GameObject.Find("Players").transform);
+        // if(index == 0){
+
+        //     newCard = GameObject.Find("PlayerCard1");
+        //     newCard.transform.GetChild(0).GetComponent<Text>().text = name;
+        //     newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
+        // }
+        // if(index == 1){
+        //     newCard = GameObject.Find("PlayerCard2");
+        //     newCard.transform.GetChild(0).GetComponent<Text>().text = name;
+        //     newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
+        // }
+        // if(index == 2){
+        //     newCard = GameObject.Find("PlayerCard2");
+        //     newCard.transform.GetChild(0).GetComponent<Text>().text = name;
+        //     newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
+        // }
+        // if(index == 3){
+        //     newCard = GameObject.Find("PlayerCard2");
+        //     newCard.transform.GetChild(0).GetComponent<Text>().text = name;
+        //     newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
+        // }
+        // if(index == 4){
+        //     newCard = GameObject.Find("PlayerCard2");
+        //     newCard.transform.GetChild(0).GetComponent<Text>().text = name;
+        //     newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
+        // }
+
         Debug.Log("spawning player card ");
-        Debug.Log($"Index in command {_index}");
+        Debug.Log($"Index in command {_index} et mon nom {name}");
+
         GameObject newCard = Instantiate(PlayerCard);
         newCard.transform.SetParent(GameObject.Find("Players").transform);
-        newCard.transform.GetChild(0).GetComponent<Text>().text = "Player" + (_index);
+        newCard.transform.GetChild(0).GetComponent<Text>().text = name;
         
         newCard.transform.GetChild(1).GetComponent<Button>().onClick.AddListener( () => changeColor(newCard));
         NetworkServer.Spawn(newCard,connectionToClient);
         cardList.Add(newCard);
-        RpcShowPreviousCard( );
+        RpcShowPreviousCard(newCard);
+
     }
 
 
     [ClientRpc]
-    public void RpcShowPreviousCard(){
+    public void RpcShowPreviousCard(GameObject newCard){
+        
+        //c'est le plus recent a rejoindre
+        // if(newCard.GetComponent<Text>().text == playerName){
+        //     Debug.Log("here 1 ");
+        //     for(int i = 0 ; i < cardList.Count ; i++){
+        //         cardList[i].SetActive(true) ; 
+        //     }
+        // }else{
+            Debug.Log("here 2 ");
+            newCard.SetActive(true);
+        //}
         // int i = 0 ;
         // Debug.Log($"Card count is {cardList.Count}");
         // if(index != cardList.Count  ){
@@ -115,10 +164,11 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
         //     Debug.Log($"Card count is {cardList.Count}");
         //     cardList[i].SetActive(true);
         // }
-        for (int i = 0 ; i< cardList.Count ; i++){
-            cardList[i].SetActive(false) ; 
-            cardList[i].SetActive(true) ; 
-        }
+        // for (int i = 0 ; i< cardList.Count ; i++){
+        //     cardList[i].SetActive(false) ; 
+        //     cardList[i].SetActive(true) ; 
+        // }
+        Debug.Log($"Mon index est {index} et mon nom {playerName}");
         Debug.Log($"Card count is {cardList.Count}");  
     }
 

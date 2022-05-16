@@ -4,14 +4,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+//using UnityEngine.Objects;
 using TMPro;
 using System;
 
 [Serializable]
-public class playerStats{
-    private string playerName;
+public /*static */class playerStats{
+    [SerializeField] private string playerName;
     public string getPlayerName() {
         return this.playerName;
+    }
+
+    public string setPlayerName(string name) {
+        return this.playerName = name;
     }
 }
 
@@ -27,14 +32,19 @@ public class Credentials
 public class serverResponse {
     public string success;
     public string message;
+
+    public string name;
     public string error;
 }
+
+
 public class logIn : MonoBehaviour{
     TMP_InputField inputUsername;
     TMP_InputField inputPassword;
     Button submit;
     Text serverResponseText; 
     playerStats playerStat ; 
+    string PlayerName ;
 
 
     string getRouteURI = "http://185.155.93.105:11007/logIn";
@@ -78,8 +88,13 @@ public class logIn : MonoBehaviour{
                
                 if(data.success == "true")
                 {
-                    string PlayerName =  playerStat.getPlayerName();
-                    SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
+                    playerStat.setPlayerName(data.name);
+                    PlayerName =  playerStat.getPlayerName();
+                    Debug.Log($"++++++{PlayerName}");
+                    //DataSaver.saveData(PlayerName, "name");
+                    PlayerPrefs.SetString("playerName", PlayerName);
+                    PlayerPrefs.Save ();
+                    SceneManager.LoadScene("CreateOrJoin", LoadSceneMode.Single);
                 }
                 else if(data.success == "false" && data.message == "Not existing user") {
                     serverResponseText.text = "Wrong credentials";
@@ -93,4 +108,6 @@ public class logIn : MonoBehaviour{
             }
         }      
     }
+
+
 }
