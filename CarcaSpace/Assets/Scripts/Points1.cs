@@ -5,15 +5,12 @@ using UnityEngine.UI;
 using Mirror;
 
 
-public class Points : NetworkBehaviour
+public class Points1 : NetworkBehaviour
 {
-    public PlayerManager PlayerManager;
-    int score;
-
     // Start is called before the first frame update
     void Start()
     {
-        score = 0;
+        this.GetComponent<Points1>().GetComponent<Text>().text = "Player 1 : 0";
     }
 
     // Update is called once per frame
@@ -21,15 +18,17 @@ public class Points : NetworkBehaviour
     {
         // this.GetComponent<Points>().GetComponent<Text>().text = "okkk";
         // Debug.Log(this.GetComponent<Points>().GetComponent<Text>().text);
-        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        // NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        // PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+        /*
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            int score = PlayerManager.list_of_struct_player[0].points;
+            //int score = PlayerManager.list_of_struct_player[0].points;
             this.GetComponent<Points>().GetComponent<Text>().text = "test score";
         }
-        if (Input.GetKeyUp(KeyCode.Tab))
-            this.GetComponent<Points>().GetComponent<Text>().text = "";
+        */
+        // if (Input.GetKeyUp(KeyCode.Tab))
+            
 
         /*
             on laisse ce code, pour qu'on ait une touche sur laquelle appuyer pour afficher les score

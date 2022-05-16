@@ -193,13 +193,13 @@ public class Move : NetworkBehaviour {
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
           abbeyes.Add(go);
         PlayerManager.abbeyIsClose();
-        if(PlayerManager.list_of_struct_player != null)
-        {
-          Debug.Log("Points j1 : " + PlayerManager.list_of_struct_player[1].points);
-        }
-        for(int m = 0; m<=PlayerManager.list_of_struct_player.Count; m++){
-          Debug.Log("Joueur "+i+"; score = "+ PlayerManager.list_of_struct_player[i].points);
-        }
+        // if(PlayerManager.list_of_struct_player != null)
+        // {
+        //   Debug.Log("Points j1 : " + PlayerManager.list_of_struct_player[1].points);
+        // }
+        // for(int m = 0; m<=PlayerManager.list_of_struct_player.Count; m++){
+        //   Debug.Log("Joueur "+i+"; score = "+ PlayerManager.list_of_struct_player[i].points);
+        // }
         PlayerManager.resetVisite();   
 
         /* comptage des points

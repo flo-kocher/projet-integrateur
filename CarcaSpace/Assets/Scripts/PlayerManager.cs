@@ -190,7 +190,17 @@ public class PlayerManager : NetworkBehaviour
         {
             if(joueur[i] == max_joueur && max_joueur !=0)
                 list_of_struct_player[i] = new Player(list_of_struct_player[i].id, list_of_struct_player[i].points + lst.CurrentTiles.Count);  
-                //Debug.Log("Points joueurs: " + list_of_struct_player[i].points);            
+                Debug.Log("Points joueurs: " + list_of_struct_player[i].points);
+                var list = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach(GameObject j in list)
+                {
+                    string contient = "Points"+(i+1).ToString()+"";
+                    if(j.name.Contains(contient))
+                    {
+                        dynamic x = test_point(j);
+                        x.GetComponent<Text>().text = "Points : "+list_of_struct_player[i].points.ToString();
+                    }
+                }
         }
         
         return 0;
@@ -199,7 +209,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void checkAllStruct()
     {
-        Debug.Log("checkallstruct debut");
+        // Debug.Log("checkallstruct debut");
         for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
         {
             int cmp_est_fermante = 0;
@@ -419,6 +429,11 @@ public class PlayerManager : NetworkBehaviour
         base.OnStartServer();
         instatiateTiles();
         CmdSpawnGrid(10);
+        // Points1.GetComponent<Text>().text = "Player 1 : 0";
+        // Points3.GetComponent<Text>().text = "Player 4 : 0";
+        // Points2.GetComponent<Text>().text = "Player 2 : 0";
+        // Points4.GetComponent<Text>().text = "Player 5 : 0";
+        // Points5.GetComponent<Text>().text = "Player 3 : 0";
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
 
@@ -2557,6 +2572,17 @@ public class PlayerManager : NetworkBehaviour
         foreach(object i in mm)
         {
         if (i.GetType().Name.Contains("tile_type"))
+            return i;
+        }
+        return null;
+    }
+
+        dynamic test_point(GameObject go) 
+    {
+        var mm = go.GetComponents(typeof(Component));
+        foreach(object i in mm)
+        {
+        if (i.GetType().Name.Contains("Points"))
             return i;
         }
         return null;
