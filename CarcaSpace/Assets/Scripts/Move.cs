@@ -178,21 +178,7 @@ public class Move : NetworkBehaviour {
         this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
-        //cloture de chemins
-        PlayerManager.roadIsClosed_Struct(go);
-        PlayerManager.checkAllStruct();
-        //PlayerManager.seeStruct();
 
-        //cloture de villes
-        PlayerManager.resetVisite();
-        PlayerManager.drawshit(go);
-        PlayerManager.resetVisite();
-
-        //cloture d'abbayes
-        
-        if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
-          abbeyes.Add(go);
-        PlayerManager.abbeyIsClose();
         // if(PlayerManager.list_of_struct_player != null)
         // {
         //   Debug.Log("Points j1 : " + PlayerManager.list_of_struct_player[1].points);
@@ -200,21 +186,21 @@ public class Move : NetworkBehaviour {
         // for(int m = 0; m<=PlayerManager.list_of_struct_player.Count; m++){
         //   Debug.Log("Joueur "+i+"; score = "+ PlayerManager.list_of_struct_player[i].points);
         // }
-        PlayerManager.resetVisite();   
 
-        /* comptage des points
-            comptage des abbays complet
-              if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
-                PlayerManager.abbeyes.Add(go);
-              PlayerManager.abbeyIsClose();
-            comptage points villes completes
-              PlayerManager.resetVisite();
-              PlayerManager.drawshit(go);
-              PlayerManager.resetVisite();
-            comptage points chemin complets
-              PlayerManager.checkAllStruct();
+        // comptage des points
+        //comptage des abbays complet
+        if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
+          abbeyes.Add(go);
+        PlayerManager.abbeyIsClose();
+      //comptage points villes completes
+        PlayerManager.resetVisite();
+        PlayerManager.drawshit(go);
+        PlayerManager.resetVisite();
+      //comptage points chemin complets
+        PlayerManager.roadIsClosed_Struct(go);
+        PlayerManager.checkAllStruct();
 
-        */
+        
 
 
       }

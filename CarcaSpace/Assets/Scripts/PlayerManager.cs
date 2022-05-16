@@ -73,9 +73,6 @@ public class PlayerManager : NetworkBehaviour
     //
     // public List<GameObject> Move.plateau = new List<GameObject>();
 
-    // liste des abbayes posées
-    // public List<GameObject> abbeyes = new List<GameObject>();
-
     // structure d'un joueur
     public struct Player
     {
@@ -160,9 +157,22 @@ public class PlayerManager : NetworkBehaviour
         }
         return;
     }
-
-
     
+    public void affichage_score(int i)
+    {
+        
+        var list = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach(GameObject j in list)
+        {
+            string contient = "Points"+(i+1).ToString()+"";
+            if(j.name.Contains(contient))
+            {
+                dynamic x = test_point(j);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+list_of_struct_player[i].points.ToString();
+            }
+        }
+    }
+
     public int comptage_points(CurrentRoads lst)    // Les carrefour n'existe pas encore pour nous Et il y a au plus 4 joueurs
     {
         // à faire dynamiquement
@@ -189,18 +199,11 @@ public class PlayerManager : NetworkBehaviour
         for(int i=0; i<list_of_struct_player.Count; i++)
         {
             if(joueur[i] == max_joueur && max_joueur !=0)
+            {
                 list_of_struct_player[i] = new Player(list_of_struct_player[i].id, list_of_struct_player[i].points + lst.CurrentTiles.Count);  
                 Debug.Log("Points joueurs: " + list_of_struct_player[i].points);
-                var list = Resources.FindObjectsOfTypeAll<GameObject>();
-                foreach(GameObject j in list)
-                {
-                    string contient = "Points"+(i+1).ToString()+"";
-                    if(j.name.Contains(contient))
-                    {
-                        dynamic x = test_point(j);
-                        x.GetComponent<Text>().text = "Points : "+list_of_struct_player[i].points.ToString();
-                    }
-                }
+                affichage_score(i);
+            }
         }
         
         return 0;
@@ -1350,6 +1353,7 @@ public class PlayerManager : NetworkBehaviour
                             {
                                 list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
                             }
+
                             //Debug.Log("score = "+ list_of_struct_player[j].points);
                         }
                     }
@@ -1740,7 +1744,7 @@ public class PlayerManager : NetworkBehaviour
             {
                 resetVisite();
                 int p = score(tile_laid)*2;
-               // Debug.Log ("point " + p);
+                Debug.Log ("non special fermé");
                 int max =0;
                 for(int i = 0; i < meeplePlayerTown.Length; i++)
                 {
@@ -1756,9 +1760,13 @@ public class PlayerManager : NetworkBehaviour
                //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
                     if(meeplePlayerTown[j] == max && max != 0)
                     {
+                        Debug.Log("max" + max + "joueur" + j);
+
                         list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
                     }
-                 //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                    affichage_score(j);
+
+                    Debug.Log("score = "+ list_of_struct_player[j].points);
                 }
             }
         }
@@ -1891,6 +1899,7 @@ public class PlayerManager : NetworkBehaviour
                             list_of_struct_player[j]= new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + 9);
                             Move.abbeyes.RemoveAt(i);
                         }
+                        affichage_score(j);
                     }
                 }
                 // if (abbeyLaid(Move.abbeyes[i]) == false)
@@ -1909,28 +1918,28 @@ public class PlayerManager : NetworkBehaviour
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
         GameObject[] voisins = new GameObject[8];
-        
+        int Abbaye_compteur = 0;
         // pose abbaye direct avec les 8 tuiles
         for (int i = 0; i < Move.plateau.Count; i++)
         {
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1)
-                compteur++; // haut
+                Abbaye_compteur++; // haut
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
-                compteur++; // gauche
+                Abbaye_compteur++; // gauche
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1)
-                compteur++; // bas
+                Abbaye_compteur++; // bas
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
-                compteur++; // droite
+                Abbaye_compteur++; // droite
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1)
-                compteur++; // haut droite
+                Abbaye_compteur++; // haut droite
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1)
-                compteur++; // haut gauche
+                Abbaye_compteur++; // haut gauche
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1)
-                compteur++; // bas droite
+                Abbaye_compteur++; // bas droite
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1)
-                compteur++; // bas gauche
+                Abbaye_compteur++; // bas gauche
         }
-        if (compteur == 8)
+        if (Abbaye_compteur == 8)
         {
             // calcul de points
            // //Debug.Log("abbaye: " + tile_laid + " est complet");
@@ -2273,7 +2282,7 @@ public class PlayerManager : NetworkBehaviour
         GameObject tmpTile_laid= tile_laid;
         for(int i = 0; i < Move.plateau.Count; i++)
         {
-            Debug.Log("plat : " + Move.plateau[i]);
+            //Debug.Log("plat : " + Move.plateau[i]);
             if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = Move.plateau[i]; // haut
             if(Move.plateau[i].GetComponent<Constraints>().coordX == x-1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
@@ -2287,6 +2296,7 @@ public class PlayerManager : NetworkBehaviour
         tmpTile_laid.GetComponent<Constraints>().visite = true;
         if (tmpTile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
+            Debug.Log("yo");
             if(tmpTile_laid.GetComponent<Constraints>().meeple == 0)
             {
                 for(int j=0; j<list_of_struct_player.Count; j++)
