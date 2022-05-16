@@ -47,6 +47,9 @@ public class PlayerManager : NetworkBehaviour
     [SyncVar]
     public bool IsSpawnGrid ; 
 
+    public int[] meeplePlayerTown = new int[] {0,0,0,0,0}; 
+
+
     // private int compteur = 0;
 
     // emplacements des étoiles sur une tuile
@@ -57,6 +60,7 @@ public class PlayerManager : NetworkBehaviour
     public Vector2 milieu = new Vector2(0.5f, 0.5f);
     // tableau des emplacements
     public Vector2[] tabPos;
+    public int compteur =0;
 
 
     //bool create = true;
@@ -68,9 +72,6 @@ public class PlayerManager : NetworkBehaviour
 
     //
     // public List<GameObject> Move.plateau = new List<GameObject>();
-
-    // liste des abbayes posées
-    public List<GameObject> abbeyes = new List<GameObject>();
 
     // structure d'un joueur
     public struct Player
@@ -87,6 +88,13 @@ public class PlayerManager : NetworkBehaviour
             points = 0;
             meeple_libre = 7;
         }
+        
+        public Player(NetworkIdentity id, int points)
+        {
+            this.id = id;
+            this.points = points;
+            meeple_libre = 7;
+        }
     }
 
     public List<Player> list_of_struct_player = new List<Player>();
@@ -101,7 +109,7 @@ public class PlayerManager : NetworkBehaviour
         public int Size;
         public List<GameObject> CurrentTiles;
         public bool isClosed;
-
+        public List<Player> lstPlayer; 
         //Constructor
         public CurrentRoads(string name, GameObject tile)
         {
@@ -109,6 +117,8 @@ public class PlayerManager : NetworkBehaviour
             this.Size = 1;
             this.CurrentTiles = new List<GameObject>();
             this.CurrentTiles.Add(tile);
+            this.lstPlayer = new List<Player>();
+
             this.isClosed = false;
             //this.isClosed = false;
         }
@@ -119,6 +129,7 @@ public class PlayerManager : NetworkBehaviour
             this.Size = 1;
             this.CurrentTiles = lll;
             this.isClosed = status;
+            this.lstPlayer = new List<Player>();
         }
     }
 
@@ -146,42 +157,53 @@ public class PlayerManager : NetworkBehaviour
         }
         return;
     }
-
-
     
-    public int comptage_points(List<GameObject> lst)    // Les carrefour n'existe pas encore pour nous Et il y a au plus 4 joueurs
+    public void affichage_score(int i)
+    {
+        
+        var list = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach(GameObject j in list)
+        {
+            string contient = "Points"+(i+1).ToString()+"";
+            if(j.name.Contains(contient))
+            {
+                dynamic x = test_point(j);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+list_of_struct_player[i].points.ToString();
+            }
+        }
+    }
+
+    public int comptage_points(CurrentRoads lst)    // Les carrefour n'existe pas encore pour nous Et il y a au plus 4 joueurs
     {
         // à faire dynamiquement
-        int[] joueur = new int[] { 0, 0, 0, 0};
+        int[] joueur = new int[] { 0, 0, 0, 0, 0};
         int max_joueur = 0;
-        for(int i=0; i<lst.Count; i++)
-        {
-            if(lst[i].GetComponent<Constraints>().meeple  !=- 1)
+        for(int i=0; i<lst.lstPlayer.Count; i++)
+        {   
+            for(int j=0; j<list_of_struct_player.Count; j++)
             {
-                if(lst[i].GetComponent<Constraints>().meeple == 0 && lst[i].GetComponent<Constraints>().haut == Type_land.Chemin);
+                if(lst.lstPlayer[i].id == list_of_struct_player[j].id)
                 {
-                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
+                    joueur[j]++;
                 }
-                if(lst[i].GetComponent<Constraints>().meeple == 1 && lst[i].GetComponent<Constraints>().gauche == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
-                if(lst[i].GetComponent<Constraints>().meeple == 2 && lst[i].GetComponent<Constraints>().bas == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
-                if(lst[i].GetComponent<Constraints>().meeple == 3 && lst[i].GetComponent<Constraints>().droite == Type_land.Chemin);
-                    joueur[lst[i].GetComponent<Constraints>().id_joueur]++;
             }
         }
         
         // joueur avec le plus de pions sur un chemin
-        for(int i=0; i<4; i++)
+        for(int i=0; i<5; i++)
         {
             if(joueur[i] > max_joueur)
                 max_joueur = joueur[i];
         }
         // Plusieurs joueurs peuvent avoir le nb max
-        for(int i=0; i<4; i++)
+        for(int i=0; i<list_of_struct_player.Count; i++)
         {
-            if(joueur[i] == max_joueur)
-                Debug.Log("le score du chemin est : " + lst.Count);              
+            if(joueur[i] == max_joueur && max_joueur !=0)
+            {
+                list_of_struct_player[i] = new Player(list_of_struct_player[i].id, list_of_struct_player[i].points + lst.CurrentTiles.Count);  
+                Debug.Log("Points joueurs: " + list_of_struct_player[i].points);
+                affichage_score(i);
+            }
         }
         
         return 0;
@@ -190,6 +212,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void checkAllStruct()
     {
+        // Debug.Log("checkallstruct debut");
         for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
         {
             int cmp_est_fermante = 0;
@@ -200,8 +223,9 @@ public class PlayerManager : NetworkBehaviour
             }
             if(cmp_est_fermante == 2 || Move.list_of_struct_roads[i].isClosed)
             {
+                Debug.Log("checkallstruct fermante");
                 //calcul de points
-                //comptage_points(Move.list_of_struct_roads[i].CurrentTiles);
+                comptage_points(Move.list_of_struct_roads[i]);
 
                 //donner points aux Joueurs qui ont des Meeples sur le chemin
                 //suppression de liste
@@ -225,7 +249,7 @@ public class PlayerManager : NetworkBehaviour
         Player player = new Player(NetworkClient.connection.identity);
         //playerList.Add(networkIdentity);
         list_of_struct_player.Add(player);
-        //Debug.Log("Player list",playerList.Count);
+        ////Debug.Log("Player list",playerList.Count);
     }
 
     // méthode générant la liste des tuiles
@@ -407,7 +431,12 @@ public class PlayerManager : NetworkBehaviour
     {
         base.OnStartServer();
         instatiateTiles();
-        // CmdSpawnGrid(10);
+        CmdSpawnGrid(10);
+        // Points1.GetComponent<Text>().text = "Player 1 : 0";
+        // Points3.GetComponent<Text>().text = "Player 4 : 0";
+        // Points2.GetComponent<Text>().text = "Player 2 : 0";
+        // Points4.GetComponent<Text>().text = "Player 5 : 0";
+        // Points5.GetComponent<Text>().text = "Player 3 : 0";
         //Debug.Log("els dans all_tiles : " +all_tiles);
         //Debug.Log(all_tiles.Count);
 
@@ -421,6 +450,14 @@ public class PlayerManager : NetworkBehaviour
         // Move.nb_of_struct_roads = 0;
     }
 
+    // [Command]
+    // public void resetVisite()
+    // {
+    //     RpcresetVisite();
+    // }
+
+    // [ClientRpc]
+    [Command]
     public void resetVisite()
     {
         for (int i = 0; i < Move.plateau.Count; i++)
@@ -428,6 +465,7 @@ public class PlayerManager : NetworkBehaviour
             Move.plateau[i].GetComponent<Constraints>().visite = false;
         }
     }
+    
 
     public void createNewStruct(GameObject tile_laid, String intersection)
     {
@@ -440,15 +478,10 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void seeStruct()
     {
-        Debug.Log("liste des structs "+Move.list_of_struct_roads.Count);
+        // Debug.Log("liste des structs "+Move.list_of_struct_roads.Count);
         for(int k = 0; k < Move.list_of_struct_roads.Count; k++)
         {
           Debug.Log("nb d'elt dans  la structure "+k+ " : "+Move.list_of_struct_roads[k].CurrentTiles.Count);
-        //   for(int i = 0; i < Move.list_of_struct_roads[k].CurrentTiles.Count;i++)
-        //   {
-            //   Debug.Log("Nom elt : "+Move.list_of_struct_roads[k].CurrentTiles[i]+ " dans la liste");
-        //   }
-          //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
         }
     }
 
@@ -457,38 +490,38 @@ public class PlayerManager : NetworkBehaviour
     {
         if (tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin && tile_laid.GetComponent<Constraints>().bas != Type_land.Chemin && tile_laid.GetComponent<Constraints>().gauche != Type_land.Chemin && tile_laid.GetComponent<Constraints>().droite != Type_land.Chemin && tile_laid.GetComponent<Constraints>().haut != Type_land.Chemin)
         {
-            Debug.Log("Pas de composante Chemin sur ma tuile");
+            //Debug.Log("Pas de composante Chemin sur ma tuile");
             return;
         }
 
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
-        Debug.Log(" Nom tile : " + tile_laid.name);
-        Debug.Log("Coord : "+x+"   "+y);
+       // Debug.Log(" Nom tile : " + tile_laid.name);
+       // Debug.Log("Coord : "+x+"   "+y);
 
         // on ne met dans voisins[] que les voisins qui ont une connection Chemin avec notre Go, puisque ce ne sont que eux qui nous interesse
         GameObject[] voisins = new GameObject[4];
         for (int i = 0; i < Move.plateau.Count; i++)
         {
-            Debug.Log("COORD ELT PLATEAU : " + Move.plateau[i].GetComponent<Constraints>().coordX + "   " + Move.plateau[i].GetComponent<Constraints>().coordY);
+            // Debug.Log("COORD ELT PLATEAU : " + Move.plateau[i].GetComponent<Constraints>().coordX + "   " + Move.plateau[i].GetComponent<Constraints>().coordY);
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1 && Move.plateau[i].GetComponent<Constraints>().bas == Type_land.Chemin)
             {
-                Debug.Log("haut");
+                // Debug.Log("haut");
                 voisins[0] = Move.plateau[i]; // haut
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y && Move.plateau[i].GetComponent<Constraints>().droite == Type_land.Chemin)
             {
-                Debug.Log("gauche");
+                // Debug.Log("gauche");
                 voisins[1] = Move.plateau[i]; // gauche
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1 && Move.plateau[i].GetComponent<Constraints>().haut == Type_land.Chemin)
             {
-                Debug.Log("bas");
+                // Debug.Log("bas");
                 voisins[2] = Move.plateau[i]; // bas
             }
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y && Move.plateau[i].GetComponent<Constraints>().gauche == Type_land.Chemin)
             {
-                Debug.Log("droite");
+                // Debug.Log("droite");
                 voisins[3] = Move.plateau[i]; // droite
             }
         }
@@ -497,7 +530,7 @@ public class PlayerManager : NetworkBehaviour
         // {
         //     Debug.Log(" Tuile : " + i + " a comme coord : " + Move.plateau[i].GetComponent<Constraints>().coordX + " " + Move.plateau[i].GetComponent<Constraints>().coordY);
         // }
-        Debug.Log("La tuile " + tile_laid + " a comme voisins : haut " + voisins[0] + " gauche " + voisins[1] + " bas " + voisins[2] + " droite " + voisins[3]);
+        // Debug.Log("La tuile " + tile_laid + " a comme voisins : haut " + voisins[0] + " gauche " + voisins[1] + " bas " + voisins[2] + " droite " + voisins[3]);
 
         // il n'y a pas de connexion de chemin, on crée une nouvelle structure
         if (voisins[0] == null && voisins[1] == null && voisins[2] == null && voisins[3] == null)
@@ -520,7 +553,7 @@ public class PlayerManager : NetworkBehaviour
             }
             else
             {
-                Debug.Log("Aucun voisins");
+                // Debug.Log("Aucun voisins");
                 //créer une nouvelle structure
                 createNewStruct(tile_laid, "");
             }
@@ -1210,7 +1243,7 @@ public class PlayerManager : NetworkBehaviour
                 cr.CurrentTiles.Add(tile_laid);
                 if (tile_laid.name.Contains("17") || tile_laid.name.Contains("22") || tile_laid.name.Contains("21"))
                 {
-                    //Debug.Log("1 voisin et tuile 17 ou 22");
+                    ////Debug.Log("1 voisin et tuile 17 ou 22");
                     if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Chemin)
                         createNewStruct(tile_laid, "_1");
                     if (tile_laid.GetComponent<Constraints>().bas == Type_land.Chemin)
@@ -1268,165 +1301,490 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-public void drawshit(GameObject tile_laid)
-{
-    int x = tile_laid.GetComponent<Constraints>().coordX;
-    int y = tile_laid.GetComponent<Constraints>().coordY;
+    public void drawshit(GameObject tile_laid)
+    {
+        int x = tile_laid.GetComponent<Constraints>().coordX;
+        int y = tile_laid.GetComponent<Constraints>().coordY;
 
-    GameObject[] voisins = new GameObject[4];
-    for(int i = 0; i < Move.plateau.Count; i++)
-    {
-        if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y+1)
-            voisins[0] = Move.plateau[i]; // haut
-        if(Move.plateau[i].GetComponent<Constraints>().coordX == x-1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
-            voisins[1] = Move.plateau[i]; // gauche
-        if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y-1)
-            voisins[2] = Move.plateau[i]; // bas
-        if(Move.plateau[i].GetComponent<Constraints>().coordX == x+1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
-            voisins[3] = Move.plateau[i]; // droite
-    }
-    if (tile_laid.name.Contains("10"))
-    {
-        Debug.Log ("cas spé 10");
-        //haut et gauche
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+        GameObject[] voisins = new GameObject[4];
+        for(int i = 0; i < Move.plateau.Count; i++)
         {
-            resetVisite();
-            if (voisins[0] != null)
-            {
-                bool rep = townIsClosed(voisins[0]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[0]));
-            }
-            resetVisite();
-            if (voisins[1] != null){
-                bool rep = townIsClosed(voisins[1]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[1]));  
-            }     
+            // Debug.Log("plat : " + Move.plateau[i]);
+                if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y+1)
+                    voisins[0] = Move.plateau[i]; // haut
+                if(Move.plateau[i].GetComponent<Constraints>().coordX == x-1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
+                    voisins[1] = Move.plateau[i]; // gauche
+                if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y-1)
+                    voisins[2] = Move.plateau[i]; // bas
+                if(Move.plateau[i].GetComponent<Constraints>().coordX == x+1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
+                    voisins[3] = Move.plateau[i]; // droite
         }
-        //gaucge et bas
-        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
+        if (tile_laid.name.Contains("10"))
         {
-            resetVisite();
-            if (voisins[1] != null){
-                bool rep = townIsClosed(voisins[1]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[1])); 
-            }           
-            resetVisite();
-            if (voisins[2] != null){
-                bool rep = townIsClosed(voisins[2]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[2]));   
-            }     
+            //Debug.Log ("cas spé 10");
+            //haut et gauche
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[0]);
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    resetVisite();
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                        //Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                               // Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                            Debug.Log("j = "+j);
+                            Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+
+                            //Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+                resetVisite();
+                if (voisins[1] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[1]);
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    resetVisite();
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                        //Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                                //Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                           // Debug.Log("j = "+j);
+                          //  Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                          //  Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+            }
+            //gaucge et bas
+            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tile_laid.GetComponent<Constraints>().bas == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[1] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[1]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                      //  Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                                Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                          //  Debug.Log("j = "+j);
+                          //  Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                         //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+                resetVisite();
+                if (voisins[2] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[2]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                       // Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                             //   Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                          //  Debug.Log("j = "+j);
+                         //   Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                         //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+            }
+            //bas et droite
+            if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[2] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[2]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                      //  Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                              //  Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                          //  Debug.Log("j = "+j);
+                            //Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                           // Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }  
+                }
+                resetVisite();
+                if (voisins[3] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[3]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                       // Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                             //   Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                         //   Debug.Log("j = "+j);
+                          //  Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                          //  Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+            }
+            //haut et droite
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[0]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                      //  Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                               // Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                          //  Debug.Log("j = "+j);
+                           // Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                         //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+                resetVisite();
+                if (voisins[3] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[3]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                       // Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                      //          Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                      //      Debug.Log("j = "+j);
+                       //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                        //    Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+            }
         }
-        //bas et droite
-        if (tile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
+        if (tile_laid.name.Contains("15"))
         {
-            resetVisite();
-            if (voisins[2] != null){
-                bool rep = townIsClosed(voisins[2]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[2]));    
-            }        
-            resetVisite();
-            if (voisins[3] != null)
+            //Debug.Log ("cas spé 15");
+            if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
             {
-                bool rep = townIsClosed(voisins[3]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[3]));
+                resetVisite();
+                if (voisins[1] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[1]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                       // Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                          //      Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                          //  Debug.Log("j = "+j);
+                        //    Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                        //    Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+                resetVisite();
+                if (voisins[3] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[3]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                      //  Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                      //          Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                     //       Debug.Log("j = "+j);
+                       //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                        //    Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+            }
+            if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
+            {
+                resetVisite();
+                if (voisins[0] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[0]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                      //  Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                       //         Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                          //  Debug.Log("j = "+j);
+                         //   Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                            Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
+                resetVisite();
+                if (voisins[2] != null)
+                {
+                    tile_laid.GetComponent<Constraints>().visite = true;
+                    bool rep = townIsClosed(voisins[2]);
+                    resetVisite();
+                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    if(rep == true )
+                    {
+                        int p = score(tile_laid)*2;
+                      //  Debug.Log ("point " + p);
+                        int max =0;
+                        for(int i = 0; i < meeplePlayerTown.Length; i++)
+                        {
+                            if(max< meeplePlayerTown[i])
+                            {
+                                max = meeplePlayerTown[i];
+                            }
+                      //          Debug.Log("MAx meeple ville = "+max );
+                        }
+                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        {
+                        //    Debug.Log("j = "+j);
+                      //      Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                            if(meeplePlayerTown[j] == max && max != 0)
+                            {
+                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                            }
+                      //      Debug.Log("score = "+ list_of_struct_player[j].points);
+                        }
+                    }
+                }
             }
         }
-        //haut et droite
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tile_laid.GetComponent<Constraints>().droite == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-            {
-                bool rep = townIsClosed(voisins[0]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[0]));
-            }
-            resetVisite();
-            if (voisins[3] != null)
-            {
-                bool rep = townIsClosed(voisins[3]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[3]));
-            }
-        }
-    }
-    if (tile_laid.name.Contains("15"))
-    {
-        Debug.Log ("cas spé 15");
-        if (tile_laid.GetComponent<Constraints>().gauche == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[1] != null)
-            {
-                bool rep = townIsClosed(voisins[1]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[1]));
-            }
-            resetVisite();
-            if (voisins[3] != null)   
-            {
-                bool rep = townIsClosed(voisins[3]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[3]));
-            }
-        }
-        if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville)
-        {
-            resetVisite();
-            if (voisins[0] != null)
-            {
-                bool rep = townIsClosed(voisins[0]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[0]));
-            }
-            resetVisite();
-            if (voisins[2] != null)
-            {
-                bool rep = townIsClosed(voisins[2]);
-                Debug.Log("La partie haute est fermé ?" + rep);
-                if(rep == true )
-                    player.points += (1+ score(voisins[2]));
-            }
-        }
-    }
         if (!(tile_laid.name.Contains("10")) && !(tile_laid.name.Contains("15")))
         {
+            resetVisite();
             bool rep = townIsClosed(tile_laid);
-            Debug.Log ("pas de cas spé");
-            Debug.Log("La ville est fermé ?" + rep);
+            //Debug.Log ("pas de cas spé");
+            //Debug.Log("La ville est fermé ?" + rep);
             if(rep == true )
-                player.points +=  score(tile_laid);
-            
+            {
+                resetVisite();
+                int p = score(tile_laid)*2;
+                Debug.Log ("non special fermé");
+                int max =0;
+                for(int i = 0; i < meeplePlayerTown.Length; i++)
+                {
+                    if(max< meeplePlayerTown[i])
+                    {
+                        max = meeplePlayerTown[i];
+                    }
+                //        Debug.Log("MAx meeple ville = "+max );
+                }
+                for(int j =0; j < list_of_struct_player.Count; j++ )
+                {
+                //    Debug.Log("j = "+j);
+               //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
+                    if(meeplePlayerTown[j] == max && max != 0)
+                    {
+                        Debug.Log("max" + max + "joueur" + j);
+
+                        list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                    }
+                    affichage_score(j);
+
+                    Debug.Log("score = "+ list_of_struct_player[j].points);
+                }
+            }
         }
-}
+    }
+
+    public int getCompteur(PlayerManager player)
+    {
+        return player.compteur ;
+    }
 
 
     //faire algo pour vérifier que la tuile pioché n'est pas une tuille spé 
 
-    // rajouter condition pour les tuiles 10 et 15 qu'il faut lancer l'algo 2 fois
+    //algo de villes sur cas généraux
     public bool townIsClosed(GameObject tile_laid)
     {
         if(tile_laid.GetComponent<Constraints>().haut != Type_land.Ville && tile_laid.GetComponent<Constraints>().bas != Type_land.Ville && tile_laid.GetComponent<Constraints>().gauche != Type_land.Ville && tile_laid.GetComponent<Constraints>().droite != Type_land.Ville && tile_laid.GetComponent<Constraints>().haut != Type_land.Ville)
             return false;
-        bool maboule = true;
         
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
@@ -1434,7 +1792,7 @@ public void drawshit(GameObject tile_laid)
         GameObject[] voisins = new GameObject[4];
         for(int i = 0; i < Move.plateau.Count; i++)
         {
-            Debug.Log("plat : " + Move.plateau[i]);
+            // Debug.Log("plat : " + Move.plateau[i]);
                 if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y+1)
                     voisins[0] = Move.plateau[i]; // haut
                 if(Move.plateau[i].GetComponent<Constraints>().coordX == x-1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
@@ -1445,7 +1803,11 @@ public void drawshit(GameObject tile_laid)
                     voisins[3] = Move.plateau[i]; // droite
         }
 
+        Debug.Log("Liste des voisins : haut : "+voisins[0]+" gauche : "+voisins[1]+" bas : "+voisins[2] + " droite : "+voisins[3]);
+        // Debug.Log("Liste valeur visites : haut : "+voisins[0].GetComponent<Constraints>().visite+" gauche : "+voisins[1].GetComponent<Constraints>().visite+" bas : "+voisins[2].GetComponent<Constraints>().visite + " droite : "+voisins[3].GetComponent<Constraints>().visite);
+                
         tile_laid.GetComponent<Constraints>().visite = true;
+        // RpcEstVisite(tile_laid);
         // && tile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine pour distinguer des tuile 10 et 15
         if (tile_laid.GetComponent<Constraints>().haut == Type_land.Ville && (!tile_laid.name.Contains("10") || !tile_laid.name.Contains("15")))
         {
@@ -1453,10 +1815,12 @@ public void drawshit(GameObject tile_laid)
                 {
                     return false;
                 }
-            Debug.Log("mon voisin du haut est non null");
+           // Debug.Log("mon voisin du haut est non null");
+            Debug.Log("viste haut : " + voisins[0].GetComponent<Constraints>().visite);
             if (!voisins[0].GetComponent<Constraints>().visite)
                 {
                 voisins[0].GetComponent<Constraints>().visite = true;
+                // RpcEstVisite(voisins[0]);
                 if(!townIsClosed(voisins[0]))
                     return false;
                 }
@@ -1467,10 +1831,12 @@ public void drawshit(GameObject tile_laid)
                 {
                     return false;
                 }
-            Debug.Log("mon voisin de gauche est non null");
+          //  Debug.Log("mon voisin de gauche est non null");
+            Debug.Log("viste gauche : " + voisins[1].GetComponent<Constraints>().visite);
             if (!voisins[1].GetComponent<Constraints>().visite)
                 {
                 voisins[1].GetComponent<Constraints>().visite = true;
+                // RpcEstVisite(voisins[1]);
                 if(!townIsClosed(voisins[1]))
                         return false;
                 }
@@ -1481,10 +1847,12 @@ public void drawshit(GameObject tile_laid)
                     {
                         return false;
                     }
-                Debug.Log("mon voisin du bas est non null");
+               // Debug.Log("mon voisin du bas est non null");
+                Debug.Log("viste bas : " + voisins[2].GetComponent<Constraints>().visite);
                 if (!voisins[2].GetComponent<Constraints>().visite)
                     {
                     voisins[2].GetComponent<Constraints>().visite = true;
+                    // RpcEstVisite(voisins[2]);
                     if(!townIsClosed(voisins[2]))
                         return false;
                     }
@@ -1495,10 +1863,12 @@ public void drawshit(GameObject tile_laid)
                     {
                     return false;
                     }
-                Debug.Log("mon voisin de droite est non null");
+              //  Debug.Log("mon voisin de droite est non null");
+                Debug.Log("viste droite : " + voisins[3].GetComponent<Constraints>().visite);
                 if (!voisins[3].GetComponent<Constraints>().visite)
                     {
                     voisins[3].GetComponent<Constraints>().visite = true;
+                    // RpcEstVisite(voisins[3]);
                     if (!townIsClosed(voisins[3]))
                         return false;
                     }
@@ -1506,22 +1876,37 @@ public void drawshit(GameObject tile_laid)
         return true;
     }
 
+    [ClientRpc]
+    void RpcEstVisite(GameObject go)
+    {
+        go.GetComponent<Constraints>().visite = true;
+    }
+
+    [Command]
     public void abbeyIsClose()
     {
-        //ajouter dès qu'on pick une tuile ou dès qu'on la pose
-        //si son milieu est == Abbaye
-        // -> on la rajoute à une liste d'abbaye
-        //et ensuite on lance à chaque tour, abbeyIsClose sur seulement cette liste
-
-
-        // parcours de Move.plateau
-        for (int i = 0; i < abbeyes.Count; i++)
+        // parcours de plateau
+        for (int i = 0; i < Move.abbeyes.Count; i++)
         {
-            if (abbeyLaid(abbeyes[i])){
-                player.points += 9;
-                abbeyes.RemoveAt(i);
+            if (Move.abbeyes[i].GetComponent<Constraints>().meeple == 4)
+            {
+                if (abbeyLaid(Move.abbeyes[i]))
+                {
+                    for (int j = 0; j < list_of_struct_player.Count; j++)
+                    {
+                        if(list_of_struct_player[j].id == Move.abbeyes[i].GetComponent<Constraints>().id_joueur)
+                        {
+                            list_of_struct_player[j]= new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + 9);
+                            Move.abbeyes.RemoveAt(i);
+                        }
+                        affichage_score(j);
+                    }
+                }
+                // if (abbeyLaid(Move.abbeyes[i]) == false)
+                // {
+                //     player.points = counterAbbey;
+                // }
             }
-            
         }
         // if (Move.plateau[i].milie == abbaye)
         //  je lance abbeyLaid(Move.plateau[i])
@@ -1533,37 +1918,167 @@ public void drawshit(GameObject tile_laid)
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
         GameObject[] voisins = new GameObject[8];
-        int compteur = 0;
+        int Abbaye_compteur = 0;
         // pose abbaye direct avec les 8 tuiles
         for (int i = 0; i < Move.plateau.Count; i++)
         {
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1)
-                compteur++; // haut
+                Abbaye_compteur++; // haut
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
-                compteur++; // gauche
+                Abbaye_compteur++; // gauche
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1)
-                compteur++; // bas
+                Abbaye_compteur++; // bas
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
-                compteur++; // droite
+                Abbaye_compteur++; // droite
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1)
-                compteur++; // haut droite
+                Abbaye_compteur++; // haut droite
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x - 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y + 1)
-                compteur++; // haut gauche
+                Abbaye_compteur++; // haut gauche
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1)
-                compteur++; // bas droite
+                Abbaye_compteur++; // bas droite
             if (Move.plateau[i].GetComponent<Constraints>().coordX == x + 1 && Move.plateau[i].GetComponent<Constraints>().coordY == y - 1)
-                compteur++; // bas gauche
+                Abbaye_compteur++; // bas gauche
         }
-        if (compteur == 8)
+        if (Abbaye_compteur == 8)
         {
             // calcul de points
-            Debug.Log("abbaye: " + tile_laid + " est complet");
+           // //Debug.Log("abbaye: " + tile_laid + " est complet");
             return true;
         }
         return false;
         // lancer la fonction sur tous les GO qui sont des abbayes (milieu = abbaye) -> tout le Move.plateau pour tous les tours
         // const int voisins[8][2] = {{-1,-1}, {-1,0}, {-1,1}, {0,-1}, {0,1}, {1,-1}, {1,0}, {1,1}};
     }
+
+    public void placeMeeple(float x,float y, GameObject go)
+    {
+        float xTuile = x - go.GetComponent<Constraints>().coordX;
+        float yTuile = y - go.GetComponent<Constraints>().coordY;
+
+        // Haut
+        if(xTuile>=0.5f && xTuile<0.6f && yTuile>=0.82f && yTuile<0.84f)
+        {
+            
+            Debug.Log("meeple haut");
+            
+            go.GetComponent<Constraints>().meeple = 0;    
+            if( go.GetComponent<Constraints>().haut == Type_land.Chemin)
+            {
+                for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
+                {
+                    for (int j = 0; j < Move.list_of_struct_roads[i].CurrentTiles.Count; j++)
+                    {
+                        if (Move.list_of_struct_roads[i].CurrentTiles[j] == go)
+                        {
+                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            {
+                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]); 
+                            }
+                        } 
+                    }
+                }
+            }
+            if (go.GetComponent<Constraints>().haut == Type_land.Ville)
+            {
+
+            }
+        }
+        
+        // Gauche
+        if(xTuile>=0.17f && xTuile<0.18f && yTuile>=0.5f && yTuile<0.6f)
+        {
+            Debug.Log("meeple gauche");
+            go.GetComponent<Constraints>().meeple = 1; 
+            if( go.GetComponent<Constraints>().gauche == Type_land.Chemin)
+            {
+                for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
+                {
+                    for (int j = 0; j < Move.list_of_struct_roads[i].CurrentTiles.Count; j++)
+                    {
+                        if (Move.list_of_struct_roads[i].CurrentTiles[j] == go)
+                        {
+                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            {
+                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]); 
+                            }
+                        } 
+                    }
+                }
+            }   
+        }
+
+        // Bas
+        if(xTuile>=0.5f && xTuile<0.6f && yTuile>=0.17f && yTuile<0.18f)
+        {
+            Debug.Log("meeple bas");
+            go.GetComponent<Constraints>().meeple = 2;
+            if( go.GetComponent<Constraints>().bas == Type_land.Chemin)
+            {
+                for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
+                {
+                    for (int j = 0; j < Move.list_of_struct_roads[i].CurrentTiles.Count; j++)
+                    {
+                        if (Move.list_of_struct_roads[i].CurrentTiles[j] == go)
+                        {
+                            //Debug.Log("ajout meeple dans chemin");
+                            //Debug.Log("placeMEeple: i " +i+ " j " +j);
+                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            {
+                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]); 
+                            }
+                        } 
+                    }
+                }
+            }  
+
+        }
+
+        // Droite
+        if(xTuile>=0.82f && xTuile<0.84f && yTuile>=0.5f && yTuile<0.6f)
+        {
+            Debug.Log("meeple droite");
+            go.GetComponent<Constraints>().meeple = 3;
+            if( go.GetComponent<Constraints>().droite == Type_land.Chemin)
+            {
+                for(int i = 0; i < Move.list_of_struct_roads.Count; i++)
+                {
+                    for (int j = 0; j < Move.list_of_struct_roads[i].CurrentTiles.Count; j++)
+                    {
+                        if (Move.list_of_struct_roads[i].CurrentTiles[j] == go)
+                        {
+                            //Debug.Log("ajout meeple dans chemin");
+                            //Debug.Log("placeMEeple: i " +i+ " j " +j);
+                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            {
+                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]);
+
+                                
+                            }
+                        } 
+                    }
+                }
+            }
+            if( go.GetComponent<Constraints>().droite == Type_land.Ville)
+            {
+
+            }
+        }
+
+        // Milieu
+        if(xTuile>=0.5f && xTuile<0.6f && yTuile>=0.5f && yTuile<0.6f)
+        {
+            if (go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
+            {
+                go.GetComponent<Constraints>().meeple = 4;
+            }
+            // if (go.GetComponent<Constraints>().droite == Type_land.);
+        }
+
+    }    
 
     // Demande du client au serveur du tirage d'une tuile de manière aléatoire
     [Command]
@@ -1591,7 +2106,7 @@ public void drawshit(GameObject tile_laid)
             // on pioche la tuile dans la liste all-tiles et puis on la supprime de la liste
             GameObject tuilos = Instantiate(all_tiles[randInt]);
             all_tiles.RemoveAt(randInt);
-            //Debug.Log("Objet à faire spawn : " + tuilos);
+            ////Debug.Log("Objet à faire spawn : " + tuilos);
             // on spawn la tuile sur le serveur
             NetworkServer.Spawn(tuilos, connectionToClient);
             // on affiche la tuile chez tous les clients
@@ -1635,21 +2150,30 @@ public void drawshit(GameObject tile_laid)
 
     // Demande de pose de Meeple au serveur
     [Command]
-    public void CmdSpawnMeeple(float x, float y)
+    public void CmdSpawnMeeple(float x, float y, GameObject go)
     {
+        // Debug.Log("creation meeple ");
         compteurMeeple++;
         // instantiation d'un Prefab Meeple
         GameObject meeple = GameObject.Instantiate(Meeples);
         meeple.SetActive(true);
         NetworkServer.Spawn(meeple, connectionToClient);
         meeple.name = "Meeple" + compteurMeeple;
-        //Debug.Log("positions stars en x : " +transform.position.x + " et en y : " + transform.position.y);
+        ////Debug.Log("positions stars en x : " +transform.position.x + " et en y : " + transform.position.y);
         // on positionne le Meeple au dessus de la position de l'étoile sur laquelle on clique (ses positions sont les paramètres x et y)
         meeple.transform.position = new Vector3(x + 0.6f, y - 0.04f, 0.25f);
+        placeMeeple(x,y, go);
 
         //meeple.transform.SetParent(GameObject.Find("Meeples").transform);
+        MoveMeeple.rmStars(); ////////////////////////////////////////////////////////////////// à implémenter
 
-        //MoveMeeple.rmStars(); ////////////////////////////////////////////////////////////////// à implémenter
+        var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach (GameObject i in allobjects)
+            // if (-0.05f<i.transform.position.z && i.transform.position.z<0.05f && i.transform.position.x == x + 0.6f && i.transform.position.y == y - 0.04f)
+            // if(meeple.transform.position.x-0.7f < i.transform.position.x && i.transform.position.x < meeple.transform.position.x+0.7f && meeple.transform.position.y-0.7f < i.transform.position.y && i.transform.position.y < meeple.transform.position.y+0.7f && -0.05f < i.transform.position.z && i.transform.position.z < 0.05f)
+            if((meeple.transform.position.x-(meeple.transform.position.x-0.35f))/2 < i.transform.position.x && i.transform.position.x < (meeple.transform.position.x+(meeple.transform.position.x+0.35f))/2 && (meeple.transform.position.y-(meeple.transform.position.x-(meeple.transform.position.x-0.35f))/2 < i.transform.position.y && i.transform.position.y < (meeple.transform.position.y+(meeple.transform.position.x+0.35f))/2 && -0.05f < i.transform.position.z && i.transform.position.z < 0.05f))
+
+                Debug.Log(i.name);
 
         RpcShowMeeples(meeple, "Dealt");
     }
@@ -1659,7 +2183,7 @@ public void drawshit(GameObject tile_laid)
     void RpcShowMeeples(GameObject go, string action)
     {
         //Debug.Log("je suis dans rpc");
-        //Debug.Log("GameObject : "+ go);
+        // Debug.Log("GameObject : "+ go);
         //Debug.Log("Action : "+ action);
 
         if (action == "Dealt")
@@ -1698,14 +2222,14 @@ public void drawshit(GameObject tile_laid)
                 GameObject star = Instantiate(Stars);
 
                 star.SetActive(true);
-                //Debug.Log("Stars à faire spawn : " + star);
+                ////Debug.Log("Stars à faire spawn : " + star);
                 //NetworkServer.Spawn(star, connectionToClient);
                 star.name = "Star" + i;
                 star.transform.position = new Vector3(x + tabPos[i].x, y + tabPos[i].y, -0.1f);
                 star.transform.SetParent(GameObject.Find("Stars").transform);
                 NetworkServer.Spawn(star, connectionToClient);
                 RpcShowStars(star, "Dealt");
-                //Debug.Log("rpc fais buggué ? ");
+                ////Debug.Log("rpc fais buggué ? ");
             }
         }
     }
@@ -1714,7 +2238,7 @@ public void drawshit(GameObject tile_laid)
     [ClientRpc]
     void RpcShowStars(GameObject go, string action)
     {
-        //Debug.Log("GO : " + go);
+        ////Debug.Log("GO : " + go);
         if (action == "Dealt")
         {
             if (hasAuthority)
@@ -1736,18 +2260,29 @@ public void drawshit(GameObject tile_laid)
         }
     }
 
+    // [Command]
+    // public void rmStars()
+    // {
+    //     var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+    //     foreach (GameObject i in allobjects)
+    //         if (i.name == "Star")
+    //             NetworkServer.Destroy(i);
+    // }
+
 
     public int score(GameObject tile_laid)
     {
-
+        
         int x = tile_laid.GetComponent<Constraints>().coordX;
         int y = tile_laid.GetComponent<Constraints>().coordY;
         int p = 0;
+        if(tile_laid.GetComponent<Constraints>().blason == true)
+            p++;
         GameObject[] voisins = new GameObject[4];
         GameObject tmpTile_laid= tile_laid;
         for(int i = 0; i < Move.plateau.Count; i++)
         {
-            Debug.Log("plat : " + Move.plateau[i]);
+            //Debug.Log("plat : " + Move.plateau[i]);
             if(Move.plateau[i].GetComponent<Constraints>().coordX == x && Move.plateau[i].GetComponent<Constraints>().coordY == y+1)
                 voisins[0] = Move.plateau[i]; // haut
             if(Move.plateau[i].GetComponent<Constraints>().coordX == x-1 && Move.plateau[i].GetComponent<Constraints>().coordY == y)
@@ -1761,64 +2296,141 @@ public void drawshit(GameObject tile_laid)
         tmpTile_laid.GetComponent<Constraints>().visite = true;
         if (tmpTile_laid.GetComponent<Constraints>().haut == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
-
+            Debug.Log("yo");
+            if(tmpTile_laid.GetComponent<Constraints>().meeple == 0)
+            {
+                for(int j=0; j<list_of_struct_player.Count; j++)
+                {
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    {
+                        meeplePlayerTown[j]++;
+                    }
+                }
+            }
             if(voisins[0] != null &&  !(voisins[0].GetComponent<Constraints>().visite) && (voisins[0].name.Contains("10") || voisins[0].name.Contains("15")))
             {
-                p++;
+                if(voisins[0].GetComponent<Constraints>().meeple == 2)
+                {
+                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    {
+                        if(voisins[0].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        {
+                            meeplePlayerTown[j]++;
+                        }
+                    }            
+                }
             }
             else if (voisins[0] != null && !(voisins[0].GetComponent<Constraints>().visite))
             {
-                Debug.Log("haut +");
+                ////Debug.Log("haut +");
                 voisins[0].GetComponent<Constraints>().visite = true;
                 p += score(voisins[0]);
             }    
         }
         if (tmpTile_laid.GetComponent<Constraints>().gauche == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
+            if(tmpTile_laid.GetComponent<Constraints>().meeple == 1)
+            {
+                for(int j=0; j<list_of_struct_player.Count; j++)
+                {
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    {
+                        meeplePlayerTown[j]++;
+                    }
+                }
+            }
             if(voisins[1] != null &&  !(voisins[1].GetComponent<Constraints>().visite) && (voisins[1].name.Contains("10") || voisins[1].name.Contains("15")))
             {
-                p++;
+                if(voisins[1].GetComponent<Constraints>().meeple == 3)
+                {
+                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    {
+                        if(voisins[1].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        {
+                            meeplePlayerTown[j]++;
+                        }
+                    }            
+                }
             }
             else if (voisins[1] != null && !(voisins[1].GetComponent<Constraints>().visite))
             {
-                Debug.Log("gauche +");
+                ////Debug.Log("gauche +");
                 voisins[1].GetComponent<Constraints>().visite = true;
-                 p += score(voisins[1]);
+                p += score(voisins[1]);
             }    
         }
         if (tmpTile_laid.GetComponent<Constraints>().bas == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
-            if(voisins[2] != null &&  !(voisins[2].GetComponent<Constraints>().visite) && (voisins[2].name.Contains("10") || voisins[2].name.Contains("15")))
+            if(tmpTile_laid.GetComponent<Constraints>().meeple == 2)
             {
-                p++;
+                for(int j=0; j<list_of_struct_player.Count; j++)
+                {
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    {
+                        meeplePlayerTown[j]++;
+                    }
+                }
             }
-
+            if((voisins[2] != null &&  !(voisins[2].GetComponent<Constraints>().visite)) && (voisins[2].name.Contains("10") || voisins[2].name.Contains("15")))
+            {
+                //Debug.Log(" merde +");
+                if(voisins[2].GetComponent<Constraints>().meeple == 0)
+                {
+                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    {
+                        if(voisins[2].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        {
+                            meeplePlayerTown[j]++;
+                        }
+                    }            
+                }
+            }
+            
             else if (voisins[2] != null && !(voisins[2].GetComponent<Constraints>().visite))
             {
-                Debug.Log("bas +");
+               // Debug.Log(" on continue en bas +");
                 voisins[2].GetComponent<Constraints>().visite = true;
 
                 p += score(voisins[2]);
-            }    
+            }
+          //  Debug.Log("bientot on continue en bas +");
+          //  Debug.Log("visite voisin " + voisins[2].GetComponent<Constraints>().visite);
         }
         if (tmpTile_laid.GetComponent<Constraints>().droite == Type_land.Ville && tmpTile_laid.GetComponent<Constraints>().milieu != Type_land.Plaine)
         {
+            if(tmpTile_laid.GetComponent<Constraints>().meeple == 3)
+            {
+                for(int j=0; j<list_of_struct_player.Count; j++)
+                {
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    {
+                        meeplePlayerTown[j]++;
+                    }
+                }
+            }
             if(voisins[3] != null &&  !(voisins[3].GetComponent<Constraints>().visite) && (voisins[3].name.Contains("10") || voisins[3].name.Contains("15")))
             {
-                p++;
+                if(voisins[3].GetComponent<Constraints>().meeple == 1)
+                {
+                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    {
+                        if(voisins[3].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        {
+                            meeplePlayerTown[j]++;
+                        }
+                    }            
+                }
             }
             else if (voisins[3] != null && !(voisins[3].GetComponent<Constraints>().visite))
             {
-                Debug.Log("droite +");
+              //  Debug.Log("droite +");
                 voisins[3].GetComponent<Constraints>().visite = true;
-
+                
                 p += score(voisins[3]);
             }    
         }
-
+       // Debug.Log("merci");
         return p+ 1;
- 
- 
     }
 
     
@@ -1862,7 +2474,6 @@ public void drawshit(GameObject tile_laid)
     [Command]
     public void CmdSpawnGrid(int nbTuiles)
     {
-        Debug.Log("afficher grid");
         for (int x = 0; x < nbTuiles; x++)
         {
             for (int y = 0; y < nbTuiles; y++)
@@ -1946,15 +2557,44 @@ public void drawshit(GameObject tile_laid)
         i.gauche = g;
         i.bas = b;
         i.droite = d;
+
+        go.GetComponent<Constraints>().haut = h;
+        go.GetComponent<Constraints>().bas = b;
+        go.GetComponent<Constraints>().gauche = g;
+        go.GetComponent<Constraints>().droite = d;
     }
 
-    dynamic test(GameObject go) {
-    var mm = go.GetComponents(typeof(Component));
-    foreach(object i in mm)
+    [Command]
+    public void CmdSetLaid(GameObject go)
     {
-      if (i.GetType().Name.Contains("tile_type"))
-        return i;
+        RpcSetLaid(go);
     }
-    return null;
-  }
+
+    [ClientRpc]
+    void RpcSetLaid(GameObject go)
+    {
+        go.GetComponent<Constraints>().laid = true;
+    }
+
+    dynamic test(GameObject go) 
+    {
+        var mm = go.GetComponents(typeof(Component));
+        foreach(object i in mm)
+        {
+        if (i.GetType().Name.Contains("tile_type"))
+            return i;
+        }
+        return null;
+    }
+
+        dynamic test_point(GameObject go) 
+    {
+        var mm = go.GetComponents(typeof(Component));
+        foreach(object i in mm)
+        {
+        if (i.GetType().Name.Contains("Points"))
+            return i;
+        }
+        return null;
+    }
 }

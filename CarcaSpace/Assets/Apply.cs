@@ -18,15 +18,18 @@ public class Apply : MonoBehaviour {
     this.gameObject.SetActive(false);
     var list = Resources.FindObjectsOfTypeAll<GameObject>();
     foreach (GameObject i in list) {
-      if (i.name.Contains("Clone")) {
-        if (i.GetComponent<rotateZ>().enabled != true)
-        {
-          i.GetComponent<AccessDenied>().enabled = false;
-          i.GetComponent<Move>().enabled = false;
-          i.GetComponent<NotifDenied>().enabled = false;
-          i.GetComponent<Constraints>().enabled = false;
-          i.GetComponent<MoveFirst>().enabled = false;
+      if (i.name.Contains("TileType")) {
+        if(i.name.Contains("Clone")){
+          if (i.GetComponent<rotateZ>().enabled != true)
+          {
+            i.GetComponent<AccessDenied>().enabled = false;
+            i.GetComponent<Move>().enabled = false;
+            i.GetComponent<NotifDenied>().enabled = false;
+            i.GetComponent<Constraints>().enabled = false;
+            i.GetComponent<MoveFirst>().enabled = false;
+          }
         }
+        
       }
     }
     ButtonPick.SetActive(true);

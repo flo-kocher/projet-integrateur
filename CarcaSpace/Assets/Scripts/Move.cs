@@ -21,6 +21,7 @@ public class Move : NetworkBehaviour {
   public static List<GameObject> plateau = new List<GameObject>();
   public static int nb_of_struct_roads;
   public static List<PlayerManager.CurrentRoads> list_of_struct_roads = new List<PlayerManager.CurrentRoads>();
+  public static List<GameObject> abbeyes = new List<GameObject>();
 
   // Start is called before the first frame update
   void Start() { 
@@ -52,6 +53,7 @@ public class Move : NetworkBehaviour {
             MoveMeeple.rmMeeple(); ///////////////// à faire en version Network
             clickedOnStar = false;
           }
+          
           if (!dragging) {
             if (this.GetComponent<Constraints>().verif(
                     i.haut,
@@ -99,18 +101,23 @@ public class Move : NetworkBehaviour {
                 this.GetComponent<AccessDenied>().animRefuse();
               }
 
-              dragging = !dragging;
+              //dragging = !dragging;
             }
           } else {
             anim1 = true;
           }
         } else if (go.name.Contains("Star")) {
-          go.GetComponent<CreateMeeple>().function();
+          //Debug.Log($"id is { NetworkClient.connection.identity}, go is {go}") ;
+          this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
+          //GameObject tmpTile_laid= tile_laid;
+
+          go.GetComponent<CreateMeeple>().function(gameObject);
           clickedOnStar = true;
         }
       }
     }
-    if (dragging) {
+    if (dragging) 
+    {
       Vector3 position =
           new Vector3(Input.mousePosition.x, Input.mousePosition.y,
                       Camera.main.WorldToScreenPoint(transform.position).z);
@@ -119,7 +126,7 @@ public class Move : NetworkBehaviour {
           new Vector3(worldPosition.x, worldPosition.y, transform.position.z);
     }
     if (anim1) {
-      MoveMeeple.rmStars(); ///////////////// Faire en version Network
+      // MoveMeeple.rmStars(); ///////////////// Faire en version Network
 
       if (disapear != null) {
         // disapear.SetActive(true);
@@ -162,60 +169,38 @@ public class Move : NetworkBehaviour {
         // faire spawn les étoiles sur le serveur et les clients
         
         // PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
-        PlayerManager.CmdSpawnStars(disapear.GetComponent<Constraints>().posePossible, x, y);
+        PlayerManager.CmdSetLaid(go);
+        PlayerManager.CmdSpawnStars(go.GetComponent<Constraints>().posePossible, x, y);
 
         go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;
         go.GetComponent<Constraints>().coordY = disapear.GetComponent<Constraints>().coordY;
         
-        PlayerManager.roadIsClosed_Struct(go);
-        PlayerManager.checkAllStruct();
-        PlayerManager.seeStruct();
-
+        this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
-        //cloture de chemins
-        // PlayerManager.townIsClosed(go);
-      
-        //PlayerManager.roadIsClosed_Struct(go);
-        //PlayerManager.checkAllStruct();
-        //Debug.Log("liste des structs "+PlayerManager.list_of_struct_roads.Count);
-        /*
-        for(int k = 0; k < PlayerManager.list_of_struct_roads.Count; k++)
-        {
-          Debug.Log("nb d'elt dans  la structure "+k+ " : "+PlayerManager.list_of_struct_roads[k].CurrentTiles.Count);
-          //Debug.Log("var isClosed = "+PlayerManager.list_of_struct_roads[k].isClosed);
-        }
-        */
-        //Debug.Log("test estFermante " +go.GetComponent<Constraints>().estFermante);
-        
 
-        //Debug.Log("structure "+PlayerManager.list_of_struct_roads[k].Name+ " : "+ PlayerManager.list_of_struct_roads[k].CurrentTiles.Count+ " elems"+" tag : "+PlayerManager.list_of_struct_roads[k].tag);
-        
+        // if(PlayerManager.list_of_struct_player != null)
+        // {
+        //   Debug.Log("Points j1 : " + PlayerManager.list_of_struct_player[1].points);
+        // }
+        // for(int m = 0; m<=PlayerManager.list_of_struct_player.Count; m++){
+        //   Debug.Log("Joueur "+i+"; score = "+ PlayerManager.list_of_struct_player[i].points);
+        // }
 
-    
-        // PlayerManager.resetVisite();
-        // PlayerManager.drawshit(go);
-        // PlayerManager.resetVisite();
-
-        //cloture d'abbayes
-        /*
+        // comptage des points
+        //comptage des abbays complet
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
-          PlayerManager.abbeyes.Add(go);
+          abbeyes.Add(go);
         PlayerManager.abbeyIsClose();
-        */
-        /* comptage des points
-            comptage des abbays complet
-              if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
-                PlayerManager.abbeyes.Add(go);
-              PlayerManager.abbeyIsClose();
-            comptage points villes completes
-              PlayerManager.resetVisite();
-              PlayerManager.drawshit(go);
-              PlayerManager.resetVisite();
-            comptage points chemin complets
-              PlayerManager.checkAllStruct();
+      //comptage points villes completes
+        PlayerManager.resetVisite();
+        PlayerManager.drawshit(go);
+        PlayerManager.resetVisite();
+      //comptage points chemin complets
+        PlayerManager.roadIsClosed_Struct(go);
+        PlayerManager.checkAllStruct();
 
-        */
+        
 
 
       }

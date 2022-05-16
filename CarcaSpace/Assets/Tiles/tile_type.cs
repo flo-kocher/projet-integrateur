@@ -19,6 +19,7 @@ public abstract class tile_type : NetworkBehaviour
     public static int nbrTuile = 72; // sans rivière : 72, avec rivière : 84
     public static bool finish = false;
     public static bool blason;
+    // public static bool laid = false;
     public PlayerManager PlayerManager;
 
 
@@ -42,14 +43,16 @@ public abstract class tile_type : NetworkBehaviour
     {
         if(Input.GetKeyDown("left") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne)){
+            // Debug.Log(this.GetComponent<Constraints>().laid);
+            if(!this.GetComponent<Constraints>().laid && !(r.leve || r.couche || r.tourne)){
                 rotate_left();
             }
             
         }
         if(Input.GetKeyDown("right") && r!=null)
         {
-            if(!(r.leve || r.couche || r.tourne)){
+            // Debug.Log(this.GetComponent<Constraints>().laid);
+            if(!this.GetComponent<Constraints>().laid && !(r.leve || r.couche || r.tourne)){
                 rotate_right();
             }
         }
