@@ -82,7 +82,7 @@ app.post('/logIn', async (req, res) => {
             }
             else{
                 res.send({success: false,
-                message: "Not existing user"})
+                message: "Credentials failed"})
             }
         })
         .catch( (err) => {
