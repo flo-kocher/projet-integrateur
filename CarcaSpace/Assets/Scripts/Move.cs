@@ -53,6 +53,7 @@ public class Move : NetworkBehaviour {
             MoveMeeple.rmMeeple(); ///////////////// à faire en version Network
             clickedOnStar = false;
           }
+          
           if (!dragging) {
             if (this.GetComponent<Constraints>().verif(
                     i.haut,
@@ -100,19 +101,23 @@ public class Move : NetworkBehaviour {
                 this.GetComponent<AccessDenied>().animRefuse();
               }
 
-              dragging = !dragging;
+              //dragging = !dragging;
             }
           } else {
             anim1 = true;
           }
         } else if (go.name.Contains("Star")) {
-          // Debug.Log(go.name);
-          go.GetComponent<CreateMeeple>().function();
+          //Debug.Log($"id is { NetworkClient.connection.identity}, go is {go}") ;
+          this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
+          //GameObject tmpTile_laid= tile_laid;
+
+          go.GetComponent<CreateMeeple>().function(gameObject);
           clickedOnStar = true;
         }
       }
     }
-    if (dragging) {
+    if (dragging) 
+    {
       Vector3 position =
           new Vector3(Input.mousePosition.x, Input.mousePosition.y,
                       Camera.main.WorldToScreenPoint(transform.position).z);
@@ -170,24 +175,32 @@ public class Move : NetworkBehaviour {
         go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;
         go.GetComponent<Constraints>().coordY = disapear.GetComponent<Constraints>().coordY;
         
+        this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
         //cloture de chemins
         PlayerManager.roadIsClosed_Struct(go);
         PlayerManager.checkAllStruct();
-        PlayerManager.seeStruct();
+        //PlayerManager.seeStruct();
 
         //cloture de villes
-        // PlayerManager.resetVisite();
-        // PlayerManager.drawshit(go);
-        // PlayerManager.resetVisite();
+        PlayerManager.resetVisite();
+        PlayerManager.drawshit(go);
+        PlayerManager.resetVisite();
 
         //cloture d'abbayes
         
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
           abbeyes.Add(go);
         PlayerManager.abbeyIsClose();
-        
+        if(PlayerManager.list_of_struct_player != null)
+        {
+          Debug.Log("Points j1 : " + PlayerManager.list_of_struct_player[1].points);
+        }
+        for(int m = 0; m<=PlayerManager.list_of_struct_player.Count; m++){
+          Debug.Log("Joueur "+i+"; score = "+ PlayerManager.list_of_struct_player[i].points);
+        }
+        PlayerManager.resetVisite();   
 
         /* comptage des points
             comptage des abbays complet
