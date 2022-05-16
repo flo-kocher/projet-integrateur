@@ -34,11 +34,13 @@ public class logIn : MonoBehaviour{
     TMP_InputField inputPassword;
     Button submit;
     Text serverResponseText; 
+    playerStats playerStat ; 
 
 
     string getRouteURI = "http://185.155.93.105:11007/logIn";
     //string getRouteURI = "localhost:8080/logIn";
     void Start(){
+        playerStat = new playerStats();
         inputUsername = GameObject.Find("Username").GetComponent<TMP_InputField>();
         inputPassword = GameObject.Find("Password").GetComponent<TMP_InputField>();
         submit = GameObject.Find("Submit").GetComponent<Button>();
@@ -76,7 +78,7 @@ public class logIn : MonoBehaviour{
                
                 if(data.success == "true")
                 {
-                    playerName = getPlayerName();
+                    string PlayerName =  playerStat.getPlayerName();
                     SceneManager.LoadScene("Lobby", LoadSceneMode.Additive);
                 }
                 else if(data.success == "false" && data.message == "Not existing user") {

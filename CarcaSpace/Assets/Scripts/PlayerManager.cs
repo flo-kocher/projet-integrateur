@@ -438,7 +438,7 @@ public class PlayerManager : NetworkBehaviour
         // Points4.GetComponent<Text>().text = "Player 5 : 0";
         // Points5.GetComponent<Text>().text = "Player 3 : 0";
         //Debug.Log("els dans all_tiles : " +all_tiles);
-        //Debug.Log(all_tiles.Count);
+        Debug.Log("ici start");
 
         //instantie le tableau des positions des étoiles
         tabPos = new Vector2[5];
@@ -2437,7 +2437,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcShowGrid(GameObject go, string action, int x, int y)
     {
-        // Debug.Log("ALOOO");
+        Debug.Log("ALOOO");
         if (action == "Dealt")
         {
             if (hasAuthority)
@@ -2474,6 +2474,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawnGrid(int nbTuiles)
     {
+        Debug.Log($"ya zebi");
         for (int x = 0; x < nbTuiles; x++)
         {
             for (int y = 0; y < nbTuiles; y++)
