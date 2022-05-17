@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : NetworkBehaviour
 {
@@ -2232,6 +2233,7 @@ public class PlayerManager : NetworkBehaviour
             {
                 Debug.Log("AFFICHAGE DE FIN DE DEMO");
                 Debug.Log("Faire return qui emmene autre part pour pas avoir de déconnexion de client");
+                RpcChangeScenes("MainMenu");
             }
             else
             {
@@ -2273,6 +2275,11 @@ public class PlayerManager : NetworkBehaviour
         }
         
         // compteur++;
+    }
+
+    [ClientRpc]
+    public void RpcChangeScenes(string scene){
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
     }
 
     bool CheckPick(){

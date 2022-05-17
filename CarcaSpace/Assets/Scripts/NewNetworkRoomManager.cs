@@ -88,7 +88,7 @@ public class NewNetworkRoomManager : NetworkRoomManager
 // #else
 //             showStartButton = true;
 // #endif
-       // ServerChangeScene(GameplayScene);
+//        ServerChangeScene(GameplayScene);
     }
 
     /// <summary>
