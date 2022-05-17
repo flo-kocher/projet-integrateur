@@ -246,7 +246,7 @@ public class PlayerManager : NetworkBehaviour
                 Move.points1+=points;
                 var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
                 foreach (GameObject o in allobjects)
-                    if (o.name == "Points1")
+                    if (o.name.Contains("Points1"))
                         o.GetComponent<Points1>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
             }
             else if(i == 1)
@@ -254,7 +254,7 @@ public class PlayerManager : NetworkBehaviour
                 Move.points2+=points;
                 var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
                 foreach (GameObject o in allobjects)
-                    if (o.name == "Points2")
+                    if (o.name.Contains("Points2"))
                         o.GetComponent<Points2>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();
 
             }
@@ -263,7 +263,7 @@ public class PlayerManager : NetworkBehaviour
                 Move.points3+=points;
                 var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
                 foreach (GameObject o in allobjects)
-                    if (o.name == "Points3")
+                    if (o.name.Contains("Points3"))
                         o.GetComponent<Points3>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
             }
 
@@ -328,7 +328,7 @@ public class PlayerManager : NetworkBehaviour
                 Debug.Log("checkallstruct fermante");
                 //calcul de points
                 comptage_points(Move.list_of_struct_roads[i]);
-                Debug.Log("Current : "+GameManager.Instance.Current_player);
+                // Debug.Log("Current : "+GameManager.Instance.Current_player);
                 affichage_score_demo(GameManager.Instance.Current_player,Move.list_of_struct_roads[i].CurrentTiles.Count);
 
                 //donner points aux Joueurs qui ont des Meeples sur le chemin
@@ -342,7 +342,7 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
-        Debug.Log("client connects");
+        // Debug.Log("client connects");
 
         // grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
@@ -353,7 +353,7 @@ public class PlayerManager : NetworkBehaviour
         if (networkIdentity != null)
         {
             //PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-            Debug.Log("Id : " + networkIdentity);
+            // Debug.Log("Id : " + networkIdentity);
             // Debug.Log("NetId : "+networkIdentity.netId); // type UInt32
             Player player = new Player(networkIdentity.netId);
             playerList.Add(networkIdentity);
@@ -571,7 +571,7 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        Debug.Log("on start server");
+        // Debug.Log("on start server");
         // instatiateTiles();
         instatiateTiles_demo();
         CmdSpawnGrid(10);
@@ -580,8 +580,8 @@ public class PlayerManager : NetworkBehaviour
         // Points2.GetComponent<Text>().text = "Player 2 : 0";
         // Points4.GetComponent<Text>().text = "Player 5 : 0";
         // Points5.GetComponent<Text>().text = "Player 3 : 0";
-        Debug.Log("els dans all_tiles : " +all_tiles);
-        Debug.Log("ici start");
+        // Debug.Log("els dans all_tiles : " +all_tiles);
+        // Debug.Log("ici start");
 
         //instantie le tableau des positions des étoiles
         tabPos = new Vector2[5];
@@ -1094,7 +1094,7 @@ public class PlayerManager : NetworkBehaviour
                 {
                     CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                     CurrentRoads road_haut = getStructByName(nom_struct_haut);
-                    Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
+                    // Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
                     for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
                     {
                         road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
@@ -2036,26 +2036,34 @@ public class PlayerManager : NetworkBehaviour
         // parcours de plateau
         for (int i = 0; i < Move.abbeyes.Count; i++)
         {
-            if (Move.abbeyes[i].GetComponent<Constraints>().meeple == 4)
+            if (abbeyLaid(Move.abbeyes[i]))
             {
-                if (abbeyLaid(Move.abbeyes[i]))
-                {
-                    for (int j = 0; j < Move.list_of_struct_player.Count; j++)
-                    {
-                        if(Move.list_of_struct_player[j].id == Move.abbeyes[i].GetComponent<Constraints>().id_joueur)
-                        {
-                            Move.list_of_struct_player[j]= new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + 9);
-                            Move.abbeyes.RemoveAt(i);
-                        }
-                        Debug.Log("add points");
-                        affichage_score_demo(GameManager.Instance.Current_player,9);
-                    }
-                }
-                // if (abbeyLaid(Move.abbeyes[i]) == false)
-                // {
-                //     player.points = counterAbbey;
-                // }
+                affichage_score_demo(GameManager.Instance.Current_player,9);
             }
+
+
+
+            // if (Move.abbeyes[i].GetComponent<Constraints>().meeple == 4)
+            // {
+            //     if (abbeyLaid(Move.abbeyes[i]))
+            //     {
+            //         for (int j = 0; j < Move.list_of_struct_player.Count; j++)
+            //         {
+            //             if(Move.list_of_struct_player[j].id == Move.abbeyes[i].GetComponent<Constraints>().id_joueur)
+            //             {
+            //                 Move.list_of_struct_player[j]= new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + 9);
+            //                 Move.abbeyes.RemoveAt(i);
+            //                 affichage_score_demo(GameManager.Instance.Current_player,9);
+            //             }
+            //             // Debug.Log("add points");
+                        
+            //         }
+            //     }
+            //     // if (abbeyLaid(Move.abbeyes[i]) == false)
+            //     // {
+            //     //     player.points = counterAbbey;
+            //     // }
+            // }
         }
         // if (Move.plateau[i].milie == abbaye)
         //  je lance abbeyLaid(Move.plateau[i])
@@ -2683,7 +2691,7 @@ public class PlayerManager : NetworkBehaviour
 
     [Command]
     public void CmdDealMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m, int x, int y){
-        Debug.Log($"disa{disapear}");
+        // Debug.Log($"disa{disapear}");
         NetworkServer.Spawn(disapear, connectionToClient);
         RpcShowMove(disapear, h, b, g, d, m, x, y);
     }
@@ -2691,21 +2699,21 @@ public class PlayerManager : NetworkBehaviour
 
     [ClientRpc]
     void RpcShowMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m, int x, int y){
-        Debug.Log("Debug yes : "+disapear);
-        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().haut);
-        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().bas);
-        Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().gauche);
-        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().droite);
-        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().milieu);
-        Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().coordX);
-        Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().coordY);
-        Debug.Log("ok : "+h);
-        Debug.Log("ok : "+g);
-        Debug.Log("ok : "+b);
-        Debug.Log("ok : "+d);
-        Debug.Log("ok : "+m);
-        Debug.Log("ok : "+x);
-        Debug.Log("ok : "+y);
+        // Debug.Log("Debug yes : "+disapear);
+        // Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().haut);
+        // Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().bas);
+        // Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().gauche);
+        // Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().droite);
+        // Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().milieu);
+        // Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().coordX);
+        // Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().coordY);
+        // Debug.Log("ok : "+h);
+        // Debug.Log("ok : "+g);
+        // Debug.Log("ok : "+b);
+        // Debug.Log("ok : "+d);
+        // Debug.Log("ok : "+m);
+        // Debug.Log("ok : "+x);
+        // Debug.Log("ok : "+y);
         disapear.GetComponent<Constraints>().haut =
             h;
         disapear.GetComponent<Constraints>().bas =
@@ -2754,7 +2762,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcRotate(GameObject go, Type_land h, Type_land b, Type_land g, Type_land d)
     {
-        dynamic i = test(go);
+        tile_type i = test(go);
         i.haut = h;
         i.gauche = g;
         i.bas = b;

@@ -80,8 +80,8 @@ public class Move : NetworkBehaviour {
               this.GetComponent<rotateZ>().enabled = false;
               this.GetComponent<tile_type>().enabled = false;
               disapear = GameObject.Find((int)x + "/" + (int)y);
-              Debug.Log($"coord de la tuile {x} / {y}");
-              Debug.Log($"Disappeart {haut }");
+              // Debug.Log($"coord de la tuile {x} / {y}");
+              // Debug.Log($"Disappeart {haut }");
 
               this.GetComponent<Constraints>().enabled = false;
 
@@ -202,7 +202,10 @@ public class Move : NetworkBehaviour {
         // comptage des points
         //comptage des abbays complet
         if(go.GetComponent<Constraints>().milieu == Type_land.Abbaye)
+        {
+          // go.GetComponent<Constraints>().id_joueur = GameManager.Instance.Current_player;
           abbeyes.Add(go);
+        }
         PlayerManager.abbeyIsClose();
       //comptage points villes completes
         PlayerManager.resetVisite();
