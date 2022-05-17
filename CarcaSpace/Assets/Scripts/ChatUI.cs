@@ -84,7 +84,7 @@ public class ChatUI : NetworkBehaviour
     private void CmdSendMessage(string message,string playerName)
     {
         Debug.Log("CmdSend");
-        RpcHandleMessage($"[{playerName}]: {message}");;
+        RpcHandleMessage($"{playerName}: {message} \n");;
     }
 
     [ClientRpc]
