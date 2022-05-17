@@ -43,7 +43,7 @@ public class Move : NetworkBehaviour {
 
   // Update is called once per frame
   void Update() {
-    dynamic i = test(); 
+    tile_type i = test();
     r = this.GetComponent<rotateZ>();
     float x = transform.position.x - (transform.position.x % 1);
     float y = transform.position.y - (transform.position.y % 1);
@@ -216,12 +216,13 @@ public class Move : NetworkBehaviour {
     }
   }
 
-  dynamic test() {
+  tile_type test() {
     var mm = this.gameObject.GetComponents(typeof(Component));
     foreach(object i in mm)
     {
+      Debug.Log(i.GetType());
       if (i.GetType().Name.Contains("tile_type"))
-        return i;
+        return (tile_type) i;
     }
     return null;
   }
