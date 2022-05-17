@@ -128,7 +128,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -11.175636, y: -4.4780273, z: -34.812958, w: -444.55856}
+  m_margin: {x: -11.175636, y: -4.4780273, z: -82.98517, w: -444.55856}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -711,7 +711,7 @@ GameObject:
   - component: {fileID: 3698725122213656003}
   - component: {fileID: 3698725122213656000}
   m_Layer: 0
-  m_Name: ChatUi
+  m_Name: ChatUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -766,6 +766,7 @@ MonoBehaviour:
   chatUI: {fileID: 3698725122213656030}
   chatText: {fileID: 3698725120645757771}
   inputField: {fileID: 3698725121047689531}
+  sendButton: {fileID: 0}
 --- !u!1 &3698725122220452087
 GameObject:
   m_ObjectHideFlags: 0
