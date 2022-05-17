@@ -122,10 +122,12 @@ app.post('/logIn', async (req, res) => {
     }
 });
 
-app.use((err, req, res) => {
+app.use(async (err, req, res) => {
+    console.log(req.path);
+    console.log(req.headers);
     console.log(req);
-    console.log(err);
-    res.status(err.status || 500).send({
+    //console.log(err);
+    res.send({
         success: false,
         error: {
             status: err.status || 500,

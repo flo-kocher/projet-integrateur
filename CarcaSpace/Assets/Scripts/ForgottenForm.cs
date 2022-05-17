@@ -48,7 +48,7 @@ public class ForgottenForm : MonoBehaviour
                 restAPI.uploadHandler = new UploadHandlerRaw(System.Text.Encoding.UTF8.GetBytes(jsonData));
 
                 yield return restAPI.SendWebRequest();
-                if(restAPI.isNetworkError || restAPI.isHttpError){
+                if(restAPI.result != UnityWebRequest.Result.Success){
                     Debug.Log(restAPI.error);
                     Debug.Log(jsonData);
                 }else{

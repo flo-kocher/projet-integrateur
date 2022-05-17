@@ -2754,7 +2754,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcRotate(GameObject go, Type_land h, Type_land b, Type_land g, Type_land d)
     {
-        dynamic i = test(go);
+        tile_type i = test(go);
         i.haut = h;
         i.gauche = g;
         i.bas = b;
