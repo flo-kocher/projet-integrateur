@@ -23,6 +23,14 @@ public class Move : NetworkBehaviour {
   public static List<PlayerManager.CurrentRoads> list_of_struct_roads = new List<PlayerManager.CurrentRoads>();
   public static List<GameObject> abbeyes = new List<GameObject>();
 
+  public static List<PlayerManager.Player> list_of_struct_player = new List<PlayerManager.Player>();
+  public static int points1 = 0;
+  public static int points2 = 0;
+  public static int points3 = 0;
+
+
+  
+
   // Start is called before the first frame update
   void Start() { 
     var list = Resources.FindObjectsOfTypeAll<GameObject>();
@@ -111,7 +119,7 @@ public class Move : NetworkBehaviour {
           }
         } else if (go.name.Contains("Star")) {
           //Debug.Log($"id is { NetworkClient.connection.identity}, go is {go}") ;
-          this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
+          this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity.netId;
           //GameObject tmpTile_laid= tile_laid;
 
           go.GetComponent<CreateMeeple>().function(gameObject);
@@ -179,7 +187,7 @@ public class Move : NetworkBehaviour {
         go.GetComponent<Constraints>().coordX = disapear.GetComponent<Constraints>().coordX;
         go.GetComponent<Constraints>().coordY = disapear.GetComponent<Constraints>().coordY;
         
-        this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity;
+        this.GetComponent<Constraints>().id_joueur = NetworkClient.connection.identity.netId;
         // APPELS DES FONCTIONS DE VERIFICATION DE CLOTURE
 
 

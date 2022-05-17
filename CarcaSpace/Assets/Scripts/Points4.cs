@@ -10,7 +10,7 @@ public class Points4 : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.GetComponent<Points4>().GetComponent<Text>().text = "Player 4 : 0";
+        // this.GetComponent<Points4>().GetComponent<Text>().text = "Player 4 : 0";
     }
 
     // Update is called once per frame

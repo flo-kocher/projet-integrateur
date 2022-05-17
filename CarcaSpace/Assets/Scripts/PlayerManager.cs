@@ -81,19 +81,19 @@ public class PlayerManager : NetworkBehaviour
     public struct Player
     {
         // Déclaration
-        public NetworkIdentity id;
+        public UInt32 id;
         public int points;
         public int meeple_libre;
 
         // Constructor
-        public Player(NetworkIdentity id)
+        public Player(UInt32 id)
         {
             this.id = id;
             points = 0;
             meeple_libre = 7;
         }
         
-        public Player(NetworkIdentity id, int points)
+        public Player(UInt32 id, int points)
         {
             this.id = id;
             this.points = points;
@@ -101,7 +101,7 @@ public class PlayerManager : NetworkBehaviour
         }
     }
 
-    public List<Player> list_of_struct_player = new List<Player>();
+
     public Player player; 
 
 
@@ -119,7 +119,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdUpdateJoueur(int i)
     {
         RpcUpdateJoueur(i);
@@ -133,6 +133,7 @@ public class PlayerManager : NetworkBehaviour
         GameManager.Instance.Current_player = (GameManager.Instance.Current_player + i) % GameManager.Instance.nb_joueur;
         //Debug.Log(GameManager.Instance.Current_player);
         GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = true;
+        GameObject.Find("Bar").GetComponent<barre>().resetTimer();
     }
 
 
@@ -196,7 +197,7 @@ public class PlayerManager : NetworkBehaviour
     
     public void affichage_score(int i)
     {
-        
+        Debug.Log("indice du joueur : "+i);
         var list = Resources.FindObjectsOfTypeAll<GameObject>();
         foreach(GameObject j in list)
         {
@@ -204,8 +205,64 @@ public class PlayerManager : NetworkBehaviour
             if(j.name.Contains(contient))
             {
                 dynamic x = test_point(j);
-                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+list_of_struct_player[i].points.ToString();
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.list_of_struct_player[i].points.ToString();
             }
+        }
+    }
+
+    public void affichage_score_demo(int i,int points)
+    {
+        Debug.Log("indice du joueur : "+i);
+        Debug.Log("nombre de points attribués : "+points);
+        var list = Resources.FindObjectsOfTypeAll<GameObject>();
+        foreach(GameObject j in list)
+        {
+            string contient = "Points"+(i+1).ToString()+"";
+            if(j.name.Contains(contient))
+            {
+                // Debug.Log("apel à cmdaffichagescoredemo");
+                // CmdAffichageScoreDemo(j,i,points);
+                RpcAffichageScoreDemo(j,i,points);
+                // dynamic x = test_point(j);
+                // x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+points.ToString();
+            }
+        }
+    }
+
+    [Command]
+    void CmdAffichageScoreDemo(GameObject point, int i, int points)
+    {
+        RpcAffichageScoreDemo(point,i,points);
+    }
+
+    [ClientRpc]
+    void RpcAffichageScoreDemo(GameObject point, int i, int points)
+    {
+        if(point != null)
+        {
+            if(i == 0)
+            {
+                Move.points1+=points;
+                dynamic x = test_point(point);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
+            }
+            else if(i == 1)
+            {
+                Move.points2+=points;
+                dynamic x = test_point(point);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();                
+            }
+            else if(i == 2)
+            {
+                Move.points3+=points;
+                dynamic x = test_point(point);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
+            }
+
+
+            // Debug.Log("Go : "+point);
+            // dynamic x = test_point(point);
+            // x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+points.ToString();
         }
     }
 
@@ -216,9 +273,9 @@ public class PlayerManager : NetworkBehaviour
         int max_joueur = 0;
         for(int i=0; i<lst.lstPlayer.Count; i++)
         {   
-            for(int j=0; j<list_of_struct_player.Count; j++)
+            for(int j=0; j<Move.list_of_struct_player.Count; j++)
             {
-                if(lst.lstPlayer[i].id == list_of_struct_player[j].id)
+                if(lst.lstPlayer[i].id == Move.list_of_struct_player[j].id)
                 {
                     joueur[j]++;
                 }
@@ -232,15 +289,16 @@ public class PlayerManager : NetworkBehaviour
                 max_joueur = joueur[i];
         }
         // Plusieurs joueurs peuvent avoir le nb max
-        for(int i=0; i<list_of_struct_player.Count; i++)
+        for(int i=0; i<Move.list_of_struct_player.Count; i++)
         {
             if(joueur[i] == max_joueur && max_joueur !=0)
             {
-                list_of_struct_player[i] = new Player(list_of_struct_player[i].id, list_of_struct_player[i].points + lst.CurrentTiles.Count);  
-                Debug.Log("Points joueurs: " + list_of_struct_player[i].points);
-                affichage_score(i);
+                Move.list_of_struct_player[i] = new Player(Move.list_of_struct_player[i].id, Move.list_of_struct_player[i].points + lst.CurrentTiles.Count);  
+                Debug.Log("Points joueurs: " + Move.list_of_struct_player[i].points);
+                // affichage_score_demo(GameManager.Instance.Current_player,lst.CurrentTiles.Count);
             }
         }
+        
         
         return 0;
     }
@@ -262,6 +320,8 @@ public class PlayerManager : NetworkBehaviour
                 Debug.Log("checkallstruct fermante");
                 //calcul de points
                 comptage_points(Move.list_of_struct_roads[i]);
+                Debug.Log("Current : "+GameManager.Instance.Current_player);
+                affichage_score_demo(GameManager.Instance.Current_player,Move.list_of_struct_roads[i].CurrentTiles.Count);
 
                 //donner points aux Joueurs qui ont des Meeples sur le chemin
                 //suppression de liste
@@ -274,20 +334,28 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartClient()
     {
         base.OnStartClient();
+        Debug.Log("client connects");
 
         // grid = GameObject.Find("Grid");
         temp = GameObject.Find("Temp");
         ui = GameObject.Find("UI");
 
         // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
-        // NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-        //Player player = new Player(NetworkClient.connection.identity);
-        //playerList.Add(networkIdentity);
-        //list_of_struct_player.Add(player);
-        ////Debug.Log("Player list",playerList.Count);
-        // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-        playerList.Add(networkIdentity);
+        if (networkIdentity != null)
+        {
+            //PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+            Debug.Log("Id : " + networkIdentity);
+            // Debug.Log("NetId : "+networkIdentity.netId); // type UInt32
+            Player player = new Player(networkIdentity.netId);
+            playerList.Add(networkIdentity);
+            Move.list_of_struct_player.Add(player);
+            ////Debug.Log("Player list",playerList.Count);
+            // on ajoute l'id du joueur pour pouvoir determiner le tour plus tard
+            // NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+            // playerList.Add(networkIdentity);
+            
+        }
         GameManager.Instance.AddPlayer(this);
     }
 
@@ -1412,16 +1480,16 @@ public class PlayerManager : NetworkBehaviour
                             }
                                // Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                             Debug.Log("j = "+j);
                             Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
 
-                            //Debug.Log("score = "+ list_of_struct_player[j].points);
+                            //Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1445,15 +1513,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                                 //Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                            // Debug.Log("j = "+j);
                           //  Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                          //  Debug.Log("score = "+ list_of_struct_player[j].points);
+                          //  Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1481,15 +1549,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                                 Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                           //  Debug.Log("j = "+j);
                           //  Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                         //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                         //   Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1513,15 +1581,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                              //   Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                           //  Debug.Log("j = "+j);
                          //   Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                         //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                         //   Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1549,15 +1617,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                               //  Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                           //  Debug.Log("j = "+j);
                             //Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                           // Debug.Log("score = "+ list_of_struct_player[j].points);
+                           // Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }  
                 }
@@ -1581,15 +1649,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                              //   Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                          //   Debug.Log("j = "+j);
                           //  Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                          //  Debug.Log("score = "+ list_of_struct_player[j].points);
+                          //  Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1617,15 +1685,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                                // Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                           //  Debug.Log("j = "+j);
                            // Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                         //   Debug.Log("score = "+ list_of_struct_player[j].points);
+                         //   Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1649,15 +1717,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                       //          Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                       //      Debug.Log("j = "+j);
                        //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                        //    Debug.Log("score = "+ list_of_struct_player[j].points);
+                        //    Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1678,6 +1746,7 @@ public class PlayerManager : NetworkBehaviour
                     if(rep == true )
                     {
                         int p = score(tile_laid)*2;
+                        affichage_score_demo(GameManager.Instance.Current_player,p);
                        // Debug.Log ("point " + p);
                         int max =0;
                         for(int i = 0; i < meeplePlayerTown.Length; i++)
@@ -1688,15 +1757,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                           //      Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                           //  Debug.Log("j = "+j);
                         //    Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                        //    Debug.Log("score = "+ list_of_struct_player[j].points);
+                        //    Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1720,15 +1789,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                       //          Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                      //       Debug.Log("j = "+j);
                        //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                        //    Debug.Log("score = "+ list_of_struct_player[j].points);
+                        //    Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1755,15 +1824,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                        //         Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                           //  Debug.Log("j = "+j);
                          //   Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                            Debug.Log("score = "+ list_of_struct_player[j].points);
+                            // Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1787,15 +1856,15 @@ public class PlayerManager : NetworkBehaviour
                             }
                       //          Debug.Log("MAx meeple ville = "+max );
                         }
-                        for(int j =0; j < list_of_struct_player.Count; j++ )
+                        for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                         {
                         //    Debug.Log("j = "+j);
                       //      Debug.Log("meeple = "+ meeplePlayerTown[j]);
                             if(meeplePlayerTown[j] == max && max != 0)
                             {
-                                list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                                Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                             }
-                      //      Debug.Log("score = "+ list_of_struct_player[j].points);
+                      //      Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                         }
                     }
                 }
@@ -1810,6 +1879,7 @@ public class PlayerManager : NetworkBehaviour
             if(rep == true )
             {
                 resetVisite();
+                // int p = score(tile_laid)*2;
                 int p = score(tile_laid)*2;
                 Debug.Log ("non special fermé");
                 int max =0;
@@ -1821,7 +1891,8 @@ public class PlayerManager : NetworkBehaviour
                     }
                 //        Debug.Log("MAx meeple ville = "+max );
                 }
-                for(int j =0; j < list_of_struct_player.Count; j++ )
+                // Debug.Log("Nombre de players : "+Move.list_of_struct_player.Count);
+                for(int j =0; j < Move.list_of_struct_player.Count; j++ )
                 {
                 //    Debug.Log("j = "+j);
                //     Debug.Log("meeple = "+ meeplePlayerTown[j]);
@@ -1829,12 +1900,14 @@ public class PlayerManager : NetworkBehaviour
                     {
                         Debug.Log("max" + max + "joueur" + j);
 
-                        list_of_struct_player[j] = new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + p);
+                        Move.list_of_struct_player[j] = new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + p);
                     }
-                    affichage_score(j);
+                    
 
-                    Debug.Log("score = "+ list_of_struct_player[j].points);
+                    Debug.Log("score = "+ Move.list_of_struct_player[j].points);
                 }
+                // Debug.Log("Id du joueur actuel : "+networkIdentity);
+                affichage_score_demo(GameManager.Instance.Current_player,p);
             }
         }
     }
@@ -1959,14 +2032,14 @@ public class PlayerManager : NetworkBehaviour
             {
                 if (abbeyLaid(Move.abbeyes[i]))
                 {
-                    for (int j = 0; j < list_of_struct_player.Count; j++)
+                    for (int j = 0; j < Move.list_of_struct_player.Count; j++)
                     {
-                        if(list_of_struct_player[j].id == Move.abbeyes[i].GetComponent<Constraints>().id_joueur)
+                        if(Move.list_of_struct_player[j].id == Move.abbeyes[i].GetComponent<Constraints>().id_joueur)
                         {
-                            list_of_struct_player[j]= new Player(list_of_struct_player[j].id, list_of_struct_player[j].points + 9);
+                            Move.list_of_struct_player[j]= new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + 9);
                             Move.abbeyes.RemoveAt(i);
                         }
-                        affichage_score(j);
+                        affichage_score_demo(GameManager.Instance.Current_player,9);
                     }
                 }
                 // if (abbeyLaid(Move.abbeyes[i]) == false)
@@ -2037,10 +2110,10 @@ public class PlayerManager : NetworkBehaviour
                     {
                         if (Move.list_of_struct_roads[i].CurrentTiles[j] == go)
                         {
-                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            for(int k = 0; k < Move.list_of_struct_player.Count; k++)
                             {
-                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
-                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]); 
+                                if(Move.list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(Move.list_of_struct_player[k]); 
                             }
                         } 
                     }
@@ -2065,10 +2138,10 @@ public class PlayerManager : NetworkBehaviour
                     {
                         if (Move.list_of_struct_roads[i].CurrentTiles[j] == go)
                         {
-                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            for(int k = 0; k < Move.list_of_struct_player.Count; k++)
                             {
-                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
-                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]); 
+                                if(Move.list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(Move.list_of_struct_player[k]); 
                             }
                         } 
                     }
@@ -2091,10 +2164,10 @@ public class PlayerManager : NetworkBehaviour
                         {
                             //Debug.Log("ajout meeple dans chemin");
                             //Debug.Log("placeMEeple: i " +i+ " j " +j);
-                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            for(int k = 0; k < Move.list_of_struct_player.Count; k++)
                             {
-                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
-                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]); 
+                                if(Move.list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(Move.list_of_struct_player[k]); 
                             }
                         } 
                     }
@@ -2118,10 +2191,10 @@ public class PlayerManager : NetworkBehaviour
                         {
                             //Debug.Log("ajout meeple dans chemin");
                             //Debug.Log("placeMEeple: i " +i+ " j " +j);
-                            for(int k = 0; k < list_of_struct_player.Count; k++)
+                            for(int k = 0; k < Move.list_of_struct_player.Count; k++)
                             {
-                                if(list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
-                                    Move.list_of_struct_roads[i].lstPlayer.Add(list_of_struct_player[k]);
+                                if(Move.list_of_struct_player[k].id==go.GetComponent<Constraints>().id_joueur)
+                                    Move.list_of_struct_roads[i].lstPlayer.Add(Move.list_of_struct_player[k]);
 
                                 
                             }
@@ -2394,9 +2467,9 @@ public class PlayerManager : NetworkBehaviour
             Debug.Log("yo");
             if(tmpTile_laid.GetComponent<Constraints>().meeple == 0)
             {
-                for(int j=0; j<list_of_struct_player.Count; j++)
+                for(int j=0; j<Move.list_of_struct_player.Count; j++)
                 {
-                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                     {
                         meeplePlayerTown[j]++;
                     }
@@ -2406,9 +2479,9 @@ public class PlayerManager : NetworkBehaviour
             {
                 if(voisins[0].GetComponent<Constraints>().meeple == 2)
                 {
-                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    for(int j=0; j<Move.list_of_struct_player.Count; j++)
                     {
-                        if(voisins[0].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        if(voisins[0].GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                         {
                             meeplePlayerTown[j]++;
                         }
@@ -2426,9 +2499,9 @@ public class PlayerManager : NetworkBehaviour
         {
             if(tmpTile_laid.GetComponent<Constraints>().meeple == 1)
             {
-                for(int j=0; j<list_of_struct_player.Count; j++)
+                for(int j=0; j<Move.list_of_struct_player.Count; j++)
                 {
-                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                     {
                         meeplePlayerTown[j]++;
                     }
@@ -2438,9 +2511,9 @@ public class PlayerManager : NetworkBehaviour
             {
                 if(voisins[1].GetComponent<Constraints>().meeple == 3)
                 {
-                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    for(int j=0; j<Move.list_of_struct_player.Count; j++)
                     {
-                        if(voisins[1].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        if(voisins[1].GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                         {
                             meeplePlayerTown[j]++;
                         }
@@ -2458,9 +2531,9 @@ public class PlayerManager : NetworkBehaviour
         {
             if(tmpTile_laid.GetComponent<Constraints>().meeple == 2)
             {
-                for(int j=0; j<list_of_struct_player.Count; j++)
+                for(int j=0; j<Move.list_of_struct_player.Count; j++)
                 {
-                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                     {
                         meeplePlayerTown[j]++;
                     }
@@ -2471,9 +2544,9 @@ public class PlayerManager : NetworkBehaviour
                 //Debug.Log(" merde +");
                 if(voisins[2].GetComponent<Constraints>().meeple == 0)
                 {
-                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    for(int j=0; j<Move.list_of_struct_player.Count; j++)
                     {
-                        if(voisins[2].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        if(voisins[2].GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                         {
                             meeplePlayerTown[j]++;
                         }
@@ -2495,9 +2568,9 @@ public class PlayerManager : NetworkBehaviour
         {
             if(tmpTile_laid.GetComponent<Constraints>().meeple == 3)
             {
-                for(int j=0; j<list_of_struct_player.Count; j++)
+                for(int j=0; j<Move.list_of_struct_player.Count; j++)
                 {
-                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                    if(tmpTile_laid.GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                     {
                         meeplePlayerTown[j]++;
                     }
@@ -2507,9 +2580,9 @@ public class PlayerManager : NetworkBehaviour
             {
                 if(voisins[3].GetComponent<Constraints>().meeple == 1)
                 {
-                    for(int j=0; j<list_of_struct_player.Count; j++)
+                    for(int j=0; j<Move.list_of_struct_player.Count; j++)
                     {
-                        if(voisins[3].GetComponent<Constraints>().id_joueur == list_of_struct_player[j].id)
+                        if(voisins[3].GetComponent<Constraints>().id_joueur == Move.list_of_struct_player[j].id)
                         {
                             meeplePlayerTown[j]++;
                         }

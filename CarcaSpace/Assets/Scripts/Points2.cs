@@ -16,6 +16,7 @@ public class Points2 : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        // this.GetComponent<Points2>().GetComponent<Text>().text = Move.points2;
         // this.GetComponent<Points>().GetComponent<Text>().text = "okkk";
         // Debug.Log(this.GetComponent<Points>().GetComponent<Text>().text);
         // NetworkIdentity networkIdentity = NetworkClient.connection.identity;

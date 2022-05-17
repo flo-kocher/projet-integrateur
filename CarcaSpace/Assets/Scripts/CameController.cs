@@ -13,52 +13,110 @@ public class CameController : MonoBehaviour {
   public float maxZ;
   private float gradient;
 
+  public bool souris = true;
+  public bool clavier = true;
+
   void Update() {
 
     Vector3 pos = transform.position;
-    // z,q,s,d touche pour déplacer la caméra (prévus pour clavier azerty)
-    if (Input.GetKey("z") ||
-        ((Input.mousePosition.y >= (Screen.height - panBorderThickness)) &&
-         (Input.mousePosition.y < Screen.height) &&
-         (Input.mousePosition.x < Screen.width) &&
-         (Input.mousePosition.x > 0))) {
-      gradient =
-          1 - (Screen.height - Input.mousePosition.y) / panBorderThickness;
-      if (Input.GetKey("z"))
-        gradient = 0.5f;
-      pos.y += gradient * panSpeed * Time.deltaTime;
+    if(souris && clavier)
+    {
+      // z,q,s,d touche pour déplacer la caméra (prévus pour clavier azerty)
+      if (Input.GetKey("z") ||
+          ((Input.mousePosition.y >= (Screen.height - panBorderThickness)) &&
+           (Input.mousePosition.y < Screen.height) &&
+           (Input.mousePosition.x < Screen.width) &&
+           (Input.mousePosition.x > 0))) {
+        gradient =
+            1 - (Screen.height - Input.mousePosition.y) / panBorderThickness;
+        if (Input.GetKey("z"))
+          gradient = 0.5f;
+        pos.y += gradient * panSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("s") || ((Input.mousePosition.y <= panBorderThickness) &&
+                                (Input.mousePosition.y > 0) &&
+                                (Input.mousePosition.x < Screen.width) &&
+                                (Input.mousePosition.x > 0))) {
+        gradient =
+            (panBorderThickness - Input.mousePosition.y) / panBorderThickness;
+        if (Input.GetKey("s"))
+          gradient = 0.5f;
+        pos.y -= gradient * panSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("d") ||
+          ((Input.mousePosition.x >= (Screen.width - panBorderThickness)) &&
+           (Input.mousePosition.x < Screen.width) &&
+           (Input.mousePosition.y < Screen.height) &&
+           (Input.mousePosition.y > 0))) {
+        gradient =
+            1 - (Screen.width - Input.mousePosition.x) / panBorderThickness;
+        if (Input.GetKey("d"))
+          gradient = 0.5f;
+        pos.x += gradient * panSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("q") || ((Input.mousePosition.x <= panBorderThickness) &&
+                                (Input.mousePosition.x > 0) &&
+                                (Input.mousePosition.y < Screen.height) &&
+                                (Input.mousePosition.y > 0))) {
+        gradient =
+            (panBorderThickness - Input.mousePosition.x) / panBorderThickness;
+        if (Input.GetKey("q"))
+          gradient = 0.5f;
+        pos.x -= gradient * panSpeed * Time.deltaTime;
+      }
+    } else if (souris)
+    {
+      if 
+          ((Input.mousePosition.y >= (Screen.height - panBorderThickness)) &&
+           (Input.mousePosition.y < Screen.height) &&
+           (Input.mousePosition.x < Screen.width) &&
+           (Input.mousePosition.x > 0)) {
+        gradient =
+            1 - (Screen.height - Input.mousePosition.y) / panBorderThickness;
+        pos.y += gradient * panSpeed * Time.deltaTime;
+      }
+      if ((Input.mousePosition.y <= panBorderThickness) &&
+                                (Input.mousePosition.y > 0) &&
+                                (Input.mousePosition.x < Screen.width) &&
+                                (Input.mousePosition.x > 0)) {
+        gradient =
+            (panBorderThickness - Input.mousePosition.y) / panBorderThickness;
+        pos.y -= gradient * panSpeed * Time.deltaTime;
+      }
+      if
+          ((Input.mousePosition.x >= (Screen.width - panBorderThickness)) &&
+           (Input.mousePosition.x < Screen.width) &&
+           (Input.mousePosition.y < Screen.height) &&
+           (Input.mousePosition.y > 0)) {
+        gradient =
+            1 - (Screen.width - Input.mousePosition.x) / panBorderThickness;
+        pos.x += gradient * panSpeed * Time.deltaTime;
+      }
+      if ((Input.mousePosition.x <= panBorderThickness) &&
+                                (Input.mousePosition.x > 0) &&
+                                (Input.mousePosition.y < Screen.height) &&
+                                (Input.mousePosition.y > 0)) {
+        gradient =
+            (panBorderThickness - Input.mousePosition.x) / panBorderThickness;
+        pos.x -= gradient * panSpeed * Time.deltaTime;
+      }
+    } else if (clavier)
+    {
+     if (Input.GetKey("z")) {
+        pos.y += 0.5f * panSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("s")) {
+        pos.y -= 0.5f * panSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("d")) {
+        pos.x += 0.5f * panSpeed * Time.deltaTime;
+      }
+      if (Input.GetKey("q")) {
+        pos.x -= 0.5f * panSpeed * Time.deltaTime;
+      }
     }
-    if (Input.GetKey("s") || ((Input.mousePosition.y <= panBorderThickness) &&
-                              (Input.mousePosition.y > 0) &&
-                              (Input.mousePosition.x < Screen.width) &&
-                              (Input.mousePosition.x > 0))) {
-      gradient =
-          (panBorderThickness - Input.mousePosition.y) / panBorderThickness;
-      if (Input.GetKey("s"))
-        gradient = 0.5f;
-      pos.y -= gradient * panSpeed * Time.deltaTime;
-    }
-    if (Input.GetKey("d") ||
-        ((Input.mousePosition.x >= (Screen.width - panBorderThickness)) &&
-         (Input.mousePosition.x < Screen.width) &&
-         (Input.mousePosition.y < Screen.height) &&
-         (Input.mousePosition.y > 0))) {
-      gradient =
-          1 - (Screen.width - Input.mousePosition.x) / panBorderThickness;
-      if (Input.GetKey("d"))
-        gradient = 0.5f;
-      pos.x += gradient * panSpeed * Time.deltaTime;
-    }
-    if (Input.GetKey("q") || ((Input.mousePosition.x <= panBorderThickness) &&
-                              (Input.mousePosition.x > 0) &&
-                              (Input.mousePosition.y < Screen.height) &&
-                              (Input.mousePosition.y > 0))) {
-      gradient =
-          (panBorderThickness - Input.mousePosition.x) / panBorderThickness;
-      if (Input.GetKey("q"))
-        gradient = 0.5f;
-      pos.x -= gradient * panSpeed * Time.deltaTime;
-    }
+
+    
 
     // dezoomer ou zoomer avec la roulette du clavier
     float scroll = Input.GetAxis("Mouse ScrollWheel");
