@@ -219,24 +219,7 @@ public class NewNetworkRoomManager : NetworkRoomManager
     /// <param name="conn">The connection that finished loading a new networked scene.</param>
     public override void OnRoomClientSceneChanged(NetworkConnection conn) {
 
-        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
-        
-        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
-
-        PlayerManager.instatiateTiles_demo();
-        PlayerManager.CmdSpawnGrid(10);
-        
-        Debug.Log("els dans all_tiles : " +PlayerManager.all_tiles);
-        Debug.Log("ici start");
-
-        //instantie le tableau des positions des étoiles
-        PlayerManager.tabPos = new Vector2[5];
-        PlayerManager.tabPos[0] = PlayerManager.haut;
-        PlayerManager.tabPos[1] = PlayerManager.gauche;
-        PlayerManager.tabPos[2] = PlayerManager.bas;
-        PlayerManager.tabPos[3] = PlayerManager.droite;
-        PlayerManager.tabPos[4] = PlayerManager.milieu;
-        Move.nb_of_struct_roads = 0;
+        base.OnRoomClientSceneChanged(conn);
        
      }
     
