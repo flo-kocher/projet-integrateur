@@ -72,6 +72,9 @@ public class Move : NetworkBehaviour {
               this.GetComponent<rotateZ>().enabled = false;
               this.GetComponent<tile_type>().enabled = false;
               disapear = GameObject.Find((int)x + "/" + (int)y);
+              Debug.Log($"coord de la tuile {x} / {y}");
+              Debug.Log($"Disappeart {haut }");
+
               this.GetComponent<Constraints>().enabled = false;
 
               NetworkIdentity networkIdentity = NetworkClient.connection.identity;

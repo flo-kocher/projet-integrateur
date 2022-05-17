@@ -304,7 +304,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: 'Send
+
+'
 --- !u!222 &427729946
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -708,7 +710,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 804833114}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aab4c8111b7c411b9b92cf3dbc5bd4e, type: 3}
   m_Name: 
@@ -773,7 +775,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &867303075 stripped
 GameObject:
@@ -1305,8 +1307,6 @@ GameObject:
   - component: {fileID: 1818041377}
   - component: {fileID: 1818041380}
   - component: {fileID: 1818041379}
-  - component: {fileID: 1818041381}
-  - component: {fileID: 1818041382}
   m_Layer: 0
   m_Name: Stars
   m_TagString: Untagged
@@ -1367,30 +1367,6 @@ MonoBehaviour:
   visible: 0
   m_AssetId: 
   hasSpawned: 0
---- !u!114 &1818041381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1818041376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c01b47e91679a4043987073b5ef1a027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1818041382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1818041376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ec1864878ab63a47b32fb352de5b60e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1930280591 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4638994677721029907, guid: dc368e81f7983bd49a59a6e342ffe4a9, type: 3}
