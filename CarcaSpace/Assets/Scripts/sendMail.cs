@@ -14,7 +14,8 @@ public class sendMail : MonoBehaviour
     public TMP_InputField inputMail;
 
     public static string code_verif;
-     public static string mail_databsase;
+    public static string mail_databsase;
+    public Button backButton;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +25,15 @@ public class sendMail : MonoBehaviour
         submit = GameObject.Find("Submit").GetComponent<Button>();
         submit.onClick.AddListener(PostData);
         //submit.onClick.AddListener(PostData);
+        backButton = GameObject.Find("Back").GetComponent<Button>();
+        backButton.onClick.AddListener(returnPage);
     }
 
     void PostData() => StartCoroutine(UploadTo());
 
+    public void returnPage(){
+        SceneManager.LoadScene("GameMenu", LoadSceneMode.Single);
+    }
     public IEnumerator UploadTo(){
         mail_databsase = inputMail.text;
         Credentials credentials = new Credentials();

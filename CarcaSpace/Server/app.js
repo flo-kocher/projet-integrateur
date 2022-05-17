@@ -7,7 +7,6 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 const userSchema = require('./models/users')
-
 const users = require('./models/users');
 
 app.engine('html', require('ejs').renderFile);
@@ -29,12 +28,20 @@ app.use(compression());
 app.use(express.json());
 app.listen(process.env.PORT || 3000, () => console.log(`Server has started on port ${process.env.PORT}`))
 
+app.get('/', async (req, res) => {
+	res.send("hello world !");
+});
 
 app.post('/signIn', async (req,res) => {
+    console.log("1");
+    console.log(req.body);
+
+    if(!validEmail(req.body.mail)){
+        res.send({success: false,
+                  message: "Email not valid"});
+        return;
+    }
     crypto.randomBytes(32, function(err, salt){
-        if(err){
-            console.log(err);
-        }
         argon2i.hash(req.body.pass, salt)
         .then(async (hash) => {
             const user = new userSchema ({
@@ -46,26 +53,35 @@ app.post('/signIn', async (req,res) => {
                 .then(async (doc) => {
                     if(doc == null){
                         const newUser = await user.save()
-                        console.log(req.body)
+                        res.send({success: true});
                     }
                     else{
                         res.send({success: false,
-                            error: "Existing credentials"
+                            message: "Existing credentials"
                           })
                     }
                 })
                 .catch( (err) => {
                     console.log(err);
-                    res.status(err.status || 500).send({
+                    res.send({
                         success: false,
                         error: {
                             status: err.status || 500,
                             message: "Network error"
                         }
-                    })
+                    });
                 })
         })
-
+        .catch( (err) => {
+            console.log(err)
+            res.send({
+                sucess: false,
+                error: {
+                    status: err.status || 500,
+                    message: "Hashing error"
+                }
+            });
+        })
     })
 
     
@@ -73,16 +89,20 @@ app.post('/signIn', async (req,res) => {
 });
 
 app.post('/logIn', async (req, res) => {
-    var userAccout = await users.findOne({name: req.body.name});
-    if(userAccout != null){
-        argon2i.verify(userAccout.pass, req.body.pass)
+    var userAccount = await users.findOne({name: req.body.name});
+    console.log(req.body);
+    if(userAccount != null){
+        console.log("if");
+        console.log(userAccount.pass);
+        argon2i.verify(userAccount.pass, req.body.pass)
         .then(succeed => {
             if(succeed){
-                res.send({success: true});
+                res.send({success: true, 
+			    name: req.body.name});
             }
             else{
                 res.send({success: false,
-                message: "Credentials failed"})
+                message: "Error verifying account"})
             }
         })
         .catch( (err) => {
@@ -92,87 +112,14 @@ app.post('/logIn', async (req, res) => {
                     status: err.status || 500,
                     message: err.message
                 }
-            })
+            });
         })
     }
-});
-
-
-//RESET PASSWORD
-app.post('/Reset_pass', (request,response,next)=>{
-    var post_data = request.body;
-    
-    var mail = post_data.mail;
-    console.log(mail);
-    
-    var insertJson = {
-        'mail': mail
-    };
-    
-    //CHECK EXISTS EMAIL
-    userSchema.find({'mail':mail}).count(function(err,number){
-        if(number == 0){
-            console.log("email n'existe pas");
-            response.json("email n'existe pas");
-        }
-        else
-        {
-            
-            // emetteur
-            var smtpTransport = nodemailer.createTransport({
-                service: 'gmail', 
-                auth: {
-                    user: 'anas.9haoud@gmail.com',
-                    pass: 'rkvnulksxwzlumwg'
-                }
-            });
-
-            // code de vérification
-            var code_verification = +Math.floor(Math.random()*10000);
-            response.json(code_verification);
-
-            //envoie au destinantaire
-            var mailOptions = {
-                from: 'anas.9haoud@gmail.com',
-                to: mail,
-                subject: 'confirmation code',
-                text: 'Votre code de vérification: '+code_verification
-            };
-            
-            smtpTransport.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
-            }); 
-        }
-    })
-     
- });
-
-
-//UpdateUserPassword
-app.post('/UpdateUserPassword', (req,response,next)=>{
- crypto.randomBytes(32, function(err, salt){
-    if(err){
-        console.log(err);
+    else{
+        console.log("else");
+        res.send({success: false,
+                  message: "Not existing account"});
     }
-    argon2i.hash(req.body.pass, salt)
-        .then(async (hash) => {
-            
-            var mail = req.body.mail;
-
-            console.log(mail);
-            console.log(req.body.pass);
-            userSchema.updateOne({'mail':mail},{$set:{'pass': hash}},function(error,res){
-                    response.json('update succed');
-                    console.log('update succed');
-                })
-        });
-
-  });
-
 });
 
 app.use((err, req, res) => {
@@ -198,4 +145,9 @@ const tokenHandler = async (user) => {
     } catch(e){
         return Promise.reject(error)
     }
+}
+function validEmail (email){
+    const emailRegex = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+    if (!emailRegex.test(email)) return false;
+    return true;
 }

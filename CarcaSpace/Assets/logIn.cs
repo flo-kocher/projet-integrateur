@@ -4,12 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-//using UnityEngine.Objects;
 using TMPro;
 using System;
 
 [Serializable]
-public /*static */class playerStats{
+public class playerStats{
     [SerializeField] private string playerName;
     public string getPlayerName() {
         return this.playerName;
@@ -48,7 +47,6 @@ public class logIn : MonoBehaviour{
 
 
     string getRouteURI = "http://185.155.93.105:11007/logIn";
-    //string getRouteURI = "localhost:8080/logIn";
     void Start(){
         playerStat = new playerStats();
         inputUsername = GameObject.Find("Username").GetComponent<TMP_InputField>();
@@ -90,20 +88,18 @@ public class logIn : MonoBehaviour{
                 {
                     playerStat.setPlayerName(data.name);
                     PlayerName =  playerStat.getPlayerName();
-                    Debug.Log($"++++++{PlayerName}");
-                    //DataSaver.saveData(PlayerName, "name");
                     PlayerPrefs.SetString("playerName", PlayerName);
                     PlayerPrefs.Save ();
                     SceneManager.LoadScene("CreateOrJoin", LoadSceneMode.Single);
                 }
-                else if(data.success == "false" && data.message == "Not existing user") {
-                    serverResponseText.text = "Wrong credentials";
+                else if(data.success == "false") {
+                    serverResponseText.text = data.message;
                 }
                 else if(data.error != null && data.success == "false") {
-                    Debug.Log("Fatal error");
+                    serverResponseText.text = "Fatal error";
                 }
                 else {
-                    Debug.Log("Erreur inconnue");
+                   serverResponseText.text = "Unknown error";
                 }
             }
         }      
