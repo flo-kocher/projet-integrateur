@@ -200,10 +200,7 @@ public class Move : NetworkBehaviour {
       //comptage points chemin complets
         PlayerManager.roadIsClosed_Struct(go);
         PlayerManager.checkAllStruct();
-
-        
-
-
+        PlayerManager.seeStruct();
       }
     }
   }

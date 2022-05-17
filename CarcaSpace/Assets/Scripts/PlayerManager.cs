@@ -131,7 +131,7 @@ public class PlayerManager : NetworkBehaviour
         pose = false;
         GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = false;
         GameManager.Instance.Current_player = (GameManager.Instance.Current_player + i) % GameManager.Instance.nb_joueur;
-        Debug.Log(GameManager.Instance.Current_player);
+        //Debug.Log(GameManager.Instance.Current_player);
         GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = true;
     }
 
@@ -289,6 +289,31 @@ public class PlayerManager : NetworkBehaviour
         NetworkIdentity networkIdentity = NetworkClient.connection.identity;
         playerList.Add(networkIdentity);
         GameManager.Instance.AddPlayer(this);
+    }
+
+    public List<GameObject> instatiateTiles_demo()
+    {
+        all_tiles.Add(TileType0);
+        all_tiles.Add(TileType4);
+        all_tiles.Add(TileType8);
+        all_tiles.Add(TileType8);
+        all_tiles.Add(TileType8);
+        all_tiles.Add(TileType22);
+        all_tiles.Add(TileType24);
+        all_tiles.Add(TileType23);        
+        all_tiles.Add(TileType24);
+        all_tiles.Add(TileType23);
+        all_tiles.Add(TileType3);        
+        all_tiles.Add(TileType23);
+        all_tiles.Add(TileType24);
+        // all_tiles.Add(TileType24);
+        // all_tiles.Add(TileType23);
+        all_tiles.Add(TileType17);
+        all_tiles.Add(TileType15);
+        all_tiles.Add(TileType2);
+        all_tiles.Add(TileType2);
+        
+        return all_tiles;
     }
 
 
@@ -470,7 +495,8 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
-        instatiateTiles();
+        // instatiateTiles();
+        instatiateTiles_demo();
         CmdSpawnGrid(10);
         // Points1.GetComponent<Text>().text = "Player 1 : 0";
         // Points3.GetComponent<Text>().text = "Player 4 : 0";
@@ -478,7 +504,7 @@ public class PlayerManager : NetworkBehaviour
         // Points4.GetComponent<Text>().text = "Player 5 : 0";
         // Points5.GetComponent<Text>().text = "Player 3 : 0";
         //Debug.Log("els dans all_tiles : " +all_tiles);
-        Debug.Log("ici start");
+        //Debug.Log("ici start");
 
         //instantie le tableau des positions des étoiles
         tabPos = new Vector2[5];
@@ -1047,7 +1073,7 @@ public class PlayerManager : NetworkBehaviour
                 {
                     CurrentRoads road_gauche = getStructByName(nom_struct_gauche);
                     CurrentRoads road_haut = getStructByName(nom_struct_haut);
-                    Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
+                    //Debug.Log("RG : " + road_gauche + " RH : " + road_haut);
                     for (int i = 0; i < road_gauche.CurrentTiles.Count; i++)
                     {
                         road_haut.CurrentTiles.Add(road_gauche.CurrentTiles[i]);
@@ -1647,7 +1673,7 @@ public class PlayerManager : NetworkBehaviour
                     tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[1]);
                     resetVisite();
-                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    Debug.Log("La partie gauche est fermé ?" + rep);
                     if(rep == true )
                     {
                         int p = score(tile_laid)*2;
@@ -1679,7 +1705,7 @@ public class PlayerManager : NetworkBehaviour
                     tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[3]);
                     resetVisite();
-                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    Debug.Log("La partie droite est fermé ?" + rep);
                     if(rep == true )
                     {
                         int p = score(tile_laid)*2;
@@ -1714,7 +1740,7 @@ public class PlayerManager : NetworkBehaviour
                     tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[0]);
                     resetVisite();
-                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    Debug.Log("La partie haute est fermé ?" + rep);
                     if(rep == true )
                     {
                         int p = score(tile_laid)*2;
@@ -1746,7 +1772,7 @@ public class PlayerManager : NetworkBehaviour
                     tile_laid.GetComponent<Constraints>().visite = true;
                     bool rep = townIsClosed(voisins[2]);
                     resetVisite();
-                    //Debug.Log("La partie haute est fermé ?" + rep);
+                    Debug.Log("La partie bas est fermé ?" + rep);
                     if(rep == true )
                     {
                         int p = score(tile_laid)*2;
@@ -1779,7 +1805,7 @@ public class PlayerManager : NetworkBehaviour
             resetVisite();
             bool rep = townIsClosed(tile_laid);
             //Debug.Log ("pas de cas spé");
-            //Debug.Log("La ville est fermé ?" + rep);
+            Debug.Log("La ville est fermé ?" + rep);
             if(rep == true )
             {
                 resetVisite();
@@ -2124,10 +2150,25 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdDealTiles()
     {
-        int randInt = 0;
+        // int randInt = 0;
         // génération aléaoire de la seed
-        System.Random rnd = new System.Random();
+        // System.Random rnd = new System.Random();
         if(CheckPick()){
+            if(PIck.compteur == all_tiles.Count-1)
+            {
+                Debug.Log("AFFICHAGE DE FIN DE DEMO");
+                Debug.Log("Faire return qui emmene autre part pour pas avoir de déconnexion de client");
+            }
+            else
+            {
+                GameObject tuilos = Instantiate(all_tiles[PIck.compteur]);
+                // all_tiles.RemoveAt(PIck.compteur);
+                // Debug.Log("Objet à faire spawn : " + tuilos);
+                NetworkServer.Spawn(tuilos, connectionToClient);
+                RpcShowTiles(tuilos, "Dealt");
+                PIck.compteur++;
+            }
+            /*
             if (PIck.compteur == 0)
             {
                 PIck.compteur++;
@@ -2152,6 +2193,9 @@ public class PlayerManager : NetworkBehaviour
                 // on affiche la tuile chez tous les clients
                 RpcShowTiles(tuilos, "Dealt");
             }
+            */
+            // Debug.Log("Compteur tuile : "+PIck.compteur);
+
         }
         
         // compteur++;
@@ -2487,7 +2531,7 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcShowGrid(GameObject go, string action, int x, int y)
     {
-        Debug.Log("ALOOO");
+        //Debug.Log("ALOOO");
         if (action == "Dealt")
         {
             if (hasAuthority)
@@ -2524,7 +2568,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawnGrid(int nbTuiles)
     {
-        Debug.Log($"ya zebi");
+        //Debug.Log($"ya zebi");
         for (int x = 0; x < nbTuiles; x++)
         {
             for (int y = 0; y < nbTuiles; y++)

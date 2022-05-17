@@ -693,11 +693,12 @@ MonoBehaviour:
   coordX: 0
   coordY: 0
   meeple: 0
-  id_joueur: 0
+  id_joueur: {fileID: 0}
   visite: 0
   carrefour: 0
   posePossible: 0000000000
   estFermante: 0
+  laid: 0
   debug: 
 --- !u!114 &1748095382869284942
 MonoBehaviour:
