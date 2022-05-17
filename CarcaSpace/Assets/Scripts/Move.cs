@@ -220,7 +220,7 @@ public class Move : NetworkBehaviour {
     var mm = this.gameObject.GetComponents(typeof(Component));
     foreach(object i in mm)
     {
-      Debug.Log(i.GetType());
+      // Debug.Log(i.GetType());
       if (i.GetType().Name.Contains("tile_type"))
         return (tile_type) i;
     }

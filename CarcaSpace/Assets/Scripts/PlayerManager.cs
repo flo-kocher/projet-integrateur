@@ -205,8 +205,8 @@ public class PlayerManager : NetworkBehaviour
             string contient = "Points"+(i+1).ToString()+"";
             if(j.name.Contains(contient))
             {
-                dynamic x = test_point(j);
-                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.list_of_struct_player[i].points.ToString();
+                // dynamic x = test_point(j);
+                // x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.list_of_struct_player[i].points.ToString();
             }
         }
     }
@@ -244,20 +244,27 @@ public class PlayerManager : NetworkBehaviour
             if(i == 0)
             {
                 Move.points1+=points;
-                dynamic x = test_point(point);
-                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
+                var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach (GameObject o in allobjects)
+                    if (o.name == "Points1")
+                        o.GetComponent<Points1>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
             }
             else if(i == 1)
             {
                 Move.points2+=points;
-                dynamic x = test_point(point);
-                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();                
+                var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach (GameObject o in allobjects)
+                    if (o.name == "Points2")
+                        o.GetComponent<Points2>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();
+
             }
             else if(i == 2)
             {
                 Move.points3+=points;
-                dynamic x = test_point(point);
-                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
+                var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+                foreach (GameObject o in allobjects)
+                    if (o.name == "Points3")
+                        o.GetComponent<Points3>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
             }
 
 
@@ -2040,6 +2047,7 @@ public class PlayerManager : NetworkBehaviour
                             Move.list_of_struct_player[j]= new Player(Move.list_of_struct_player[j].id, Move.list_of_struct_player[j].points + 9);
                             Move.abbeyes.RemoveAt(i);
                         }
+                        Debug.Log("add points");
                         affichage_score_demo(GameManager.Instance.Current_player,9);
                     }
                 }
@@ -2770,25 +2778,25 @@ public class PlayerManager : NetworkBehaviour
         go.GetComponent<Constraints>().laid = true;
     }
 
-    dynamic test(GameObject go) 
+    tile_type test(GameObject go) 
     {
         var mm = go.GetComponents(typeof(Component));
         foreach(object i in mm)
         {
         if (i.GetType().Name.Contains("tile_type"))
-            return i;
+            return (tile_type)i;
         }
         return null;
     }
 
-        dynamic test_point(GameObject go) 
-    {
-        var mm = go.GetComponents(typeof(Component));
-        foreach(object i in mm)
-        {
-        if (i.GetType().Name.Contains("Points"))
-            return i;
-        }
-        return null;
-    }
+    //     dynamic test_point(GameObject go) 
+    // {
+    //     var mm = go.GetComponents(typeof(Component));
+    //     foreach(object i in mm)
+    //     {
+    //     if (i.GetType().Name.Contains("Points"))
+    //         return i;
+    //     }
+    //     return null;
+    // }
 }
