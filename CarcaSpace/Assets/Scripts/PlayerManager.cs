@@ -249,6 +249,7 @@ public class PlayerManager : NetworkBehaviour
         Player player = new Player(NetworkClient.connection.identity);
         //playerList.Add(networkIdentity);
         list_of_struct_player.Add(player);
+        Debug.Log("Ello boss");
         ////Debug.Log("Player list",playerList.Count);
     }
 

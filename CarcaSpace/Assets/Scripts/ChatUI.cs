@@ -17,6 +17,8 @@ public class ChatUI : NetworkBehaviour
     [SerializeField] public TMP_Text chatText = null;
     [SerializeField] public TMP_InputField inputField = null;
 
+    [SerializeField] public Button sendButton ; 
+
 
     private static event Action<string> OnMessage;
 
@@ -56,6 +58,7 @@ public class ChatUI : NetworkBehaviour
             Debug.Log("ici 2");
             return; 
         }
+        Debug.Log("ici 3");
         CmdSendMessage(message);
         inputField.text = string.Empty;
     }
