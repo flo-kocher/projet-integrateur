@@ -21,6 +21,15 @@ EditorBuildSettings:
     path: Assets/Scenes/GameMenu.unity
     guid: 6755171ef73c41849aca54334dea4de2
   - enabled: 1
+    path: Assets/Scenes/ForgotPassword.unity
+    guid: 11ffe3177cb8f684392f5b75a2ee82ae
+  - enabled: 1
+    path: Assets/Scenes/codeVerification.unity
+    guid: 60bb3e67c5185f24bbcd07066f356167
+  - enabled: 1
+    path: Assets/Scenes/NewPassword.unity
+    guid: 4842e01114a8ab24cb6cecac0f85763d
+  - enabled: 1
     path: Assets/Scenes/Lobby.unity
     guid: 398ac905703a46b4bac2fe46c4774ed6
   - enabled: 1
