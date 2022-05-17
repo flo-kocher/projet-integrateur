@@ -11,11 +11,13 @@ public class Points3 : NetworkBehaviour
     void Start()
     {
         this.GetComponent<Points3>().GetComponent<Text>().text = "Player 3 : 0";
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        // this.GetComponent<Points3>().GetComponent<Text>().text = Move.points3;
         // this.GetComponent<Points>().GetComponent<Text>().text = "okkk";
         // Debug.Log(this.GetComponent<Points>().GetComponent<Text>().text);
         // NetworkIdentity networkIdentity = NetworkClient.connection.identity;

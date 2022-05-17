@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
+using System;
 
 
 public enum Type_land
@@ -25,7 +26,7 @@ public class Constraints : NetworkBehaviour
     public int coordX;
     public int coordY;
     public int meeple;  // 0 haut, 1 gauche, 2 bas, 3 droite, 4 milieu
-    public NetworkIdentity id_joueur;  // A faire
+    public UInt32 id_joueur;  // A faire
     public bool visite;
     public bool carrefour;
     public bool[] posePossible = {false, false, false, false, false};
@@ -37,7 +38,7 @@ public class Constraints : NetworkBehaviour
         visite = false;
         //meeple = -1;
         this.meeple = -1;
-        this.id_joueur = null;
+        this.id_joueur = 0;
 
     }
     void Update()
