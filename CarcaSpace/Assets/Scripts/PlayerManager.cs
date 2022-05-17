@@ -119,7 +119,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdUpdateJoueur(int i)
     {
         RpcUpdateJoueur(i);
@@ -133,6 +133,7 @@ public class PlayerManager : NetworkBehaviour
         GameManager.Instance.Current_player = (GameManager.Instance.Current_player + i) % GameManager.Instance.nb_joueur;
         //Debug.Log(GameManager.Instance.Current_player);
         GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = true;
+        GameObject.Find("Bar").GetComponent<barre>().resetTimer();
     }
 
 
