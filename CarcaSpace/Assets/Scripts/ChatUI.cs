@@ -15,7 +15,8 @@ public class ChatUI : NetworkBehaviour
 
     [SerializeField] public GameObject chatUI = null;
     [SerializeField] public TMP_Text chatText = null;
-    [SerializeField] public TMP_InputField inputField = null;
+    [SerializeField] public TMP_InputField inputField ;
+     
 
     [SerializeField] public Button sendButton ; 
 
@@ -25,8 +26,24 @@ public class ChatUI : NetworkBehaviour
     public override void OnStartAuthority()
     {
         chatUI.SetActive(true);
+        
 
         OnMessage += HandleNewMessage;
+    }
+
+    public override void OnStartClient(){
+        base.OnStartClient();
+        sendButton.onClick.AddListener(sendMessage);
+    }
+
+    
+
+    public void sendMessage(){
+        string message = inputField.GetComponent<TMP_InputField>().text;
+        string playerName =  PlayerPrefs.GetString("playerName");
+        Debug.Log($"sending {message}");
+        Debug.Log("sending");
+        Send(message,playerName);
     }
 
     [ClientCallback]
@@ -37,41 +54,44 @@ public class ChatUI : NetworkBehaviour
         OnMessage -= HandleNewMessage;
     }
 
+
     private void HandleNewMessage(string message)
     {
         chatText.text += message;
     }
 
     [Client]
-    public void Send(string message)
-    {
-        message = inputField.text ;
-        Debug.Log($"sending {message}");
-        Debug.Log("sending");
+    public void Send(string message,string playerName){
+    //     message = inputField.text ;
+    //     Debug.Log($"sending {message}");
+    //     Debug.Log("sending");
 
-        if (!Input.GetKeyDown(KeyCode.Return)) { 
-            Debug.Log("ici 1 ");
-            return; 
-        }
+        // if (!Input.GetKeyDown(KeyCode.Return)) { 
+        //     Debug.Log("ici 1 ");
+        //     return; 
+        // }
 
         if (string.IsNullOrWhiteSpace(message)) { 
             Debug.Log("ici 2");
             return; 
         }
         Debug.Log("ici 3");
-        CmdSendMessage(message);
+        CmdSendMessage(message,playerName);
         inputField.text = string.Empty;
     }
 
-    [Command]
-    private void CmdSendMessage(string message)
+    [Command(requiresAuthority = false)]
+    private void CmdSendMessage(string message,string playerName)
     {
-        RpcHandleMessage($"[{connectionToClient.connectionId}]: {message}");
+        Debug.Log("CmdSend");
+        RpcHandleMessage($"{playerName}: {message} \n");;
     }
 
     [ClientRpc]
     private void RpcHandleMessage(string message)
     {
-        OnMessage?.Invoke($"\n{message}");
+        
+        HandleNewMessage(message);
+        Debug.Log($"je recois le message {message}") ; 
     }
 }

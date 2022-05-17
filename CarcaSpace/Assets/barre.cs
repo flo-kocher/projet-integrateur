@@ -8,6 +8,7 @@ using Mirror ;
 public class barre : NetworkBehaviour {
   [SyncVar]
   float time = 0;
+  public PlayerManager PlayerManager;
   // Start is called before the first frame update
   void Start() {}
 
@@ -27,6 +28,24 @@ public class barre : NetworkBehaviour {
       RectTransform rt = GetComponent<RectTransform>();
       rt.sizeDelta = new Vector2(rt.sizeDelta.x - decrease, rt.sizeDelta.y);
     }
+    else {
+      NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+      PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+      PlayerManager.CmdUpdateJoueur(GameObject.Find("GameManager").GetComponent<GameManager>().nb_joueur);
+      resetTimer();
+    }
+
     time += Time.deltaTime;
+  }
+
+
+  public void resetTimer() {
+    time = 0;
+    Color c = GetComponent<Image>().color;
+    c.g = 255;
+    c.r = 128;
+    GetComponent<Image>().color = c;
+    RectTransform rt = GetComponent<RectTransform>();
+    rt.sizeDelta = new Vector2(300, rt.sizeDelta.y);
   }
 }

@@ -78,6 +78,10 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// <para>This happens after OnStartClient(), as it is triggered by an ownership message from the server. This is an appropriate place to activate components or functionality that should only be active for the local player, such as cameras and input.</para>
     /// </summary>
     public override void OnStartLocalPlayer() {
+        playerName =  PlayerPrefs.GetString("playerName");
+        Debug.Log($"Player Name is  {playerName}");
+        Debug.Log($"Index  {index}");
+        CmdSpawnCard(playerName , index);
         base.OnStartLocalPlayer();
     }
 
@@ -88,8 +92,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnStartAuthority() {
         base.OnStartAuthority();  
-        playerName =  PlayerPrefs.GetString("playerName");
-        Debug.Log($"Player Name is  {playerName}");
+        
     }
 
     [Command]
@@ -125,7 +128,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
         // }
 
         Debug.Log("spawning player card ");
-        Debug.Log($"Index in command {_index} et mon nom {name}");
+        Debug.Log($"Index in command {_index} etLE NOM EST{name}");
 
         GameObject newCard = Instantiate(PlayerCard);
         newCard.transform.SetParent(GameObject.Find("Players").transform);
@@ -192,7 +195,7 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     public override void OnClientEnterRoom() {
         base.OnClientEnterRoom();
         
-        CmdSpawnCard(playerName , index);
+        
         if(isLocalPlayer == true){
             
             playerNumber++;

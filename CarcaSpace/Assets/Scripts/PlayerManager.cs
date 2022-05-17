@@ -119,7 +119,7 @@ public class PlayerManager : NetworkBehaviour
     }
 
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdUpdateJoueur(int i)
     {
         RpcUpdateJoueur(i);
@@ -133,7 +133,7 @@ public class PlayerManager : NetworkBehaviour
         GameManager.Instance.Current_player = (GameManager.Instance.Current_player + i) % GameManager.Instance.nb_joueur;
         //Debug.Log(GameManager.Instance.Current_player);
         GameManager.Instance._players[GameManager.Instance.Current_player].isOurTurn = true;
-        // Debug.Log("Id du joueur actuel : "+GameManager.Instance.Current_player);
+        GameObject.Find("Bar").GetComponent<barre>().resetTimer();
     }
 
 
@@ -563,6 +563,7 @@ public class PlayerManager : NetworkBehaviour
     public override void OnStartServer()
     {
         base.OnStartServer();
+        Debug.Log("on start server");
         // instatiateTiles();
         instatiateTiles_demo();
         CmdSpawnGrid(10);
@@ -571,8 +572,8 @@ public class PlayerManager : NetworkBehaviour
         // Points2.GetComponent<Text>().text = "Player 2 : 0";
         // Points4.GetComponent<Text>().text = "Player 5 : 0";
         // Points5.GetComponent<Text>().text = "Player 3 : 0";
-        //Debug.Log("els dans all_tiles : " +all_tiles);
-        //Debug.Log("ici start");
+        Debug.Log("els dans all_tiles : " +all_tiles);
+        Debug.Log("ici start");
 
         //instantie le tableau des positions des étoiles
         tabPos = new Vector2[5];
@@ -581,7 +582,7 @@ public class PlayerManager : NetworkBehaviour
         tabPos[2] = bas;
         tabPos[3] = droite;
         tabPos[4] = milieu;
-        // Move.nb_of_struct_roads = 0;
+        Move.nb_of_struct_roads = 0;
     }
 
     // [Command]
@@ -2609,6 +2610,7 @@ public class PlayerManager : NetworkBehaviour
         {
             if (hasAuthority)
             {
+                Debug.Log("has authority " +go);
                 //go.name = "connard";
                 go.transform.SetParent(GameObject.Find("Grid").transform);
                 go.name = x + "/" + y;
@@ -2621,7 +2623,7 @@ public class PlayerManager : NetworkBehaviour
             else
             {
                 //go.name = "le con";
-                
+                Debug.Log("has NO authority " +go);
                 go.transform.SetParent(GameObject.Find("Grid").transform);
                 go.name = x + "/" + y;
                 Vector2 v = new Vector2(x + 0.5f, y + 0.5f);
@@ -2666,12 +2668,29 @@ public class PlayerManager : NetworkBehaviour
 
     [Command]
     public void CmdDealMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m, int x, int y){
+        Debug.Log($"disa{disapear}");
+        NetworkServer.Spawn(disapear, connectionToClient);
         RpcShowMove(disapear, h, b, g, d, m, x, y);
     }
 
 
     [ClientRpc]
     void RpcShowMove(GameObject disapear, Type_land h, Type_land b, Type_land g, Type_land d, Type_land m, int x, int y){
+        Debug.Log("Debug yes : "+disapear);
+        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().haut);
+        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().bas);
+        Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().gauche);
+        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().droite);
+        Debug.Log("Debug yes : "+disapear.GetComponent<Constraints>().milieu);
+        Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().coordX);
+        Debug.Log("Debug haut : "+disapear.GetComponent<Constraints>().coordY);
+        Debug.Log("ok : "+h);
+        Debug.Log("ok : "+g);
+        Debug.Log("ok : "+b);
+        Debug.Log("ok : "+d);
+        Debug.Log("ok : "+m);
+        Debug.Log("ok : "+x);
+        Debug.Log("ok : "+y);
         disapear.GetComponent<Constraints>().haut =
             h;
         disapear.GetComponent<Constraints>().bas =

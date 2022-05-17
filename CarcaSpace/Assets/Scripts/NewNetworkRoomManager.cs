@@ -25,6 +25,8 @@ using System;
 public class NewNetworkRoomManager : NetworkRoomManager
 {
 
+    public PlayerManager PlayerManager;
+
     bool showStartButton;
 
     public List<NewNetworkRoomManager> RoomPlayers { get; } = new List<NewNetworkRoomManager>();
@@ -78,6 +80,9 @@ public class NewNetworkRoomManager : NetworkRoomManager
 
         base.OnRoomServerPlayersReady();
         ServerChangeScene(GameplayScene);
+        OnRoomServerSceneChanged(GameplayScene);
+
+        
 //         #if UNITY_SERVER
 //             base.OnRoomServerPlayersReady();
 // #else
@@ -112,7 +117,13 @@ public class NewNetworkRoomManager : NetworkRoomManager
     /// This is called on the server when a networked scene finishes loading.
     /// </summary>
     /// <param name="sceneName">Name of the new scene.</param>
-    public override void OnRoomServerSceneChanged(string sceneName) { }
+    public override void OnRoomServerSceneChanged(string sceneName) {
+        base.OnRoomServerSceneChanged(sceneName);
+        
+        
+
+        
+    }
 
     /// <summary>
     /// This allows customization of the creation of the room-player object on the server.
@@ -160,6 +171,7 @@ public class NewNetworkRoomManager : NetworkRoomManager
     public override bool OnRoomServerSceneLoadedForPlayer(NetworkConnection conn, GameObject roomPlayer, GameObject gamePlayer)
     {
         return base.OnRoomServerSceneLoadedForPlayer(conn, roomPlayer, gamePlayer);
+         
     }
 
     #endregion
@@ -167,9 +179,6 @@ public class NewNetworkRoomManager : NetworkRoomManager
     #region Client Callbacks
     public override void OnRoomClientConnect(NetworkConnection conn) {
         base.OnRoomClientConnect(conn) ; 
-       // RoomPlayers.Add(this);
-        Debug.Log($"player number is {RoomPlayers.Count} ");
-
     }
 
     public virtual void OnRoomClientEnter() {
@@ -208,7 +217,28 @@ public class NewNetworkRoomManager : NetworkRoomManager
     /// This is called on the client when the client is finished loading a new networked scene.
     /// </summary>
     /// <param name="conn">The connection that finished loading a new networked scene.</param>
-    public override void OnRoomClientSceneChanged(NetworkConnection conn) { }
+    public override void OnRoomClientSceneChanged(NetworkConnection conn) {
+
+        NetworkIdentity networkIdentity = NetworkClient.connection.identity;
+        
+        PlayerManager = networkIdentity.GetComponent<PlayerManager>();
+
+        PlayerManager.instatiateTiles_demo();
+        PlayerManager.CmdSpawnGrid(10);
+        
+        Debug.Log("els dans all_tiles : " +PlayerManager.all_tiles);
+        Debug.Log("ici start");
+
+        //instantie le tableau des positions des étoiles
+        PlayerManager.tabPos = new Vector2[5];
+        PlayerManager.tabPos[0] = PlayerManager.haut;
+        PlayerManager.tabPos[1] = PlayerManager.gauche;
+        PlayerManager.tabPos[2] = PlayerManager.bas;
+        PlayerManager.tabPos[3] = PlayerManager.droite;
+        PlayerManager.tabPos[4] = PlayerManager.milieu;
+        Move.nb_of_struct_roads = 0;
+       
+     }
     
     /// <summary>
     /// Called on the client when adding a player to the room fails.
