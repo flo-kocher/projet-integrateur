@@ -90,7 +90,6 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
         base.OnStartAuthority();  
         playerName =  PlayerPrefs.GetString("playerName");
         Debug.Log($"Player Name is  {playerName}");
-        CmdSpawnCard(playerName , index);
     }
 
     [Command]
@@ -144,14 +143,9 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     public void RpcShowPreviousCard(GameObject newCard){
         
         //c'est le plus recent a rejoindre
-        // if(newCard.GetComponent<Text>().text == playerName){
-        //     Debug.Log("here 1 ");
-        //     for(int i = 0 ; i < cardList.Count ; i++){
-        //         cardList[i].SetActive(true) ; 
-        //     }
-        // }else{
-            Debug.Log("here 2 ");
-            newCard.SetActive(true);
+        
+        Debug.Log("here 2 ");
+        newCard.SetActive(true);
         //}
         // int i = 0 ;
         // Debug.Log($"Card count is {cardList.Count}");
@@ -197,6 +191,8 @@ public class NewNetworkRoomPlayer : NetworkRoomPlayer
     /// </summary>
     public override void OnClientEnterRoom() {
         base.OnClientEnterRoom();
+        
+        CmdSpawnCard(playerName , index);
         if(isLocalPlayer == true){
             
             playerNumber++;

@@ -34,12 +34,6 @@ public class NewNetworkRoomManager : NetworkRoomManager
     [SerializeField] Scene menuScene ; 
 
 
-
-    public string playerName;
-  
-
-
-
     public override void OnStopClient () {
         base.OnStopClient();
         Debug.Log ($"Client Stopped");
@@ -180,6 +174,7 @@ public class NewNetworkRoomManager : NetworkRoomManager
 
     public virtual void OnRoomClientEnter() {
         base.OnRoomClientEnter();
+
         
     }
 
