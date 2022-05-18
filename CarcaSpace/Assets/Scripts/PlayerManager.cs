@@ -239,32 +239,59 @@ public class PlayerManager : NetworkBehaviour
     [ClientRpc]
     void RpcAffichageScoreDemo(GameObject point, int i, int points)
     {
+        // if(point != null)
+        // {
+        //     if(i == 0)
+        //     {
+        //         Move.points1+=points;
+        //         var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        //         foreach (GameObject o in allobjects)
+        //             if (o.name.Contains("Points1"))
+        //                 o.GetComponent<Points1>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
+                
+        //     }
+        //     else if(i == 1)
+        //     {
+        //         Move.points2+=points;
+        //         var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        //         foreach (GameObject o in allobjects)
+        //             if (o.name.Contains("Points2"))
+        //                 o.GetComponent<Points2>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();
+
+        //     }
+        //     else if(i == 2)
+        //     {
+        //         Move.points3+=points;
+        //         var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
+        //         foreach (GameObject o in allobjects)
+        //             if (o.name.Contains("Points3"))
+        //                 o.GetComponent<Points3>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
+        //     }
+
+
+        //     // Debug.Log("Go : "+point);
+        //     // dynamic x = test_point(point);
+        //     // x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+points.ToString();
+        // }
         if(point != null)
         {
             if(i == 0)
             {
                 Move.points1+=points;
-                var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
-                foreach (GameObject o in allobjects)
-                    if (o.name.Contains("Points1"))
-                        o.GetComponent<Points1>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
+                dynamic x = test_point(point);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points1.ToString();
             }
             else if(i == 1)
             {
                 Move.points2+=points;
-                var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
-                foreach (GameObject o in allobjects)
-                    if (o.name.Contains("Points2"))
-                        o.GetComponent<Points2>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();
-
+                dynamic x = test_point(point);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points2.ToString();                
             }
             else if(i == 2)
             {
                 Move.points3+=points;
-                var allobjects = Resources.FindObjectsOfTypeAll<GameObject>();
-                foreach (GameObject o in allobjects)
-                    if (o.name.Contains("Points3"))
-                        o.GetComponent<Points3>().GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
+                dynamic x = test_point(point);
+                x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+Move.points3.ToString();
             }
 
 
@@ -272,6 +299,7 @@ public class PlayerManager : NetworkBehaviour
             // dynamic x = test_point(point);
             // x.GetComponent<Text>().text = "Player "+(i+1).ToString()+" : "+points.ToString();
         }
+
     }
 
     public int comptage_points(CurrentRoads lst)    // Les carrefour n'existe pas encore pour nous Et il y a au plus 4 joueurs
@@ -2797,14 +2825,14 @@ public class PlayerManager : NetworkBehaviour
         return null;
     }
 
-    //     dynamic test_point(GameObject go) 
-    // {
-    //     var mm = go.GetComponents(typeof(Component));
-    //     foreach(object i in mm)
-    //     {
-    //     if (i.GetType().Name.Contains("Points"))
-    //         return i;
-    //     }
-    //     return null;
-    // }
+        dynamic test_point(GameObject go) 
+    {
+        var mm = go.GetComponents(typeof(Component));
+        foreach(object i in mm)
+        {
+        if (i.GetType().Name.Contains("Points"))
+            return i;
+        }
+        return null;
+    }
 }
