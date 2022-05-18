@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 public class ForgottenForm : MonoBehaviour
 {
 
-    string getRouteURI = "localhost:8080/UpdateUserPassword";
+    string getRouteURI = "http://185.155.93.105:11007/UpdateUserPassword";
     public Button submit;
     public TMP_InputField inputPass;
     public TMP_InputField inputPassConfirm;

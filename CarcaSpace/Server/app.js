@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose')
 const userSchema = require('./models/users')
 const users = require('./models/users');
+const nodemailer = require("nodemailer");
 
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -121,6 +122,84 @@ app.post('/logIn', async (req, res) => {
                   message: "Not existing account"});
     }
 });
+
+//RESET PASSWORD
+app.post('/Reset_pass', (request,response,next)=>{
+    var post_data = request.body;
+    
+    var mail = post_data.mail;
+    console.log(mail);
+    
+    var insertJson = {
+        'mail': mail
+    };
+    
+    //CHECK EXISTS EMAIL
+    userSchema.find({'mail':mail}).count(function(err,number){
+        if(number == 0){
+            console.log("email n'existe pas");
+            response.json("email n'existe pas");
+        }
+        else
+        {
+            
+            // emetteur
+            var smtpTransport = nodemailer.createTransport({
+                service: 'gmail', 
+                auth: {
+                    user: 'anas.9haoud@gmail.com',
+                    pass: 'rkvnulksxwzlumwg'
+                }
+            });
+
+            // code de vérification
+            var code_verification = +Math.floor(Math.random()*10000);
+            response.json(code_verification);
+
+            //envoie au destinantaire
+            var mailOptions = {
+                from: 'anas.9haoud@gmail.com',
+                to: mail,
+                subject: 'confirmation code',
+                text: 'Votre code de vérification: '+code_verification
+            };
+            
+            smtpTransport.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+            }); 
+        }
+    })
+     
+ });
+
+
+//UpdateUserPassword
+app.post('/UpdateUserPassword', (req,response,next)=>{
+ crypto.randomBytes(32, function(err, salt){
+    if(err){
+        console.log(err);
+    }
+    argon2i.hash(req.body.pass, salt)
+        .then(async (hash) => {
+            
+            var mail = req.body.mail;
+
+            console.log(mail);
+            console.log(req.body.pass);
+            userSchema.updateOne({'mail':mail},{$set:{'pass': hash}},function(error,res){
+                    response.json('update succed');
+                    console.log('update succed');
+                })
+        });
+
+  });
+
+});
+
 
 app.use(async (err, req, res) => {
     console.log(req.path);
